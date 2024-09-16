@@ -1,3 +1,5 @@
 import { Routes } from '@angular/router';
-
-export const routes: Routes = [];
+import {MaterialComponent} from './paginas/material/material.component'
+export const routes: Routes = [
+    {path:'ver-material',component:MaterialComponent}
+];
