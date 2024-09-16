@@ -1,0 +1,19 @@
+<p>buscar-materia works!</p>
+
+<div class="busqueda">
+    <label for="buscar-materia">Buscar:</label>
+    <input type="text" id="buscar-materia" placeholder="Escribe el nombre" />
+  
+    <label for="filtro-categoria">Filtrar por:</label>
+    <select id="filtro-categoria">
+      <option value="materia">Materia</option>
+      <option value="profesor">Profesor</option>
+    </select>
+  
+    <button type="button" (click)="buscar()">Buscar</button>
+  </div>
+
+  <div class="resultado">
+    <p *ngIf="resultado">{{ resultado }}</p>
+    <p *ngIf="!resultado && busquedaRealizada">No se encontraron resultados.</p>
+  </div>
