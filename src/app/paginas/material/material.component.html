@@ -1,0 +1,38 @@
+<div class="contenido">
+  <div id="outerContainer">
+      <div class="pdf-container" style="display: flex; flex-direction: column;  align-items: center; justify-content: center;">
+          <a href="{{src}}" >link</a>
+          <pdf-viewer
+          [src]="src"
+          [rotation]="0"
+          [original-size]="false"
+          [show-all]="true"
+          [fit-to-page]="false"
+          [zoom]="1"
+          [zoom-scale]="'page-width'"
+          [stick-to-page]="false"
+          [render-text]="true"
+          [external-link-target]="'blank'"
+          [autoresize]="true"
+          [show-borders]="false"
+          style="width: 50%; height: 85vh;"
+          (after-load-complete)="readPdf($event)"
+        ></pdf-viewer>
+        <mat-accordion style="width: 50%; margin-top: 10px;">
+          <mat-expansion-panel  (opened)="panelOpenState.set(true)" (closed)="panelOpenState.set(false)" >
+            <mat-expansion-panel-header>
+              <mat-panel-title> Teoria </mat-panel-title>
+              <mat-panel-description>
+                Quieres profundizar mas?
+              </mat-panel-description>
+            </mat-expansion-panel-header>
+            <div [innerHTML]="responseTeory"></div>
+          </mat-expansion-panel>
+        </mat-accordion>
+      </div>
+     
+    </div>
+  
+  </div>
+  
+    
