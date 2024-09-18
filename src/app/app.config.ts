@@ -10,9 +10,6 @@ export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes),
     provideAnimationsAsync(),
-<<<<<<< Marlon_Rama
-    provideStorage(() => getStorage()), provideFirebaseApp(() => initializeApp({"projectId":"file-update-3ec62","appId":"1:865106620028:web:a3e9cc311723a3f556e3f9","storageBucket":"file-update-3ec62.appspot.com","apiKey":"AIzaSyDwAxeEhEOgc6_gnf9NMKbEo9d1v1DGaaE","authDomain":"file-update-3ec62.firebaseapp.com","messagingSenderId":"865106620028"}))
-=======
     provideFirebaseApp(() =>
       initializeApp({
         projectId: 'sistemasacademicopdfs',
@@ -25,6 +22,5 @@ export const appConfig: ApplicationConfig = {
       })
     ),
     provideStorage(() => getStorage()),
->>>>>>> main
   ],
 };
