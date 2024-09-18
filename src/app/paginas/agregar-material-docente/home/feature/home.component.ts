@@ -1,5 +1,6 @@
 import { Component, computed, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common'; // Importa CommonModule
+import { NavbarComponent } from '../../../agregar-material-docente/shared/ui/navbar/navbar.component';
 
 import {
     Storage,
@@ -12,7 +13,7 @@ import { Subscription } from 'rxjs';
 @Component({
 selector: 'app-home',
 standalone: true,
-imports: [CommonModule], // Asegúrate de importar CommonModule aquí
+imports: [CommonModule,NavbarComponent], // Asegúrate de importar CommonModule aquí
 templateUrl:'./home.component.html',
 })
 export default class HomeComponent {
