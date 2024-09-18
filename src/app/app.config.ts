@@ -10,7 +10,6 @@ export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes),
     provideAnimationsAsync(),
-
     provideFirebaseApp(() =>
       initializeApp({
         projectId: 'sistemasacademicopdfs',
@@ -23,6 +22,5 @@ export const appConfig: ApplicationConfig = {
       })
     ),
     provideStorage(() => getStorage()),
-
   ],
 };
