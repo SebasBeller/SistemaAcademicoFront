@@ -10,7 +10,7 @@ export const routes: Routes = [
     }, 
     {
       path: 'agregar-nuevo-contenido',
-      component: AgregarNuevoContenidoComponent,  // Aquí registras tu componente en las rutas
+      component: AgregarNuevoContenidoComponent, 
       title: 'Agregar Nuevo Contenido'
     },
       {path:'mostrar-materia', component:MostrarMateriaComponent
