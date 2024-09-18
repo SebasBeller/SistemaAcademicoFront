@@ -7,7 +7,7 @@ import { DetalleMateriaComponent } from './paginas/detalle-materia/detalle-mater
 export const routes: Routes = [
     {path:'ver-material',component:MaterialComponent
 
-    },
+    }, 
     {
       path: 'agregar-nuevo-contenido',
       component: AgregarNuevoContenidoComponent, 
@@ -17,6 +17,10 @@ export const routes: Routes = [
 
       },
       {path:'detalle-materia', component:DetalleMateriaComponent},
-     {path : 'Buscar-Materia', component: BuscarMateriaComponent}
+      {path : 'Buscar-Materia', component: BuscarMateriaComponent},
+
+      // parte Marlon >> Home
+      { path: '', loadChildren: () => import('./paginas/agregar-material-docente/home/feature/home-routing') },
+
       ];
 
