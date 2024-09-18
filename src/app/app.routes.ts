@@ -20,7 +20,7 @@ export const routes: Routes = [
       {path : 'Buscar-Materia', component: BuscarMateriaComponent},
 
       // parte Marlon >> Home
-      { path: '', loadChildren: () => import('./paginas/agregar-material-docente/home/feature/home-routing') },
+      { path: 'agregar-material-docente', loadChildren: () => import('./paginas/agregar-material-docente/home/feature/home-routing') },
 
       ];
 
