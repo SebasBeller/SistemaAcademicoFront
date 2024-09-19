@@ -1,13 +1,23 @@
-import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { DataService } from './data.service';  
+import { CommonModule } from '@angular/common';  
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.sass'
+  styleUrls: ['./app.component.sass'],
+  imports: [CommonModule] 
 })
-export class AppComponent {
-  title = 'sistema-estudiantil-ia';
+export class AppComponent implements OnInit {
+  materias: any[] = [];
+
+  constructor(private dataService: DataService) {}
+
+  ngOnInit() {
+    console.log('AppComponent inicializado');
+    this.materias = this.dataService.getTrimestreData();
+  }
 }
+
+
