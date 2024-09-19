@@ -7,9 +7,9 @@ export class MaterialService {
   materiales:Material[]=[
     {
     id:1,
-    nombre:"PRACTICAia_RPK8.pdf",
+    nombre:"Software Testing.pdf",
     tipo:"Teorico",
-    url:"/v0/b/sistemasacademicopdfs.appspot.com/o/uploads%2FPRACTICAia_RPK8.pdf?alt=media&token=d76094a4-4243-4ada-b25c-7e3edc65b2b0"
+    url:"/v0/b/sistemasacademicopdfs.appspot.com/o/uploads%2F04%20Software%20Testing%202024.pdf?alt=media&token=44b82328-3d0f-49ea-9706-c9d7255f7620"
   },
   {
     id:2,

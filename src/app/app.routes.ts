@@ -4,8 +4,9 @@ import { AgregarNuevoContenidoComponent } from './paginas/agregar-nuevo-contenid
 import { BuscarMateriaComponent } from './paginas/buscar-materia/buscar-materia.component';
 import { MostrarMateriaComponent } from './paginas/mostrar-materia/mostrar-materia.component';
 import { DetalleMateriaComponent } from './paginas/detalle-materia/detalle-materia.component';
+import {VerMaterialesComponent} from './paginas/ver-materiales/ver-materiales.component'
 export const routes: Routes = [
-    {path:'ver-material',component:MaterialComponent
+    {path:'ver-material/:id',component:MaterialComponent
 
     }, 
     {
@@ -21,6 +22,6 @@ export const routes: Routes = [
 
       // parte Marlon >> Home
       { path: 'agregar-material-docente', loadChildren: () => import('./paginas/agregar-material-docente/home/feature/home-routing') },
-
+      {path : 'ver-materiales', component: VerMaterialesComponent }
       ];
 
