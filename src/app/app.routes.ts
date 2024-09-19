@@ -7,16 +7,20 @@ import { DetalleMateriaComponent } from './paginas/detalle-materia/detalle-mater
 export const routes: Routes = [
     {path:'ver-material',component:MaterialComponent
 
-    },
+    }, 
     {
       path: 'agregar-nuevo-contenido',
-      component: AgregarNuevoContenidoComponent,  // Aquí registras tu componente en las rutas
+      component: AgregarNuevoContenidoComponent, 
       title: 'Agregar Nuevo Contenido'
     },
       {path:'mostrar-materia', component:MostrarMateriaComponent
 
       },
       {path:'detalle-materia', component:DetalleMateriaComponent},
-     {path : 'Buscar-Materia', component: BuscarMateriaComponent}
+      {path : 'Buscar-Materia', component: BuscarMateriaComponent},
+
+      // parte Marlon >> Home
+      { path: 'agregar-material-docente', loadChildren: () => import('./paginas/agregar-material-docente/home/feature/home-routing') },
+
       ];
 

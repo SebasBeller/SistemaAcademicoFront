@@ -18,8 +18,9 @@
           style="width: 50%; height: 85vh;"
           (after-load-complete)="readPdf($event)"
         ></pdf-viewer>
-        <mat-accordion style="width: 50%; margin-top: 10px;">
-          <mat-expansion-panel  (opened)="panelOpenState.set(true)" (closed)="panelOpenState.set(false)" >
+        <mat-accordion style="width: 50%; margin-top: 10px;" >
+          <mat-expansion-panel  (opened)="panelOpenState.set(true)" 
+          (closed)="panelOpenState.set(false)"    [expanded]="panelOpenState()" >
             <mat-expansion-panel-header>
               <mat-panel-title> Teoria </mat-panel-title>
               <mat-panel-description>
