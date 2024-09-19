@@ -10,7 +10,7 @@ import {
   percentage,
 } from '@angular/fire/storage';
 import { Subscription } from 'rxjs';
-
+import { MaterialService } from '../../../../servicios/material.service';
 @Component({
   selector: 'app-home',
   standalone: true,
@@ -19,6 +19,8 @@ import { Subscription } from 'rxjs';
 })
 export default class HomeComponent {
   progress = signal('0%');
+
+  materialesServicio:MaterialService=inject(MaterialService)
 
   downloadURL: string | null = null;
   // almacena la URL
@@ -40,7 +42,8 @@ export default class HomeComponent {
   uploadFile() {
     const storageRef = ref(this._storage, `uploads/${this.file.name}`);
     const task = uploadBytesResumable(storageRef, this.file);
-
+    console.log(this.materialesServicio.getMateriales())
+    
     if (this.susbscription) {
       this.susbscription.unsubscribe();
       this.susbscription = undefined;
@@ -55,6 +58,7 @@ export default class HomeComponent {
         if (progress === 100) {
           this.downloadURL = await getDownloadURL(storageRef);
           console.log('Download URL:', this.downloadURL); // Verificar si se obtiene la URL
+          this.materialesServicio.addMaterial(this.materialesServicio.getMateriales().length+1,this.file.name,"Teorico",this.downloadURL.split("https://firebasestorage.googleapis.com")[1]);
         }
       }
     );
