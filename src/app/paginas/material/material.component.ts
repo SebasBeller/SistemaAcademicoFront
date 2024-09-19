@@ -22,11 +22,11 @@ import {ActivatedRoute} from '@angular/router'
 })
 export class MaterialComponent {
   readonly panelOpenState = signal(false);
-  // private src:string =
-  //   '/api/v0/b/pdf-storage-67ae3.appspot.com/o/Trigonometria.pdf?alt=media&token=33709e51-f1f2-4c5e-bcf0-4cc9e52a261a';
-    private src!:string;
+
+  private src!:string;
   materialesServicio:MaterialService=inject(MaterialService) 
   route:ActivatedRoute=inject(ActivatedRoute) 
+
   private pdfService=inject(PdfService)
   responseTeory?: string;
   constructor(){
