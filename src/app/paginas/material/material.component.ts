@@ -10,6 +10,7 @@ import {
 import { MatExpansionModule } from '@angular/material/expansion';
 import {PdfService} from '../../servicios/pdf.service'
 import { MaterialService } from '../../servicios/material.service';
+import {ActivatedRoute} from '@angular/router'
 
 @Component({
   selector: 'app-material',
@@ -21,11 +22,18 @@ import { MaterialService } from '../../servicios/material.service';
 })
 export class MaterialComponent {
   readonly panelOpenState = signal(false);
-  private src:string =
-    '/api/v0/b/pdf-storage-67ae3.appspot.com/o/Trigonometria.pdf?alt=media&token=33709e51-f1f2-4c5e-bcf0-4cc9e52a261a';
-  materialesServicio:MaterialService=inject(MaterialService)  
+
+  private src!:string;
+  materialesServicio:MaterialService=inject(MaterialService) 
+  route:ActivatedRoute=inject(ActivatedRoute) 
+
   private pdfService=inject(PdfService)
   responseTeory?: string;
+  constructor(){
+    let link=this.route.snapshot.params['id'];
+    this.src='/api'+link;
+    console.log(link)
+  }
   getSrc():string{
     return this.src;
   }
