@@ -28,9 +28,16 @@ export default class HomeComponent {
   tipoMaterial: string = 'Teorico'; // Valor predeterminado
   tituloMaterial: string = '';
 
+  showForm: boolean = false;
+  materiales: Array<{ titulo: string ;tipo:string; url: string }> = [];
+
+  constructor(storage: Storage) {
+    this._storage = storage;
+  }
+
   changeInput(event: Event) {
     const input = event.target as HTMLInputElement;
-    if (input.files) {
+    if (input.files && input.files.length > 0) {
       this.file = input.files[0];
       this.uploadFile();
     }
@@ -56,19 +63,43 @@ export default class HomeComponent {
     );
   }
 
+  // Confirmar la adición de un nuevo material
   confirm() {
-    // Aquí puedes manejar la lógica para confirmar la creación del material
-    console.log('Tipo de Material:', this.tipoMaterial);
-    console.log('Título del Material:', this.tituloMaterial);
-    console.log('URL del archivo:', this.downloadURL);
+    if (this.tituloMaterial && this.tipoMaterial && this.downloadURL) {
+      this.materiales.push({
+        titulo: this.tituloMaterial,
+        tipo: this.tipoMaterial,
+        url: this.downloadURL,
+      });
+      this.resetForm();
+    }
   }
-
   cancel() {
     // Aquí puedes manejar la lógica para cancelar la acción
-    this.tituloMaterial = '';
-    this.tipoMaterial = 'Teorico';
-    this.progress.set('0%');
-    this.downloadURL = null;
+    //this.tituloMaterial = '';
+    //this.tipoMaterial = 'Teorico';
+    //this.progress.set('0%');
+    this.resetForm();
+    this.showForm = false;
+    //this.downloadURL = null;
+  }
+
+    // Mostrar/ocultar el formulario
+    toggleForm() {
+      this.showForm = !this.showForm;
+    }
+
+      // Redirigir al archivo del material
+  goToMaterial(material: { titulo: string; tipo: string; url: string }) {
+    window.open(material.url, '_blank');
+  }
+
+    // Restablecer los valores del formulario
+    resetForm() {
+      this.tituloMaterial = '';
+      this.tipoMaterial = 'Teorico';
+      this.downloadURL = null;
+      this.progress.set('0%');
   }
 
   ngOnDestroy() {
