@@ -1,1 +1,50 @@
-<p>ver-materias-docente works!</p>
+<style>
+    .example-card {
+  max-width: 400px;
+}
+
+.example-header-image {
+  background-size: cover;
+}
+.card-container {
+  display: flex;
+  flex-wrap: wrap; /* Permite que las tarjetas se envuelvan en la siguiente línea */
+  justify-content: space-around; /* Espacio entre las tarjetas */
+  gap: 16px; /* Espacio entre las tarjetas (ajusta según necesites) */
+  margin: 5%;
+}
+h3,h2{
+  text-align: center;
+}
+
+.example-card {
+  flex: 1 1 300px; /* Permite que las tarjetas tengan un ancho mínimo de 300px */
+  max-width: 400px; /* Ajusta el ancho máximo según tus necesidades */
+}
+
+</style>
+<h2>Mis materias:</h2>
+<div class="card-container">
+
+    @for (materia of this.materias; track materia.id) {     
+    <mat-card class="example-card" appearance="outlined">
+    
+    <img mat-card-image src="https://2.bp.blogspot.com/-DOXEGnjTVHs/V3MUqvgn_dI/AAAAAAAAADE/LEZCAP5mB-UE8S3FOs91mCeVu31KewVAQCLcB/s1600/lectura1-1030x953.jpg">
+    <mat-card-content>
+      <h3>{{materia.nombre}}
+      </h3>
+      <p>
+        Area: Ciencias {{materia.area}}
+      </p>
+      <p>
+      Paralelo: {{materia.paralelo.paralelo}}
+    </p>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-button>Mas detalles</button>
+    </mat-card-actions>
+    </mat-card>
+}
+    
+    </div>
+    
