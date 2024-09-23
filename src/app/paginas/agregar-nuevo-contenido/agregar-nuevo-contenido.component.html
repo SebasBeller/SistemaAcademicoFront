@@ -1,17 +1,4 @@
-<button class="add-content-btn" (click)="showForm = true">Agregar Nuevo Contenido</button>
-
-<div *ngIf="showForm" class="form-container">
-  <label>
-    Nombre del módulo:
-    <input [(ngModel)]="newModuleName" />
-  </label>
-  <label>
-    URL de la imagen:
-    <input [(ngModel)]="newModuleImageUrl" />
-  </label>
-  <button (click)="addNewModule()">Añadir</button>
-  <button (click)="cancel()">Cancelar</button>
-</div>
+<button class="add-content-btn" (click)="addNewModule()">Agregar Nuevo Contenido</button>
 
 <div class="container" id="content-container">
   <div *ngFor="let card of cards" class="card-wrapper">
