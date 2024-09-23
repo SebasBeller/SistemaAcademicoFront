@@ -1,6 +1,18 @@
-<p>mostrar-materia</p>
-<img src="https://cdn.pixabay.com/photo/2015/07/28/23/09/learn-865788_960_720.jpg" alt="">
-<div class="materia-nombre">Matemáticas</div>
-<div class="profesor-nombre">Juan Perez</div>
-<div class="Paralelo">1er A</div>
-<div class="enlace-detalles"><a href="/detalle-materia">Ver más detalle</a></div>
+<div class="materias-contenedor">
+  <div *ngFor="let materia of materias" class="materia-card">
+
+    <button [routerLink]="['/detalle-materia', materia.titulo]" class="materia-nombre">{{ materia.titulo }}</button>
+
+
+    <img [src]="materia.imagen" alt="Imagen de la materia">
+
+
+    <div class="profesor-nombre">{{ materia.profesor }}</div>
+    <div class="Paralelo">{{ materia.paralelo }}</div>
+
+
+    <div class="enlace-detalles">
+      <a [routerLink]="['/detalle-materia', materia.titulo]">Ver más detalle</a>
+    </div>
+  </div>
+</div>
