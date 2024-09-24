@@ -5,10 +5,10 @@ import { routes } from './app.routes';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { getStorage, provideStorage } from '@angular/fire/storage';
-
+import {provideHttpClient} from '@angular/common/http';
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideRouter(routes),
+    provideRouter(routes),provideHttpClient(),
     provideAnimationsAsync(),
     provideFirebaseApp(() =>
       initializeApp({
