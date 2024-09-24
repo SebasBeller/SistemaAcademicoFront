@@ -13,7 +13,7 @@ export const routes: Routes = [
   { path: 'mostrar-materia', component: MostrarMateriaComponent },
   { path: 'detalle-materia/:titulo', component: DetalleMateriaComponent }, // Modificación aquí
   { path: 'Buscar-Materia', component: BuscarMateriaComponent },
-  { path: 'agregar-material-docente', loadChildren: () => import('./paginas/agregar-material-docente/home/feature/home-routing') },
+  { path: 'agregar-material-docente/:id', loadChildren: () => import('./paginas/agregar-material-docente/home/feature/home-routing') },
   { path: 'ver-materiales', component: VerMaterialesComponent },
   {path : 'ver-materias-docente', component: VerMateriasDocenteComponent }
 

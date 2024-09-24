@@ -8,6 +8,9 @@ import { FormsModule } from '@angular/forms'; // Importa FormsModule correctamen
 import { ActivatedRoute } from '@angular/router';
 import {Unidad} from '../../interfaces/unidad';
 import {UnidadService} from '../../servicios/unidad.service';
+import {MateriasProfesorService} from '../../servicios/materias-profesor.service';
+import {MateriaAsignadaDocente} from '../../interfaces/materia-asignada-docente';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-agregar-nuevo-contenido',
   standalone: true,
@@ -21,16 +24,31 @@ export class AgregarNuevoContenidoComponent  implements OnInit {
   showForm = false;
   newModuleName = '';
   newModuleImageUrl = '';
+  
+  materiaAsiganda?:MateriaAsignadaDocente;
 
   id_dicta:number;
   unidadServicio:UnidadService = inject(UnidadService)
+  materiaAsignadaServicio:MateriasProfesorService = inject(MateriasProfesorService)
 
   route:ActivatedRoute=inject(ActivatedRoute) 
-  constructor(private dialog: MatDialog) {
+  constructor(private dialog: MatDialog, private router: Router) {
     this.id_dicta=this.route.snapshot.params['id_dicta']
   }
 
+
   ngOnInit(): void {
+    this.materiaAsignadaServicio.obtenerMateriaAsignada(this.id_dicta).subscribe(
+      response => {
+        console.log('Datos recibidos:', response);
+        this.materiaAsiganda = response; 
+        console.log('Materia:', this.materiaAsiganda);
+      },
+      error => {
+        console.error('Error en la petición GET:', error);
+      }
+    )
+
     this.unidadServicio.getUnidadesDeMateriAsignada(this.id_dicta).subscribe(
       response => {
         console.log('Datos recibidos:', response);
@@ -41,6 +59,7 @@ export class AgregarNuevoContenidoComponent  implements OnInit {
         console.error('Error en la petición GET:', error);
       }
     );
+
 
   }
 
@@ -111,7 +130,9 @@ export class AgregarNuevoContenidoComponent  implements OnInit {
     //   this.cardCounter = 1;
     // }
   }
-
+  dirigirAContenido(id?:number){
+    this.router.navigate( ['/agregar-material-docente', id])
+  }
   cancel() {
     this.showForm = false;
     this.resetForm();
