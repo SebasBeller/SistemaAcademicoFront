@@ -1,39 +1,48 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-buscar-materia',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './buscar-materia.component.html',
-  styleUrl: './buscar-materia.component.sass'
+  styleUrls: ['./buscar-materia.component.sass']
 })
 export class BuscarMateriaComponent {
   materias = [
-    { nombre: 'Matemáticas', id: 1 },
-    { nombre: 'Historia', id: 2 },
-    { nombre: 'Ciencias', id: 3 }
+    { nombre: 'Matemáticas', id: 1, profesor: 'Juan Pérez' },
+    { nombre: 'Historia', id: 2, profesor: 'Ana Gómez' },
+    { nombre: 'Ciencias', id: 3, profesor: 'Luis Martínez' }
   ];
 
-  resultado: string | null = null;
+  profesores = [
+    { nombre: 'Juan Pérez', materia: 'Matemáticas' },
+    { nombre: 'Ana Gómez', materia: 'Historia' },
+    { nombre: 'Luis Martínez', materia: 'Ciencias' },
+    { nombre: 'Márco Aurelio', materia: 'Ciencias' }
+  ];
+
+  resultado: string[] = [];
   busquedaRealizada = false;
+  tipoBusqueda: 'materia' | 'profesor' = 'materia'; // Valor predeterminado
 
-  buscar(){
+  buscar() {
     const inputValue = (document.getElementById('buscar-materia') as HTMLInputElement).value;
-    const filtro = (document.getElementById('filtro-categoria') as HTMLSelectElement).value;
 
-    console.log('Buscando:', inputValue, 'en la categoría:', filtro);
+    console.log('Buscando:', inputValue, 'en el tipo de búsqueda:', this.tipoBusqueda);
 
-    if (filtro === 'materia') {
-      const materia = this.materias.find(m => m.nombre.toLowerCase() === inputValue.toLowerCase());
-      this.resultado = materia ? `Materia encontrada: ${materia.nombre}` : null;
-      
+    if (this.tipoBusqueda === 'materia') {
+      this.resultado = this.materias.filter(m => 
+        !inputValue || m.nombre.toLowerCase().includes(inputValue.toLowerCase())
+      ).map(m => `Materia: ${m.nombre}, Profesor: ${m.profesor}`);
+    } else {
+      // Filtrar correctamente por profesores
+      this.resultado = this.profesores.filter(p => 
+        !inputValue || p.nombre.toLowerCase().includes(inputValue.toLowerCase())
+      ).map(p => `Profesor: ${p.nombre}, Materia: ${p.materia}`);
     }
-    else {
-      this.resultado = null;
-    }
 
-    this.busquedaRealizada = true;
+    this.busquedaRealizada = true; // Actualizar estado de búsqueda
   }
-
 }

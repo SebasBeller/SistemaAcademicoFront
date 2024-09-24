@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { GropApiIAService } from './grop-api-ia.service';
+import { MaterialService } from './material.service';
 
-describe('GropApiIAService', () => {
-  let service: GropApiIAService;
+describe('MaterialService', () => {
+  let service: MaterialService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(GropApiIAService);
+    service = TestBed.inject(MaterialService);
   });
 
   it('should be created', () => {
