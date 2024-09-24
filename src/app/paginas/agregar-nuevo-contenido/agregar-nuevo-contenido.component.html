@@ -1,8 +1,11 @@
-<button class="add-content-btn" (click)="addNewModule()">Agregar Nuevo Contenido</button>
+<h1>{{materiaAsiganda?.materia?.nombre}}</h1>
+<p>Area: Ciencias</p>
+<p>Paralelo: {{materiaAsiganda?.materia?.paralelo?.paralelo}}</p>
+<button class="add-content-btn" (click)="addNewModule()" >Agregar Nuevo Contenido</button>
 
-<div class="container" id="content-container" >
+<div class="container" id="content-container"  >
   <div *ngFor="let card of this. unidades" class="card-wrapper">
-    <div class="card">
+    <div class="card"  (click)="dirigirAContenido(card.id_unidad)">
       <img [src]="card.imagen_url" alt="Module Image" width="100" />
     </div>
     <strong>{{ card.nombre }}</strong>
