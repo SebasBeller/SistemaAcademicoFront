@@ -1,4 +1,4 @@
-import { Component, computed, inject, signal } from '@angular/core';
+import { Component, computed, inject, signal ,OnInit} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NavbarComponent } from '../../../agregar-material-docente/shared/ui/navbar/navbar.component';
 import {
@@ -10,29 +10,49 @@ import {
 } from '@angular/fire/storage';
 import { Subscription } from 'rxjs';
 import { FormsModule } from '@angular/forms';
-
+import {Material} from "../../../../interfaces/material"
+import {MaterialService} from "../../../../servicios/material.service"
+import { ActivatedRoute} from '@angular/router';
 @Component({
   selector: 'app-home',
   standalone: true,
   imports: [CommonModule, NavbarComponent, FormsModule],
   templateUrl: './home.component.html',
 })
-export default class HomeComponent {
+export default class HomeComponent implements OnInit{
   progress = signal('0%');
-  downloadURL: string | null = null;
+  downloadURL: string | undefined = undefined;
   file!: File;
   private readonly _storage = inject(Storage);
   susbscription: Subscription | undefined = undefined;
 
   // Variables para el tipo de material y el título
   tipoMaterial: string = 'Teorico'; // Valor predeterminado
-  tituloMaterial: string = '';
+  nombreMaterial: string = '';
 
   showForm: boolean = false;
-  materiales: Array<{ titulo: string ;tipo:string; url: string }> = [];
+  materiales: Material[] = [];
 
+  servicioMateriales:MaterialService = inject(MaterialService);
+
+  id_unidad?:number;
+  route:ActivatedRoute=inject(ActivatedRoute) 
   constructor(storage: Storage) {
     this._storage = storage;
+    this.id_unidad=this.route.snapshot.params['id']
+  }
+  ngOnInit(): void {
+    this.servicioMateriales.getMaterialesDeUnidad(this.id_unidad).subscribe(
+      response => {
+        console.log('Datos recibidos:', response);
+        this.materiales = response; 
+        console.log('Materia:', this.materiales);
+      },
+      error => {
+        console.error('Error en la petición GET:', error);
+      }
+    )
+      
   }
 
   changeInput(event: Event) {
@@ -65,18 +85,25 @@ export default class HomeComponent {
 
   // Confirmar la adición de un nuevo material
   confirm() {
-    if (this.tituloMaterial && this.tipoMaterial && this.downloadURL) {
-      this.materiales.push({
-        titulo: this.tituloMaterial,
-        tipo: this.tipoMaterial,
-        url: this.downloadURL,
-      });
-      this.resetForm();
+    let material: Material = {
+      nombre: this.nombreMaterial,
+      tipo: this.tipoMaterial,
+      url: this.downloadURL,
+    }
+    if (this.nombreMaterial && this.tipoMaterial && this.downloadURL) {
+      material.id_unidad=this.id_unidad
+      this.servicioMateriales.guardadMaterial(material).subscribe(
+        response => {
+          console.log('Material guardado:', response);
+          this.materiales.push(material);
+          this.resetForm();
+        }
+      );
     }
   }
   cancel() {
     // Aquí puedes manejar la lógica para cancelar la acción
-    //this.tituloMaterial = '';
+    //this.nombreMaterial = '';
     //this.tipoMaterial = 'Teorico';
     //this.progress.set('0%');
     this.resetForm();
@@ -90,15 +117,15 @@ export default class HomeComponent {
     }
 
       // Redirigir al archivo del material
-  goToMaterial(material: { titulo: string; tipo: string; url: string }) {
-    window.open(material.url, '_blank');
+  goToMaterial(material: Material) {
+    window.open('/api'+material.url, '_blank');
   }
 
     // Restablecer los valores del formulario
     resetForm() {
-      this.tituloMaterial = '';
+      this.nombreMaterial = '';
       this.tipoMaterial = 'Teorico';
-      this.downloadURL = null;
+      this.downloadURL = undefined;
       this.progress.set('0%');
   }
 

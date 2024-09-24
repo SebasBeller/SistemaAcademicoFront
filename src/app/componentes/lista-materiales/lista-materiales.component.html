@@ -3,7 +3,7 @@
     <div mat-subheader>Materia: Matematicas</div>
     <div mat-subheader>Contenidos:</div>
     <mat-divider></mat-divider>
-    @for (contenido of this.materialesServicio.getMateriales(); track contenido.id) {
+    @for (contenido of this.materialesServicio.getMateriales(); track contenido.id_material) {
       <mat-list-item>
         <mat-icon matListItemIcon>note</mat-icon>
         <div matListItemTitle>
