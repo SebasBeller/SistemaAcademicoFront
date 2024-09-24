@@ -6,25 +6,17 @@ import { MostrarMateriaComponent } from './paginas/mostrar-materia/mostrar-mater
 import { DetalleMateriaComponent } from './paginas/detalle-materia/detalle-materia.component';
 import {VerMaterialesComponent} from './paginas/ver-materiales/ver-materiales.component'
 import {VerMateriasDocenteComponent} from './paginas/ver-materias-docente/ver-materias-docente.component'
+
 export const routes: Routes = [
-    {path:'ver-material/:id',component:MaterialComponent
+  { path: 'ver-material/:id', component: MaterialComponent },
+  { path: 'agregar-nuevo-contenido/:id_dicta', component: AgregarNuevoContenidoComponent, title: 'Agregar Nuevo Contenido' },
+  { path: 'mostrar-materia', component: MostrarMateriaComponent },
+  { path: 'detalle-materia/:titulo', component: DetalleMateriaComponent }, // Modificación aquí
+  { path: 'Buscar-Materia', component: BuscarMateriaComponent },
+  { path: 'agregar-material-docente', loadChildren: () => import('./paginas/agregar-material-docente/home/feature/home-routing') },
+  { path: 'ver-materiales', component: VerMaterialesComponent },
+  {path : 'ver-materias-docente', component: VerMateriasDocenteComponent }
 
-    }, 
-    {
-      path: 'agregar-nuevo-contenido',
-      component: AgregarNuevoContenidoComponent, 
-      title: 'Agregar Nuevo Contenido'
-    },
-      {path:'mostrar-materia', component:MostrarMateriaComponent
+];
 
-      },
-      {path:'detalle-materia', component:DetalleMateriaComponent},
-      {path : 'Buscar-Materia', component: BuscarMateriaComponent},
-
-      // parte Marlon >> Home
-      { path: 'agregar-material-docente', loadChildren: () => import('./paginas/agregar-material-docente/home/feature/home-routing') },
-      {path : 'ver-materiales', component: VerMaterialesComponent },
-      
-      {path : 'ver-materias-docente', component: VerMateriasDocenteComponent }
-      ];
 

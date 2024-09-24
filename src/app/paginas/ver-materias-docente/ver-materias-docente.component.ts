@@ -3,16 +3,18 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatCardModule} from '@angular/material/card';
 import {MateriasProfesorService} from '../../servicios/materias-profesor.service';
 import {Materia} from '../../interfaces/materia';
+import {MateriaAsignadaDocente} from '../../interfaces/materia-asignada-docente';
+import {RouterModule} from '@angular/router';
 @Component({
   selector: 'app-ver-materias-docente',
   standalone: true,
-  imports: [MatCardModule, MatButtonModule],
+  imports: [MatCardModule, MatButtonModule,RouterModule],
   templateUrl: './ver-materias-docente.component.html',
   styleUrl: './ver-materias-docente.component.sass',
 })
 export class VerMateriasDocenteComponent implements OnInit {
   servicioMateriasProfesor:MateriasProfesorService=inject(MateriasProfesorService);
-  materias:Materia[]=[];
+  materias:MateriaAsignadaDocente[]=[];
   
 ngOnInit(): void {
      this.servicioMateriasProfesor.obtenerMaterias().subscribe(
