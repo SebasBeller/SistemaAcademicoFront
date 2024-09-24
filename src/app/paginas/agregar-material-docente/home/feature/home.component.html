@@ -1,6 +1,6 @@
 <app-navbar></app-navbar>
 <div class="w-full max-w-[600px] mx-auto px-5 pt-[100px]">
-    <h1 class="text-4xl mb-8">Números Enteros</h1>
+    <h1 class="text-4xl mb-8">Contenidos</h1>
 
     <!-- Botón para agregar nuevo material -->
     <button
@@ -23,11 +23,11 @@
 
         <!-- Título del material -->
         <div class="mb-4">
-            <label for="tituloMaterial" class="block text-lg font-medium">Título del Material</label>
+            <label for="nombreMaterial" class="block text-lg font-medium">Título del Material</label>
             <input
-                id="tituloMaterial"
+                id="nombreMaterial"
                 type="text"
-                [(ngModel)]="tituloMaterial"
+                [(ngModel)]="nombreMaterial"
                 placeholder="Ejercicios de Aplicaciones de Números Enteros"
                 class="border rounded w-full py-2 px-3"
             />
@@ -61,7 +61,7 @@
     <!-- Lista de materiales añadidos -->
     <div *ngFor="let material of materiales" class="mb-4">
         <button (click)="goToMaterial(material)" class="border border-gray-300 rounded-lg w-full py-2 px-3 flex justify-between items-center">
-            <span>{{ material.titulo }}</span>
+            <span>{{ material.nombre }}</span>
             <span>{{ material.tipo }}</span>
         </button>
     </div>

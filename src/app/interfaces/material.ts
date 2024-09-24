@@ -1,7 +1,8 @@
 
 export interface Material {
-    id:number,
+    id_material?:number,
+    id_unidad?:number,
     nombre:string,
     tipo:string,
-    url:string
+    url?:string
 }
