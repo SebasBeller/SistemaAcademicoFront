@@ -26,22 +26,22 @@ h3,h2{
 <h2>Mis materias:</h2>
 <div class="card-container">
 
-    @for (materia of this.materias; track materia.id) {     
+    @for (materiaAsignada of this.materias; track materiaAsignada.id_dicta) {     
     <mat-card class="example-card" appearance="outlined">
     
     <img mat-card-image src="https://2.bp.blogspot.com/-DOXEGnjTVHs/V3MUqvgn_dI/AAAAAAAAADE/LEZCAP5mB-UE8S3FOs91mCeVu31KewVAQCLcB/s1600/lectura1-1030x953.jpg">
     <mat-card-content>
-      <h3>{{materia.nombre}}
+      <h3>{{materiaAsignada.materia?.nombre}}
       </h3>
       <p>
-        Area: Ciencias {{materia.area}}
+        Area: Ciencias
       </p>
       <p>
-      Paralelo: {{materia.paralelo.paralelo}}
+      Paralelo: {{materiaAsignada.materia?.paralelo?.paralelo}}
     </p>
     </mat-card-content>
     <mat-card-actions>
-      <button mat-button>Mas detalles</button>
+      <button mat-button [routerLink]="['/agregar-nuevo-contenido', materiaAsignada.id_dicta]">Mas detalles</button>
     </mat-card-actions>
     </mat-card>
 }

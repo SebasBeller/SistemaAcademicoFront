@@ -9,7 +9,7 @@ import {VerMateriasDocenteComponent} from './paginas/ver-materias-docente/ver-ma
 
 export const routes: Routes = [
   { path: 'ver-material/:id', component: MaterialComponent },
-  { path: 'agregar-nuevo-contenido', component: AgregarNuevoContenidoComponent, title: 'Agregar Nuevo Contenido' },
+  { path: 'agregar-nuevo-contenido/:id_dicta', component: AgregarNuevoContenidoComponent, title: 'Agregar Nuevo Contenido' },
   { path: 'mostrar-materia', component: MostrarMateriaComponent },
   { path: 'detalle-materia/:titulo', component: DetalleMateriaComponent }, // Modificación aquí
   { path: 'Buscar-Materia', component: BuscarMateriaComponent },
