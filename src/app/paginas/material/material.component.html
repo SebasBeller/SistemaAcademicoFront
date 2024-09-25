@@ -1,3 +1,39 @@
+<style>
+  .accordion {
+  width: 700px;
+}
+
+.accordion-item {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  
+}
+
+.accordion-header {
+  width: 100%;
+  background-color: #f1f1f1;
+  border: none;
+  padding: 5px;
+  text-align: center;
+  cursor: pointer;
+  outline: none;
+  transition: background-color 0.3s ease;
+}
+
+.accordion-header:hover {
+  background-color: #ddd;
+}
+
+.accordion-header.active {
+  background-color: #ccc;
+}
+
+.accordion-content {
+  padding: 15px;
+  background-color: #fff;
+}
+
+</style>
 <div class="contenido">
   <div id="outerContainer">
       <div class="pdf-container" style="display: flex; flex-direction: column;  align-items: center; justify-content: center;">
@@ -18,22 +54,27 @@
           style="width: 50%; height: 85vh;"
           (after-load-complete)="readPdf($event)"
         ></pdf-viewer>
-        <mat-accordion style="width: 50%; margin-top: 10px;" >
-          <mat-expansion-panel  (opened)="panelOpenState.set(true)" 
-          (closed)="panelOpenState.set(false)"    [expanded]="panelOpenState()" >
-            <mat-expansion-panel-header>
-              <mat-panel-title> Teoria </mat-panel-title>
-              <mat-panel-description>
-                Quieres profundizar mas?
-              </mat-panel-description>
-            </mat-expansion-panel-header>
-            <div [innerHTML]="responseTeory"></div>
-          </mat-expansion-panel>
-        </mat-accordion>
+          
+  <div class="accordion">
+    <div class="accordion-item">
+
+      <button class="accordion-header" (click)="toggle()">
+        <p>
+          Quieres profundizar mas?
+        </p>
+        Tipo: {{material?.tipo}} 
+      </button>
+      <div class="accordion-content" *ngIf="isOpen">
+        <div [innerHTML]="response"></div>
+      </div>
+    </div>
+  </div>
+  
+     
       </div>
      
     </div>
   
   </div>
+
   
-    
