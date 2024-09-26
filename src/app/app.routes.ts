@@ -4,7 +4,6 @@ import { AgregarNuevoContenidoComponent } from './paginas/agregar-nuevo-contenid
 import { BuscarMateriaComponent } from './paginas/buscar-materia/buscar-materia.component';
 import { MostrarMateriaComponent } from './paginas/mostrar-materia/mostrar-materia.component';
 import { DetalleMateriaComponent } from './paginas/detalle-materia/detalle-materia.component';
-import {VerMaterialesComponent} from './paginas/ver-materiales/ver-materiales.component'
 import {VerMateriasDocenteComponent} from './paginas/ver-materias-docente/ver-materias-docente.component'
 import {VerMaterialesEstudianteComponent} from './paginas/ver-materia-estudiante/home/feature/home.component'
 export const routes: Routes = [
