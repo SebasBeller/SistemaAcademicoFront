@@ -6,7 +6,7 @@ import { MostrarMateriaComponent } from './paginas/mostrar-materia/mostrar-mater
 import { DetalleMateriaComponent } from './paginas/detalle-materia/detalle-materia.component';
 import {VerMaterialesComponent} from './paginas/ver-materiales/ver-materiales.component'
 import {VerMateriasDocenteComponent} from './paginas/ver-materias-docente/ver-materias-docente.component'
-
+import {VerMaterialesEstudianteComponent} from './paginas/ver-materia-estudiante/home/feature/home.component'
 export const routes: Routes = [
   { path: 'ver-material/:id', component: MaterialComponent },
   { path: 'agregar-nuevo-contenido/:id_dicta', component: AgregarNuevoContenidoComponent, title: 'Agregar Nuevo Contenido' },
@@ -14,9 +14,8 @@ export const routes: Routes = [
   { path: 'detalle-materia/:id_dicta', component: DetalleMateriaComponent }, // Modificación aquí
   { path: 'Buscar-Materia', component: BuscarMateriaComponent },
   { path: 'agregar-material-docente/:id', loadChildren: () => import('./paginas/agregar-material-docente/home/feature/home-routing') },
-  { path: 'ver-materiales/:id', component: VerMaterialesComponent },
-  {path : 'ver-materias-docente', component: VerMateriasDocenteComponent }
-
+  {path : 'ver-materias-docente', component: VerMateriasDocenteComponent },
+  {path : 'ver-materiales-estudiante', component:VerMaterialesEstudianteComponent}
 ];
 
 

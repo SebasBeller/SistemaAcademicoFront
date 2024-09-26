@@ -13,6 +13,9 @@ export class MaterialService {
   getMateriales():Material[]{
     return this.materiales;
   }
+  encontrarMaterial(id?:number):Observable<Material> {
+    return this.http.get<Material>(`${this.urlApi}/${id}`);
+  }
   getMaterialesDeUnidad(id?:number):Observable<Material[]> {
     return this.http.get<Material[]>(`${this.urlApi}/unidad/${id}`);
   }
