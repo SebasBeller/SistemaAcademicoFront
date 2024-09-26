@@ -10,7 +10,7 @@ export const routes: Routes = [
   { path: 'ver-material/:id', component: MaterialComponent },
   { path: 'agregar-nuevo-contenido/:id_dicta', component: AgregarNuevoContenidoComponent, title: 'Agregar Nuevo Contenido' },
   { path: 'mostrar-materia', component: MostrarMateriaComponent },
-  { path: 'detalle-materia/:titulo', component: DetalleMateriaComponent }, // Modificación aquí
+  { path: 'detalle-materia/:id_dicta', component: DetalleMateriaComponent }, // Modificación aquí
   { path: 'Buscar-Materia', component: BuscarMateriaComponent },
   { path: 'agregar-material-docente/:id', loadChildren: () => import('./paginas/agregar-material-docente/home/feature/home-routing') },
   {path : 'ver-materias-docente', component: VerMateriasDocenteComponent },

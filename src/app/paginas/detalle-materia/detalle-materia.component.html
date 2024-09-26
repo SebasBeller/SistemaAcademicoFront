@@ -1,27 +1,25 @@
-<h1>{{ materiaTitulo }}</h1>
-<div class="area-materias">Área: {{ area }}</div>
-<div class="profesor-nombre">Profesor: {{ profesor }}</div>
-<div class="Paralelo">Paralelo: {{ paralelo }}</div>
+<h1>{{materiaAsiganda?.materia?.nombre}}</h1>
+<div class="area-materias">Área: {{materiaAsiganda?.materia?.nombre}}</div>
+<div class="profesor-nombre">Profesor: {{materiaAsiganda?.profesor?.nombre}}</div>
+<div class="Paralelo">Paralelo: {{materiaAsiganda?.materia?.paralelo?.paralelo}}</div>
 <div class="enlace-detalles">
   <button routerLink="/mostrar-materia" class="btn-volver">Volver</button>
-
 </div>
 <div class="contenido-materia-detalle">
   <div class="titulo-contenido">
     <div class="titulo-contenido-boton">
     <h2>Primer Trimestre</h2>
-  
-
   </div>
   </div>
 
-  <div *ngFor="let tema of temas" class="tema-container">
-    <div class="tema">
-      <h3>{{ tema.nombre }}</h3>
-      <div class="imagen-materia">
-        <img [src]="tema.imagen" alt="{{ tema.nombre }}">
-      </div>
-      <div class="texto-materia">{{ tema.descripcion }}</div>
+  <div *ngFor="let card of this. unidades" class="card-wrapper">
+    <div class="card"  >
+      <img [src]="card.imagen_url" alt="Module Image" width="100" />
+    </div>
+    <strong>{{ card.nombre }}</strong>
+    <div class="button-group">
+
+
     </div>
   </div>
 </div>
