@@ -14,7 +14,7 @@ export const routes: Routes = [
   { path: 'detalle-materia/:id_dicta', component: DetalleMateriaComponent }, // Modificación aquí
   { path: 'Buscar-Materia', component: BuscarMateriaComponent },
   { path: 'agregar-material-docente/:id', loadChildren: () => import('./paginas/agregar-material-docente/home/feature/home-routing') },
-  { path: 'ver-materiales', component: VerMaterialesComponent },
+  { path: 'ver-materiales/:id', component: VerMaterialesComponent },
   {path : 'ver-materias-docente', component: VerMateriasDocenteComponent }
 
 ];
