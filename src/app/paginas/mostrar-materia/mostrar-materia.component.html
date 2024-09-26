@@ -1,3 +1,4 @@
+<h2>Mis materias:</h2>
 <div class="materias-contenedor">
   <div *ngFor="let materia of materias" class="materia-card">
 
@@ -8,7 +9,7 @@
 
     <div class="profesor-nombre">{{ materia.profesor?.nombre }}</div>
 
-    <div class="Paralelo">{{materia.materia?.paralelo?.paralelo}}</div>
+    <div class="Paralelo">paralelo:{{materia.materia?.paralelo?.paralelo}}</div>
 
     <div class="enlace-detalles">
        <button mat-button [routerLink]="['/detalle-materia', materia.id_dicta]">Más detalles</button>
