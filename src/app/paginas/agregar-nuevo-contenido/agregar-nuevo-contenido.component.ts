@@ -24,14 +24,14 @@ export class AgregarNuevoContenidoComponent  implements OnInit {
   showForm = false;
   newModuleName = '';
   newModuleImageUrl = '';
-  
+
   materiaAsiganda?:MateriaAsignadaDocente;
 
   id_dicta:number;
   unidadServicio:UnidadService = inject(UnidadService)
   materiaAsignadaServicio:MateriasProfesorService = inject(MateriasProfesorService)
 
-  route:ActivatedRoute=inject(ActivatedRoute) 
+  route:ActivatedRoute=inject(ActivatedRoute)
   constructor(private dialog: MatDialog, private router: Router) {
     this.id_dicta=this.route.snapshot.params['id_dicta']
   }
@@ -41,7 +41,7 @@ export class AgregarNuevoContenidoComponent  implements OnInit {
     this.materiaAsignadaServicio.obtenerMateriaAsignada(this.id_dicta).subscribe(
       response => {
         console.log('Datos recibidos:', response);
-        this.materiaAsiganda = response; 
+        this.materiaAsiganda = response;
         console.log('Materia:', this.materiaAsiganda);
       },
       error => {
@@ -52,7 +52,7 @@ export class AgregarNuevoContenidoComponent  implements OnInit {
     this.unidadServicio.getUnidadesDeMateriAsignada(this.id_dicta).subscribe(
       response => {
         console.log('Datos recibidos:', response);
-        this.unidades = response; 
+        this.unidades = response;
         console.log('Unidades:', this.unidades);
       },
       error => {
@@ -77,7 +77,9 @@ export class AgregarNuevoContenidoComponent  implements OnInit {
           id_dicta: this.id_dicta,
           nombre: result.name || `Nuevo Contenido ${this.cardCounter}`,
           trimestre: '1er',
-          imagen_url: result.imageUrl || 'default-image-url.jpg'
+          imagen_url: result.imageUrl || 'default-image-url.jpg',
+          descripcion: undefined,
+          imagen: undefined
         }
         console.log(nuevaUnidad)
         this.unidadServicio.guardarUnidadDeMateriAsignada(nuevaUnidad).subscribe(
