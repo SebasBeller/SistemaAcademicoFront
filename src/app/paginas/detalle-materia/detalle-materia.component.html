@@ -16,7 +16,7 @@
     <div class="card"  >
       <img [src]="card.imagen_url" alt="Module Image" width="100" />
     </div>
-    <strong>{{ card.nombre }}</strong>
+    <a  [routerLink]="['/ver-materiales', card.id_dicta]"><strong>{{ card.nombre }}</strong></a>
     <div class="button-group">
 
 

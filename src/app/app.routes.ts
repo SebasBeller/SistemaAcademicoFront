@@ -16,8 +16,6 @@ export const routes: Routes = [
   { path: 'agregar-material-docente/:id', loadChildren: () => import('./paginas/agregar-material-docente/home/feature/home-routing') },
   {path : 'ver-materias-docente', component: VerMateriasDocenteComponent },
   {path : 'ver-materiales-estudiante', component:VerMaterialesEstudianteComponent}
-
-
 ];
 
 
