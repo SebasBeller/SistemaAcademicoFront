@@ -34,7 +34,8 @@ export class VerMaterialesEstudianteComponent implements OnInit{
   id_unidad?:number;
   route:ActivatedRoute=inject(ActivatedRoute) 
   constructor() {
-    this.id_unidad=91
+    this.id_unidad=this.route.snapshot.params['id']
+    // this.id_unidad=91
   }
   ngOnInit(): void {
     this.servicioMateriales.getMaterialesDeUnidad(this.id_unidad).subscribe(
