@@ -1,6 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
+import { MateriaAsignadaDocente } from '../../interfaces/materia-asignada-docente';
+import { MateriasProfesorService } from '../../servicios/materias-profesor.service';
 
 @Component({
   selector: 'app-mostrar-materia',
@@ -9,28 +11,26 @@ import { RouterLink } from '@angular/router';
   templateUrl: './mostrar-materia.component.html',
   styleUrls: ['./mostrar-materia.component.sass'] // Corregido a styleUrls
 })
-export class MostrarMateriaComponent {
+export class MostrarMateriaComponent implements OnInit {
+  servicioMateriasProfesor:MateriasProfesorService=inject(MateriasProfesorService);
+  materias:MateriaAsignadaDocente[]=[];
+  materiaAsignada: any;
+
 
   // Definir un arreglo de materias
-  materias = [
-    {
-      titulo: 'Matemáticas',
-      imagen: 'assets/img/Recurso (1).png',
-      profesor: 'Juan Perez',
-      paralelo: '1er A'
-    },
-    {
-      titulo: 'Física',
-      imagen: 'assets/img/Recurso (4).png',
-      profesor: 'Ana Gomez',
-      paralelo: '1er B'
-    },
-    {
-      titulo: 'Química',
-      imagen: 'assets/img/Recurso (3).png',
-      profesor: 'Carlos Ruiz',
-      paralelo: '2do C'
-    }
-  ];
+  ngOnInit(): void {
+    this.servicioMateriasProfesor.obtenerMaterias().subscribe(
+      (response: MateriaAsignadaDocente[]) => {
+        console.log('Datos recibidos:', response);
+        this.materias = response; // Asigna los datos cuando la respuesta es recibida
+        this.materias.forEach(materia => console.log(materia));
+      },
+      error => {
+        console.error('Error en la petición GET:', error);
+      }
+    );
+  }
+
+
 
 }

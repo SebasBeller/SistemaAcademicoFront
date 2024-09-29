@@ -1,27 +1,15 @@
-<h1>{{ materiaTitulo }}</h1>
-<div class="area-materias">Área: {{ area }}</div>
-<div class="profesor-nombre">Profesor: {{ profesor }}</div>
-<div class="Paralelo">Paralelo: {{ paralelo }}</div>
-<div class="enlace-detalles">
-  <button routerLink="/mostrar-materia" class="btn-volver">Volver</button>
-
+<div class="titulo">
+  <h1><b>{{materiaAsiganda?.materia?.nombre}}</b></h1>
+  <div class="area-materias"><b>Área: Ciencias</b></div>
+  <div class="profesor-nombre"><b>Profesor: {{materiaAsiganda?.profesor?.nombre}}</b></div>
+  <div class="Paralelo"><b>Paralelo: {{materiaAsiganda?.materia?.paralelo?.paralelo}}</b></div>
+</div>
+<div class="titulo-contenido">
+  <h2><b>Primer Trimestre</b></h2>
 </div>
 <div class="contenido-materia-detalle">
-  <div class="titulo-contenido">
-    <div class="titulo-contenido-boton">
-    <h2>Primer Trimestre</h2>
-  
-
-  </div>
-  </div>
-
-  <div *ngFor="let tema of temas" class="tema-container">
-    <div class="tema">
-      <h3>{{ tema.nombre }}</h3>
-      <div class="imagen-materia">
-        <img [src]="tema.imagen" alt="{{ tema.nombre }}">
-      </div>
-      <div class="texto-materia">{{ tema.descripcion }}</div>
-    </div>
+  <div *ngFor="let card of this. unidades" class="card-wrapper">
+    <img [src]="card.imagen_url" alt="Module Image"/>
+    <a  [routerLink]="['/ver-materiales-estudiante', card.id_unidad]"><strong><b>{{ card.nombre }}</b></strong></a>
   </div>
 </div>
