@@ -8,6 +8,7 @@ import { VerMaterialesComponent} from './paginas/ver-materiales/ver-materiales.c
 import {VerMateriasDocenteComponent} from './paginas/ver-materias-docente/ver-materias-docente.component'
 import {VerMaterialesEstudianteComponent} from './paginas/ver-materia-estudiante/home/feature/home.component'
 import { LayoutComponent } from './layout/layout.component';
+import { ListaEstudiantesProfesorComponent } from './paginas/lista-estudiantes-profesor/lista-estudiantes-profesor.component';
 
 export const routes: Routes = [
   {
@@ -17,11 +18,12 @@ export const routes: Routes = [
       { path: 'ver-material/:id', component: MaterialComponent },
       { path: 'agregar-nuevo-contenido/:id_dicta', component: AgregarNuevoContenidoComponent, title: 'Agregar Nuevo Contenido' },
       { path: 'mostrar-materia', component: MostrarMateriaComponent },
-      { path: 'detalle-materia/:id_dicta', component: DetalleMateriaComponent }, // Modificación aquí
+      { path: 'detalle-materia/:id_dicta', component: DetalleMateriaComponent },
       { path: 'Buscar-Materia', component: BuscarMateriaComponent },
       { path: 'agregar-material-docente/:id', loadChildren: () => import('./paginas/agregar-material-docente/home/feature/home-routing') },
       { path: 'ver-materias-docente', component: VerMateriasDocenteComponent },
-      { path: 'ver-materiales-estudiante/:id', component:VerMaterialesEstudianteComponent}
+      { path: 'ver-materiales-estudiante/:id', component:VerMaterialesEstudianteComponent},
+      { path: 'lista-estudiantes-profesor', component:ListaEstudiantesProfesorComponent}
     ]
   }
 ];
