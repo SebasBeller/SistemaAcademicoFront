@@ -15,6 +15,7 @@ import { RouterModule } from '@angular/router';
   standalone: true,
   imports: [CommonModule, NavbarComponent, FormsModule,RouterModule],
   templateUrl: './home.component.html',
+  styleUrl: './home.component.sass'
 })
 export class VerMaterialesEstudianteComponent implements OnInit{
   progress = signal('0%');
