@@ -16,5 +16,3 @@ export const routes: Routes = [
   {path : 'ver-materias-docente', component: VerMateriasDocenteComponent },
   {path : 'ver-materiales-estudiante/:id', component:VerMaterialesEstudianteComponent}
 ];
-
-
