@@ -7,7 +7,7 @@ import{MateriaAsignadaDocente} from '../interfaces/materia-asignada-docente';
 })
 export class MateriasProfesorService {
   urlApi:string='http://localhost:3000/materia-asignada-profesor'
-  constructor(private http: HttpClient) {
+  constructor(private readonly http: HttpClient) {
 
   }
   materias: MateriaAsignadaDocente[] = [];
@@ -18,13 +18,13 @@ obtenerMaterias():Observable<MateriaAsignadaDocente[]>{
   //   console.error('Error en la petición GET:', error);
   // }))
   return this.http.get<MateriaAsignadaDocente[]>(`${this.urlApi}/todas-las-materias`)
-  
+
 }
 obtenerMateriaAsignada(id:number):Observable<MateriaAsignadaDocente>{
   return this.http.get<MateriaAsignadaDocente>(`${this.urlApi}/${id}`)
 }
-  // getMaterias(): Materia[] {  
+  // getMaterias(): Materia[] {
   //   return this.materias;
   // }
-  
+
 }
