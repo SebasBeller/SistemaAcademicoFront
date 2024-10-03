@@ -1,23 +1,16 @@
-import { Component, OnInit } from '@angular/core';
-import { DataService } from './data.service';  
-import { CommonModule } from '@angular/common';  
-
+import { CommonModule } from '@angular/common';
+import { Component } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { RouterOutlet } from '@angular/router';
+import { MatDialogModule } from '@angular/material/dialog';
 @Component({
   selector: 'app-root',
   standalone: true,
+  imports: [CommonModule,RouterOutlet, FormsModule],
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.sass'],
-  imports: [CommonModule] 
+  styleUrl: './app.component.sass'
 })
-export class AppComponent implements OnInit {
-  materias: any[] = [];
-
-  constructor(private dataService: DataService) {}
-
-  ngOnInit() {
-    console.log('AppComponent inicializado');
-    this.materias = this.dataService.getTrimestreData();
-  }
+export class AppComponent {
+  title = 'sistema-estudiantil-ia';
+  
 }
-
-
