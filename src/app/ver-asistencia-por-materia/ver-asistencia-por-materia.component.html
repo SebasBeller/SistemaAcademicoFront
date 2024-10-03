@@ -1,0 +1,16 @@
+<div class="attendance-container">
+    <h2>Matemáticas</h2>
+    <p>Profesor: {{ professor }}</p>
+    <p>Paralelo: {{ parallel }}</p>
+  
+    <div class="month">
+      <h3>{{ month }}</h3>
+      <div class="days-grid">
+        <div *ngFor="let day of days" class="day" [ngClass]="getStatusClass(day.status)">
+          <input type="checkbox" [checked]="day.status === 'present'" (click)="toggleStatus(day)">
+          <label>{{ day.day }}</label>
+        </div>
+      </div>
+    </div>
+  </div>
+  

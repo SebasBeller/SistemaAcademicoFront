@@ -8,6 +8,7 @@ import { VerMaterialesComponent} from './paginas/ver-materiales/ver-materiales.c
 import {VerMateriasDocenteComponent} from './paginas/ver-materias-docente/ver-materias-docente.component'
 import {VerMaterialesEstudianteComponent} from './paginas/ver-materia-estudiante/home/feature/home.component'
 import { LayoutComponent } from './layout/layout.component';
+import { VerAsistenciaPorMateriaComponent } from './ver-asistencia-por-materia/ver-asistencia-por-materia.component';
 
 export const routes: Routes = [
   {
@@ -21,7 +22,8 @@ export const routes: Routes = [
       { path: 'Buscar-Materia', component: BuscarMateriaComponent },
       { path: 'agregar-material-docente/:id', loadChildren: () => import('./paginas/agregar-material-docente/home/feature/home-routing') },
       { path: 'ver-materias-docente', component: VerMateriasDocenteComponent },
-      { path: 'ver-materiales-estudiante/:id', component:VerMaterialesEstudianteComponent}
+      { path: 'ver-materiales-estudiante/:id', component:VerMaterialesEstudianteComponent},
+      {path: 'ver-asistencia-materia',component:VerAsistenciaPorMateriaComponent}
     ]
 }
 ];
