@@ -53,7 +53,7 @@ export class RegistroAsistenciaDocentesComponent {
   }
 
   eliminarFecha(fecha:string) {
-    const confirmacion = confirm('Estas seguro de eliminar la fecha ${fecha}? ');
+    const confirmacion = confirm(`Estas seguro de eliminar la fecha ${fecha}`);
     if(confirmacion){
       const index = this.displayedColumns.indexOf(fecha);
       if(index !== -1){
