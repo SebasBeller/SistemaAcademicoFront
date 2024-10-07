@@ -25,6 +25,6 @@ export const routes: Routes = [
       { path: 'ver-materias-docente', component: VerMateriasDocenteComponent },
       { path: 'ver-materiales-estudiante/:id', component:VerMaterialesEstudianteComponent},
       { path: 'lista-estudiantes-profesor', component:ListaEstudiantesProfesorComponent},
-        { path: 'ver-asistencias-estudiantes', component:RegistroAsistenciaDocentesComponent}
+        { path: 'registro-asistencias-estudiantes', component:RegistroAsistenciaDocentesComponent}
       ]}
 ];

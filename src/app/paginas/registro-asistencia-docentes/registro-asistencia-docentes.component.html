@@ -1,24 +1,56 @@
 <style>
   button {
-  margin-left: 5px;
-}
-</style>
-<button (click)="agregarFila()">+</button>
-<button (click)="editarFecha()">🖉</button>
-<button (click)="eliminarFecha()">🗑</button>
-<table mat-table [dataSource]="asitencias" class="mat-elevation-z8">
+    margin-left: 5px;
+  }
+  mat-select {
+    font-size: inherit; /* Hace que el select herede el tamaño de fuente del contenedor */
+  }
 
+  td {
+    font-size: inherit; /* Asegúrate que las celdas hereden el tamaño de la tabla */
+  }
+  .botonGuardar{
+    margin: 2%;
+  }
+</style>
+<mat-form-field class="example-full-width">
+  <mat-label>Agregar Fecha</mat-label>
+  <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="picker" 
+  (dateChange)="agregarFecha($event)"/>
+  <mat-hint>MM/DD/YYYY</mat-hint>
+  <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+  <mat-datepicker #picker></mat-datepicker>
+</mat-form-field>
+
+<table mat-table [dataSource]="asistencias" class="mat-elevation-z8">
   <ng-container matColumnDef="nombre">
-    <th mat-header-cell *matHeaderCellDef> Nombre </th>
-    <td mat-cell *matCellDef="let element"> {{element.nombre}} </td>
+    <th mat-header-cell *matHeaderCellDef>Nombre</th>
+    <td mat-cell *matCellDef="let element">{{ element.nombre }}</td>
   </ng-container>
 
-  <ng-container *ngFor="let fecha of displayedColumns.slice(1)" [matColumnDef]="fecha">
-    <th mat-header-cell *matHeaderCellDef> {{fecha}} </th>
-    <td mat-cell *matCellDef="let element"> {{this.servicioAsistencias.getEstadoAsistencia(element.asistencias, fecha)}} </td>
+  <ng-container
+    *ngFor="let fecha of displayedColumns.slice(1)"
+    [matColumnDef]="fecha"
+  >
+    <th mat-header-cell *matHeaderCellDef>
+      {{ fecha }}
+      <button (click)="editarFecha()">🖉</button>
+      <button (click)="eliminarFecha()">🗑</button>
+    </th>
+    <td mat-cell *matCellDef="let element">
+      <mat-select [value]="getEstadoAsistencia(element.asistencias, fecha)"
+      (selectionChange)="actualizarAsistencia(element.asistencias,fecha, $event)">
+        <mat-option  value="Presente">Presente</mat-option>
+        <mat-option value="Falta">Falta</mat-option>
+        <mat-option value="Justificado">Justificado</mat-option>
+      </mat-select>
+    </td>
   </ng-container>
 
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-
+  <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
 </table>
+<button mat-fab aria-label="A button to save the changes" class="botonGuardar" (click)="guardarCambios()">
+  <mat-icon>save</mat-icon>
+  </button>
+  
