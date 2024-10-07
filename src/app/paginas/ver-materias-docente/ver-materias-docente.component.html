@@ -1,50 +1,14 @@
-<style>
-    .example-card {
-  max-width: 250px
-}
-
-.example-header-image {
-  background-size: cover;
-}
-.card-container {
-  display: flex;
-  flex-wrap: wrap; /* Permite que las tarjetas se envuelvan en la siguiente línea */
-  justify-content: space-around; /* Espacio entre las tarjetas */
-  gap: 16px; /* Espacio entre las tarjetas (ajusta según necesites) */
-  margin: 2%;
-}
-h3,h2{
-  text-align: center;
-}
-
-.example-card {
-  flex: 1 1 300px; /* Permite que las tarjetas tengan un ancho mínimo de 300px */
-  max-width: 250px; /* Ajusta el ancho máximo según tus necesidades */
-}
-
-</style>
-<h2>Mis materias:</h2>
+<h2><b>Mis materias:</b></h2>
 <div class="card-container">
-
-    @for (materiaAsignada of this.materias; track materiaAsignada.id_dicta) {     
-    <mat-card class="example-card" appearance="outlined">
-    
+  @for (materiaAsignada of this.materias; track materiaAsignada.id_dicta) {
+  <div class="materia-card">
+    <b>{{materiaAsignada.materia?.nombre}}</b>
     <img mat-card-image src="https://2.bp.blogspot.com/-DOXEGnjTVHs/V3MUqvgn_dI/AAAAAAAAADE/LEZCAP5mB-UE8S3FOs91mCeVu31KewVAQCLcB/s1600/lectura1-1030x953.jpg">
-    <mat-card-content>
-      <h3>{{materiaAsignada.materia?.nombre}}
-      </h3>
-      <p>
-        Area: Ciencias
-      </p>
-      <p>
-      Paralelo: {{materiaAsignada.materia?.paralelo?.paralelo}}
-    </p>
-    </mat-card-content>
-    <mat-card-actions>
-      <button mat-button [routerLink]="['/agregar-nuevo-contenido', materiaAsignada.id_dicta]">Mas detalles</button>
-    </mat-card-actions>
-    </mat-card>
-}
-    
+    <div class="Area"><b>Area: Ciencias</b></div>
+    <div class="Paralelo"><b>Paralelo: {{materiaAsignada.materia?.paralelo?.paralelo}}</b></div>
+    <div class="enlace-detalles">
+      <button mat-button [routerLink]="['/agregar-nuevo-contenido', materiaAsignada.id_dicta]"><b>Más detalles</b></button>
     </div>
-    
+  </div>
+  }
+</div>
