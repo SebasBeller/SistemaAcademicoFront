@@ -11,12 +11,14 @@ import {UnidadService} from '../../servicios/unidad.service';
 import {MateriasProfesorService} from '../../servicios/materias-profesor.service';
 import {MateriaAsignadaDocente} from '../../interfaces/materia-asignada-docente';
 import { Router } from '@angular/router';
+import { RouterLink } from '@angular/router';
+
 @Component({
   selector: 'app-agregar-nuevo-contenido',
   standalone: true,
   templateUrl: './agregar-nuevo-contenido.component.html',
   styleUrls: ['./agregar-nuevo-contenido.component.sass'],
-  imports: [CommonModule, MatButtonModule, FormsModule] // Asegúrate de que FormsModule esté en la lista de imports
+  imports: [CommonModule, MatButtonModule, FormsModule, RouterLink] // Asegúrate de que FormsModule esté en la lista de imports
 })
 export class AgregarNuevoContenidoComponent  implements OnInit {
   cardCounter = 1;

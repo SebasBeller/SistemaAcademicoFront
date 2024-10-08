@@ -10,7 +10,7 @@ import { MateriasProfesorService } from '../../servicios/materias-profesor.servi
   standalone: true,
   imports: [CommonModule,RouterLink,FormsModule],
   templateUrl: './mostrar-materia.component.html',
-  styleUrls: ['./mostrar-materia.component.sass'] // Corregido a styleUrls
+  styleUrls: ['./mostrar-materia.component.sass'] 
 })
 export class MostrarMateriaComponent implements OnInit {
   servicioMateriasProfesor:MateriasProfesorService=inject(MateriasProfesorService);
@@ -19,13 +19,11 @@ export class MostrarMateriaComponent implements OnInit {
   searchTerm: string = '';
 
 
-  // Definir un arreglo de materias
   ngOnInit(): void {
     this.servicioMateriasProfesor.obtenerMaterias().subscribe(
       (response: MateriaAsignadaDocente[]) => {
         console.log('Datos recibidos:', response);
         this.materias = response; // Asigna los datos cuando la respuesta es recibida
-
       },
       error => {
         console.error('Error en la petición GET:', error);

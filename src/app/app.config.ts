@@ -9,7 +9,8 @@ import { provideHttpClient } from '@angular/common/http';
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideRouter(routes),provideHttpClient(),
+    provideRouter(routes),provideHttpClient()
+    ,
     provideAnimationsAsync(),
     provideFirebaseApp(() =>
       initializeApp({
@@ -25,3 +26,6 @@ export const appConfig: ApplicationConfig = {
     provideStorage(() => getStorage()),
   ],
 };
+
+
+

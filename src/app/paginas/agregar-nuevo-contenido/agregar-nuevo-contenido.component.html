@@ -3,6 +3,8 @@
   <div class="area-materias"><b>Área: Ciencias</b></div>
   <div class="profesor-nombre"><b>Profesor: {{materiaAsiganda?.profesor?.nombre}}</b></div>
   <div class="Paralelo"><b>Paralelo: {{materiaAsiganda?.materia?.paralelo?.paralelo}}</b></div>
+  <button class="asistencias-btn" [routerLink]="['/registro-asistencias-estudiantes', this.id_dicta]" ><b>Asistencias</b></button>
+  
 </div>
 <div class="titulo-contenido">
   <h2><b>Primer Trimestre</b></h2>

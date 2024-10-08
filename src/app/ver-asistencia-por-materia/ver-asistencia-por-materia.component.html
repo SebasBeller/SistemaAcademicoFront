@@ -1,0 +1,16 @@
+<div class="attendance-container">
+    <h2>Matemáticas</h2>
+    <p>Profesor: {{ professor }}</p>
+    <p>Paralelo: {{ parallel }}</p>
+  
+    <div class="month">
+      <h3>{{ month }}</h3>
+      <div class="days-grid">
+        <div *ngFor="let day of days" class="day">
+            <label>{{ day.day }}</label>
+          <img [src]="getImageForStatus(day.status)" alt="{{ day.status }} icon">
+        </div>
+      </div>
+    </div>
+  </div>
+  
