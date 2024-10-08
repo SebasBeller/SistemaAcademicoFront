@@ -1,85 +1,132 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { HistorialAsistenciaService } from '../../servicios/historial-asistencia.service';
+import { Asistencia } from '../../interfaces/asistencia';
+import { Profesor } from '../../interfaces/profesor';
+import { MateriaAsignadaDocente } from '../../interfaces/materia-asignada-docente';
+import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
-import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-historial-asistencia',
   standalone: true,
-  imports: [CommonModule,RouterLink,FormsModule],
+  imports: [CommonModule, RouterLink, FormsModule],
   templateUrl: './historial-asistencia.component.html',
-  styleUrl: './historial-asistencia.component.sass'
+  styleUrls: ['./historial-asistencia.component.sass']
 })
-export class HistorialAsistenciaComponent {
-  // Variables para la búsqueda
+export class HistorialAsistenciaComponent implements OnInit {
+  asistencias: Asistencia[] = [];
+  profesores: Profesor[] = [];
+  materiasAsignadas: MateriaAsignadaDocente[] = [];
   busqueda: string = '';
-  tipoFiltro: string = 'materia'; // Por defecto, se busca por materia
+  materiasFiltradas: MateriaAsignadaDocente[] = [];
+  selectedProfesorId: number | null = null;
+  selectedParalelo: string | null = null;
+tipoFiltro: any;
 
-  // Historial de materias (puedes modificar los datos según tu caso)
-  historialMaterias = [
-    {
-      materia: 'Matemáticas',
-      profesor: 'Profesor Pérez',
-      paralelo: 'A',
-      imagen: 'https://via.placeholder.com/100',
-      faltas: 3,
-      asistencias: 20,
-      licencias: 1,
+  constructor(private readonly historialAsistenciaService: HistorialAsistenciaService) {}
 
-    },
-    {
-      materia: 'Física',
-      profesor: 'Profesora López',
-      paralelo: 'B',
-      imagen: 'https://via.placeholder.com/100',
-      faltas: 2,
-      asistencias: 18,
-      licencias: 2,
+  ngOnInit(): void {
+    this.obtenerAsistencias();
+    this.obtenerProfesores();
+    this.obtenerMateriasAsignadas();
+    // Si necesitas obtener materias, implementa el método obtenerMaterias
+    // this.obtenerMaterias();
+  }
 
-    },
-    {
-      materia: 'Química',
-      profesor: 'Profesor Gómez',
-      paralelo: 'A',
-      imagen: 'https://via.placeholder.com/100',
-      faltas: 1,
-      asistencias: 19,
-      licencias: 0,
-
-    },
-    {
-      materia: 'Geometria',
-      profesor: 'Adelio Martínez',
-      paralelo: 'B',
-      imagen: 'https://via.placeholder.com/100',
-      faltas: 1,
-      asistencias: 19,
-      licencias: 1,
-
-    }
-  ];
-
-  // Arreglo que contiene los resultados filtrados
-  materiasFiltradas = [...this.historialMaterias];
-
-  // Método para filtrar las materias basado en la búsqueda y el filtro seleccionado
-  filtrarMaterias() {
-    const filtro = this.busqueda.toLowerCase();
-
-    // Aplica el filtro según el tipo seleccionado
-    this.materiasFiltradas = this.historialMaterias.filter((materia) => {
-      if (this.tipoFiltro === 'materia') {
-        return materia.materia.toLowerCase().includes(filtro);
-      } else if (this.tipoFiltro === 'docente') {
-        return materia.profesor.toLowerCase().includes(filtro);
-      } else if (this.tipoFiltro === 'paralelo') {
-        return materia.paralelo.toLowerCase().includes(filtro);
+  obtenerAsistencias(): void {
+    this.historialAsistenciaService.obtenerAsistencias().subscribe(
+      (asistencias) => {
+        console.log('Asistencias recibidas:', asistencias);
+        this.asistencias = asistencias;
+      },
+      error => {
+        console.error('Error en la petición de asistencias:', error);
       }
-      return false;
+    );
+  }
+
+  obtenerProfesores(): void {
+    this.historialAsistenciaService.obtenerProfesores().subscribe(
+      (profesores) => {
+        console.log('Profesores recibidos:', profesores);
+        this.profesores = profesores;
+      },
+      error => {
+        console.error('Error en la petición de profesores:', error);
+      }
+    );
+  }
+
+  obtenerMateriasAsignadas(): void {
+    this.historialAsistenciaService.obtenerMateriasAsignadas().subscribe(
+      (materiasAsignadas) => {
+        console.log('Materias asignadas recibidas:', materiasAsignadas);
+        this.materiasAsignadas = materiasAsignadas;
+        this.materiasFiltradas = materiasAsignadas;
+      },
+      error => {
+        console.error('Error en la petición de materias asignadas:', error);
+      }
+    );
+  }
+
+  filtrarMaterias(): void {
+    this.materiasFiltradas = this.materiasAsignadas; // Resetea a todas las materias
+
+    // Filtrar por búsqueda de título
+    if (this.busqueda.trim() !== '') {
+      this.materiasFiltradas = this.materiasFiltradas.filter(materia =>
+        materia.materia?.nombre.toLowerCase().includes(this.busqueda.toLowerCase()) // Filtra según el nombre
+      );
+    }
+
+    // Filtrar por profesor
+    if (this.selectedProfesorId !== null) {
+      this.materiasFiltradas = this.materiasFiltradas.filter(materia =>
+        materia.profesor && materia.profesor.id_profesor === this.selectedProfesorId
+      );
+    }
+
+    // Filtrar por paralelo
+    if (this.selectedParalelo) {
+      this.materiasFiltradas = this.materiasFiltradas.filter(materia =>
+        materia.materia && materia.materia.paralelo && materia.materia.paralelo.paralelo === this.selectedParalelo // Filtra según el paralelo
+      );
+    }
+  }
+
+  seleccionarProfesor(profesorId: number | null): void {
+    this.selectedProfesorId = profesorId;
+    this.filtrarMaterias();
+  }
+
+  seleccionarParalelo(paralelo: string | null): void {
+    this.selectedParalelo = paralelo;
+    this.filtrarMaterias();
+  }
+
+  calcularTotalClases(materia: MateriaAsignadaDocente): { faltas: number, asistencias: number, licencias: number } {
+    let faltas = 0;
+    let asistencias = 0;
+    let licencias = 0;
+
+    this.asistencias.forEach(asistencia => {
+      if (asistencia.materiaAsignada.id_dicta === materia.id_dicta) {
+        switch (asistencia.estado) {
+          case 'Falta':
+            faltas++;
+            break;
+          case 'Presente':
+            asistencias++;
+            break;
+          case 'Justificado':
+            licencias++;
+            break;
+        }
+      }
     });
 
-  }
-  calcularTotalClases(materia: any): number {
-    return materia.faltas + materia.asistencias + materia.licencias;
+    return { faltas, asistencias, licencias };
   }
 }

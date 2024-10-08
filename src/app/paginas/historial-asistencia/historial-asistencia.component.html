@@ -8,12 +8,14 @@
     (ngModelChange)="filtrarMaterias()"
   />
 
-  <!-- Combo box para seleccionar el filtro -->
+  <!-- Combo box para seleccionar el tipo de filtro -->
   <select [(ngModel)]="tipoFiltro" (change)="filtrarMaterias()" class="text-input">
     <option value="materia">Materia</option>
     <option value="docente">Docente</option>
     <option value="paralelo">Paralelo</option>
   </select>
+
+
 </div>
 
 <div *ngIf="materiasFiltradas.length === 0">
@@ -23,15 +25,17 @@
 <!-- Lista de materias filtradas -->
 <div class="materias-container">
   <div *ngFor="let materia of materiasFiltradas" class="materia-detalle">
-    <img [src]="materia.imagen" alt="{{materia.materia}}" />
+    <img [src]="materia.imagen" alt="{{materia.titulo}}" />
     <div>
-      <h2>{{materia.materia}}</h2>
-      <p><strong>Profesor:</strong> {{materia.profesor}}</p>
-      <p><strong>Paralelo:</strong> {{materia.paralelo}}</p>
-      <p><strong>Faltas:</strong> {{materia.faltas}}</p>
-      <p><strong>Asistencias:</strong> {{materia.asistencias}}</p>
-      <p><strong>Licencias:</strong> {{materia.licencias}}</p>
-      <p><strong>Total de clases:</strong> {{calcularTotalClases(materia)}}</p>
+      <h2>{{materia.materia?.nombre}}</h2>
+      <p><strong>Profesor:</strong> {{materia.profesor?.nombre}}</p>
+      <p><strong>Paralelo:</strong> {{materia.paralelo?.paralelo}}</p>
+      <p><strong>Faltas:</strong> {{calcularTotalClases(materia).faltas}}</p>
+      <p><strong>Asistencias:</strong> {{calcularTotalClases(materia).asistencias}}</p>
+      <p><strong>Licencias:</strong> {{calcularTotalClases(materia).licencias}}</p>
+
+      <!-- Mostrar los totales de asistencias, faltas y permisos -->
+      <p><strong>Total de clases:</strong> {{calcularTotalClases(materia).asistencias + calcularTotalClases(materia).faltas + calcularTotalClases(materia).licencias}}</p>
       <p><strong><a routerLink="#" class="blue-link">DETALLE</a></strong></p>
     </div>
   </div>

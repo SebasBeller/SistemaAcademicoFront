@@ -8,12 +8,10 @@ import { VerMaterialesComponent} from './paginas/ver-materiales/ver-materiales.c
 import {VerMateriasDocenteComponent} from './paginas/ver-materias-docente/ver-materias-docente.component'
 import {VerMaterialesEstudianteComponent} from './paginas/ver-materia-estudiante/home/feature/home.component'
 import { LayoutComponent } from './layout/layout.component';
-<<<<<<< HEAD
 import { HistorialAsistenciaComponent } from './paginas/historial-asistencia/historial-asistencia.component';
-=======
 import { ListaEstudiantesProfesorComponent } from './paginas/lista-estudiantes-profesor/lista-estudiantes-profesor.component';
-import {RegistroAsistenciaDocentesComponent} from "./paginas/registro-asistencia-docentes/registro-asistencia-docentes.component"
->>>>>>> 029e5ca97f9e28cf3947c7acc2344c7d82392b28
+
+
 
 export const routes: Routes = [
   {
@@ -28,13 +26,13 @@ export const routes: Routes = [
       { path: 'agregar-material-docente/:id', loadChildren: () => import('./paginas/agregar-material-docente/home/feature/home-routing') },
       { path: 'ver-materias-docente', component: VerMateriasDocenteComponent },
       { path: 'ver-materiales-estudiante/:id', component:VerMaterialesEstudianteComponent},
-<<<<<<< HEAD
+      { path: 'lista-estudiantes-profesor', component:ListaEstudiantesProfesorComponent},
+     
       { path: 'historial-asistencia', component:HistorialAsistenciaComponent}
     ]
-}
-=======
-      { path: 'lista-estudiantes-profesor', component:ListaEstudiantesProfesorComponent},
-        { path: 'ver-asistencias-estudiantes', component:RegistroAsistenciaDocentesComponent}
-      ]}
->>>>>>> 029e5ca97f9e28cf3947c7acc2344c7d82392b28
-];
+   }
+
+
+      ]
+
+
