@@ -1,4 +1,12 @@
+import {Estudiante} from './estudiante';
+import {MateriaAsignadaDocente} from './materia-asignada-docente';
 export interface Asistencia {
-    fecha: string;
+    id_asistencia?: number;
+    fecha_asistencia: Date;
     estado: string;
+    id_dicta: number;
+    id_estudiante: number;
+    
+    estudiante?: Estudiante;
+
   }

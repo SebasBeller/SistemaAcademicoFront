@@ -1,18 +1,18 @@
-<h2>Mis materias:</h2>
+<h2><b>Mis materias:</b></h2>
 <div class="materias-contenedor">
   <div *ngFor="let materia of materias" class="materia-card">
 
-
-    <button [routerLink]="['/detalle-materia', materia.titulo]" class="materia-nombre">{{materia.materia?.nombre}}</button>
+    <button [routerLink]="['/detalle-materia', materia.titulo]" class="materia-nombre"><b>{{materia.materia?.nombre}}</b></button>
 
     <img mat-card-image src="https://2.bp.blogspot.com/-DOXEGnjTVHs/V3MUqvgn_dI/AAAAAAAAADE/LEZCAP5mB-UE8S3FOs91mCeVu31KewVAQCLcB/s1600/lectura1-1030x953.jpg">
 
-    <div class="profesor-nombre">{{ materia.profesor?.nombre }}</div>
+    <div class="profesor-nombre"><b>{{ materia.profesor?.nombre }}</b></div>
 
-    <div class="Paralelo">paralelo:{{materia.materia?.paralelo?.paralelo}}</div>
+    <div class="Paralelo"><b>Paralelo: {{materia.materia?.paralelo?.paralelo}}</b></div>
+
 
     <div class="enlace-detalles">
-       <button mat-button [routerLink]="['/detalle-materia', materia.id_dicta]">Más detalles</button>
-    </div>
+      <button mat-button [routerLink]="['/detalle-materia', materia.id_dicta]"><b>Más detalles</b></button>
+   </div>
   </div>
 </div>
