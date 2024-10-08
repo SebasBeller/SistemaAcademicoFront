@@ -5,7 +5,7 @@ import Groq from 'groq-sdk';
   providedIn: 'root',
 })
 export class APIServiceIAService {
-  private groq: any;
+  private readonly groq: any;
   constructor() {
     this.groq = new Groq({
       apiKey: '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',

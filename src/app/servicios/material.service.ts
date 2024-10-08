@@ -9,7 +9,7 @@ import {map} from 'rxjs/operators';
 export class MaterialService {
   materiales:Material[]=[]
   urlApi:string='http://localhost:3000/material'
-  constructor(private http: HttpClient) { }
+  constructor(private readonly http: HttpClient) { }
   getMateriales():Material[]{
     return this.materiales;
   }
@@ -22,7 +22,7 @@ export class MaterialService {
   guardadMaterial(material:Material):Observable<number> {
     return this.http.post<Material>(`${this.urlApi}`, material)
     .pipe(
-      map((response: Material) => response.id_material || 1) 
+      map((response: Material) => response.id_material || 1)
     );
   }
 }

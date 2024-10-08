@@ -7,6 +7,7 @@ import { DetalleMateriaComponent } from './paginas/detalle-materia/detalle-mater
 import { VerMateriasDocenteComponent } from './paginas/ver-materias-docente/ver-materias-docente.component';
 import { VerMaterialesEstudianteComponent } from './paginas/ver-materia-estudiante/home/feature/home.component';
 import { LayoutComponent } from './layout/layout.component';
+import { HistorialAsistenciaComponent } from './paginas/historial-asistencia/historial-asistencia.component';
 import { VerAsistenciaPorMateriaComponent } from './ver-asistencia-por-materia/ver-asistencia-por-materia.component';
 import { ListaEstudiantesProfesorComponent } from './paginas/lista-estudiantes-profesor/lista-estudiantes-profesor.component';
 import { RegistroAsistenciaDocentesComponent } from './paginas/registro-asistencia-docentes/registro-asistencia-docentes.component';
@@ -38,12 +39,14 @@ export const routes: Routes = [
         component: VerMaterialesEstudianteComponent,
       },
       {
-        path: 'ver-asistencia-materia',
-        component: VerAsistenciaPorMateriaComponent,
-      },
-      {
         path: 'lista-estudiantes-profesor',
         component: ListaEstudiantesProfesorComponent,
+      },
+
+      { path: 'historial-asistencia', component: HistorialAsistenciaComponent },
+      {
+        path: 'ver-asistencia-materia',
+        component: VerAsistenciaPorMateriaComponent,
       },
       {
         path: 'registro-asistencias-estudiantes/:idMateria',

@@ -6,7 +6,8 @@ export interface Asistencia {
     estado: string;
     id_dicta: number;
     id_estudiante: number;
-    
+    materiaAsignada: any;
+    fecha: string;
     estudiante?: Estudiante;
 
   }
