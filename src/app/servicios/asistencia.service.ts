@@ -18,13 +18,13 @@ export class AsistenciaService {
   getAsistenciasDeMateriaAsignada(
     id?: number
   ): Observable<MateriaAsignadaDocente> {
-    return this.http.get<MateriaAsignadaDocente>(`${this.urlApi}/${155}`);
+    return this.http.get<MateriaAsignadaDocente>(`${this.urlApi}/${id}`);
   }
   
   getAsistenciasAgrupadasPor(asistencias?: any[],grupo?:string):any[]{
     return Object.entries(
       asistencias?.reduce((acc: any, asistencia: any) => {
-        const nombreEstudiante = asistencia.estudiante?.nombre || 'Desconocido';
+        const nombreEstudiante = asistencia.estudiante?.nombre || 'Mariana';
           (acc[nombreEstudiante] = acc[nombreEstudiante] || []).push(
             asistencia
           );

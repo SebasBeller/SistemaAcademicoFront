@@ -14,6 +14,7 @@ import {MatDatepickerInputEvent} from '@angular/material/datepicker';
 import {MatIconModule} from '@angular/material/icon';
 import {MatDividerModule} from '@angular/material/divider';
 import {MatButtonModule} from '@angular/material/button';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-registro-asistencia-docentes',
@@ -28,7 +29,7 @@ import {MatButtonModule} from '@angular/material/button';
     MatDatepickerModule,
     MatButtonModule,
     MatDividerModule,
-    MatIconModule
+    MatIconModule,
   ],
   providers: [provideNativeDateAdapter()],
   templateUrl: './registro-asistencia-docentes.component.html',
@@ -44,11 +45,14 @@ export class RegistroAsistenciaDocentesComponent implements OnInit {
   private readonly currentYear = new Date().getFullYear();
   readonly minDate = new Date(this.currentYear - 20, 0, 1);
   readonly maxDate = new Date(this.currentYear + 1, 11, 31);
-  constructor(){
+  route:ActivatedRoute=inject(ActivatedRoute)
+  idMateria!:number;
+  constructor() {
+    this.idMateria=this.route.snapshot.params['idMateria']
   }
 
   ngOnInit(): void {
-    this.servicioAsistencias.getAsistenciasDeMateriaAsignada().subscribe(
+    this.servicioAsistencias.getAsistenciasDeMateriaAsignada(this.idMateria).subscribe(
       (response: MateriaAsignadaDocente) => {
         console.log('Datos recibidos:', response);
         this.materiaAsignada = response; 

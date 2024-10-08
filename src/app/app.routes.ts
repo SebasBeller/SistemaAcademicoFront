@@ -46,7 +46,7 @@ export const routes: Routes = [
         component: ListaEstudiantesProfesorComponent,
       },
       {
-        path: 'registro-asistencias-estudiantes',
+        path: 'registro-asistencias-estudiantes/:idMateria',
         component: RegistroAsistenciaDocentesComponent,
       },
     ],
