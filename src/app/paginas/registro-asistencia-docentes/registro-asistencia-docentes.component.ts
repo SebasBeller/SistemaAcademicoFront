@@ -147,13 +147,39 @@ export class RegistroAsistenciaDocentesComponent implements OnInit {
     )
   }
 
-  
-  editarFecha() {
-    this.btnEditar = !this.btnEditar;
+  editarFecha(fecha:string) {
+    const nuevaFecha = prompt('Editar fecha ${fecha}', fecha);
+    if(nuevaFecha && nuevaFecha !== fecha){
+      const index = this.displayedColumns.indexOf(fecha);
+      if(index !== -1){
+        this.displayedColumns[index] = nuevaFecha;
+      }
+      for(let registro of this.asistencias){
+        const asistencia = registro.asistencias.find((a:any)=> a.fecha === fecha);
+        if(asistencia){
+          asistencia.fecha = nuevaFecha;
+        }
+      }
+    }
   }
 
-  eliminarFecha() {
-  }
 
+
+  eliminarFecha(fecha:string) {
+    const confirmacion = confirm(`Estas seguro de eliminar la fecha ${fecha}`);
+    if(confirmacion){
+      const index = this.displayedColumns.indexOf(fecha);
+      if(index !== -1){
+        this.displayedColumns.splice(index,1);
+      }
+
+      for(let registro of this.asistencias){
+        const asistenciaIndex = registro.asistencias.findIndex((a:any) =>a.fecha);
+        if (asistenciaIndex !== -1){
+          registro.asistencias.splice(asistenciaIndex, 1);
+        }
+      }
+    }
+  }
   
 }
