@@ -67,7 +67,5 @@ export class RegistroAsistenciaDocentesComponent {
         }
       }
     }
-  }
-
-  
+  }  
 }
