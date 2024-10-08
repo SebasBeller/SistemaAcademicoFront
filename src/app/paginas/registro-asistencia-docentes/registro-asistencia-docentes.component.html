@@ -34,8 +34,8 @@
   >
     <th mat-header-cell *matHeaderCellDef>
       {{ fecha }}
-      <button (click)="editarFecha()">🖉</button>
-      <button (click)="eliminarFecha()">🗑</button>
+      <button (click)="editarFecha(fecha)">🖉</button>
+      <button (click)="eliminarFecha(fecha)">🗑</button>
     </th>
     <td mat-cell *matCellDef="let element">
       <mat-select [value]="getEstadoAsistencia(element.asistencias, fecha)"
