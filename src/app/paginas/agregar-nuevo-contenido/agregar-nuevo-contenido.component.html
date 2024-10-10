@@ -4,7 +4,7 @@
   <div class="profesor-nombre"><b>Profesor: {{materiaAsiganda?.profesor?.nombre}}</b></div>
   <div class="Paralelo"><b>Paralelo: {{materiaAsiganda?.materia?.paralelo?.paralelo}}</b></div>
   <button class="asistencias-btn" [routerLink]="['/registro-asistencias-estudiantes', this.id_dicta]" ><b>Asistencias</b></button>
-  <button class="asistencias-btn" [routerLink]="['/lista-estudiantes-profesor']">
+  <button class="asistencias-btn" [routerLink]="['/lista-estudiantes-profesor',this.id_dicta]">
     <b>Estudiantes</b>
   </button>
   

@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit ,inject} from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { EstudiantesMateria } from '../../interfaces/Lista-estudiantes-materia';
-import { EstudiantesService } from '../../servicios/estudiantes-materia.service';
-
+import {MateriasProfesorService} from '../../servicios/materias-profesor.service'
+import {Estudiante} from'../../interfaces/estudiante'
+import { ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'app-lista-estudiantes-profesor',
   standalone: true,
@@ -11,15 +11,25 @@ import { EstudiantesService } from '../../servicios/estudiantes-materia.service'
   styleUrl: './lista-estudiantes-profesor.component.sass'
 })
 export class ListaEstudiantesProfesorComponent implements OnInit {
-  estudiantes: EstudiantesMateria[] = [];
+  estudiantes: Estudiante[] = [];
+  route:ActivatedRoute=inject(ActivatedRoute);
+  id_dicta!:number;
 
-  constructor(private estudiantesService: EstudiantesService) {}
-
-  ngOnInit() {
-    this.estudiantesService.obtenerEstudiantes().subscribe(data => {
-        this.estudiantes = data.filter((estudiante: any) => estudiante.nombre);
-        console.log(this.estudiantes);
-    });
+  constructor(private materiaAsignadaService: MateriasProfesorService) {
+    this.id_dicta=this.route.snapshot.params["id_dicta"]
   }
 
+  ngOnInit() {
+    // this.estudiantesService.obtenerEstudiantes().subscribe(data => {
+    //     this.estudiantes = data.filter((estudiante: any) => estudiante.nombre);
+    //     console.log(this.estudiantes);
+    // });
+    this.materiaAsignadaService.obtenerEstudiantesMateriaAsignada(this.id_dicta).subscribe(
+      data => {
+            this.estudiantes = data;
+            console.log(data);
+      }
+    );
+
+}
 }
