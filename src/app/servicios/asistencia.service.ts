@@ -70,4 +70,9 @@ export class AsistenciaService {
   actualizarAsistencia(id:number,asistencia:any):Observable<Asistencia>{
     return this.http.patch<Asistencia>(`http://localhost:3000/asistencia/${id}`, asistencia)
   }
+   // Método para obtener asistencias por estudiante y materia
+   getAsistenciasPorEstudianteYMateria(idEstudiante: number, idMateria: number): Observable<Asistencia[]> {
+    const url = `${this.urlApi}/estudiante/${idEstudiante}/materia/${idMateria}`;
+    return this.http.get<Asistencia[]>(url);
+  }
 }
