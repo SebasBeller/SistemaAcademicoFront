@@ -5,6 +5,7 @@ import { Asistencia } from '../interfaces/asistencia';
 import { Profesor } from '../interfaces/profesor';
 import { Materia } from '../interfaces/materia';
 import { MateriaAsignadaDocente } from '../interfaces/materia-asignada-docente';
+import { map } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -31,5 +32,16 @@ export class HistorialAsistenciaService {
 
   obtenerMaterias(): Observable<Materia[]> {
     return this.http.get<Materia[]>(this.materiasUrl);
+  }
+   // Obtener las asistencias filtradas por id_estudiante y id_dicta
+   obtenerAsistenciasPorEstudianteYMateria(id_estudiante: number, id_dicta: number): Observable<Asistencia[]> {
+    return this.http.get<Asistencia[]>(`${this.asistenciaUrl}/asistencias`).pipe(
+      map(asistencias =>
+        asistencias.filter(asistencia =>
+          asistencia.estudiante?.id_estudiante === id_estudiante &&
+          asistencia.materiaAsignada.id_dicta === id_dicta
+        )
+      )
+    );
   }
 }

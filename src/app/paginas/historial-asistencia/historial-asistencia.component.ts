@@ -23,6 +23,7 @@ export class HistorialAsistenciaComponent implements OnInit {
   selectedProfesorId: number | null = null;
   selectedParalelo: string | null = null;
 tipoFiltro: any;
+idEstudiante: any|string;
 
   constructor(private readonly historialAsistenciaService: HistorialAsistenciaService) {}
 
