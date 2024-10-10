@@ -110,8 +110,12 @@ export class RegistroAsistenciaDocentesComponent implements OnInit {
     this.servicioAsistencias.guardarAsistencias(asistencias).subscribe(
       (response: Asistencia[]) => {
         this.materiaAsignada.asistencias = this.materiaAsignada.asistencias || [];
+        this.materiaAsignada.asistencias=this.materiaAsignada.asistencias.concat(response);
+        console.log(this.materiaAsignada.asistencias)
+        console.log(response)
         this.materiaAsignada.asistencias=[...response,...this.materiaAsignada.asistencias]
         this.asistencias =this.servicioAsistencias.getAsistenciasAgrupadasPorEstudiante(this.materiaAsignada.asistencias, "Asistencia") ;
+        this.filteredAsistencias=this.asistencias;
       },
       error => {
         console.error('Error en la petición POST:', error);
@@ -122,7 +126,9 @@ export class RegistroAsistenciaDocentesComponent implements OnInit {
 
   
   actualizarAsistencia(asistencias:Asistencia[], fecha:string,event:any){
-    console.log(this.cambiosAsistencias)
+    console.log("gg",this.cambiosAsistencias)
+    console.log("gg",asistencias)
+
     let asistencia=asistencias.find(
       (a) =>   new Date(a.fecha_asistencia+"T00:00:00").toLocaleDateString() === fecha
     ) || asistencias.find(

@@ -110,9 +110,9 @@ tipoFiltro: any;
     let faltas = 0;
     let asistencias = 0;
     let licencias = 0;
-
+    // console.log(this.asistencias)
     this.asistencias.forEach(asistencia => {
-      if (asistencia.materiaAsignada.id_dicta === materia.id_dicta) {
+      if (asistencia.materiaAsignada.id_dicta === materia.id_dicta && asistencia.estudiante?.id_estudiante==5) {
         switch (asistencia.estado) {
           case 'Falta':
             faltas++;

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { DataService } from './data.service';
 import { CommonModule } from '@angular/common';
+import { EstudiantesMateria } from '../../interfaces/Lista-estudiantes-materia';
+import { EstudiantesService } from '../../servicios/estudiantes-materia.service';
 
 @Component({
   selector: 'app-lista-estudiantes-profesor',
@@ -10,11 +11,15 @@ import { CommonModule } from '@angular/common';
   styleUrl: './lista-estudiantes-profesor.component.sass'
 })
 export class ListaEstudiantesProfesorComponent implements OnInit {
-  estudiantes: any[] = [];
+  estudiantes: EstudiantesMateria[] = [];
 
-  constructor(private dataService: DataService) {}
+  constructor(private estudiantesService: EstudiantesService) {}
 
   ngOnInit() {
-    this.estudiantes = this.dataService.getListstudentsData();
+    this.estudiantesService.obtenerEstudiantes().subscribe(data => {
+        this.estudiantes = data.filter((estudiante: any) => estudiante.nombre);
+        console.log(this.estudiantes);
+    });
   }
+
 }
