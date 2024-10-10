@@ -36,7 +36,7 @@
 
       <!-- Mostrar los totales de asistencias, faltas y permisos -->
       <p><strong>Total de clases:</strong> {{calcularTotalClases(materia).asistencias + calcularTotalClases(materia).faltas + calcularTotalClases(materia).licencias}}</p>
-      <p><strong><a routerLink="#" class="blue-link">DETALLE</a></strong></p>
+      <button mat-button [routerLink]="['/ver-asistencia-por-materia', materia.id_dicta]" class="blue-link"><b>Más detalles</b></button>
       
     </div>
   </div>
