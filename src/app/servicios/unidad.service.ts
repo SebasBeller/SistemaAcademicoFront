@@ -15,7 +15,7 @@ export class UnidadService {
   guardarUnidadDeMateriAsignada(unidad:Unidad):Observable<number> {
     return this.http.post<Unidad>(`${this.apiUrl}`, unidad)
     .pipe(
-      map((response: Unidad) => response.id_unidad || 1) // Supón que `response.id` es el número que deseas devolver
+      map((response: Unidad) => response.id_unidad || 1) 
     );
   }
 }

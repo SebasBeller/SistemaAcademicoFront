@@ -15,6 +15,7 @@ import { RouterModule } from '@angular/router';
   standalone: true,
   imports: [CommonModule, NavbarComponent, FormsModule,RouterModule],
   templateUrl: './home.component.html',
+  styleUrl: './home.component.sass'
 })
 export class VerMaterialesEstudianteComponent implements OnInit{
   progress = signal('0%');
@@ -34,7 +35,8 @@ export class VerMaterialesEstudianteComponent implements OnInit{
   id_unidad?:number;
   route:ActivatedRoute=inject(ActivatedRoute) 
   constructor() {
-    this.id_unidad=91
+    this.id_unidad=this.route.snapshot.params['id']
+    // this.id_unidad=91
   }
   ngOnInit(): void {
     this.servicioMateriales.getMaterialesDeUnidad(this.id_unidad).subscribe(

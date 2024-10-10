@@ -1,18 +1,29 @@
+
+<h2>Mis materias:</h2>
+
+<!-- Casilla de búsqueda -->
+<div class="search-box">
+  <input
+    type="text"
+    [(ngModel)]="searchTerm"
+    placeholder="Buscar materia..."
+    class="search-input"
+  />
+</div>
+
 <div class="materias-contenedor">
-  <div *ngFor="let materia of materias" class="materia-card">
+  <div *ngFor="let materia of filteredMaterias" class="materia-card">
+    <button [routerLink]="['/detalle-materia', materia.titulo]" class="materia-nombre">{{materia.materia?.nombre}}</button>
 
-    <button [routerLink]="['/detalle-materia', materia.titulo]" class="materia-nombre"><b>{{ materia.titulo }}</b></button>
+    <img mat-card-image src="https://2.bp.blogspot.com/-DOXEGnjTVHs/V3MUqvgn_dI/AAAAAAAAADE/LEZCAP5mB-UE8S3FOs91mCeVu31KewVAQCLcB/s1600/lectura1-1030x953.jpg" alt="Photo of a Shiba Inu">
 
+    <div class="profesor-nombre"><b>{{ materia.profesor?.nombre }}</b></div>
 
-    <img [src]="materia.imagen" alt="Imagen de la materia">
-
-
-    <div class="profesor-nombre"><b>{{ materia.profesor }}</b></div>
-    <div class="Paralelo"><b>{{ materia.paralelo }}</b></div>
+    <div class="Paralelo"><b>Paralelo: {{materia.materia?.paralelo?.paralelo}}</b></div>
 
 
     <div class="enlace-detalles">
-      <a [routerLink]="['/detalle-materia', materia.titulo]"><b>Ver más detalle</b></a>
-    </div>
+      <button mat-button [routerLink]="['/detalle-materia', materia.id_dicta]"><b>Más detalles</b></button>
+   </div>
   </div>
 </div>

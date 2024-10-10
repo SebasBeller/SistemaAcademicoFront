@@ -5,7 +5,7 @@ import Groq from 'groq-sdk';
   providedIn: 'root',
 })
 export class APIServiceIAService {
-  private groq: any;
+  private readonly groq: any;
   constructor() {
     this.groq = new Groq({
       apiKey: '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',
@@ -32,8 +32,8 @@ export class APIServiceIAService {
       messages:messages,
       // model: 'llama3-groq-8b-8192-tool-use-preview',
 
-      // model: 'llama-3.1-70b-versatile',
-      model: 'llama-3.1-8b-instant',
+      model: 'llama-3.1-70b-versatile',
+      // model: 'llama-3.1-8b-instant',
     });
     const htmlResponse = response.choices[0].message.content;
     console.log('API Response:', htmlResponse);

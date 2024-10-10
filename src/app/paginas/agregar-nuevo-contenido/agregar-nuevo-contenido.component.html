@@ -1,17 +1,24 @@
-<h1>{{materiaAsiganda?.materia?.nombre}}</h1>
-<p>Area: Ciencias</p>
-<p>Paralelo: {{materiaAsiganda?.materia?.paralelo?.paralelo}}</p>
-<button class="add-content-btn" (click)="addNewModule()" >Agregar Nuevo Contenido</button>
-
-<div class="container" id="content-container"  >
+<div class="titulo">
+  <h1><b>{{materiaAsiganda?.materia?.nombre}}</b></h1>
+  <div class="area-materias"><b>Área: Ciencias</b></div>
+  <div class="profesor-nombre"><b>Profesor: {{materiaAsiganda?.profesor?.nombre}}</b></div>
+  <div class="Paralelo"><b>Paralelo: {{materiaAsiganda?.materia?.paralelo?.paralelo}}</b></div>
+  <button class="asistencias-btn" [routerLink]="['/registro-asistencias-estudiantes', this.id_dicta]" ><b>Asistencias</b></button>
+  
+</div>
+<div class="titulo-contenido">
+  <h2><b>Primer Trimestre</b></h2>
+  <button class="add-content-btn" (click)="addNewModule()" ><b>Agregar Nuevo Contenido</b></button>
+</div>
+<div class="contenido-materia-detalle">
   <div *ngFor="let card of this. unidades" class="card-wrapper">
-    <div class="card"  (click)="dirigirAContenido(card.id_unidad)">
-      <img [src]="card.imagen_url" alt="Module Image" width="100" />
+    <div (click)="dirigirAContenido(card.id_unidad)">
+      <img [src]="card.imagen_url" alt="Module Image"/>
     </div>
-    <strong>{{ card.nombre }}</strong>
+    <b>{{ card.nombre }}</b>
     <div class="button-group">
-      <button (click)="editCard(card.id_unidad)">Editar</button>
-      <button (click)="deleteCard(card.id_unidad)">Eliminar</button>
+      <button (click)="editCard(card.id_unidad)"><b>Editar</b></button>
+      <button (click)="deleteCard(card.id_unidad)"><b>Eliminar</b></button>
     </div>
   </div>
 </div>
