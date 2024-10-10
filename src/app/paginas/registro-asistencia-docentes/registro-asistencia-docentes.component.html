@@ -13,6 +13,12 @@
     margin: 2%;
   }
 </style>
+
+<mat-form-field class="example-full-width">
+  <mat-label>Buscar Estudiante</mat-label>
+  <input matInput placeholder="Nombre" (input)="filtrarEstudiantes($event)" />
+</mat-form-field>
+
 <mat-form-field class="example-full-width">
   <mat-label>Agregar Fecha</mat-label>
   <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="picker" 
@@ -22,16 +28,14 @@
   <mat-datepicker #picker></mat-datepicker>
 </mat-form-field>
 
-<table mat-table [dataSource]="asistencias" class="mat-elevation-z8">
+
+<table mat-table [dataSource]="filteredAsistencias" class="mat-elevation-z8">
   <ng-container matColumnDef="nombre">
     <th mat-header-cell *matHeaderCellDef>Nombre</th>
     <td mat-cell *matCellDef="let element">{{ element.nombre }}</td>
   </ng-container>
 
-  <ng-container
-    *ngFor="let fecha of displayedColumns.slice(1)"
-    [matColumnDef]="fecha"
-  >
+  <ng-container *ngFor="let fecha of displayedColumns.slice(1)" [matColumnDef]="fecha">
     <th mat-header-cell *matHeaderCellDef>
       {{ fecha }}
       <button (click)="editarFecha(fecha)">🖉</button>
@@ -39,8 +43,8 @@
     </th>
     <td mat-cell *matCellDef="let element">
       <mat-select [value]="getEstadoAsistencia(element.asistencias, fecha)"
-      (selectionChange)="actualizarAsistencia(element.asistencias,fecha, $event)">
-        <mat-option  value="Presente">Presente</mat-option>
+      (selectionChange)="actualizarAsistencia(element.asistencias, fecha, $event)">
+        <mat-option value="Presente">Presente</mat-option>
         <mat-option value="Falta">Falta</mat-option>
         <mat-option value="Justificado">Justificado</mat-option>
       </mat-select>
