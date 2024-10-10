@@ -40,6 +40,8 @@ export class RegistroAsistenciaDocentesComponent implements OnInit {
   servicioAsistencias:AsistenciaService=inject(AsistenciaService);
   materiaAsignada!:MateriaAsignadaDocente;
   asistencias: any[]=[];
+  filteredAsistencias: any[] = []; // Lista de asistencias filtradas
+
   displayedColumns: string[]=[] ;
   cambiosAsistencias: any[]=[];
   private readonly currentYear = new Date().getFullYear();
@@ -63,6 +65,8 @@ export class RegistroAsistenciaDocentesComponent implements OnInit {
           ? this.servicioAsistencias.getAsistenciasAgrupadasPorEstudiante(this.materiaAsignada.inscripciones, "Inscripción")
           : this.servicioAsistencias.getAsistenciasAgrupadasPorEstudiante(this.materiaAsignada.asistencias, "Asistencia")
         );
+        this.filteredAsistencias = this.asistencias; // Inicializar filteredAsistencias con la lista completa
+
         let fechas:string[]= [...this.servicioAsistencias.getUniqueFechas()];
         if (fechas.includes("Invalid Date")) {
           this.displayedColumns= ['nombre']
@@ -77,7 +81,7 @@ export class RegistroAsistenciaDocentesComponent implements OnInit {
     )
   }
 
- 
+
   getEstadoAsistencia(asistencias: Asistencia[], fecha: string): string {
 
     return this.servicioAsistencias.getEstadoAsistencia(asistencias, fecha);
@@ -106,8 +110,12 @@ export class RegistroAsistenciaDocentesComponent implements OnInit {
     this.servicioAsistencias.guardarAsistencias(asistencias).subscribe(
       (response: Asistencia[]) => {
         this.materiaAsignada.asistencias = this.materiaAsignada.asistencias || [];
+        this.materiaAsignada.asistencias=this.materiaAsignada.asistencias.concat(response);
+        console.log(this.materiaAsignada.asistencias)
+        console.log(response)
         this.materiaAsignada.asistencias=[...response,...this.materiaAsignada.asistencias]
         this.asistencias =this.servicioAsistencias.getAsistenciasAgrupadasPorEstudiante(this.materiaAsignada.asistencias, "Asistencia") ;
+        this.filteredAsistencias=this.asistencias;
       },
       error => {
         console.error('Error en la petición POST:', error);
@@ -118,7 +126,9 @@ export class RegistroAsistenciaDocentesComponent implements OnInit {
 
   
   actualizarAsistencia(asistencias:Asistencia[], fecha:string,event:any){
-    console.log(this.cambiosAsistencias)
+    console.log("gg",this.cambiosAsistencias)
+    console.log("gg",asistencias)
+
     let asistencia=asistencias.find(
       (a) =>   new Date(a.fecha_asistencia+"T00:00:00").toLocaleDateString() === fecha
     ) || asistencias.find(
@@ -147,39 +157,58 @@ export class RegistroAsistenciaDocentesComponent implements OnInit {
     )
   }
 
-  editarFecha(fecha:string) {
-    const nuevaFecha = prompt('Editar fecha ${fecha}', fecha);
-    if(nuevaFecha && nuevaFecha !== fecha){
+  
+  editarFecha(fecha: string) {
+    const nuevaFecha = prompt(`Editar fecha ${fecha}`, fecha);
+    if (nuevaFecha && nuevaFecha !== fecha) {
       const index = this.displayedColumns.indexOf(fecha);
-      if(index !== -1){
+      if (index !== -1) {
         this.displayedColumns[index] = nuevaFecha;
       }
-      for(let registro of this.asistencias){
-        const asistencia = registro.asistencias.find((a:any)=> a.fecha === fecha);
-        if(asistencia){
-          asistencia.fecha = nuevaFecha;
+
+      for (let registro of this.asistencias) {
+        const asistencia = registro.asistencias.find((a: Asistencia) => 
+          new Date(a.fecha_asistencia).toLocaleDateString() === new Date(fecha).toLocaleDateString()
+        );
+
+        if (asistencia) {
+          asistencia.fecha_asistencia = nuevaFecha;
         }
       }
     }
   }
 
 
-
-  eliminarFecha(fecha:string) {
-    const confirmacion = confirm(`Estas seguro de eliminar la fecha ${fecha}`);
-    if(confirmacion){
+  eliminarFecha(fecha: string) {
+    const confirmacion = confirm(`¿Estás seguro de eliminar la fecha ${fecha}?`);
+    if (confirmacion) {
       const index = this.displayedColumns.indexOf(fecha);
-      if(index !== -1){
-        this.displayedColumns.splice(index,1);
+      if (index !== -1) {
+        this.displayedColumns.splice(index, 1);
       }
-
-      for(let registro of this.asistencias){
-        const asistenciaIndex = registro.asistencias.findIndex((a:any) =>a.fecha);
-        if (asistenciaIndex !== -1){
+  
+      for (let registro of this.asistencias) {
+        const asistenciaIndex = registro.asistencias.findIndex((a: Asistencia) => 
+          new Date(a.fecha_asistencia).toLocaleDateString() === new Date(fecha).toLocaleDateString()
+        );
+        if (asistenciaIndex !== -1) {
           registro.asistencias.splice(asistenciaIndex, 1);
         }
       }
     }
   }
   
+
+  // Añade la función de filtrado
+  filtrarEstudiantes(event: Event) {
+    const input = (event.target as HTMLInputElement).value.toLowerCase();
+    this.filteredAsistencias = this.asistencias.filter((asistencia) => 
+      asistencia.nombre.toLowerCase().includes(input)
+    );
+  }
+
+  // Actualiza el dataSource en la tabla para usar asistenciasFiltradas
+  get dataSource() {
+    return this.filteredAsistencias;
+  }
 }

@@ -7,6 +7,7 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 
+
 @Component({
   selector: 'app-historial-asistencia',
   standalone: true,
@@ -22,7 +23,10 @@ export class HistorialAsistenciaComponent implements OnInit {
   materiasFiltradas: MateriaAsignadaDocente[] = [];
   selectedProfesorId: number | null = null;
   selectedParalelo: string | null = null;
-tipoFiltro: any;
+  tipoFiltro: any;
+  idMateria:string | undefined;
+  router: any;
+
 
   constructor(private readonly historialAsistenciaService: HistorialAsistenciaService) {}
 
@@ -32,6 +36,10 @@ tipoFiltro: any;
     this.obtenerMateriasAsignadas();
     // Si necesitas obtener materias, implementa el método obtenerMaterias
     // this.obtenerMaterias();
+
+  }
+  verAsistenciaMateria(idMateria:number): void {
+    this.router.navigate(['/asistencia-materia', idMateria.toString()]);
   }
 
   obtenerAsistencias(): void {
@@ -110,9 +118,10 @@ tipoFiltro: any;
     let faltas = 0;
     let asistencias = 0;
     let licencias = 0;
-
+    // console.log(this.asistencias)
     this.asistencias.forEach(asistencia => {
-      if (asistencia.materiaAsignada.id_dicta === materia.id_dicta) {
+      // if (asistencia.materiaAsignada.id_dicta === materia.id_dicta && asistencia.estudiante?.id_estudiante==5) {
+      if (asistencia.materiaAsignada.id_dicta === materia.id_dicta ) {
         switch (asistencia.estado) {
           case 'Falta':
             faltas++;

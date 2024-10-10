@@ -1,42 +1,31 @@
-<div class="buscador">
-  <!-- Input para escribir el término de búsqueda -->
-  <input
-    type="text"
-    class="text-input"
-    placeholder="Escribe tu búsqueda..."
-    [(ngModel)]="busqueda"
-    (ngModelChange)="filtrarMaterias()"
-  />
+<h2><b>Mis Asistencias:</b></h2>
 
-  <!-- Combo box para seleccionar el tipo de filtro -->
+<div class="buscador">
+  <input type="text" class="text-input" placeholder="Escribe tu búsqueda..." [(ngModel)]="busqueda"
+    (ngModelChange)="filtrarMaterias()" />
+
   <select [(ngModel)]="tipoFiltro" (change)="filtrarMaterias()" class="text-input">
     <option value="materia">Materia</option>
     <option value="docente">Docente</option>
     <option value="paralelo">Paralelo</option>
   </select>
-
-
 </div>
 
-<div *ngIf="materiasFiltradas.length === 0">
-  <p>No se encontraron materias que coincidan con los criterios de búsqueda.</p>
-</div>
+<div class="materias-contenedor">
+  <div *ngFor="let materia of materiasFiltradas" class="materia-card">
+    <img
+      src="https://2.bp.blogspot.com/-DOXEGnjTVHs/V3MUqvgn_dI/AAAAAAAAADE/LEZCAP5mB-UE8S3FOs91mCeVu31KewVAQCLcB/s1600/lectura1-1030x953.jpg"
+      alt="{{materia.titulo}}" />
+    <h2><b>{{materia.materia?.nombre}}</b></h2>
+    <p><b>Profesor: {{materia.profesor?.nombre}}</b></p>
+    <p><b>Paralelo:1°A</b></p>
+    <p><b>Faltas:{{calcularTotalClases(materia).faltas}}</b></p>
+    <p><b>Asistencias: {{calcularTotalClases(materia).asistencias}}</b></p>
+    <p><b>Licencias: {{calcularTotalClases(materia).licencias}}</b></p>
+    <p><b>Total de clases: {{calcularTotalClases(materia).asistencias + calcularTotalClases(materia).faltas +
+        calcularTotalClases(materia).licencias}}</b></p>
 
-<!-- Lista de materias filtradas -->
-<div class="materias-container">
-  <div *ngFor="let materia of materiasFiltradas" class="materia-detalle">
-    <img src="https://2.bp.blogspot.com/-DOXEGnjTVHs/V3MUqvgn_dI/AAAAAAAAADE/LEZCAP5mB-UE8S3FOs91mCeVu31KewVAQCLcB/s1600/lectura1-1030x953.jpg" alt="{{materia.titulo}}" />
-    <div>
-      <h2>{{materia.materia?.nombre}}</h2>
-      <p><strong>Profesor:</strong> {{materia.profesor?.nombre}}</p>
-      <p><strong>Paralelo:</strong> {{materia.paralelo?.paralelo}}</p>
-      <p><strong>Faltas:</strong> {{calcularTotalClases(materia).faltas}}</p>
-      <p><strong>Asistencias:</strong> {{calcularTotalClases(materia).asistencias}}</p>
-      <p><strong>Licencias:</strong> {{calcularTotalClases(materia).licencias}}</p>
-
-      <!-- Mostrar los totales de asistencias, faltas y permisos -->
-      <p><strong>Total de clases:</strong> {{calcularTotalClases(materia).asistencias + calcularTotalClases(materia).faltas + calcularTotalClases(materia).licencias}}</p>
-      <p><strong><a routerLink="#" class="blue-link">DETALLE</a></strong></p>
-    </div>
+    <button mat-button [routerLink]="['/ver-asistencia-por-materia', materia.id_dicta]"><b>Más
+        detalles</b></button>
   </div>
 </div>

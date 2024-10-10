@@ -29,13 +29,13 @@ export class VerAsistenciaPorMateriaComponent {
   getImageForStatus(status: string) {
     switch (status) {
       case 'present':
-        return 'https://cdn-icons-png.flaticon.com/512/13725/13725918.png'; 
+        return 'https://cdn-icons-png.flaticon.com/512/13725/13725918.png';
       case 'absent':
-        return 'https://cdn-icons-png.flaticon.com/512/3999/3999575.png'; 
+        return 'https://cdn-icons-png.flaticon.com/512/3999/3999575.png';
       case 'none':
         return 'https://cdn-icons-png.freepik.com/256/9313/9313256.png';
       default:
-        return ''; 
+        return '';
     }
   }
 }
