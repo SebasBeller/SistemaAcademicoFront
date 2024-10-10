@@ -120,8 +120,8 @@ export class HistorialAsistenciaComponent implements OnInit {
     let licencias = 0;
     // console.log(this.asistencias)
     this.asistencias.forEach(asistencia => {
-      // if (asistencia.materiaAsignada.id_dicta === materia.id_dicta && asistencia.estudiante?.id_estudiante==5) {
-      if (asistencia.materiaAsignada.id_dicta === materia.id_dicta ) {
+      if (asistencia.materiaAsignada.id_dicta === materia.id_dicta && asistencia.estudiante?.id_estudiante==5) {
+      // if (asistencia.materiaAsignada.id_dicta === materia.id_dicta ) {
         switch (asistencia.estado) {
           case 'Falta':
             faltas++;

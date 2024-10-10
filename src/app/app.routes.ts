@@ -47,7 +47,7 @@ export const routes: Routes = [
       { path: 'historial-asistencia', component: HistorialAsistenciaComponent },
       {
 
-        path: 'ver-asistencia-materia/:idMateria',
+        path: 'ver-asistencia-por-materia/:idMateria',
 
         component: VerAsistenciaPorMateriaComponent,
       },

@@ -1,16 +1,11 @@
-
-.materias-container
-  display: flex
-  flex-wrap: wrap
-  gap: 20px
-  justify-content: flex-start
+h2
+  color: rgb(109,132,180)
+  margin-left: 55px
 
 .buscador
   width: 80%
   margin: 0 auto
 
-.blue-link
- color: blue
 
 .text-input
  width: 20%
@@ -18,31 +13,50 @@
  border-radius: 5px
  background-color: #f7fafd
 
-.materia-detalle
-  display: flex
-  flex-direction: column
-  align-items: center
+.materias-contenedor
+  margin-top: 15px
+  margin-top: 15px
+  display: grid
+  grid-template-columns: repeat(3, 1fr)
+  gap: 40px
+
+  .materia-card
+    border: 3px solid #000000
+    padding: 20px
+    width: 350px
+    height: 600px
+    border-radius: 10px
+    text-align: center
+    margin-left: 55px
+    margin-left: 55px
+    background-color: rgb(216,223,234)
+    font-size: 16px
+    color: rgb(109,132,180)
+
+    h2
+      margin-top: 10px
+      margin-left: 20px
+    img
+      margin-top: 10px
+      width: 300px
+      width: 300px
+      height: auto
+
+    p
+      margin-top: 10px
+
+    button:hover
+      color: rgb(0,0,0)
+
+      
+.search-input
+  width: 100%
+  padding: 10px
+  margin-bottom: 20px
   border: 1px solid #ccc
-  padding: 20px
-  border-radius: 8px
-  width: 200px
+  border-radius: 4px
 
-
-
-.materia-detalle img
-  width: 100px
-  height: 100px
-  object-fit: cover
-  margin-bottom: 15px
-
-
-
-.materia-detalle h2
-  margin: 0
-  font-size: 18px
-
-
-.materia-detalle p
-  margin: 5px 0
-  font-size: 14px
+.search-box
+  width: 50%
+  margin: 0 auto
 
