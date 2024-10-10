@@ -1,15 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { HistorialAsistenciaService } from '../../servicios/historial-asistencia.service';
-import { Asistencia } from '../../interfaces/asistencia';
-import { Profesor } from '../../interfaces/profesor';
-import { MateriaAsignadaDocente } from '../../interfaces/materia-asignada-docente';
-import { FormsModule } from '@angular/forms';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterLink } from '@angular/router';
 
 interface Day {
   day: number;
-  status: 'Presente' | 'Justificado' | 'Falta';
+  status: 'present' | 'absent' | 'none';
 }
 
 @Component({
@@ -20,44 +14,28 @@ interface Day {
   styleUrls: ['./ver-asistencia-por-materia.component.sass']
 })
 export class VerAsistenciaPorMateriaComponent {
-  asistencias: Asistencia[] = [];
-  profesores: Profesor[] = [];
-  materiasAsignadas: MateriaAsignadaDocente[] = [];
-  busqueda: string = '';
-  materiasFiltradas: MateriaAsignadaDocente[] = [];
-  selectedProfesorId: number | null = null;
-  selectedParalelo: string | null = null;
-  tipoFiltro: any;
-  idMateria:string | undefined;
-  router: any;
+  professor = 'Juan Perez';
+  parallel = '1°A';
+  month = 'Septiembre';
 
-  constructor(private readonly historialAsistenciaService: HistorialAsistenciaService) {}
+  days: Day[] = [
+    { day: 1, status: 'present' }, { day: 3, status: 'absent' }, { day: 5, status: 'present' },
+    { day: 8, status: 'present' }, { day: 10, status: 'present' }, { day: 12, status: 'present' },
+    { day: 14, status: 'none' }, { day: 17, status: 'absent' }, { day: 19, status: 'present' },
+    { day: 21, status: 'none' }, { day: 24, status: 'present' }, { day: 26, status: 'present' },
+    { day: 28, status: 'present' },
+  ];
 
-  calcularTotalClases(materia: MateriaAsignadaDocente): { faltas: number, asistencias: number, licencias: number } {
-    let faltas = 0;
-    let asistencias = 0;
-    let licencias = 0;
-
-    this.asistencias.forEach(asistencia => {
-      if (asistencia.materiaAsignada.id_dicta === materia.id_dicta) {
-        switch (asistencia.estado) {
-          case 'Falta':
-            https://cdn-icons-png.freepik.com/256/9313/9313256.png
-            faltas++;
-
-            break;
-          case 'Presente':
-            https://cdn-icons-png.flaticon.com/512/13725/13725918.png
-            asistencias++;
-            break;
-          case 'Justificado':
-            https://cdn-icons-png.flaticon.com/512/3999/3999575.png
-            licencias++;
-            break;
-        }
-      }
-    });
-
-    return { faltas, asistencias, licencias };
+  getImageForStatus(status: string) {
+    switch (status) {
+      case 'present':
+        return 'https://cdn-icons-png.flaticon.com/512/13725/13725918.png';
+      case 'absent':
+        return 'https://cdn-icons-png.flaticon.com/512/3999/3999575.png';
+      case 'none':
+        return 'https://cdn-icons-png.freepik.com/256/9313/9313256.png';
+      default:
+        return '';
+    }
   }
 }
