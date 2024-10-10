@@ -7,6 +7,7 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 
+
 @Component({
   selector: 'app-historial-asistencia',
   standalone: true,
@@ -22,7 +23,10 @@ export class HistorialAsistenciaComponent implements OnInit {
   materiasFiltradas: MateriaAsignadaDocente[] = [];
   selectedProfesorId: number | null = null;
   selectedParalelo: string | null = null;
-tipoFiltro: any;
+  tipoFiltro: any;
+  idMateria:string | undefined;
+  router: any;
+
 
   constructor(private readonly historialAsistenciaService: HistorialAsistenciaService) {}
 
@@ -32,6 +36,10 @@ tipoFiltro: any;
     this.obtenerMateriasAsignadas();
     // Si necesitas obtener materias, implementa el método obtenerMaterias
     // this.obtenerMaterias();
+
+  }
+  verAsistenciaMateria(idMateria:number): void {
+    this.router.navigate(['/asistencia-materia', idMateria.toString()]);
   }
 
   obtenerAsistencias(): void {
