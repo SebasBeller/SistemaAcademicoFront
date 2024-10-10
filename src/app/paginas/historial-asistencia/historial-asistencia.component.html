@@ -13,7 +13,7 @@
 
 <div class="materias-contenedor">
   <div *ngFor="let materia of materiasFiltradas" class="materia-card">
-    <img
+    <!-- <img
       src="https://2.bp.blogspot.com/-DOXEGnjTVHs/V3MUqvgn_dI/AAAAAAAAADE/LEZCAP5mB-UE8S3FOs91mCeVu31KewVAQCLcB/s1600/lectura1-1030x953.jpg"
       alt="{{materia.titulo}}" />
     <h2><b>{{materia.materia?.nombre}}</b></h2>
@@ -23,9 +23,24 @@
     <p><b>Asistencias: {{calcularTotalClases(materia).asistencias}}</b></p>
     <p><b>Licencias: {{calcularTotalClases(materia).licencias}}</b></p>
     <p><b>Total de clases: {{calcularTotalClases(materia).asistencias + calcularTotalClases(materia).faltas +
-        calcularTotalClases(materia).licencias}}</b></p>
+        calcularTotalClases(materia).licencias}}</b></p> -->
 
-    <button mat-button [routerLink]="['/ver-asistencia-por-materia', materia.id_dicta]"><b>Más
-        detalles</b></button>
+<!-- Lista de materias filtradas -->
+<!-- <div class="materias-container"> -->
+  <!-- <div *ngFor="let materia of materiasFiltradas" class="materia-detalle"> -->
+    <img src="https://2.bp.blogspot.com/-DOXEGnjTVHs/V3MUqvgn_dI/AAAAAAAAADE/LEZCAP5mB-UE8S3FOs91mCeVu31KewVAQCLcB/s1600/lectura1-1030x953.jpg" alt="{{materia.titulo}}" />
+    <div>
+      <h2>{{materia.materia?.nombre}}</h2>
+      <p><strong>Profesor:</strong> {{materia.profesor?.nombre}}</p>
+      <p><strong>Paralelo:</strong> {{materia.paralelo?.paralelo}}</p>
+      <p><strong>Faltas:</strong> {{calcularTotalClases(materia).faltas}}</p>
+      <p><strong>Asistencias:</strong> {{calcularTotalClases(materia).asistencias}}</p>
+      <p><strong>Licencias:</strong> {{calcularTotalClases(materia).licencias}}</p>
+      <p><strong>Total de clases:</strong> {{calcularTotalClases(materia).asistencias + calcularTotalClases(materia).faltas + calcularTotalClases(materia).licencias}}</p>
+      <p><strong><a [routerLink]="['/ver-asistencia-materia', materia.id_dicta,materia.profesor?.nombre,  materia?.materia?.nombre]" class="blue-link">DETALLE</a></strong></p>
+      <!--
+
+      -->
+    </div>
   </div>
 </div>

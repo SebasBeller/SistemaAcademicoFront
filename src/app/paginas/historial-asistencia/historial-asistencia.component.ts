@@ -34,6 +34,7 @@ export class HistorialAsistenciaComponent implements OnInit {
     this.obtenerAsistencias();
     this.obtenerProfesores();
     this.obtenerMateriasAsignadas();
+    // console.log("f",this.materiasFiltradas)
     // Si necesitas obtener materias, implementa el método obtenerMaterias
     // this.obtenerMaterias();
 
@@ -69,9 +70,13 @@ export class HistorialAsistenciaComponent implements OnInit {
   obtenerMateriasAsignadas(): void {
     this.historialAsistenciaService.obtenerMateriasAsignadas().subscribe(
       (materiasAsignadas) => {
+
         console.log('Materias asignadas recibidas:', materiasAsignadas);
         this.materiasAsignadas = materiasAsignadas;
         this.materiasFiltradas = materiasAsignadas;
+    console.log("f",this.materiasFiltradas)
+
+
       },
       error => {
         console.error('Error en la petición de materias asignadas:', error);
@@ -81,7 +86,7 @@ export class HistorialAsistenciaComponent implements OnInit {
 
   filtrarMaterias(): void {
     this.materiasFiltradas = this.materiasAsignadas; // Resetea a todas las materias
-
+    console.log("gg",this.materiasFiltradas)
     // Filtrar por búsqueda de título
     if (this.busqueda.trim() !== '') {
       this.materiasFiltradas = this.materiasFiltradas.filter(materia =>
@@ -120,8 +125,8 @@ export class HistorialAsistenciaComponent implements OnInit {
     let licencias = 0;
     // console.log(this.asistencias)
     this.asistencias.forEach(asistencia => {
-      // if (asistencia.materiaAsignada.id_dicta === materia.id_dicta && asistencia.estudiante?.id_estudiante==5) {
-      if (asistencia.materiaAsignada.id_dicta === materia.id_dicta ) {
+      if (asistencia.materiaAsignada.id_dicta === materia.id_dicta && asistencia.estudiante?.id_estudiante==5) {
+      // if (asistencia.materiaAsignada.id_dicta === materia.id_dicta ) {
         switch (asistencia.estado) {
           case 'Falta':
             faltas++;

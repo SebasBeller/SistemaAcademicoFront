@@ -165,16 +165,21 @@ export class RegistroAsistenciaDocentesComponent implements OnInit {
       if (index !== -1) {
         this.displayedColumns[index] = nuevaFecha;
       }
+      console.log(this.asistencias)
+      console.log(fecha)
 
       for (let registro of this.asistencias) {
-        const asistencia = registro.asistencias.find((a: Asistencia) => 
-          new Date(a.fecha_asistencia).toLocaleDateString() === new Date(fecha).toLocaleDateString()
-        );
-
+        const asistencia = registro.asistencias.find(
+          (a:any) =>   new Date(a.fecha_asistencia+"T00:00:00").toLocaleDateString() === fecha
+        ) || registro.asistencias.find(
+          (a:any) =>   new Date(a.fecha_asistencia).toLocaleDateString() === fecha
+        ) 
         if (asistencia) {
-          asistencia.fecha_asistencia = nuevaFecha;
+          console.log("asis",asistencia)
+          asistencia.fecha_asistencia = new Date(nuevaFecha).toLocaleDateString('en-EN');
         }
       }
+      console.log(this.asistencias)
     }
   }
 
