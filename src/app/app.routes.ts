@@ -25,6 +25,7 @@ export const routes: Routes = [
       },
       { path: 'mostrar-materia', component: MostrarMateriaComponent },
       { path: 'detalle-materia/:id_dicta', component: DetalleMateriaComponent },
+      { path: 'detalle-materia/:id_dicta', component: DetalleMateriaComponent },
       { path: 'Buscar-Materia', component: BuscarMateriaComponent },
       {
         path: 'agregar-material-docente/:id',
