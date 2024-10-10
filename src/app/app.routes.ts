@@ -40,7 +40,7 @@ export const routes: Routes = [
         component: VerMaterialesEstudianteComponent,
       },
       {
-        path: 'lista-estudiantes-profesor/:id_dicta',
+        path: 'lista-estudiantes-profesor',
         component: ListaEstudiantesProfesorComponent,
       },
 
