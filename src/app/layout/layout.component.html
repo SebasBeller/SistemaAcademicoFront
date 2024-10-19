@@ -1,4 +1,4 @@
-<header>
+<header> 
     <div class="escudo">
         <img src="https://img.freepik.com/vector-premium/diseno-vectorial-logotipo-escuela-fondo-blanco_579306-14609.jpg" alt="Escudo">
     </div>
@@ -16,11 +16,17 @@
             <img src="https://publish-p47754-e237306.adobeaemcloud.com/adobe/dynamicmedia/deliver/dm-aid--914bcfe0-f610-4610-a77e-6ea53c53f630/_330603286208.app.webp?preferwebp=true&width=312" alt="Foto de Perfil">
         </div>
         <ul>
-            <li><a routerLink="/ver-materias-docente"><b>Mis materias docente</b></a></li>
-            <li><a routerLink="/historial-asistencia"><b>Mis Asistencias</b></a></li>
-            <li><a routerLink="/mostrar-materia"><b>Mis materias</b></a></li>
-            <li><a routerLink="/notas"><b>Proximamente</b></a></li>
-            <li><a routerLink="/logout"><b>Proximamente</b></a></li>
+            <li *ngIf="userRole === 'profesor'">
+                <a routerLink="ver-materias-docente">Mis materias docente</a>
+            </li>
+            <li *ngIf="userRole === 'estudiante'">
+                <a routerLink="historial-asistencia">Mis Asistencias</a>
+            </li>
+            <li *ngIf="userRole === 'estudiante'">
+                <a routerLink="mostrar-materia">Mis materias</a>
+            </li>
+            <li><a routerLink="notas">Proximamente</a></li>
+            <li><a (click)="logout()" routerLink="logout">Log out</a></li>
         </ul>
     </div>
 </nav>

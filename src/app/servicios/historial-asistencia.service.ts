@@ -27,7 +27,8 @@ export class HistorialAsistenciaService {
   }
 
   obtenerMateriasAsignadas(): Observable<MateriaAsignadaDocente[]> {
-    return this.http.get<MateriaAsignadaDocente[]>(this.materiasAsignadasUrl);
+    return this.http.get<MateriaAsignadaDocente[]>(this.materiasAsignadasUrl)
+    ;
   }
 
   obtenerMaterias(): Observable<Materia[]> {

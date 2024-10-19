@@ -4,6 +4,9 @@ import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { MateriaAsignadaDocente } from '../../interfaces/materia-asignada-docente';
 import { MateriasProfesorService } from '../../servicios/materias-profesor.service';
+import {InscripcionService} from '../../servicios/inscripcion.service';
+import {AuthService} from '../../servicios/auth.service';
+
 
 @Component({
   selector: 'app-mostrar-materia',
@@ -14,13 +17,16 @@ import { MateriasProfesorService } from '../../servicios/materias-profesor.servi
 })
 export class MostrarMateriaComponent implements OnInit {
   servicioMateriasProfesor:MateriasProfesorService=inject(MateriasProfesorService);
+  servicioInscripcion:InscripcionService=inject(InscripcionService);
+  servicioAutenticacion:AuthService=inject(AuthService);
+
   materias:MateriaAsignadaDocente[]=[];
   materiaAsignada: any;
   searchTerm: string = '';
 
 
   ngOnInit(): void {
-    this.servicioMateriasProfesor.obtenerMaterias().subscribe(
+    this.servicioInscripcion.obtenerMaterias(this.servicioAutenticacion.getUserId()).subscribe(
       (response: MateriaAsignadaDocente[]) => {
         console.log('Datos recibidos:', response);
         this.materias = response; // Asigna los datos cuando la respuesta es recibida

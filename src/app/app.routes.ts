@@ -11,47 +11,97 @@ import { HistorialAsistenciaComponent } from './paginas/historial-asistencia/his
 import { ListaEstudiantesProfesorComponent } from './paginas/lista-estudiantes-profesor/lista-estudiantes-profesor.component';
 import { RegistroAsistenciaDocentesComponent } from './paginas/registro-asistencia-docentes/registro-asistencia-docentes.component';
 import { VerAsistenciaPorMateriaComponent } from './paginas/ver-asistencia-por-materia/ver-asistencia-por-materia.component';
+import { AuthGuard } from './guards/auth.guard'; // Importa el AuthGuard
+import{LoginComponent} from './paginas/login/login.component'
+
+
 export const routes: Routes = [
   {
-    path: '',
+    path:'',
+    component:LoginComponent
+  }
+  ,
+  {
+    path: 'home',
     component: LayoutComponent,
     children: [
-      { path: 'ver-material/:id', component: MaterialComponent },
+      {
+        path: 'ver-material/:id',
+        component: MaterialComponent,
+        canActivate: [AuthGuard],
+        data: { roles: ['estudiante'] },
+      },
+      {
+        path: 'mostrar-materia',
+        component: MostrarMateriaComponent,
+        canActivate: [AuthGuard],
+        data: { roles: ['estudiante'] },
+      },
+      {
+        path: 'Buscar-Materia',
+        component: BuscarMateriaComponent,
+        canActivate: [AuthGuard],
+        data: { roles: ['estudiante'] },
+      },
+      {
+        path: 'ver-materiales-estudiante/:id',
+        component: VerMaterialesEstudianteComponent,
+        canActivate: [AuthGuard],
+        data: { roles: ['estudiante'] },
+      },
+      {
+        path: 'historial-asistencia',
+        component: HistorialAsistenciaComponent,
+        canActivate: [AuthGuard],
+        data: { roles: ['estudiante'] },
+      },
+      {
+        path: 'ver-asistencia-materia/:materia/:professor/:materiaNombre',
+        component: VerAsistenciaPorMateriaComponent,
+        canActivate: [AuthGuard],
+        data: { roles: ['estudiante'] },
+      },
+      {
+        path: 'detalle-materia/:id_dicta',
+        component: DetalleMateriaComponent,
+        canActivate: [AuthGuard],
+        data: { roles: ['estudiante'] },
+      },
       {
         path: 'agregar-nuevo-contenido/:id_dicta',
         component: AgregarNuevoContenidoComponent,
         title: 'Agregar Nuevo Contenido',
+        canActivate: [AuthGuard],
+        data: { roles: ['profesor'] },
       },
-      { path: 'mostrar-materia', component: MostrarMateriaComponent },
-      { path: 'detalle-materia/:id_dicta', component: DetalleMateriaComponent },
-      { path: 'detalle-materia/:id_dicta', component: DetalleMateriaComponent },
-      { path: 'Buscar-Materia', component: BuscarMateriaComponent },
       {
-        path: 'agregar-material-docente/:id',
-        loadChildren: () =>
-          import(
-            './paginas/agregar-material-docente/home/feature/home-routing'
-          ),
-      },
-      { path: 'ver-materias-docente', component: VerMateriasDocenteComponent },
-      {
-        path: 'ver-materiales-estudiante/:id',
-        component: VerMaterialesEstudianteComponent,
+        path: 'ver-materias-docente',
+        component: VerMateriasDocenteComponent,
+        canActivate: [AuthGuard],
+        data: { roles: ['profesor'] },
       },
       {
         path: 'lista-estudiantes-profesor/:id_dicta',
         component: ListaEstudiantesProfesorComponent,
+        canActivate: [AuthGuard],
+        data: { roles: ['profesor'] },
       },
 
-      { path: 'historial-asistencia', component: HistorialAsistenciaComponent },
-      {
-        path: 'ver-asistencia-materia/:materia/:professor/:materiaNombre',
-        component: VerAsistenciaPorMateriaComponent,
-      },
       {
         path: 'registro-asistencias-estudiantes/:idMateria',
         component: RegistroAsistenciaDocentesComponent,
+        canActivate: [AuthGuard],
+        data: { roles: ['profesor'] },
       },
+      {
+        path: 'agregar-material-docente/:id',
+        canActivate: [AuthGuard],
+        data: { roles: ['profesor'] },
+        loadChildren: () =>
+          import(
+            './paginas/agregar-material-docente/home/feature/home-routing'
+          ),
+      }
     ],
   },
 ];

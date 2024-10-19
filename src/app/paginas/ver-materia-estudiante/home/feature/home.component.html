@@ -3,7 +3,7 @@
     
     <!-- Lista de materiales añadidos -->
     <div *ngFor="let material of materiales" class="mb-4">
-        <button  [routerLink]="['/ver-material', material.id_material]" class="border border-gray-300 rounded-lg w-full py-2 px-3 flex justify-between items-center">
+        <button  [routerLink]="['/home/ver-material', material.id_material]" class="border border-gray-300 rounded-lg w-full py-2 px-3 flex justify-between items-center">
             <span>{{ material.nombre }}</span>
             <span>{{ material.tipo }}</span>
         </button>
