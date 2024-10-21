@@ -46,8 +46,10 @@ export class NotasEService {
           if (curr.trimestre === 1) {
             acc[estudianteId].trimestre1.push(curr.nota);
           } else if (curr.trimestre === 2) {
+
             acc[estudianteId].trimestre2.push(curr.nota);
           } else if (curr.trimestre === 3) {
+
             acc[estudianteId].trimestre3.push(curr.nota);
           }
 

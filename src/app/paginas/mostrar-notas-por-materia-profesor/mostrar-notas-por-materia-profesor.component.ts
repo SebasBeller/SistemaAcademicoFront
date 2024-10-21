@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { NotasEService } from '../../servicios/notas-e.service'; // Asegúrate de que la ruta sea correcta
 import { CommonModule } from '@angular/common'; // Importar CommonModule
-
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-mostrar-notas-por-materia-profesor',
@@ -12,8 +12,11 @@ import { CommonModule } from '@angular/common'; // Importar CommonModule
 })
 export class MostrarNotasPorMateriaProfesorComponent implements OnInit {
   datos: any[] = [];
-
-  constructor(private notasEService: NotasEService) {} // Asegúrate de inyectar el servicio aquí
+  id_dicta!:number;
+  route:ActivatedRoute= inject(ActivatedRoute)
+  constructor(private notasEService: NotasEService) {
+    this.id_dicta=this.route.snapshot.params['id_dicta']
+  } // Asegúrate de inyectar el servicio aquí
 
   ngOnInit(): void {
     this.obtenerDatos();
@@ -39,9 +42,7 @@ export class MostrarNotasPorMateriaProfesorComponent implements OnInit {
     );
   }
 
-  private convertirNotas(notas: number[]): string {
-    return notas.length > 0 ? notas.join(', ') : 'Sin notas';
-  }
+  /// tipo de Dato
 
   private calcularPromedio(promedio: number): number {
     return promedio || 0; // Asegúrate de manejar correctamente los casos sin promedio
