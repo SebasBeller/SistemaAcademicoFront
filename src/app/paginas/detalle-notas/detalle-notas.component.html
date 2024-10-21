@@ -1,9 +1,13 @@
+<div class="titulo">
+  <h1><b>Materia: {{ idDicta }}</b></h1>
+  <div class="area-materias"><b>Área: Ciencias</b></div>
+</div>
+
 <div class="notas-container">
   <h2>Notas por Trimestre</h2>
-  
   <div *ngFor="let trimestre of notasPorTrimestre | keyvalue" class="trimestre-section">
     <h3>Trimestre {{ trimestre.key }}</h3>
-    
+
     <div class="notas">
       <div class="nota-item">
         <span class="tipo-label">Ser:</span>
@@ -23,7 +27,14 @@
       </div>
       <div class="nota-item total">
         <span class="tipo-label"><strong>Total:</strong></span>
-        <span class="nota-value"><strong>{{ trimestre.value.total/4 }}</strong></span>
+        <span class="nota-value"><strong>{{ trimestre.value.total / 4 }}</strong></span>
+      </div>
+
+      <!-- Botón para abrir el modal -->
+      <div class="nota-item">
+        <button mat-button (click)="abrirModal(trimestre.value)">
+          <img src="https://png.pngtree.com/png-clipart/20230921/original/pngtree-comicstyle-notepad-with-editing-pencil-icon-edit-isolated-note-vector-png-image_12814232.png" alt="Editar" width="90" height="80">
+        </button>
       </div>
     </div>
   </div>

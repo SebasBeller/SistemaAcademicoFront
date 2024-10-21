@@ -57,4 +57,10 @@ export class DetalleNotasService {
       })
     );
   }
+  actualizarAsistencia(id:number,asistencia:any):Observable<Datos>{
+    return this.http.patch<Datos>(`http://localhost:3000/nota/${id}`, asistencia)
+  }
+
+
+
 }
