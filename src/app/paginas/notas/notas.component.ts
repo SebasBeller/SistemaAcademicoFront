@@ -20,7 +20,7 @@ export class NotasComponent implements OnInit {
   profesores: MateriaAsignadaDocente[] = [];
   estudiantes: Estudiante[] = [];
   materiasAsignadas: Materias[] = [];
-  selectedYear: number = 2024;
+  selectedYear: number = new Date().getFullYear(); 
   filteredProfesores: MateriaAsignadaDocente[] = [];
   filteredEstudiantes: Estudiante[] = [];
   nombresMaterias: { [id_materia: number]: string } = {};
@@ -37,7 +37,7 @@ export class NotasComponent implements OnInit {
     this.notaService.obtenerProfesores().subscribe(
       (profesores: MateriaAsignadaDocente[]) => {
         this.profesores = profesores;
-        this.filteredProfesores = profesores; // Si necesitas filtrarlos
+        this.filteredProfesores = profesores;
         this.cargarNombresMaterias();
       },
       (error: any) => {
@@ -61,11 +61,11 @@ export class NotasComponent implements OnInit {
   onYearChange(event: Event): void {
     const selectElement = event.target as HTMLSelectElement;
     this.selectedYear = +selectElement.value;
-    this.obtenerNotas();
+    this.obtenerNotas(); // Actualizar notas al cambiar el año
   }
 
   obtenerNotas(): void {
-    this.notaService.obtenerTodasLasNotas().subscribe(
+    this.notaService.obtenerNotasPorAno(this.selectedYear).subscribe(
       (notas: Nota[]) => {
         this.notas = notas;
         this.agruparNotasPorMateria();
@@ -78,10 +78,10 @@ export class NotasComponent implements OnInit {
 
   cargarNombresMaterias(): void {
     this.filteredProfesores.forEach((materia: MateriaAsignadaDocente) => {
-      const id_materia = materia.id_dicta; // Asegúrate de que este es el ID correcto
-      const nombre = materia.materia?.nombre; // Asegúrate de que 'nombre' existe
+      const id_materia = materia.id_dicta;
+      const nombre = materia.materia?.nombre;
       if (id_materia && nombre) {
-        this.nombresMaterias[id_materia] = nombre; // Asigna el nombre de la materia al ID
+        this.nombresMaterias[id_materia] = nombre;
       }
     });
   }
@@ -106,14 +106,11 @@ export class NotasComponent implements OnInit {
         this.notasPorMateria[id_dicta].push(trimestreExistente);
       }
 
-      // Agregamos la nota al tipo correspondiente
       if (tipo in trimestreExistente.notasPorTipo) {
         trimestreExistente.notasPorTipo[tipo].push(notaValue);
       }
     });
   }
-
-
 
   calcularPromedioPorTipo(id_dicta: number, trimestre: number, tipo: string): number {
     const trimestres = this.notasPorMateria[id_dicta];
@@ -146,20 +143,20 @@ export class NotasComponent implements OnInit {
   }
 
   calcularPromedioGeneral(id_dicta: number): number {
-    const trimestres = [1, 2, 3]; // Suponiendo que los trimestres son 1, 2 y 3
+    const trimestres = [1, 2, 3];
     let sumaPromedios = 0;
     let trimestresConNotas = 0;
 
     trimestres.forEach(trimestre => {
-        const promedioTrimestre = this.calcularPromedioGlobalPorTrimestre(id_dicta, trimestre);
-        if (!isNaN(promedioTrimestre) && promedioTrimestre > 0) {
-            sumaPromedios += promedioTrimestre;
-            trimestresConNotas++;
-        }
+      const promedioTrimestre = this.calcularPromedioGlobalPorTrimestre(id_dicta, trimestre);
+      if (!isNaN(promedioTrimestre) && promedioTrimestre > 0) {
+        sumaPromedios += promedioTrimestre;
+        trimestresConNotas++;
+      }
     });
 
     return trimestresConNotas > 0 ? sumaPromedios / trimestresConNotas : 0; // Retorna el promedio general
-}
+  }
 
   determinarEstado(promedio: number): string {
     if (promedio >= 70) return 'Aprobado';

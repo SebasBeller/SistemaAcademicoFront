@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable,of } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
 import { Nota } from '../interfaces/nota';
 import { MateriaAsignadaDocente } from '../interfaces/materia-asignada-docente';
 import { Materias } from '../interfaces/materias'
@@ -10,6 +11,7 @@ import { Estudiante } from '../interfaces/estudiante';
   providedIn: 'root',
 })
 export class NotaService {
+
   private apiUrl = 'http://localhost:3000'; // Cambia esto a tu URL de API real
 
   constructor(private http: HttpClient) {}
@@ -27,5 +29,26 @@ export class NotaService {
 
   obtenerTodasLasNotas(): Observable<Nota[]> {
     return this.http.get<Nota[]>(`${this.apiUrl}/nota`);
+  }
+
+  obtenerNotasPorAno(selectedYear: number): Observable<Nota[]> {
+    return this.http.get<Nota[]>(`${this.apiUrl}/nota`).pipe(
+      catchError(error => {
+        console.error('Error al obtener notas:', error);
+        return of([]); // Retorna un array vacío en caso de error
+      }),
+      map(notas =>
+        notas
+          .map((nota: Nota) => ({
+            ...nota,
+            fecha: new Date(nota.fecha), // Convierte la cadena de fecha a un objeto Date
+            materiaAsignada: {
+              ...nota.materiaAsignada,
+              fecha: new Date(nota.materiaAsignada.fecha) // Convierte también la fecha de materiaAsignada
+            }
+          }))
+          .filter((nota: Nota) => new Date(nota.fecha).getFullYear() === selectedYear) // Filtra las notas por año
+      )
+    );
   }
 }
