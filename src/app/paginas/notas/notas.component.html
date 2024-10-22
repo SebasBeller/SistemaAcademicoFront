@@ -1,0 +1,33 @@
+<div>
+  <h1>Notas</h1>
+
+  <select (change)="onYearChange($event)">
+    <option *ngFor="let year of [2021, 2022, 2023, 2024]" [value]="year">{{ year }}</option>
+  </select>
+
+  <h2>Notas del Estudiante</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Materia</th>
+        <th>Trimestre 1</th>
+        <th>Trimestre 2</th>
+        <th>Trimestre 3</th>
+        <th>Promedio</th>
+        <th>Estado</th>
+        <th>Enlace</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let id_dicta of notasPorMateria | keyvalue">
+        <td>{{ nombresMaterias[+id_dicta.key] }}</td>
+        <td>{{ calcularPromedioGlobalPorTrimestre(+id_dicta.key, 1) | number: '1.0-0' }}</td>
+        <td>{{ calcularPromedioGlobalPorTrimestre(+id_dicta.key, 2) | number: '1.0-0'}}</td>
+        <td>{{ calcularPromedioGlobalPorTrimestre(+id_dicta.key, 3) | number: '1.0-0'}}</td>
+        <td>{{ calcularPromedioGeneral(+id_dicta.key) | number: '1.0-0' }}</td>
+        <td>{{ determinarEstado(calcularPromedioGlobalPorTrimestre(+id_dicta.key, 1)) }}</td>
+        <td><a href="#" >VER DETALLE</a></td>
+      </tr>
+    </tbody>
+  </table>
+</div>

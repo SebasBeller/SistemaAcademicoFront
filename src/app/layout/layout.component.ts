@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
 @Component({
@@ -8,6 +8,12 @@ import { RouterModule } from '@angular/router';
   templateUrl: './layout.component.html',
   styleUrl: './layout.component.sass'
 })
-export class LayoutComponent {
+export class LayoutComponent  {
+
+  route: any;
+
+  constructor() {}
+
 
 }
+

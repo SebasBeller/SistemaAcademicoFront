@@ -11,6 +11,7 @@ import { HistorialAsistenciaComponent } from './paginas/historial-asistencia/his
 import { ListaEstudiantesProfesorComponent } from './paginas/lista-estudiantes-profesor/lista-estudiantes-profesor.component';
 import { RegistroAsistenciaDocentesComponent } from './paginas/registro-asistencia-docentes/registro-asistencia-docentes.component';
 import { VerAsistenciaPorMateriaComponent } from './paginas/ver-asistencia-por-materia/ver-asistencia-por-materia.component';
+import { NotasComponent } from './paginas/notas/notas.component';
 export const routes: Routes = [
   {
     path: '',
@@ -52,6 +53,7 @@ export const routes: Routes = [
         path: 'registro-asistencias-estudiantes/:idMateria',
         component: RegistroAsistenciaDocentesComponent,
       },
+      { path: 'notas', component: NotasComponent, title: 'Notas del Estudiante' },
     ],
   },
 ];
