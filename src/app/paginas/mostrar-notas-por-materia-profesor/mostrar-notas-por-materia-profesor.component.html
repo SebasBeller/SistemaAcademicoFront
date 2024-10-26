@@ -1,33 +1,34 @@
 <div>
-    <h1>{{this.id_dicta}}</h1>
-    <h1>Matemáticas</h1>
-    <p>Área: Ciencias Exactas</p>
-    <p>Paralelo: 1ºA</p>
+  <div >
+    <h2>ID: {{ id_dicta }}</h2>
 
-    <table>
-        <thead>
-            <tr>
-                <th>Apellido</th>
-                <th>Nombre</th>
-                <th>Trimestre 1</th>
-                <th>Trimestre 2</th>
-                <th>Trimestre 3</th>
-                <th>Promedio</th>
-                <th>Acción</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let item of datos">
-                <td>{{item.apellido}}</td>
-                <td>{{item.nombre}}</td>
-                <td>{{item.trimestre1}}</td>
-                <td>{{item.trimestre2}}</td>
-                <td>{{item.trimestre3}}</td>
-                <td>{{item.promedio}}</td>
-                <td><button>Mas Detalle</button></td>
-            </tr>
-        </tbody>
-    </table>
+  </div>
+  <h3 *ngIf="datos">Materia: {{ datos }}</h3>
+  <p>Área: Ciencias Exactas</p>
+  <p>Paralelo: 1ºA</p>
+
+  <table>
+      <thead>
+          <tr>
+              <th>Apellido</th>
+              <th>Nombre</th>
+              <th>Trimestre 1</th>
+              <th>Trimestre 2</th>
+              <th>Trimestre 3</th>
+              <th>Promedio</th>
+              <th>Acción</th>
+          </tr>
+      </thead>
+      <tbody>
+          <tr *ngFor="let item of datos">
+              <td>{{item.apellido}}</td>
+              <td>{{item.nombre}}</td>
+              <td>{{item.trimestre1 | number: '1.2-2'}}</td>
+              <td>{{item.trimestre2 | number: '1.2-2'}}</td>
+              <td>{{item.trimestre3 | number: '1.2-2'}}</td>
+              <td>{{item.promedio | number: '1.2-2'}}</td>
+              <td><button>Más Detalle</button></td>
+          </tr>
+      </tbody>
+  </table>
 </div>
-
-
