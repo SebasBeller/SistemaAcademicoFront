@@ -12,16 +12,15 @@
 
 <div class="materias-contenedor">
   <div *ngFor="let materia of filteredMaterias" class="materia-card">
-    <button [routerLink]="['/detalle-materia', materia.titulo]" class="materia-nombre"><b>{{materia.materia?.nombre}}</b></button>
+    <button [routerLink]="['/home/detalle-materia', materia.titulo]" class="materia-nombre"><b>{{materia.materia?.nombre}}</b></button>
 
     <img mat-card-image src="https://2.bp.blogspot.com/-DOXEGnjTVHs/V3MUqvgn_dI/AAAAAAAAADE/LEZCAP5mB-UE8S3FOs91mCeVu31KewVAQCLcB/s1600/lectura1-1030x953.jpg" alt="Photo of a Shiba Inu">
-
     <div class="profesor-nombre"><b>{{ materia.profesor?.nombre }}</b></div>
 
     <div class="Paralelo"><b>Paralelo: {{materia.materia?.paralelo?.paralelo}}</b></div>
 
 
     <div class="enlace-detalles">
-      <button mat-button [routerLink]="['/detalle-materia', materia.id_dicta]"><b>Más detalles</b></button>
+      <button mat-button [routerLink]="['/home/detalle-materia', materia.id_dicta]"><b>Más detalles</b></button>
     </div>
 </div>

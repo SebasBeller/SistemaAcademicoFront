@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,inject } from '@angular/core';
 import { HistorialAsistenciaService } from '../../servicios/historial-asistencia.service';
 import { Asistencia } from '../../interfaces/asistencia';
 import { Profesor } from '../../interfaces/profesor';
@@ -6,6 +6,8 @@ import { MateriaAsignadaDocente } from '../../interfaces/materia-asignada-docent
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
+import {AuthService} from '../../servicios/auth.service';
+import {InscripcionService} from '../../servicios/inscripcion.service';
 
 
 @Component({
@@ -26,6 +28,8 @@ export class HistorialAsistenciaComponent implements OnInit {
   tipoFiltro: any;
   idMateria:string | undefined;
   router: any;
+  servicioAutenticacion:AuthService=inject(AuthService);
+  servicioInscripcion:InscripcionService=inject(InscripcionService);
 
 
   constructor(private readonly historialAsistenciaService: HistorialAsistenciaService) {}
@@ -34,9 +38,7 @@ export class HistorialAsistenciaComponent implements OnInit {
     this.obtenerAsistencias();
     this.obtenerProfesores();
     this.obtenerMateriasAsignadas();
-    // console.log("f",this.materiasFiltradas)
-    // Si necesitas obtener materias, implementa el método obtenerMaterias
-    // this.obtenerMaterias();
+   
 
   }
   verAsistenciaMateria(idMateria:number): void {
@@ -68,13 +70,14 @@ export class HistorialAsistenciaComponent implements OnInit {
   }
 
   obtenerMateriasAsignadas(): void {
-    this.historialAsistenciaService.obtenerMateriasAsignadas().subscribe(
+    this.servicioInscripcion.obtenerMaterias(this.servicioAutenticacion.getUserId()).subscribe(
       (materiasAsignadas) => {
 
         console.log('Materias asignadas recibidas:', materiasAsignadas);
         this.materiasAsignadas = materiasAsignadas;
         this.materiasFiltradas = materiasAsignadas;
     console.log("f",this.materiasFiltradas)
+
 
 
       },
@@ -125,7 +128,7 @@ export class HistorialAsistenciaComponent implements OnInit {
     let licencias = 0;
     // console.log(this.asistencias)
     this.asistencias.forEach(asistencia => {
-      if (asistencia.materiaAsignada.id_dicta === materia.id_dicta && asistencia.estudiante?.id_estudiante==5) {
+      if (asistencia.materiaAsignada.id_dicta === materia.id_dicta && asistencia.estudiante?.id_estudiante==this.servicioAutenticacion.getUserId()) {
       // if (asistencia.materiaAsignada.id_dicta === materia.id_dicta ) {
         switch (asistencia.estado) {
           case 'Falta':

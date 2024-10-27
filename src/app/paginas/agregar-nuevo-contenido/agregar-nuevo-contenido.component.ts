@@ -135,7 +135,7 @@ export class AgregarNuevoContenidoComponent  implements OnInit {
     // }
   }
   dirigirAContenido(id?:number){
-    this.router.navigate( ['/agregar-material-docente', id])
+    this.router.navigate( ['/home/agregar-material-docente', id])
   }
   cancel() {
     this.showForm = false;

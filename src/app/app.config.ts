@@ -23,7 +23,7 @@ export const appConfig: ApplicationConfig = {
         measurementId: 'G-W80L0CRFZM',
       })
     ),
-    provideStorage(() => getStorage()),
+    provideStorage(() => getStorage()), provideAnimationsAsync(),
   ],
 };
 
