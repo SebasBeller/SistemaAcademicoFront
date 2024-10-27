@@ -11,6 +11,7 @@ import { HistorialAsistenciaComponent } from './paginas/historial-asistencia/his
 import { ListaEstudiantesProfesorComponent } from './paginas/lista-estudiantes-profesor/lista-estudiantes-profesor.component';
 import { RegistroAsistenciaDocentesComponent } from './paginas/registro-asistencia-docentes/registro-asistencia-docentes.component';
 import { VerAsistenciaPorMateriaComponent } from './paginas/ver-asistencia-por-materia/ver-asistencia-por-materia.component';
+import { DetalleNotasComponent } from './paginas/detalle-notas/detalle-notas.component';
 import { AuthGuard } from './guards/auth.guard'; // Importa el AuthGuard
 import{LoginComponent} from './paginas/login/login.component'
 
@@ -101,6 +102,12 @@ export const routes: Routes = [
           import(
             './paginas/agregar-material-docente/home/feature/home-routing'
           ),
+      },
+      {
+        path: 'detalle-nota',
+        component: DetalleNotasComponent,
+        canActivate: [AuthGuard],
+        data: { roles: ['profesor'] }
       }
     ],
   },
