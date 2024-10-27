@@ -38,9 +38,7 @@ export class HistorialAsistenciaComponent implements OnInit {
     this.obtenerAsistencias();
     this.obtenerProfesores();
     this.obtenerMateriasAsignadas();
-    // console.log("f",this.materiasFiltradas)
-    // Si necesitas obtener materias, implementa el método obtenerMaterias
-    // this.obtenerMaterias();
+   
 
   }
   verAsistenciaMateria(idMateria:number): void {

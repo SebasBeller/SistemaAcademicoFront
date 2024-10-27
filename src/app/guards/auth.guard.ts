@@ -21,7 +21,7 @@ export class AuthGuard implements CanActivate {
       console.log(expectedRole);
 
 
-      this.router.navigate(['/access-denied']); 
+      this.router.navigate(['']); 
       return false;
     }
   }
