@@ -1,0 +1,34 @@
+<div>
+
+
+  <h3 *ngIf="datos && datos.materia">Materia: {{ datos.materia.nombre }}</h3>
+
+  <p *ngIf="datos.materia?.paralelo">Paralelo: {{ datos.materia?.paralelo?.paralelo }}</p>
+
+  <table>
+    <thead>
+      <tr>
+
+        <th>Apellido</th>
+        <th>Nombre</th>
+        <th>Trimestre 1</th>
+        <th>Trimestre 2</th>
+        <th>Trimestre 3</th>
+        <th>Promedio</th>
+        <th>Acción</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let estudiante of estudiantesPromedios">
+
+        <td>{{ estudiante.apellido }}</td>
+        <td>{{ estudiante.nombre }}</td>
+        <td>{{ estudiante.trimestre1 || 'N/A' }}</td>
+        <td>{{ estudiante.trimestre2 || 'N/A' }}</td>
+        <td>{{ estudiante.trimestre3 || 'N/A' }}</td>
+        <td>{{ estudiante.promedio?.toFixed(2) }}</td>
+        <td><button>Acción</button></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
