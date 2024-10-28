@@ -4,13 +4,12 @@ import { CommonModule } from '@angular/common';
 import { RouterLink, ActivatedRoute } from '@angular/router';
 import { NotasProfesorService } from '../../servicios/notas-e.service';
 import { Nota } from '../../interfaces/notas';
-import { Paralelo } from '../../interfaces/paralelo';
-import { Estudiante } from '../../interfaces/estudiante';
 import { MateriaAsignadaDocente } from '../../interfaces/materia-asignada-docente';
 
 interface EstudianteConPromedios {
   id:number;
   id_paralelo:number;
+  id_estudiante:number;
   nombre: string;
   apellido: string;
   trimestre1?: number;
@@ -33,6 +32,7 @@ export class MostrarNotasPorMateriaProfesorComponent implements OnInit {
   paralelos: string[] = [];
   paraleloSeleccionado: string = '';
   notas: Nota[] = [];
+  idMateria:string="";
 
   constructor(
     private notasProfesorService: NotasProfesorService,
@@ -40,15 +40,15 @@ export class MostrarNotasPorMateriaProfesorComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    const idMateria = this.route.snapshot.paramMap.get('id_dicta');
-
-    if (idMateria) {
-      const id = +idMateria;
+    this.idMateria = this.route.snapshot.paramMap.get('id_dicta')||"";
+    if (this.idMateria) {
+      const id = +(this.idMateria);
       this.cargarDatosMateriaAsignada(id);
       this.cargarNotasEstudiantes(id); // Aquí removí el parámetro paralelo
     } else {
       console.error('ID de materia no encontrado en la URL');
     }
+    console.log(this.estudiantesPromedios)
   }
 
   cargarDatosMateriaAsignada(id: number) {
@@ -90,6 +90,7 @@ export class MostrarNotasPorMateriaProfesorComponent implements OnInit {
         estudiantesMap[estudianteId] = {
           nombre: nota.estudiante.nombre,
           apellido: nota.estudiante.apellido,
+          id_estudiante:nota.estudiante.id_estudiante,
           id:nota.estudiante.id_estudiante,
           id_paralelo:nota.estudiante.id_paralelo,
           trimestre1: 0,

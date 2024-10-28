@@ -103,6 +103,12 @@ export const routes: Routes = [
         component: MostrarNotasPorMateriaProfesorComponent,
         canActivate: [AuthGuard],
         data: { roles: ['profesor'] }
+      },
+      {
+        path: 'detalle-nota/:id_dicta/:id_estudiante',
+        component: DetalleNotasComponent,
+        canActivate: [AuthGuard],
+        data: { roles: ['profesor'] }
       }
     ],
   },
