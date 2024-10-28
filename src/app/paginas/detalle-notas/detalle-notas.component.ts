@@ -44,21 +44,26 @@ filtrarNotasEstudianteMateria(idEstudiante: number, idMateria: number): void {
     nota.estudiante.id_estudiante === idEstudiante && 
     nota.materiaAsignada.id_dicta === idMateria
   );
+
   // Agrupar las notas por trimestre
   const notasAgrupadasPorTrimestre: { [trimestre: number]: { [tipo: string]: number[] } } = {};
+
   notasEstudianteMateria.forEach(nota => {
     const trimestre = nota.trimestre;
     const tipo = nota.tipo;
     const valorNota = nota.nota;
+
     // Inicializar el trimestre si no existe
     if (!notasAgrupadasPorTrimestre[trimestre]) {
       notasAgrupadasPorTrimestre[trimestre] = { ser: [], hacer: [], saber: [], decidir: [] };
     }
+
     // Agregar la nota al tipo correspondiente dentro del trimestre
     if (tipo in notasAgrupadasPorTrimestre[trimestre]) {
       notasAgrupadasPorTrimestre[trimestre][tipo].push(valorNota);
     }
   });
+
   // Asignar el resultado para mostrar en la vista
   this.notasPorTrimestre = notasAgrupadasPorTrimestre;
   console.log('Notas por trimestre del estudiante', idEstudiante, 'en la materia', idMateria, ':', this.notasPorTrimestre);
@@ -78,8 +83,6 @@ obtenerNotas(): void {
   );
 }
 
-        
-    
 
   obtenerEstudiantes(): void {
     this.detalleNotasService.obtenerEstudiantes().subscribe(
@@ -107,23 +110,13 @@ obtenerNotas(): void {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.actualizarNotas(trimestre.id, result);
+       // this.actualizarNotas(trimestre.id, result);
 
       }
     });
   }
 
-  actualizarNotas(id: number, notasActualizadas: any): void {
-    this.detalleNotasService.actualizarNota( notasActualizadas).subscribe(
-      (respuesta) => {
-        console.log('Notas actualizadas:', respuesta);
-       // this.cargarNotas();  // Recargar las notas después de la actualización
-      },
-      (error) => {
-        console.error('Error al actualizar las notas', error);
-      }
-    );
-  }
+
 
   agruparNotasPorMateria(): void {
     this.notasPorMateria = {};
