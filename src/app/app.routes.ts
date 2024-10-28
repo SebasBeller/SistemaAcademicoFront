@@ -54,7 +54,7 @@ export const routes: Routes = [
         component: RegistroAsistenciaDocentesComponent,
       },
       {
-        path: 'mostrar-notas-por-materia-profesor/:id_dicta/:id_materia',
+        path: 'mostrar-notas-por-materia-profesor/:id_dicta',
         component: MostrarNotasPorMateriaProfesorComponent,
       },
     ],

@@ -1,77 +1,138 @@
 import { Component, OnInit } from '@angular/core';
-import { NotasEService } from '../../servicios/notas-e.service';
+import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute } from '@angular/router';
-import { MateriaAsignadaDocente } from '../../interfaces/materia-asignada-docente';
+import { RouterLink, ActivatedRoute } from '@angular/router';
+import { NotasProfesorService } from '../../servicios/notas-e.service';
 import { Nota } from '../../interfaces/notas';
+import { Paralelo } from '../../interfaces/paralelo';
+import { Estudiante } from '../../interfaces/estudiante';
+import { MateriaAsignadaDocente } from '../../interfaces/materia-asignada-docente';
+
+interface EstudianteConPromedios {
+  id:number;
+  id_paralelo:number;
+  nombre: string;
+  apellido: string;
+  trimestre1?: number;
+  trimestre2?: number;
+  trimestre3?: number;
+  promedio?: number;
+}
 
 @Component({
   selector: 'app-mostrar-notas-por-materia-profesor',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterLink, FormsModule],
   templateUrl: './mostrar-notas-por-materia-profesor.component.html',
   styleUrls: ['./mostrar-notas-por-materia-profesor.component.sass']
 })
 export class MostrarNotasPorMateriaProfesorComponent implements OnInit {
-  datos: Nota[] = [];
-  id_dicta!: number;
-  loading: boolean = false;
-  materiaAsignada: MateriaAsignadaDocente[] = []; 
 
-  constructor(private notasEService: NotasEService, private route: ActivatedRoute) {
-    this.id_dicta = Number(this.route.snapshot.paramMap.get('id_dicta'));
-  }
+  datos: MateriaAsignadaDocente = {} as MateriaAsignadaDocente;
+  estudiantesPromedios: EstudianteConPromedios[] = [];
+  paralelos: string[] = [];
+  paraleloSeleccionado: string = '';
+  notas: Nota[] = [];
+
+  constructor(
+    private notasProfesorService: NotasProfesorService,
+    private route: ActivatedRoute
+  ) {}
 
   ngOnInit(): void {
-    if (!this.id_dicta) {
-      console.error('ID dictada es undefined');
-      return;
+    const idMateria = this.route.snapshot.paramMap.get('id_dicta');
+
+    if (idMateria) {
+      const id = +idMateria;
+      this.cargarDatosMateriaAsignada(id);
+      this.cargarNotasEstudiantes(id); // Aquí removí el parámetro paralelo
+    } else {
+      console.error('ID de materia no encontrado en la URL');
     }
-    this.obtenerMateria();
   }
 
-  private obtenerDatos(): void {
-    if (!this.materiaAsignada) {
-      console.error('Materia no asignada');
-      return; // Salir si no hay materia asignada
-    }
-
-    this.loading = true;
-    this.notasEService.getDatos(this.id_dicta).subscribe(
-      (response: any[]) => {
-        // Filtrar notas relacionadas a la materia asignada
-        this.datos = response.map(item => ({
-          apellido: item.apellido,
-          nombre: item.nombre,
-          trimestre1: parseFloat(item.promedio1 ? item.promedio1.toFixed(2) : '0.00'),
-          trimestre2: parseFloat(item.promedio2 ? item.promedio2.toFixed(2) : '0.00'),
-          trimestre3: parseFloat(item.promedio3 ? item.promedio3.toFixed(2) : '0.00'),
-          promedio: this.calcularPromedio(item.promedioTotal).toFixed(2) // Muestra el promedio con 2 decimales
-        }));
-        this.loading = false;
+  cargarDatosMateriaAsignada(id: number) {
+    this.notasProfesorService.getMateriaAsignadaProfesor(id).subscribe(
+      (data: MateriaAsignadaDocente) => {
+        this.datos = data;
+        this.paralelos = data.paralelo || [];
       },
-      error => {
-        console.error('Error al obtener los datos:', error);
-        this.loading = false;
+      (error: any) => {
+        console.error('Error al cargar datos de la materia asignada:', error);
       }
     );
   }
 
-  private obtenerMateria(): void {
-    this.notasEService.getMateriaPorIdDicta(this.id_dicta).subscribe(
-      (response: MateriaAsignadaDocente[]) => { // Cambiar a un arreglo de MateriaAsignadaDocente
-        this.materiaAsignada = response; // Almacena la lista de materias
-        console.log('Materias asignadas:', this.materiaAsignada);
-        this.obtenerDatos(); // Obtener datos de notas después de tener las materias asignadas
+  cargarNotasEstudiantes(idParalelo: number, idEstudiante?: number, tipo?: string) {
+    this.notasProfesorService.getNota().subscribe(
+      (data: Nota[]) => {
+        this.notas = data.filter(nota =>
+          nota.estudiante.id_paralelo
+        );
+        this.calcularPromediosPorEstudiante();
       },
-      error => {
-        console.error('Error al obtener las materias:', error);
+      (error: any) => {
+        console.error('Error al cargar notas del estudiante:', error);
       }
     );
   }
 
 
-  private calcularPromedio(promedio: number): number {
-    return promedio || 0;
+  calcularPromediosPorEstudiante() {
+    const estudiantesMap: { [id: number]: EstudianteConPromedios } = {};
+
+    this.notas.forEach(nota => {
+      const estudianteId = nota.estudiante.id_estudiante;
+
+      if (!estudiantesMap[estudianteId]) {
+        estudiantesMap[estudianteId] = {
+          nombre: nota.estudiante.nombre,
+          apellido: nota.estudiante.apellido,
+          id:nota.estudiante.id_estudiante,
+          id_paralelo:nota.estudiante.id_paralelo,
+          trimestre1: 0,
+          trimestre2: 0,
+          trimestre3: 0,
+          promedio: 0
+        };
+      }
+
+      const estudiante = estudiantesMap[estudianteId];
+
+      switch (nota.trimestre) {
+        case 1:
+          estudiante.trimestre1 = (estudiante.trimestre1 || 0) + nota.nota;
+          break;
+        case 2:
+          estudiante.trimestre2 = (estudiante.trimestre2 || 0) + nota.nota;
+          break;
+        case 3:
+          estudiante.trimestre3 = (estudiante.trimestre3 || 0) + nota.nota;
+          break;
+      }
+    });
+
+    this.estudiantesPromedios = Object.values(estudiantesMap).map(estudiante => {
+      // Suponiendo que cada trimestre tiene 4 notas
+      estudiante.trimestre1 = (estudiante.trimestre1! / 4) || 0;
+      estudiante.trimestre2 = (estudiante.trimestre2! / 4) || 0;
+      estudiante.trimestre3 = (estudiante.trimestre3! / 4) || 0;
+
+      const trimestres = [estudiante.trimestre1, estudiante.trimestre2, estudiante.trimestre3];
+      const notasValidas = trimestres.filter(nota => !isNaN(nota));
+      estudiante.promedio = notasValidas.length
+        ? notasValidas.reduce((a, b) => (a + b), 0) / notasValidas.length
+        : 0;
+
+      return estudiante;
+    });
+
+    console.log('Estudiantes con promedios:', this.estudiantesPromedios);
+  }
+
+  onParaleloChange(paralelo: string) {
+    this.paraleloSeleccionado = paralelo;
+    const idMateria = this.datos.id_dicta;
+    this.cargarNotasEstudiantes(idMateria);
   }
 }

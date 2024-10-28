@@ -13,7 +13,7 @@ export interface MateriaAsignadaDocente {
   profesor?: Profesor;
   asistencias?: Asistencia[];
   inscripciones?: any[];
-  trimestre1?: number; // O el tipo que estés usando
+  trimestre1?: number;
   trimestre2?: number;
   trimestre3?: number;
   promedio?: number;

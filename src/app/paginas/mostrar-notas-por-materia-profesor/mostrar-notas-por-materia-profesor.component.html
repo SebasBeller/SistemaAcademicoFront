@@ -1,34 +1,34 @@
 <div>
-  <div >
-    <h2>ID: {{ id_dicta }}</h2>
 
-  </div>
-  <h3 *ngIf="datos">Materia: {{ datos }}</h3>
-  <p>Área: Ciencias Exactas</p>
-  <p>Paralelo: 1ºA</p>
+
+  <h3 *ngIf="datos && datos.materia">Materia: {{ datos.materia.nombre }}</h3>
+
+  <p *ngIf="datos.materia?.paralelo">Paralelo: {{ datos.materia?.paralelo?.paralelo }}</p>
 
   <table>
-      <thead>
-          <tr>
-              <th>Apellido</th>
-              <th>Nombre</th>
-              <th>Trimestre 1</th>
-              <th>Trimestre 2</th>
-              <th>Trimestre 3</th>
-              <th>Promedio</th>
-              <th>Acción</th>
-          </tr>
-      </thead>
-      <tbody>
-          <tr *ngFor="let item of datos">
-              <td>{{item.apellido}}</td>
-              <td>{{item.nombre}}</td>
-              <td>{{item.trimestre1 | number: '1.2-2'}}</td>
-              <td>{{item.trimestre2 | number: '1.2-2'}}</td>
-              <td>{{item.trimestre3 | number: '1.2-2'}}</td>
-              <td>{{item.promedio | number: '1.2-2'}}</td>
-              <td><button>Más Detalle</button></td>
-          </tr>
-      </tbody>
+    <thead>
+      <tr>
+
+        <th>Apellido</th>
+        <th>Nombre</th>
+        <th>Trimestre 1</th>
+        <th>Trimestre 2</th>
+        <th>Trimestre 3</th>
+        <th>Promedio</th>
+        <th>Acción</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let estudiante of estudiantesPromedios">
+
+        <td>{{ estudiante.apellido }}</td>
+        <td>{{ estudiante.nombre }}</td>
+        <td>{{ estudiante.trimestre1 || 'N/A' }}</td>
+        <td>{{ estudiante.trimestre2 || 'N/A' }}</td>
+        <td>{{ estudiante.trimestre3 || 'N/A' }}</td>
+        <td>{{ estudiante.promedio?.toFixed(2) }}</td>
+        <td><button>Acción</button></td>
+      </tr>
+    </tbody>
   </table>
 </div>
