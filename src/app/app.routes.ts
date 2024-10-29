@@ -16,6 +16,8 @@ import { DetalleNotasComponent } from './paginas/detalle-notas/detalle-notas.com
 import { AuthGuard } from './guards/auth.guard'; // Importa el AuthGuard
 import{LoginComponent} from './paginas/login/login.component'
 import { MostrarNotasPorMateriaProfesorComponent } from './paginas/mostrar-notas-por-materia-profesor/mostrar-notas-por-materia-profesor.component';
+import { DetalleNotasEstudiantesComponent } from './paginas/detalle-notas-estudiantes/detalle-notas-estudiantes.component';
+import { NotasProfesorComponent } from './paginas/notas-profesor/notas-profesor.component';
 
 export const routes: Routes = [
   {
@@ -74,6 +76,12 @@ export const routes: Routes = [
         data: { roles: ['estudiante'] },
       },
       {
+        path: 'detalle-notas-estudiantes',
+        component: DetalleNotasEstudiantesComponent,
+        canActivate: [AuthGuard],
+        data: { roles: ['estudiante'] }
+      },
+      {
         path: 'agregar-nuevo-contenido/:id_dicta',
         component: AgregarNuevoContenidoComponent,
         title: 'Agregar Nuevo Contenido',
@@ -105,8 +113,14 @@ export const routes: Routes = [
         data: { roles: ['profesor'] }
       },
       {
-        path: 'detalle-nota/:id_dicta/:id_estudiante',
+        path: 'detalle-notas/:id_dicta/:id_estudiante',
         component: DetalleNotasComponent,
+        canActivate: [AuthGuard],
+        data: { roles: ['profesor'] }
+      },
+      {
+        path: 'notas-profesor',
+        component: NotasProfesorComponent,
         canActivate: [AuthGuard],
         data: { roles: ['profesor'] }
       }

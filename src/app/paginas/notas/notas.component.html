@@ -26,7 +26,7 @@
         <td>{{ calcularPromedioGlobalPorTrimestre(+id_dicta.key, 3) | number: '1.0-0' }}</td>
         <td>{{ calcularPromedioGeneral(+id_dicta.key) | number: '1.0-0' }}</td>
         <td>{{ determinarEstado(calcularPromedioGeneral(+id_dicta.key)) }}</td> <!-- Cambiar el promedio para el estado -->
-        <td><a href="#" >VER DETALLE</a></td> <!-- Usar método para manejar el clic -->
+        <td><button [routerLink]="['/home/detalle-notas-estudiantes']">Mas detalle</button></td> <!-- Usar método para manejar el clic -->
       </tr>
     </tbody>
   </table>

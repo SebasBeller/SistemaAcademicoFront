@@ -23,10 +23,7 @@ export class LoginComponent {
   login() {
     this.authService.login(this.email, this.password).subscribe({
       next: (response) => {
-        if(!response.usuario){
-          this.errorMessage = 'Error al iniciar sesión. Verifica tus credenciales.';
-          return
-        }
+        console.log(response)
         this.authService.saveUserData(response.usuario);
         this.router.navigate(['/home']);
       },

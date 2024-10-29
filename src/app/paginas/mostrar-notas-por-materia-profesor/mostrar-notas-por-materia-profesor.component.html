@@ -27,7 +27,7 @@
         <td>{{ estudiante.trimestre2 || 'N/A' }}</td>
         <td>{{ estudiante.trimestre3 || 'N/A' }}</td>
         <td>{{ estudiante.promedio?.toFixed(2) }}</td>
-        <td><button [routerLink]="['/home/detalle-nota', this.idMateria,estudiante.id_estudiante]">Mas detalle</button></td>
+        <td><button [routerLink]="['/home/detalle-notas', this.idMateria,estudiante.id_estudiante]">Mas detalle</button></td>
       </tr>
     </tbody>
   </table>

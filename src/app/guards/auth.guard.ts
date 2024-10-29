@@ -17,10 +17,11 @@ export class AuthGuard implements CanActivate {
     if (userRole === expectedRole) {
       return true;
     } else {
+      console.log(userRole);
+      console.log(expectedRole);
 
 
       this.router.navigate(['']); 
-      this.authService.logout();
       return false;
     }
   }
