@@ -219,9 +219,6 @@ export class DetalleNotasComponent implements OnInit {
           this.notas[index].fecha = nota.fecha; // Actualiza en la lista de notas
 
         }
-        console.log(this.notas)
-
-
         // Refresca la vista localmente
         // this.filtrarNotasEstudianteMateria(this.idEstudiante, this.idDicta);
       },
