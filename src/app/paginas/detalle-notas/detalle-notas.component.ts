@@ -1,5 +1,6 @@
 import { Component, OnInit, inject, numberAttribute } from '@angular/core';
 import { DetalleNotasService } from '../../servicios/detalle-notas.service';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
@@ -18,27 +19,35 @@ import { Materia } from '../../interfaces/materia';
   styleUrls: ['./detalle-notas.component.sass'],
 })
 export class DetalleNotasComponent implements OnInit {
-  notasPorTrimestre: { [key: number]: any } = {};  
+  notasPorTrimestre: { [key: number]: any } = {};
   notas: Nota[]=[];
   estudiantes: Estudiante[] = [];
   materiasAsignadas: Materia[] = [];
   profesores: MateriaAsignadaDocente[] = [];
-  selectedYear: number = new Date().getFullYear(); 
+  selectedYear: number = new Date().getFullYear();
   filteredProfesores: MateriaAsignadaDocente[] = [];
+  estudianteSeleccionado: Estudiante | null = null;
   filteredEstudiantes: Estudiante[] = [];
   nombresMaterias: { [id_materia: number]: string } = {};
   notasPorMateria: { [id_dicta: number]: { trimestre: number, notasPorTipo: { [tipo: string]: number[] } }[] } = {};
   idDicta:number=0;
   idEstudiante:number=0;
   route:ActivatedRoute=inject(ActivatedRoute)
-
+  form: FormGroup;
   constructor(
+    private fb: FormBuilder,
     private detalleNotasService: DetalleNotasService,
     private cd: ChangeDetectorRef,
-    private dialog: MatDialog  // Inyectar el servicio de MatDialog
+    private dialog: MatDialog
   ) {
     this.idDicta=+this.route.snapshot.params["id_dicta"];
     this.idEstudiante=+this.route.snapshot.params["id_estudiante"];
+    this.form = this.fb.group({
+      ser: [0],
+      saber: [0],
+      hacer: [0],
+      decidir: [0]
+    });
 
 
   }
@@ -47,36 +56,28 @@ export class DetalleNotasComponent implements OnInit {
     this.obtenerNotas();
 }
 filtrarNotasEstudianteMateria(idEstudiante: number, idMateria: number): void {
-
-  // Filtrar las notas por el estudiante y la materia específicos
-  const notasEstudianteMateria = this.notas.filter(nota => 
-    nota.estudiante.id_estudiante === idEstudiante && 
-    nota.materiaAsignada.id_dicta === idMateria
+  const notasEstudianteMateria = this.notas.filter(nota =>
+    nota.estudiante?.id_estudiante === idEstudiante &&
+    nota.materiaAsignada?.id_dicta === idMateria
   );
-console.log(this.notas)
-  // Agrupar las notas por trimestre
+
   const notasAgrupadasPorTrimestre: { [trimestre: number]: { [tipo: string]: number[] } } = {};
 
   notasEstudianteMateria.forEach(nota => {
     const trimestre = nota.trimestre;
-    const tipo = nota.tipo;
-    const valorNota = nota.nota;
-
-    // Inicializar el trimestre si no existe
     if (!notasAgrupadasPorTrimestre[trimestre]) {
       notasAgrupadasPorTrimestre[trimestre] = { ser: [], hacer: [], saber: [], decidir: [] };
     }
-
-    // Agregar la nota al tipo correspondiente dentro del trimestre
-    if (tipo in notasAgrupadasPorTrimestre[trimestre]) {
-      notasAgrupadasPorTrimestre[trimestre][tipo].push(valorNota);
+    if (nota.tipo in notasAgrupadasPorTrimestre[trimestre]) {
+      notasAgrupadasPorTrimestre[trimestre][nota.tipo].push(nota.nota);
     }
   });
 
-  // Asignar el resultado para mostrar en la vista
   this.notasPorTrimestre = notasAgrupadasPorTrimestre;
   console.log('Notas por trimestre del estudiante', idEstudiante, 'en la materia', idMateria, ':', this.notasPorTrimestre);
 }
+
+
 
 
 obtenerNotas(): void {
@@ -98,6 +99,7 @@ obtenerNotas(): void {
       (estudiantes: Estudiante[]) => {
         this.estudiantes = estudiantes;
         this.filteredEstudiantes = estudiantes;
+        this.estudianteSeleccionado = estudiantes.find(est => est.id_estudiante === this.idEstudiante) || null;
         console.log('Estudiantes obtenidos:', this.estudiantes);
       },
       (error: any) => {
@@ -105,35 +107,61 @@ obtenerNotas(): void {
       }
     );
   }
- // abrir el modal
-  abrirModal(trimestre: any): void {
-    const dialogRef = this.dialog.open(FormActuaNotasComponent, {
-      width: '400px',
-      data: {
-        ser: trimestre.ser,
-        saber: trimestre.saber,
-        hacer: trimestre.hacer,
-        decidir: trimestre.decidir
-      }
-    });
 
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-       // this.actualizarNotas(trimestre.id, result);
+// abrir el modal
+abrirModal(trimestre: any): void {
+  const dialogRef = this.dialog.open(FormActuaNotasComponent, {
+    width: '400px',
+    data: { ...trimestre }
+  });
 
-      }
-    });
-  }
+  dialogRef.afterClosed().subscribe(result => {
+    if (result) {
+      const notasAActualizar: Nota[] = ['ser', 'saber', 'hacer', 'decidir']
+        .filter(tipo => result[tipo] !== undefined)
+        .map(tipo => {
+          // Intenta obtener el id desde result o trimestre
+          const notaId = result.id || trimestre.id || this.obtenerNotaId(tipo, trimestre.trimestre);
+          return {
+            id: notaId,
+            fecha: new Date(),
+            trimestre: trimestre.trimestre,
+            tipo: tipo,
+            nota: result[tipo],
+            materiaAsignada: { id_dicta: this.idDicta, fecha: new Date() },
+            estudiante: { id_estudiante: this.idEstudiante, nombre: "", apellido: "" },
+          };
+        });
+
+      notasAActualizar.forEach(nota => {
+        if (nota.id) {
+          this.actualizarNota(nota);
+        } else {
+          console.warn('Nota con id no definido:', nota);
+        }
+      });
+    }
+  });
+}
+
+// Método adicional para obtener el id de nota si no está en result o trimestre
+obtenerNotaId(tipo: string, trimestre: number): number | undefined {
+  const nota = this.notas.find(n => n.tipo === tipo && n.trimestre === trimestre && n.estudiante?.id_estudiante === this.idEstudiante && n.materiaAsignada?.id_dicta === this.idDicta);
+  return nota ? nota.id : undefined;
+}
+
+
+
 
 
 
   agruparNotasPorMateria(): void {
     this.notasPorMateria = {};
-    
+
     this.notas.forEach(nota => {
       const id_dicta = nota.materiaAsignada.id_dicta;
       const trimestre = nota.trimestre;
-      const tipo = nota.tipo; // tipo ser hacer decidir
+      const tipo = nota.tipo;
       const notaValue = nota.nota;
 
       if (!this.notasPorMateria[id_dicta]) {
@@ -155,7 +183,29 @@ obtenerNotas(): void {
     console.log('Notas agrupadas por materia:', this.notasPorMateria); // Agregar esta línea
   }
 
-  
+  actualizarNota(nota: Nota): void {
+    this.detalleNotasService.actualizarNota(nota).subscribe(
+      (notaActualizada: Nota) => {
+        console.log('Nota actualizada:', notaActualizada);
+
+        // Actualiza en la lista local si es necesario
+        const index = this.notas.findIndex(n => n.id === nota.id);
+        if (index !== -1) {
+          this.notas[index] = notaActualizada; // Actualiza en la lista de notas
+        }
+
+        // Refresca la vista localmente
+        this.filtrarNotasEstudianteMateria(this.idEstudiante, this.idDicta);
+      },
+      (error: any) => {
+        console.error('Error al actualizar la nota:', error);
+      }
+    );
+  }
+
+
+
+
   convertToNumber(value: string): number {
     return parseFloat(value);
   }

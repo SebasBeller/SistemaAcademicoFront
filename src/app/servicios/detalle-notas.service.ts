@@ -68,16 +68,16 @@ export class DetalleNotasService {
           if (!acc[trimestre]) {
             acc[trimestre] = { ser: 0, saber: 0, hacer: 0, decidir: 0, total: 0 };
           }
-          
+
           // Convertir curr.tipo a uno de los tipos de clave válidos
           if (['ser', 'saber', 'hacer', 'decidir'].includes(curr.tipo)) {
             acc[trimestre][curr.tipo as 'ser' | 'saber' | 'hacer' | 'decidir'] = curr.nota;
           }
-  
+
           acc[trimestre].total = Object.values(acc[trimestre]).reduce((sum, val) => sum + (val || 0), 0);
           return acc;
         }, {} as { [trimestre: number]: { ser: number, saber: number, hacer: number, decidir: number, total: number }});
-  
+
         return agrupadosPorTrimestre;
       }),
       catchError(error => {
@@ -86,7 +86,7 @@ export class DetalleNotasService {
       })
     );
   }
-  
+
 
   obtenerNotasPorAno(selectedYear: number): Observable<Nota[]> {
     return this.obtenerTodasLasNotas().pipe(
@@ -109,11 +109,6 @@ export class DetalleNotasService {
   }
    // Método para actualizar la nota
    actualizarNota(nota: Nota): Observable<Nota> {
-    return this.http.put<Nota>(`${this.apiUrl}/nota/${nota.id}`, nota).pipe(
-      catchError(error => {
-        console.error('Error al actualizar la nota:', error);
-        return of(nota); // Devuelve la nota original en caso de error
-      })
-    );
+    return this.http.put<Nota>(`http://localhost:3000/nota/${nota.id}`, nota);
   }
 }

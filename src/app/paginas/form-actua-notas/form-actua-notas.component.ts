@@ -10,10 +10,10 @@ import { MatButtonModule } from '@angular/material/button';
   selector: 'app-form-actua-notas',
   standalone: true,
   imports: [
-    ReactiveFormsModule, 
-    MatDialogModule, 
-    MatFormFieldModule, 
-    MatInputModule, 
+    ReactiveFormsModule,
+    MatDialogModule,
+    MatFormFieldModule,
+    MatInputModule,
     MatButtonModule
   ],
   templateUrl: './form-actua-notas.component.html',
@@ -28,6 +28,7 @@ export class FormActuaNotasComponent {
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
     this.form = this.fb.group({
+     
       ser: [data.ser, Validators.required],
       saber: [data.saber, Validators.required],
       hacer: [data.hacer, Validators.required],

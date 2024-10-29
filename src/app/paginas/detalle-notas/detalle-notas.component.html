@@ -1,5 +1,8 @@
 <div class="titulo">
   <div class="area-materias"><b>Área: Ciencias</b></div>
+  <div *ngIf="estudianteSeleccionado">
+       <p><b>Nombre estudiante:</b> {{ estudianteSeleccionado.nombre }} {{ estudianteSeleccionado.apellido }}</p>
+  </div>
 </div>
 
 <div class="notas-container">
