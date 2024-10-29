@@ -7,11 +7,12 @@ import { Estudiante } from '../../interfaces/estudiante';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { AuthService } from '../../servicios/auth.service';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-notas',
   standalone: true,
-  imports: [CommonModule, HttpClientModule],
+  imports: [CommonModule, HttpClientModule, RouterModule],
   templateUrl: './notas.component.html',
   styleUrls: ['./notas.component.sass']
 })

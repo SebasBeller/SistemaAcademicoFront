@@ -15,7 +15,9 @@ import { NotasComponent } from './paginas/notas/notas.component';
 import { DetalleNotasComponent } from './paginas/detalle-notas/detalle-notas.component';
 import { AuthGuard } from './guards/auth.guard'; // Importa el AuthGuard
 import{LoginComponent} from './paginas/login/login.component'
-
+import { MostrarNotasPorMateriaProfesorComponent } from './paginas/mostrar-notas-por-materia-profesor/mostrar-notas-por-materia-profesor.component';
+import { DetalleNotasEstudiantesComponent } from './paginas/detalle-notas-estudiantes/detalle-notas-estudiantes.component';
+import { NotasProfesorComponent } from './paginas/notas-profesor/notas-profesor.component';
 
 export const routes: Routes = [
   {
@@ -69,6 +71,16 @@ export const routes: Routes = [
         canActivate: [AuthGuard],
         data: { roles: ['estudiante'] },
       },
+      { path: 'notas', component: NotasComponent, title: 'Notas del Estudiante',
+        canActivate: [AuthGuard],
+        data: { roles: ['estudiante'] },
+      },
+      {
+        path: 'detalle-notas-estudiantes',
+        component: DetalleNotasEstudiantesComponent,
+        canActivate: [AuthGuard],
+        data: { roles: ['estudiante'] }
+      },
       {
         path: 'agregar-nuevo-contenido/:id_dicta',
         component: AgregarNuevoContenidoComponent,
@@ -88,17 +100,29 @@ export const routes: Routes = [
         canActivate: [AuthGuard],
         data: { roles: ['profesor'] },
       },
-
       {
         path: 'registro-asistencias-estudiantes/:idMateria',
         component: RegistroAsistenciaDocentesComponent,
         canActivate: [AuthGuard],
         data: { roles: ['profesor'] }
       },
-      { path: 'notas', component: NotasComponent, title: 'Notas del Estudiante',
+      {
+        path: 'mostrar-notas-por-materia-profesor/:id_dicta',
+        component: MostrarNotasPorMateriaProfesorComponent,
         canActivate: [AuthGuard],
-        data: { roles: ['estudiante'] },
-
+        data: { roles: ['profesor'] }
+      },
+      {
+        path: 'detalle-notas/:id_dicta/:id_estudiante',
+        component: DetalleNotasComponent,
+        canActivate: [AuthGuard],
+        data: { roles: ['profesor'] }
+      },
+      {
+        path: 'notas-profesor',
+        component: NotasProfesorComponent,
+        canActivate: [AuthGuard],
+        data: { roles: ['profesor'] }
       }
     ],
   },
