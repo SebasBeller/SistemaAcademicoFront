@@ -22,7 +22,7 @@ export class NotasComponent implements OnInit {
   profesores: MateriaAsignadaDocente[] = [];
   estudiantes: Estudiante[] = [];
   materiasAsignadas: Materias[] = [];
-  selectedYear: number = 2021; 
+  selectedYear: number = 2024; 
   filteredProfesores: MateriaAsignadaDocente[] = [];
   filteredEstudiantes: Estudiante[] = [];
   nombresMaterias: { [id_materia: number]: string } = {};
@@ -33,6 +33,9 @@ export class NotasComponent implements OnInit {
     this.obtenerProfesores();
     this.obtenerEstudiantes();
     this.obtenerNotas();
+  }
+  obtenerIdEstudiante():number{
+    return this.authService.getUserId()
   }
 
   obtenerProfesores(): void {

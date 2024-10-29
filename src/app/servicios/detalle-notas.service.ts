@@ -99,7 +99,8 @@ export class DetalleNotasService {
             ...nota.materiaAsignada,
             fecha: new Date(nota.materiaAsignada?.fecha)
           }
-        })).filter((nota: Nota) => nota.fecha.getFullYear() === selectedYear);
+        })).filter((nota: Nota) =>{ 
+          return nota.fecha.getFullYear() === selectedYear});
       }),
       catchError(error => {
         console.error('Error al obtener notas por año:', error);
