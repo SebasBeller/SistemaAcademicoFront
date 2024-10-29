@@ -109,6 +109,6 @@ export class DetalleNotasService {
   }
    // Método para actualizar la nota
    actualizarNota(nota: Nota): Observable<Nota> {
-    return this.http.put<Nota>(`http://localhost:3000/nota/${nota.id}`, nota);
+    return this.http.patch<Nota>(`http://localhost:3000/nota/${nota.id}`, nota);
   }
 }
