@@ -1,34 +1,19 @@
 <div class="titulo">
-    <h1><b>Materia: Matematicas I</b></h1>
-    <div class="area-materias"><b>Área: Ciencias</b></div>
+  <div class="area-materias"><b>Área: Ciencias</b></div>
+  <div *ngIf="estudianteSeleccionado">
+       <p><b>Nombre estudiante:</b> {{ estudianteSeleccionado.nombre }} {{ estudianteSeleccionado.apellido }}</p>
   </div>
-  
-  <div class="notas-container">
-    <h2>Notas por Trimestre</h2>
-    <div *ngFor="let trimestre of notasPorTrimestre | keyvalue" class="trimestre-section">
-      <h3>Trimestre {{ trimestre.key }}</h3>
-  
-      <div class="notas">
-        <div class="nota-item">
-          <span class="tipo-label">Ser:</span>
-          <span class="nota-value">{{ trimestre.value.ser }}</span>
-        </div>
-        <div class="nota-item">
-          <span class="tipo-label">Saber:</span>
-          <span class="nota-value">{{ trimestre.value.saber }}</span>
-        </div>
-        <div class="nota-item">
-          <span class="tipo-label">Hacer:</span>
-          <span class="nota-value">{{ trimestre.value.hacer }}</span>
-        </div>
-        <div class="nota-item">
-          <span class="tipo-label">Decidir:</span>
-          <span class="nota-value">{{ trimestre.value.decidir }}</span>
-        </div>
-        <div class="nota-item total">
-          <span class="tipo-label"><strong>Total:</strong></span>
-          <span class="nota-value"><strong>{{ trimestre.value.total / 4 }}</strong></span>
-        </div>
+</div>
+
+<div class="notas-container">
+  <h2>Notas por Trimestre</h2>
+  <div *ngFor="let trimestre of notasPorTrimestre | keyvalue" class="trimestre-section">
+    <h3>Trimestre {{ trimestre.key }}</h3>
+
+    <div class="notas">
+      <div class="nota-item">
+        <span class="tipo-label">Ser:</span>
+        <span class="nota-value">{{ trimestre.value.ser[0].nota }}</span>
       </div>
       <div class="nota-item">
         <span class="tipo-label">Saber:</span>
@@ -47,6 +32,7 @@
         <span class="nota-value"><strong>{{ (convertToNumber(trimestre.value.ser[0].nota) + convertToNumber(trimestre.value.saber[0].nota) + convertToNumber(trimestre.value.hacer[0].nota) + convertToNumber(trimestre.value.decidir[0].nota)) / 4 }}</strong></span>
       </div>
 
-      <!-- Botón para abrir el modal -->
+
     </div>
   </div>
+</div>
