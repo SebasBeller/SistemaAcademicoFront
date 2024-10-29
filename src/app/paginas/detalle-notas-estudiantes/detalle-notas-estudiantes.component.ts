@@ -1,10 +1,8 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { DetalleNotasService } from '../../servicios/detalle-notas.service';
+import { DetalleNotasEstudiantesService } from '../../servicios/detalle-nota-estudiante.service';
 import { ChangeDetectorRef } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
-import { FormActuaNotasComponent } from '../form-actua-notas/form-actua-notas.component';
 
 @Component({
   selector: 'app-detalle-notas',
@@ -19,7 +17,7 @@ export class DetalleNotasEstudiantesComponent implements OnInit {
   idDicta = 130;  
 
   constructor(
-    private detalleNotasService: DetalleNotasService,
+    private detalleNotasEstudianteService: DetalleNotasEstudiantesService,
     private cd: ChangeDetectorRef,
     private dialog: MatDialog  // Inyectar el servicio de MatDialog
   ) {}
@@ -28,7 +26,7 @@ export class DetalleNotasEstudiantesComponent implements OnInit {
   }
 
   cargarNotas(): void {
-    this.detalleNotasService.getDatosAgrupados(this.idEstudiante, this.idDicta).subscribe(
+    this.detalleNotasEstudianteService.getDatosAgrupados(this.idEstudiante, this.idDicta).subscribe(
       (datosAgrupados) => {
         this.notasPorTrimestre = datosAgrupados;
         console.log('Notas agrupadas por trimestre:', this.notasPorTrimestre);
