@@ -123,6 +123,11 @@ export const routes: Routes = [
         component: NotasProfesorComponent,
         canActivate: [AuthGuard],
         data: { roles: ['profesor'] }
+      },
+      { path: 'agregar-material-docente/:id', loadChildren: () => import('./paginas/agregar-material-docente/home/feature/home-routing') ,
+        canActivate: [AuthGuard],
+        data: { roles: ['profesor'] }
+
       }
     ],
   },
