@@ -16,7 +16,7 @@ import {MatDividerModule} from '@angular/material/divider';
 import {MatButtonModule} from '@angular/material/button';
 import { ActivatedRoute } from '@angular/router';
 import { MensajeService } from '../mensaje/mensaje.component';
-
+import Swal from 'sweetalert2';
 @Component({
   selector: 'app-registro-asistencia-docentes',
   standalone: true,
@@ -164,28 +164,47 @@ export class RegistroAsistenciaDocentesComponent implements OnInit {
 
 
   editarFecha(fecha: string) {
-    const nuevaFecha = prompt(`Editar fecha ${fecha}`, fecha);
-    if (nuevaFecha && nuevaFecha !== fecha) {
-      const index = this.displayedColumns.indexOf(fecha);
-      if (index !== -1) {
-        this.displayedColumns[index] = nuevaFecha;
-      }
-      console.log(this.asistencias)
-      console.log(fecha)
-
-      for (let registro of this.asistencias) {
-        const asistencia = registro.asistencias.find(
-          (a:any) =>   new Date(a.fecha_asistencia+"T00:00:00").toLocaleDateString() === fecha
-        ) || registro.asistencias.find(
-          (a:any) =>   new Date(a.fecha_asistencia).toLocaleDateString() === fecha
-        )
-        if (asistencia) {
-          console.log("asis",asistencia)
-          asistencia.fecha_asistencia = new Date(nuevaFecha).toLocaleDateString('en-EN');
+    Swal.fire({
+      title: 'Editar Fecha',
+      input: 'date',
+      inputLabel: `Fecha actual: ${fecha}`,
+      inputValue: fecha,
+      showCancelButton: true,
+      confirmButtonText: 'Guardar',
+      cancelButtonText: 'Cancelar',
+      inputValidator: (value) => {
+        if (!value) {
+          return 'Por favor, selecciona una fecha válida.';
         }
+        return null;
       }
-      console.log(this.asistencias)
-    }
+    }).then((result) => {
+      if (result.isConfirmed && result.value) {
+        const nuevaFecha = result.value;
+
+        // Actualizar displayedColumns con la nueva fecha si existe
+        const index = this.displayedColumns.indexOf(fecha);
+        if (index !== -1) {
+          this.displayedColumns[index] = nuevaFecha;
+        }
+
+        console.log("Asistencias antes de la actualización:", this.asistencias);
+
+        // Actualizar cada registro en asistencias con la nueva fecha
+        for (let registro of this.asistencias) {
+          const asistencia = registro.asistencias.find(
+            (a: any) => new Date(a.fecha_asistencia + "T00:00:00").toLocaleDateString() === fecha ||
+                        new Date(a.fecha_asistencia).toLocaleDateString() === fecha
+          );
+
+          if (asistencia) {
+            asistencia.fecha_asistencia = new Date(nuevaFecha).toLocaleDateString('en-EN');
+          }
+        }
+
+        console.log("Asistencias después de la actualización:", this.asistencias);
+      }
+    });
   }
 
 
