@@ -1,5 +1,5 @@
 import { Component,inject ,OnInit} from '@angular/core';
-import { FormsModule } from '@angular/forms'; 
+import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { MatTableModule } from '@angular/material/table';
 import {AsistenciaService} from '../../servicios/asistencia.service'
@@ -15,6 +15,7 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatDividerModule} from '@angular/material/divider';
 import {MatButtonModule} from '@angular/material/button';
 import { ActivatedRoute } from '@angular/router';
+import { MensajeService } from '../mensaje/mensaje.component';
 
 @Component({
   selector: 'app-registro-asistencia-docentes',
@@ -25,7 +26,7 @@ import { ActivatedRoute } from '@angular/router';
     MatTableModule,
     MatSelectModule,
     MatFormFieldModule,
-    MatInputModule, 
+    MatInputModule,
     MatDatepickerModule,
     MatButtonModule,
     MatDividerModule,
@@ -49,7 +50,7 @@ export class RegistroAsistenciaDocentesComponent implements OnInit {
   readonly maxDate = new Date(this.currentYear + 1, 11, 31);
   route:ActivatedRoute=inject(ActivatedRoute)
   idMateria!:number;
-  constructor() {
+  constructor( private mensajeService:MensajeService) {
     this.idMateria=this.route.snapshot.params['idMateria']
   }
 
@@ -57,7 +58,7 @@ export class RegistroAsistenciaDocentesComponent implements OnInit {
     this.servicioAsistencias.getAsistenciasDeMateriaAsignada(this.idMateria).subscribe(
       (response: MateriaAsignadaDocente) => {
         console.log('Datos recibidos:', response);
-        this.materiaAsignada = response; 
+        this.materiaAsignada = response;
         console.log("respini",this.materiaAsignada)
 
         this.asistencias= (
@@ -87,7 +88,7 @@ export class RegistroAsistenciaDocentesComponent implements OnInit {
     return this.servicioAsistencias.getEstadoAsistencia(asistencias, fecha);
 
   }
-  
+
 
   agregarFecha(event: MatDatepickerInputEvent<Date>) {
     const fechaSeleccionada: Date | null = event.value;
@@ -124,7 +125,7 @@ export class RegistroAsistenciaDocentesComponent implements OnInit {
 
   }
 
-  
+
   actualizarAsistencia(asistencias:Asistencia[], fecha:string,event:any){
     console.log("gg",this.cambiosAsistencias)
     console.log("gg",asistencias)
@@ -143,11 +144,15 @@ export class RegistroAsistenciaDocentesComponent implements OnInit {
   }
   guardarCambios(){
     console.log("guardar",this.cambiosAsistencias)
+    this.mensajeService.mostrarMensajeExito("¡Éxito","La fecha se ha guardado exitosamente")
     this.cambiosAsistencias.forEach(
+
       (cambios)=>{
         this.servicioAsistencias.actualizarAsistencia(cambios.id_asistencia,cambios).subscribe(
           (response: Asistencia) => {
+
             console.log('Datos recibidos:', response);
+
           },
           error => {
             console.error('Error en la petición POST:', error);
@@ -157,7 +162,7 @@ export class RegistroAsistenciaDocentesComponent implements OnInit {
     )
   }
 
-  
+
   editarFecha(fecha: string) {
     const nuevaFecha = prompt(`Editar fecha ${fecha}`, fecha);
     if (nuevaFecha && nuevaFecha !== fecha) {
@@ -173,7 +178,7 @@ export class RegistroAsistenciaDocentesComponent implements OnInit {
           (a:any) =>   new Date(a.fecha_asistencia+"T00:00:00").toLocaleDateString() === fecha
         ) || registro.asistencias.find(
           (a:any) =>   new Date(a.fecha_asistencia).toLocaleDateString() === fecha
-        ) 
+        )
         if (asistencia) {
           console.log("asis",asistencia)
           asistencia.fecha_asistencia = new Date(nuevaFecha).toLocaleDateString('en-EN');
@@ -185,29 +190,39 @@ export class RegistroAsistenciaDocentesComponent implements OnInit {
 
 
   eliminarFecha(fecha: string) {
-    const confirmacion = confirm(`¿Estás seguro de eliminar la fecha ${fecha}?`);
-    if (confirmacion) {
-      const index = this.displayedColumns.indexOf(fecha);
-      if (index !== -1) {
-        this.displayedColumns.splice(index, 1);
-      }
-  
-      for (let registro of this.asistencias) {
-        const asistenciaIndex = registro.asistencias.findIndex((a: Asistencia) => 
-          new Date(a.fecha_asistencia).toLocaleDateString() === new Date(fecha).toLocaleDateString()
-        );
-        if (asistenciaIndex !== -1) {
-          registro.asistencias.splice(asistenciaIndex, 1);
+    //const confirmacion = confirm(`¿Estás seguro de eliminar la fecha ${fecha}?`);
+    this.mensajeService.mostrarMensajeConfirmacion(
+      '¡Confirmación!',
+      `¿Estás seguro de eliminar la fecha ${fecha}?`,
+      ()=>{
+       // if (confirmacion) {
+          const index = this.displayedColumns.indexOf(fecha);
+          if (index !== -1) {
+            this.displayedColumns.splice(index, 1);
+          }
+
+          for (let registro of this.asistencias) {
+            const asistenciaIndex = registro.asistencias.findIndex((a: Asistencia) =>
+              new Date(a.fecha_asistencia).toLocaleDateString() === new Date(fecha).toLocaleDateString()
+            );
+            if (asistenciaIndex !== -1) {
+              registro.asistencias.splice(asistenciaIndex, 1);
+            }
+          }
         }
-      }
-    }
+
+     // }
+
+
+    )
+
   }
-  
+
 
   // Añade la función de filtrado
   filtrarEstudiantes(event: Event) {
     const input = (event.target as HTMLInputElement).value.toLowerCase();
-    this.filteredAsistencias = this.asistencias.filter((asistencia) => 
+    this.filteredAsistencias = this.asistencias.filter((asistencia) =>
       asistencia.nombre.toLowerCase().includes(input)
     );
   }
