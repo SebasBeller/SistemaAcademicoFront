@@ -15,7 +15,8 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatDividerModule} from '@angular/material/divider';
 import {MatButtonModule} from '@angular/material/button';
 import { ActivatedRoute } from '@angular/router';
-
+import {InscripcionService} from '../../servicios/inscripcion.service'
+import{Estudiante} from '../../interfaces/estudiante'
 @Component({
   selector: 'app-registro-asistencia-docentes',
   standalone: true,
@@ -38,8 +39,12 @@ import { ActivatedRoute } from '@angular/router';
 export class RegistroAsistenciaDocentesComponent implements OnInit {
   btnEditar: boolean = true;
   servicioAsistencias:AsistenciaService=inject(AsistenciaService);
+  servicioInscripcion:InscripcionService=inject(InscripcionService);
+  inscritos:Estudiante[]=[];
+  asistenciasEstudiantes: {[key: string]: Asistencia[]|any}[]=[];
+
   materiaAsignada!:MateriaAsignadaDocente;
-  asistencias: any[]=[];
+  // asistencias: any[]=[];
   filteredAsistencias: any[] = []; // Lista de asistencias filtradas
 
   displayedColumns: string[]=[] ;
@@ -53,27 +58,20 @@ export class RegistroAsistenciaDocentesComponent implements OnInit {
     this.idMateria=this.route.snapshot.params['idMateria']
   }
 
-  ngOnInit(): void {
+
+  obtenerAsistencias(){
     this.servicioAsistencias.getAsistenciasDeMateriaAsignada(this.idMateria).subscribe(
       (response: MateriaAsignadaDocente) => {
-        console.log('Datos recibidos:', response);
         this.materiaAsignada = response; 
-        console.log("respini",this.materiaAsignada)
+        console.log(response);
 
-        this.asistencias= (
-          this.servicioAsistencias.getAsistenciasAgrupadasPorEstudiante(this.materiaAsignada.asistencias, "Asistencia").length === 0
-          ? this.servicioAsistencias.getAsistenciasAgrupadasPorEstudiante(this.materiaAsignada.inscripciones, "Inscripción")
-          : this.servicioAsistencias.getAsistenciasAgrupadasPorEstudiante(this.materiaAsignada.asistencias, "Asistencia")
-        );
-        this.filteredAsistencias = this.asistencias; // Inicializar filteredAsistencias con la lista completa
-
-        let fechas:string[]= [...this.servicioAsistencias.getUniqueFechas()];
-        if (fechas.includes("Invalid Date")) {
-          this.displayedColumns= ['nombre']
-          return
-        }
-        this.displayedColumns= ['nombre', ...this.servicioAsistencias.getUniqueFechas()]
-        console.log("ini",this.asistencias)
+        this.asistenciasEstudiantes=this.servicioAsistencias.getAsistenciasAgrupadasPorEstudiante(this.materiaAsignada.asistencias);
+        console.log(this.asistenciasEstudiantes)
+        let fechas:string[]= [...this.servicioAsistencias.getUniqueFechas()].sort((fechaAnterior,fechaActual)=>{
+          return this.esMayor(fechaAnterior,fechaActual);
+        });
+        this.displayedColumns=["nombre",...fechas]
+        this.filteredAsistencias=this.asistenciasEstudiantes
       },
       error => {
         console.error('Error en la petición GET:', error);
@@ -81,20 +79,25 @@ export class RegistroAsistenciaDocentesComponent implements OnInit {
     )
   }
 
+  esMayor(fechaAnterior:string,fechaActual:string){
+    let fechaAnt=new Date(fechaAnterior);
+    let fechaAct=new Date(fechaActual);
+    return fechaAnt.getTime()-fechaAct.getTime();
+  }
+
+  ngOnInit(): void {
+   this.obtenerAsistencias();
+  }
+
 
   getEstadoAsistencia(asistencias: Asistencia[], fecha: string): string {
 
-    return this.servicioAsistencias.getEstadoAsistencia(asistencias, fecha);
+    return this.servicioAsistencias.getAsistenciaPorFecha(asistencias, fecha)?.estado ||"Falta" ;
 
   }
-  
-
-  agregarFecha(event: MatDatepickerInputEvent<Date>) {
-    const fechaSeleccionada: Date | null = event.value;
-    let fechaActual=fechaSeleccionada|| new Date();
-    this.displayedColumns.push(fechaActual.toLocaleDateString());
-    let asistencias:Asistencia[]=[]
-    for(let registro of this.asistencias){
+  crearNuevasAsistencias(fechaActual:Date,asistencias:any){
+    let nuevasAsistencias:Asistencia[]=[]
+    for(let registro of asistencias){
       let asistencia={
         fecha_asistencia: fechaActual,
         estado:"Falta"
@@ -105,17 +108,30 @@ export class RegistroAsistenciaDocentesComponent implements OnInit {
         estudiante: registro.asistencias[0].estudiante,
         ...asistencia
       }
-      asistencias.push(data)
+      nuevasAsistencias.push(data)
     }
+    return nuevasAsistencias;
+
+  }
+
+  agregarFecha(event: MatDatepickerInputEvent<Date>) {
+    const fechaSeleccionada: Date | null = event.value;
+    let fechaActual=fechaSeleccionada|| new Date();
+    let asistencias=this.crearNuevasAsistencias(fechaActual,this.asistenciasEstudiantes);
     this.servicioAsistencias.guardarAsistencias(asistencias).subscribe(
-      (response: Asistencia[]) => {
+      (response: any[]) => {
         this.materiaAsignada.asistencias = this.materiaAsignada.asistencias || [];
-        this.materiaAsignada.asistencias=this.materiaAsignada.asistencias.concat(response);
-        console.log(this.materiaAsignada.asistencias)
-        console.log(response)
+        response=response.map(asistencia=>{
+          asistencia.fecha_asistencia=asistencia.fecha_asistencia.split(" ")[0]
+          return asistencia;
+        })
         this.materiaAsignada.asistencias=[...response,...this.materiaAsignada.asistencias]
-        this.asistencias =this.servicioAsistencias.getAsistenciasAgrupadasPorEstudiante(this.materiaAsignada.asistencias, "Asistencia") ;
-        this.filteredAsistencias=this.asistencias;
+        this.asistenciasEstudiantes =this.servicioAsistencias.getAsistenciasAgrupadasPorEstudiante(this.materiaAsignada.asistencias) ;
+        this.filteredAsistencias=this.asistenciasEstudiantes;
+        let fechas:string[]= [...this.servicioAsistencias.getUniqueFechas()].sort((fechaAnterior,fechaActual)=>{
+          return this.esMayor(fechaAnterior,fechaActual);
+        });
+        this.displayedColumns=["nombre",...fechas]
       },
       error => {
         console.error('Error en la petición POST:', error);
@@ -126,23 +142,17 @@ export class RegistroAsistenciaDocentesComponent implements OnInit {
 
   
   actualizarAsistencia(asistencias:Asistencia[], fecha:string,event:any){
-    console.log("gg",this.cambiosAsistencias)
-    console.log("gg",asistencias)
-
-    let asistencia=asistencias.find(
-      (a) =>   new Date(a.fecha_asistencia+"T00:00:00").toLocaleDateString() === fecha
-    ) || asistencias.find(
-      (a) =>   new Date(a.fecha_asistencia).toLocaleDateString() === fecha
-    ) ;
+    let asistencia=this.servicioAsistencias.getAsistenciaPorFecha(asistencias, fecha);
     asistencia!.estado=event.value;
     this.cambiosAsistencias.push({
       id_asistencia: asistencia!.id_asistencia,
       estado:asistencia!.estado
     });
+    console.log(asistencia)
     return event.value;
   }
+
   guardarCambios(){
-    console.log("guardar",this.cambiosAsistencias)
     this.cambiosAsistencias.forEach(
       (cambios)=>{
         this.servicioAsistencias.actualizarAsistencia(cambios.id_asistencia,cambios).subscribe(
@@ -165,21 +175,16 @@ export class RegistroAsistenciaDocentesComponent implements OnInit {
       if (index !== -1) {
         this.displayedColumns[index] = nuevaFecha;
       }
-      console.log(this.asistencias)
-      console.log(fecha)
-
-      for (let registro of this.asistencias) {
-        const asistencia = registro.asistencias.find(
+      for (let registro of this.asistenciasEstudiantes) {
+        const asistencia = registro["asistencias"].find(
           (a:any) =>   new Date(a.fecha_asistencia+"T00:00:00").toLocaleDateString() === fecha
-        ) || registro.asistencias.find(
+        ) || registro["asistencias"].find(
           (a:any) =>   new Date(a.fecha_asistencia).toLocaleDateString() === fecha
         ) 
         if (asistencia) {
-          console.log("asis",asistencia)
           asistencia.fecha_asistencia = new Date(nuevaFecha).toLocaleDateString('en-EN');
         }
       }
-      console.log(this.asistencias)
     }
   }
 
@@ -192,27 +197,25 @@ export class RegistroAsistenciaDocentesComponent implements OnInit {
         this.displayedColumns.splice(index, 1);
       }
   
-      for (let registro of this.asistencias) {
-        const asistenciaIndex = registro.asistencias.findIndex((a: Asistencia) => 
+      for (let registro of this.asistenciasEstudiantes) {
+        const asistenciaIndex = registro["asistencias"].findIndex((a: Asistencia) => 
           new Date(a.fecha_asistencia).toLocaleDateString() === new Date(fecha).toLocaleDateString()
         );
         if (asistenciaIndex !== -1) {
-          registro.asistencias.splice(asistenciaIndex, 1);
+          registro["asistencias"].splice(asistenciaIndex, 1);
         }
       }
     }
   }
   
 
-  // Añade la función de filtrado
   filtrarEstudiantes(event: Event) {
     const input = (event.target as HTMLInputElement).value.toLowerCase();
-    this.filteredAsistencias = this.asistencias.filter((asistencia) => 
-      asistencia.nombre.toLowerCase().includes(input)
+    this.filteredAsistencias = this.asistenciasEstudiantes.filter((asistencia) => 
+      asistencia["nombre"].toLowerCase().includes(input)
     );
   }
 
-  // Actualiza el dataSource en la tabla para usar asistenciasFiltradas
   get dataSource() {
     return this.filteredAsistencias;
   }

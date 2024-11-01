@@ -99,7 +99,7 @@ export class DetalleNotasComponent implements OnInit {
     this.detalleNotasService.obtenerNotasPorAno(this.selectedYear).subscribe(
       (notas: Nota[]) => {
         this.notas = notas;
-        this.filtrarNotasEstudianteMateria(this.idEstudiante, this.idDicta); // Filtra para id_estudiante = 1 y id_dicta = 130
+        this.filtrarNotasEstudianteMateria(this.idEstudiante, this.idDicta); 
       },
       (error: any) => {
         console.error('Error en la petición de notas:', error);

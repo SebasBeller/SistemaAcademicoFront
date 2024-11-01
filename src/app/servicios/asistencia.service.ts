@@ -21,10 +21,10 @@ export class AsistenciaService {
     return this.http.get<MateriaAsignadaDocente>(`${this.urlApi}/${id}`);
   }
   
-  getAsistenciasAgrupadasPor(asistencias?: any[],grupo?:string):any[]{
+  getAsistenciasAgrupadasPor(asistencias?: any[]):any[]{
     return Object.entries(
       asistencias?.reduce((acc: any, asistencia: any) => {
-        const nombreEstudiante = asistencia.estudiante?.nombre || 'Mariana';
+        const nombreEstudiante = `${asistencia.estudiante.apellido} ${asistencia.estudiante?.nombre}`;
           (acc[nombreEstudiante] = acc[nombreEstudiante] || []).push(
             asistencia
           );
@@ -32,8 +32,8 @@ export class AsistenciaService {
       }, {})
     ).map(([nombre, asistencias]) => ({ nombre, asistencias }));
   }
-  getAsistenciasAgrupadasPorEstudiante(asistencias?: any[],grupo?:string): any[] {
-    this.asistencias = this.getAsistenciasAgrupadasPor(asistencias,grupo);
+  getAsistenciasAgrupadasPorEstudiante(asistencias?: any[]): any[] {
+    this.asistencias = this.getAsistenciasAgrupadasPor(asistencias);
     return this.asistencias;
   }
 
@@ -48,13 +48,13 @@ export class AsistenciaService {
     return Array.from(fechas);
   }
 
-  getEstadoAsistencia(asistencias: Asistencia[], fecha: string): string {
+  getAsistenciaPorFecha(asistencias: Asistencia[], fecha: string):Asistencia|undefined {
         
     const asistencia = asistencias.find(
       (a) => 
             new Date(a.fecha_asistencia+"T00:00:00").toLocaleDateString() === fecha
     );
-    return asistencia ? asistencia.estado : 'Falta';
+    return asistencia;
   }
 
   guardarAsistencia(asistencia:Asistencia):Observable<number>{
