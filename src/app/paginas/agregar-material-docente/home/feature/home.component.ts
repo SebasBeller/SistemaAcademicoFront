@@ -59,6 +59,10 @@ export default class HomeComponent implements OnInit{
     const input = event.target as HTMLInputElement;
     if (input.files && input.files.length > 0) {
       this.file = input.files[0];
+      if(!this.file.type.split("/")[1].includes("pdf")){
+        console.log("ERROR FORMATO NO VALIDO DEBE SUBIR SOLO PDF")
+        return;
+      }
       this.uploadFile();
     }
   }
