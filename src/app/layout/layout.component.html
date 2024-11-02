@@ -1,9 +1,11 @@
 <header>
   <div class="escudo">
+    <a routerLink="home">
     <img
       src="https://img.freepik.com/vector-premium/diseno-vectorial-logotipo-escuela-fondo-blanco_579306-14609.jpg"
       alt="Escudo"
     />
+    </a>
   </div>
   <div class="titulo">
     <h1><b>Colegio San Rafael</b></h1>
@@ -19,10 +21,12 @@
 <nav>
   <div class="sidebar">
     <div class="fotoperfil">
+      <a routerLink="perfil-estudiante/1">
       <img
         src="https://publish-p47754-e237306.adobeaemcloud.com/adobe/dynamicmedia/deliver/dm-aid--914bcfe0-f610-4610-a77e-6ea53c53f630/_330603286208.app.webp?preferwebp=true&width=312"
         alt="Foto de Perfil"
       />
+      Editar Perfil</a>
     </div>
     <ul>
       <li *ngIf="userRole === 'profesor'">
