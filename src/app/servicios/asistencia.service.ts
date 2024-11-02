@@ -32,10 +32,27 @@ export class AsistenciaService {
       }, {})
     ).map(([nombre, asistencias]) => ({ nombre, asistencias }));
   }
+  getAsistenciasInscripcionAgrupadasPor(inscripciones?: any[]):any[]{
+    return Object.entries(
+      inscripciones?.reduce((acc: any, asistencia: any) => {
+        const nombreEstudiante = `${asistencia.estudiante?.apellido} ${asistencia.estudiante?.nombre}`;
+          acc[nombreEstudiante]=[]
+        return acc;
+      }, {})
+    ).map(([nombre, asistencias]) => ({ nombre, asistencias }));
+  }
   getAsistenciasAgrupadasPorEstudiante(asistencias?: any[]): any[] {
     this.asistencias = this.getAsistenciasAgrupadasPor(asistencias);
     return this.asistencias;
   }
+
+  getAsistenciasInscripcionAgrupadasPorEstudiante(inscripciones?: any[]): any[] {
+    this.asistencias = this.getAsistenciasInscripcionAgrupadasPor(inscripciones);
+    console.log("hh",this.asistencias)
+    return this.asistencias;
+  }
+  
+
 
   getUniqueFechas(): string[] {
     const fechas = new Set<string>();
@@ -69,6 +86,10 @@ export class AsistenciaService {
 
   actualizarAsistencia(id:number,asistencia:any):Observable<Asistencia>{
     return this.http.patch<Asistencia>(`http://localhost:3000/asistencia/${id}`, asistencia)
+  }
+
+  eliminarAsistencia(id:number):Observable<Asistencia>{
+    return this.http.delete<Asistencia>(`http://localhost:3000/asistencia/${id}`)
   }
    // Método para obtener asistencias por estudiante y materia
    getAsistenciasPorEstudianteYMateria(idEstudiante: number, idMateria: number): Observable<Asistencia[]> {
