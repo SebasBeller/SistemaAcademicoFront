@@ -29,7 +29,7 @@
   </mat-form-field>
 
   <mat-form-field class="example-full-width">
-    <mat-label>Seleccionar dia </mat-label>
+    <mat-label>{{fechaInicio.toLocaleDateString("en-US")}}</mat-label>
     <input matInput [matDatepicker]="picker"
     (dateChange)="filtrarFechas($event)">
     <mat-hint>MM/DD/YYYY</mat-hint>
@@ -37,8 +37,6 @@
     <mat-datepicker #picker></mat-datepicker>
   </mat-form-field>
 
-
-<p>Fecha: {{fechaInicio.toLocaleDateString("en-US")}}</p>
 <table mat-table [dataSource]="filteredAsistencias" class="mat-elevation-z8">
   <ng-container matColumnDef="nombre">
     <th mat-header-cell *matHeaderCellDef>Nombre</th>

@@ -155,11 +155,20 @@ export class RegistroAsistenciaDocentesComponent implements OnInit {
       return this.esMayor(fechaAnterior,fechaActual);
     });
     this.displayedColumns=["nombre",...fechas]
-    this.displayedColumns=this.displayedColumns.slice(0,10)
   }
+
+  esFechaRepetida(fechaActual:Date){
+    if(this.displayedColumns.includes(fechaActual.toLocaleDateString())){
+      this.mensajeService.mostrarMensajeError("Error!!","Fecha Repetida! La fecha que desea agregar ya existe.");
+      return true
+    }
+    return false
+
+  }
+
   esFechaValida(fechaActual:Date){
     if(!this.estaFechaEntreSemana(fechaActual)){
-      this.mensajeService.mostrarMensajeError("Fecha Incorrecta!!","Error! La fecha no pertenece a la semana");
+      this.mensajeService.mostrarMensajeError("Error!!","Fecha Incorrecta! La fecha no esta en el rango de dias habiles de la semana.");
       return false;
     }
     return true
@@ -168,7 +177,9 @@ export class RegistroAsistenciaDocentesComponent implements OnInit {
   agregarFecha(event: MatDatepickerInputEvent<Date>) {
     const fechaSeleccionada: Date | null = event.value;
     let fechaActual=fechaSeleccionada|| new Date();
-    if(!this.esFechaValida(new Date(fechaActual.toISOString().split("T")[0]+"T23:59:59"))){
+    if(!this.esFechaValida(new Date(fechaActual.toISOString().split("T")[0]+"T23:59:59"))
+      ||this.esFechaRepetida(fechaActual)
+    ){
       return
     }
     let asistencias=this.crearNuevasAsistencias(fechaActual,this.materiaAsignada.inscripciones);
@@ -239,7 +250,10 @@ export class RegistroAsistenciaDocentesComponent implements OnInit {
       }
     }).then((result) => {
       if (result.isConfirmed && result.value ) {
-        if(!this.esFechaValida(new Date(result.value+"T23:59:59"))){
+        if(!this.esFechaValida(new Date(result.value+"T23:59:59"))
+          || this.esFechaRepetida(new Date(result.value+"T23:59:59"))
+
+        ){
           return
         }
         const nuevaFecha = result.value;
