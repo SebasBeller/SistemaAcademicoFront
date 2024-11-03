@@ -12,14 +12,19 @@ export class AuthService {
   constructor(private http: HttpClient) {}
 
   login(email: string, password: string): Observable<any> {
-    console.log(email);
-    console.log(password);
-
     return this.http.post(this.loginUrl, { email:email, password:password });
   }
 
+   
   saveUserData(user: any): void {
-    localStorage.setItem('userId', user.id_estudiante); 
+    let id:number=0;
+    if(user.tipo=="estudiante"){
+      id=user.id_estudiante;
+    }else{
+      id=user.id_profesor
+    }
+    localStorage.setItem('userId', id.toString()); 
+    
     localStorage.setItem('userType', user.tipo);  
   }
 
