@@ -13,6 +13,7 @@ import { FormsModule } from '@angular/forms';
 import {Material} from "../../../../interfaces/material"
 import {MaterialService} from "../../../../servicios/material.service"
 import { ActivatedRoute} from '@angular/router';
+import {MensajeService} from '../../../mensaje/mensaje.component';
 @Component({
   selector: 'app-home',
   standalone: true,
@@ -36,7 +37,9 @@ export default class HomeComponent implements OnInit{
   servicioMateriales:MaterialService = inject(MaterialService);
 
   id_unidad?:number;
-  route:ActivatedRoute=inject(ActivatedRoute) 
+  route:ActivatedRoute=inject(ActivatedRoute) ;
+  mensajeService:MensajeService=inject(MensajeService); 
+
   constructor(storage: Storage) {
     this._storage = storage;
     this.id_unidad=this.route.snapshot.params['id']
@@ -59,6 +62,10 @@ export default class HomeComponent implements OnInit{
     const input = event.target as HTMLInputElement;
     if (input.files && input.files.length > 0) {
       this.file = input.files[0];
+      if(!this.file.type.split("/")[1].includes("pdf")){
+        this.mensajeService.mostrarMensajeError("ERROR!!","Error Formato Invalido, solo se debe subir PDFs");
+        return;
+      }
       this.uploadFile();
     }
   }
@@ -94,6 +101,7 @@ export default class HomeComponent implements OnInit{
       material.id_unidad=this.id_unidad
       this.servicioMateriales.guardadMaterial(material).subscribe(
         response => {
+          this.mensajeService.mostrarMensajeExito("SUBIDA DE ARCHIVO EXITOSA!!","Se subio el archivo correctamente");
           console.log('Material guardado:', response);
           this.materiales.push(material);
           this.resetForm();

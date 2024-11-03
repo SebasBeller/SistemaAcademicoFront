@@ -30,6 +30,7 @@ export class NotaService {
   obtenerTodasLasNotas(): Observable<Nota[]> {
     return this.http.get<Nota[]>(`${this.apiUrl}/nota`);
   }
+  
 
   obtenerNotasPorAno(selectedYear: number): Observable<Nota[]> {
     return this.http.get<Nota[]>(`${this.apiUrl}/nota`).pipe(
