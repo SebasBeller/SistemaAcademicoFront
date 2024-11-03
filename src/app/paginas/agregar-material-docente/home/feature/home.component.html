@@ -50,6 +50,7 @@
             <p class="mt-4 text-lg text-blue-600">¡Archivo subido! </p>
         </div>
 
+
         <!-- Botones de acción -->
         <div class="mt-6 flex justify-end">
             <button (click)="cancel()" class="bg-red-500 text-white py-2 px-4 rounded mr-2">Cancelar</button>
@@ -58,10 +59,22 @@
     </div>
 
     <!-- Lista de materiales añadidos -->
-    <div *ngFor="let material of materiales" class="mb-4">
+
+    <thead>
+        <tr>
+            <th scope="col">Editar</th>
+            <th scope="col">Eliminar</th>
+        </tr>
+    </thead>
+
+    <div *ngFor="let material of materiales ;let i=index" class="mb-4">
         <button (click)="goToMaterial(material)" class="border border-gray-300 rounded-lg w-full py-2 px-3 flex justify-between items-center">
             <span>{{ material.nombre }}</span>
             <span>{{ material.tipo }}</span>
         </button>
+
+            <!-- Botón de Editar -->
+            <button (click)="toggleForm(material)"class="bg-yellow-500 text-white py-1 px-3 rounded mr-2">Actualizar</button>
+            <button (click)="eliminarMaterial(material.id_material)" class="bg-red-500 text-white py-1 px-3 rounded">Eliminar</button>
     </div>
 </div>
