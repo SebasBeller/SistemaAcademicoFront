@@ -5,6 +5,7 @@ import {MateriasProfesorService} from '../../servicios/materias-profesor.service
 import {Materia} from '../../interfaces/materia';
 import {MateriaAsignadaDocente} from '../../interfaces/materia-asignada-docente';
 import {RouterModule} from '@angular/router';
+import { AuthService } from '../../servicios/auth.service';
 @Component({
   selector: 'app-notas-profesor',
   standalone: true,
@@ -15,12 +16,15 @@ import {RouterModule} from '@angular/router';
 export class NotasProfesorComponent implements OnInit {
   servicioMateriasProfesor:MateriasProfesorService=inject(MateriasProfesorService);
   materias:MateriaAsignadaDocente[]=[];
+  authService: AuthService = inject(AuthService);
+
   
   ngOnInit(): void {
+    const idProfesor = this.authService.getUserId();
      this.servicioMateriasProfesor.obtenerMaterias().subscribe(
        response => {
          console.log('Datos recibidos:', response);
-         this.materias = response; // Asigna los datos cuando la respuesta es recibida
+         this.materias = response.filter(materia => materia.profesor?.id_profesor === idProfesor); // Asigna los datos cuando la respuesta es recibida
          console.log('Materias asignadas:', this.materias);
        },
        error => {
