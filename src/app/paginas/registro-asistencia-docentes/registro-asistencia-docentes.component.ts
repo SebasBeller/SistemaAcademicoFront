@@ -77,7 +77,7 @@ export class RegistroAsistenciaDocentesComponent implements OnInit {
 
   }
   filtrarAsistenciasEnFechas(asistencias:any){
- 
+
 
     return asistencias.filter((asistencia:any)=>{
       let fecha=new Date(asistencia.fecha_asistencia+"T23:59:00")
@@ -96,7 +96,7 @@ export class RegistroAsistenciaDocentesComponent implements OnInit {
     this.servicioAsistencias.getAsistenciasDeMateriaAsignada(this.idMateria).subscribe(
       (response: MateriaAsignadaDocente) => {
         console.log('Datos recibidos:', response);
-        this.materiaAsignada = response; 
+        this.materiaAsignada = response;
         this.materiaAsignada.asistencias=this.filtrarAsistenciasEnFechas(this.materiaAsignada.asistencias)
 
         this.asistenciasEstudiantes=this.servicioAsistencias.getAsistenciasAgrupadasPorEstudiante(this.materiaAsignada.asistencias)
@@ -173,7 +173,7 @@ export class RegistroAsistenciaDocentesComponent implements OnInit {
     }
     return true
   }
-  
+
   agregarFecha(event: MatDatepickerInputEvent<Date>) {
     const fechaSeleccionada: Date | null = event.value;
     let fechaActual=fechaSeleccionada|| new Date();
@@ -203,16 +203,26 @@ export class RegistroAsistenciaDocentesComponent implements OnInit {
   }
 
 
-  actualizarAsistencia(asistencias:Asistencia[], fecha:string,event:any){
-    let asistencia=this.servicioAsistencias.getAsistenciaPorFecha(asistencias, fecha);
-    asistencia!.estado=event.value;
-    this.cambiosAsistencias.push({
-      id_asistencia: asistencia!.id_asistencia,
-      estado:asistencia!.estado
-    });
+  actualizarAsistencia(asistencias: Asistencia[], fecha: string, event: any) {
+    console.log("gg", this.cambiosAsistencias);
+    console.log("gg", asistencias);
+
+    let asistencia = asistencias.find(
+      (a) => new Date(a.fecha_asistencia).toISOString().slice(0, 10) === fecha
+    );
+
+    if (asistencia) {
+      asistencia.estado = event.value;
+      this.cambiosAsistencias.push({
+        id_asistencia: asistencia.id_asistencia,
+        estado: asistencia.estado,
+      });
+    } else {
+      console.log("No se encontró la asistencia para la fecha especificada.");
+    }
+
     return event.value;
   }
-
   guardarCambios(){
     this.mensajeService.mostrarMensajeExito("¡Éxito","La fecha se ha guardado exitosamente")
     this.cambiosAsistencias.forEach(
@@ -264,20 +274,20 @@ export class RegistroAsistenciaDocentesComponent implements OnInit {
           this.displayedColumns[index] = new Date(nuevaFecha+"T23:59:00").toLocaleDateString("en-US");
         }
         console.log("Asistencias antes de la actualización:", this.asistenciasEstudiantes);
-        
+
         // Actualizar cada registro en asistencias con la nueva fecha
         for (let registro of this.asistenciasEstudiantes) {
           const asistencia = registro["asistencias"].find(
-            (a: any) => new Date(a.fecha_asistencia + "T23:59:00").toLocaleDateString() === fecha 
+            (a: any) => new Date(a.fecha_asistencia + "T23:59:00").toLocaleDateString() === fecha
           );
 
           if (asistencia) {
             asistencia.fecha_asistencia = new Date(nuevaFecha).toISOString().split("T")[0]
             this.servicioAsistencias.actualizarAsistencia(asistencia.id_asistencia,asistencia).subscribe(
               (response: Asistencia) => {
-    
+
                 console.log('Datos recibidos:', response);
-    
+
               },
               error => {
                 console.error('Error en la petición POST:', error);
@@ -285,7 +295,7 @@ export class RegistroAsistenciaDocentesComponent implements OnInit {
             )
           }
         }
-        
+
         this.filtrarFechaColumnas();
         console.log("Asistencias después de la actualización:", this.asistenciasEstudiantes);
       }
@@ -300,13 +310,13 @@ export class RegistroAsistenciaDocentesComponent implements OnInit {
       `¿Estás seguro de eliminar la fecha ${fecha}?`,
       ()=>{
        // if (confirmacion) {
-        
-       
+
+
        const index = this.displayedColumns.indexOf(fecha);
        if (index !== -1) {
          this.displayedColumns.splice(index, 1);
         }
-        
+
         for (let registro of this.asistenciasEstudiantes) {
           const asistenciaIndex = registro["asistencias"].findIndex((a: Asistencia) =>{
             return new Date(a.fecha_asistencia+"T23:59:00").toLocaleDateString() == new Date(fecha).toLocaleDateString()
@@ -317,9 +327,9 @@ export class RegistroAsistenciaDocentesComponent implements OnInit {
               registro["asistencias"].splice(asistenciaIndex, 1);
               this.servicioAsistencias.eliminarAsistencia(asistencia.id_asistencia).subscribe(
                 (response: Asistencia) => {
-      
+
                   console.log('Datos recibidos:', response);
-      
+
                 },
                 error => {
                   console.error('Error en la petición POST:', error);
