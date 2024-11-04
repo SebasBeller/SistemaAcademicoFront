@@ -19,12 +19,18 @@
 </header>
 
 <nav>
-  <div class="sidebar">
-    <div class="fotoperfil">
+  <div class="sidebar" >
+    <div class="fotoperfil" *ngIf="userRole === ''">
       <a [routerLink]="'perfil-estudiante/' + idEstudiante">
         <img *ngIf="fotoPerfil" [src]="fotoPerfil" alt="Foto de Perfil" />
       Editar Perfil</a>
 
+    </div>
+    <div class="fotoperfil">
+      <img
+        src="https://publish-p47754-e237306.adobeaemcloud.com/adobe/dynamicmedia/deliver/dm-aid--914bcfe0-f610-4610-a77e-6ea53c53f630/_330603286208.app.webp?preferwebp=true&width=312"
+        alt="Foto de Perfil"
+      />
     </div>
     <ul>
       <li *ngIf="userRole === 'profesor'">

@@ -2,6 +2,8 @@
 import { Component ,inject,OnInit} from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { FormularioAgregarContenidoComponent } from '../formulario-agregar-contenido/formulario-agregar-contenido.component';
+import { FormularioEditarContenidoComponent } from '../formulario-editar-contenido/formulario-editar-contenido.component';
+
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { FormsModule } from '@angular/forms'; // Importa FormsModule correctamente desde @angular/forms
@@ -121,36 +123,58 @@ export class AgregarNuevoContenidoComponent  implements OnInit {
   }
 
   editCard(id?: number) {
-    // const cardToEdit = this.cards.find(card => card.id === id);
-    // if (!cardToEdit) return;
+    const cardToEdit = this.unidades.find(card => card.id_unidad === id);
+    if (!cardToEdit) return;
 
-    // const dialogRef = this.dialog.open(FormularioAgregarContenidoComponent, {
-    //   width: '300px',
-    //   data: {
-    //     name: cardToEdit.content,
-    //     imageUrl: cardToEdit.imageUrl
-    //   }
-    // });
+    const dialogRef = this.dialog.open(FormularioEditarContenidoComponent, {
+      width: '300px',
+      data: {
+        name: cardToEdit.nombre,
+        imageUrl: cardToEdit.imagen_url
+      }
+    });
 
-    // dialogRef.afterClosed().subscribe(result => {
-    //   if (result) {
-    //     const index = this.cards.findIndex(card => card.id === id);
-    //     if (index !== -1) {
-    //       this.cards[index] = {
-    //         id,
-    //         content: result.name,
-    //         imageUrl: result.imageUrl
-    //       };
-    //     }
-    //   }
-    // });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        const index = this.unidades.findIndex(card => card.id_unidad === id);
+        if (index !== -1) {
+          let unidad:Unidad=this.unidades[index];
+          unidad.imagen_url= result.imageUrl;
+          unidad.nombre= result.name;
+          this.unidadServicio.editarUnidad(unidad.id_unidad||0,unidad).subscribe(
+            response => {
+              this.mensajeService.mostrarMensajeExito("¡Éxito", 'Se ha editado con éxito el nuevo contenido');
+       
+              console.log(response);  
+            },
+            error => {
+              console.error('Error:', error);
+              this.mensajeService.mostrarMensajeError('¡Error!','Algo a pasado')
+            }
+          )
+        }
+      }
+    });
   }
 
   deleteCard(id?: number) {
-    // this.cards = this.cards.filter(card => card.id !== id);
-    // if (this.cards.length === 0) {
-    //   this.cardCounter = 1;
-    // }
+    this.unidades = this.unidades.filter(card => card.id_unidad !== id);
+    if (this.unidades.length === 0) {
+      this.cardCounter = 1;
+    }
+    this.unidadServicio.eliminarUnidad(id||0).subscribe(
+      response => {
+        this.mensajeService.mostrarMensajeExito("¡Éxito", 'Se elimino el contenido con exito');
+ 
+        console.log(response);  
+      },
+      error => {
+        console.error('Error:', error);
+        this.mensajeService.mostrarMensajeError('¡Error!','Algo a pasado')
+      }
+    )
+
+    
   }
   dirigirAContenido(id?:number){
     this.router.navigate( ['/home/agregar-material-docente', id])
