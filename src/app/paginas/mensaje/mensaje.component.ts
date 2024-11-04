@@ -36,7 +36,7 @@ export class MensajeService {
       cancelButtonText: 'No, cancelar!'
     }).then((result) => {
       if (result.isConfirmed) {
-        callback(); // Ejecuta la función callback si se confirma
+        callback(); 
       }
     });
   }
