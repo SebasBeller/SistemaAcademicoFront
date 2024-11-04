@@ -3,11 +3,11 @@
     margin-left: 5px;
   }
   mat-select {
-    font-size: inherit; /* Hace que el select herede el tamaño de fuente del contenedor */
+    font-size: inherit;
   }
 
   td {
-    font-size: inherit; /* Asegúrate que las celdas hereden el tamaño de la tabla */
+    font-size: inherit; 
   }
   .botonGuardar{
     margin: 2%;
@@ -19,15 +19,23 @@
   <input matInput placeholder="Nombre" (input)="filtrarEstudiantes($event)" />
 </mat-form-field>
 
-<mat-form-field class="example-full-width">
-  <mat-label>Agregar Fecha</mat-label>
-  <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="picker" 
-  (dateChange)="agregarFecha($event)"/>
-  <mat-hint><b>MM/DD/YYYY</b></mat-hint>
-  <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-  <mat-datepicker #picker></mat-datepicker>
-</mat-form-field>
+  <mat-form-field class="example-full-width">
+    <mat-label>Agregar Fecha</mat-label>
+    <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="singlePicker" 
+           (dateChange)="agregarFecha($event)"/>
+    <mat-hint>MM/DD/YYYY</mat-hint>
+    <mat-datepicker-toggle matIconSuffix [for]="singlePicker"></mat-datepicker-toggle>
+    <mat-datepicker #singlePicker></mat-datepicker>
+  </mat-form-field>
 
+  <mat-form-field class="example-full-width">
+    <mat-label>{{fechaInicio.toLocaleDateString("en-US")}}</mat-label>
+    <input matInput [matDatepicker]="picker"
+    (dateChange)="filtrarFechas($event)">
+    <mat-hint>MM/DD/YYYY</mat-hint>
+    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field>
 
 <table mat-table [dataSource]="filteredAsistencias" class="mat-elevation-z8">
   <ng-container matColumnDef="nombre">
