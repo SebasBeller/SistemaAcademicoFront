@@ -25,4 +25,16 @@ export class MaterialService {
       map((response: Material) => response.id_material || 1)
     );
   }
+
+  actualizarMaterial(id: number, material: Material): Observable<Material> {
+    if (!id) {
+      throw new Error('El ID del material es requerido para la actualización');
+    }
+    return this.http.patch<Material>(`${this.urlApi}/${id}`, material);
+  }
+
+  eliminarMaterial(id: number): Observable<any> {
+    return this.http.delete(`${this.urlApi}/${id}`);
+  }
+
 }
