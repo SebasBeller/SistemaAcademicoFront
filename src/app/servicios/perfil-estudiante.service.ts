@@ -11,6 +11,7 @@ export class PerfilEstudianteService {
 
   private apiUrl = 'http://localhost:3000/estudiante';
 
+
   constructor(private http: HttpClient) { }
 
   obtenerListaEstudiantes(): Observable<Estudiante[]> {
@@ -30,7 +31,8 @@ export class PerfilEstudianteService {
     );
   }
 
-  // Método para manejar errores
+
+
   private handleError(error: HttpErrorResponse) {
     // Puedes personalizar este manejo de errores según tu necesidad
     console.error('Ocurrió un error:', error);

@@ -5,5 +5,6 @@ export interface Estudiante {
     nombre: string;
     apellido: string;
     email: string;
+    foto:string;
     paralelo?: Paralelo;
 }

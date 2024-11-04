@@ -24,17 +24,27 @@ export class LoginComponent {
      private router: Router,
     private mensajeService: MensajeService) {}
 
-  login() {
-    this.authService.login(this.email, this.password).subscribe({
-      next: (response) => {
-        console.log(response)
-        this.authService.saveUserData(response.usuario);
-        this.router.navigate(['/home']);
-      },
-      error: (err) => {
-        this.mensajeService.mostrarMensajeError("¡Erro!","La contraseña o su correo es incorrecto")
-        console.error('Error en el login:', err);
-      }
-    });
+    login() {
+      this.authService.login(this.email, this.password).subscribe({
+          next: (response) => {
+              console.log("Respuesta completa del login:", response);
+              if (response && response.usuario) {
+                  this.authService.saveUserData(response.usuario);
+                  this.router.navigate(['/home']);
+              } else {
+                  console.error("La respuesta no contiene los datos esperados de usuario.");
+                  this.mensajeService.mostrarMensajeError("Error", "Datos de usuario no recibidos.");
+              }
+          },
+          error: (err) => {
+              console.error('Error en el login:', err);
+              this.mensajeService.mostrarMensajeError("¡Error!", "La contraseña o su correo es incorrecto");
+          }
+      });
   }
+
+
+
+
 }
+

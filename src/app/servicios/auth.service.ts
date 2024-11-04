@@ -14,13 +14,13 @@ export class AuthService {
   login(email: string, password: string): Observable<any> {
     console.log(email);
     console.log(password);
-
     return this.http.post(this.loginUrl, { email:email, password:password });
   }
 
   saveUserData(user: any): void {
-    localStorage.setItem('userId', user.id_estudiante); 
-    localStorage.setItem('userType', user.tipo);  
+    localStorage.setItem('userId', user.id_estudiante);
+    localStorage.setItem('userType', user.tipo);
+    localStorage.setItem('userProfilePic', user.Foto || '');
   }
 
   getUserType(): string | null {
@@ -30,13 +30,17 @@ export class AuthService {
   getUserId(): number | 0 {
     return Number(localStorage.getItem('userId'));
   }
+  getUserProfilePic(): string | null {
+    return localStorage.getItem('userProfilePic');
+  }
 
   logout(): void {
     localStorage.removeItem('userId');
     localStorage.removeItem('userType');
+    localStorage.removeItem('userProfilePic');
   }
 
   isAuthenticated(): boolean {
-    return !!localStorage.getItem('userId');  
+    return !!localStorage.getItem('userId');
   }
 }

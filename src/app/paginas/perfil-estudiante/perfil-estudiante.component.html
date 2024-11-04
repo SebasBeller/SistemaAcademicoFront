@@ -1,4 +1,21 @@
 <style>
+
+ img{
+  border-radius: 50%;
+ }
+ .elegir-avatar{
+  width: 40%;
+  margin: 0 auto;
+ }
+ ul {
+  display: flex;
+ }
+ ul li img{
+  width: 50px;
+  cursor: pointer;
+ }
+
+
   input[type=text], input[type=password], select {
     width: 100%;
     padding: 12px 20px;
@@ -29,6 +46,12 @@
     background-color: #f2f2f2;
     padding: 20px;
   }
+  .foto-perfil{
+    width: 20%;
+    margin: 0 auto;
+    text-align: center;
+
+  }
 
   .error {
     color: red;
@@ -36,38 +59,56 @@
   }
 </style>
 
+
 <div>
-  <p>{{idEstudiante}}</p>
-  <p>Nombre: {{estudianteSeleccionado?.nombre}}</p>
-  <p>Apellido: {{estudianteSeleccionado?.apellido}}</p>
-  <p>Correo: {{estudianteSeleccionado?.email}}</p>
-</div>
-<div>
-  <fieldset>
-    <legend>Formulario de edición</legend>
-    <form [formGroup]="estudianteForm" (ngSubmit)="onGuardar()">
-      <label for="fname">Nombre</label>
-      <input type="text" id="fname" formControlName="nombre">
+  <div>
+    <fieldset>
+      <legend>PERFIL DEL ESTUDIANTE</legend>
 
-      <label for="lname">Apellido</label>
-      <input type="text" id="lname" formControlName="apellido">
+      <form [formGroup]="estudianteForm" (ngSubmit)="onGuardar()">
 
-      <label for="email">Email</label>
-      <input type="text" id="email" formControlName="email">
+        <div class="foto-perfil">
+          <img [src]="imagenURL || '../../../assets/img/silueta.png'" width="200" alt="Foto de perfil seleccionada">
+        </div>
+        <div class="elegir-avatar">
+          <ul>
+            <li><img src="../../../assets/img/avatar1.png" (click)="selectAvatar('../../../assets/img/avatar1.png')"></li>
+            <li><img src="../../../assets/img/avatar2.png" (click)="selectAvatar('../../../assets/img/avatar2.png')"></li>
+            <li><img src="../../../assets/img/avatar3.png" (click)="selectAvatar('../../../assets/img/avatar3.png')"></li>
+            <li><img src="../../../assets/img/avatar4.png" (click)="selectAvatar('../../../assets/img/avatar4.png')"></li>
+            <li><img src="../../../assets/img/avatar5.png" (click)="selectAvatar('../../../assets/img/avatar5.png')"></li>
+            <li><img src="../../../assets/img/avatar6.png" (click)="selectAvatar('../../../assets/img/avatar6.png')"></li>
+            <li><img src="../../../assets/img/avatar7.png" (click)="selectAvatar('../../../assets/img/avatar7.png')"></li>
+            <li><img src="../../../assets/img/avatar8.png" (click)="selectAvatar('../../../assets/img/avatar8.png')"></li>
+          </ul>
+        </div>
 
-      <label for="password">Contraseña</label>
-      <input type="password" id="password" formControlName="password">
-      <div *ngIf="estudianteForm.get('password')?.invalid && estudianteForm.get('password')?.touched" class="error">
-        La contraseña debe tener al menos 8 caracteres.
-      </div>
 
-      <label for="repeatPassword">Repetir Contraseña</label>
-      <input type="password" id="repeatPassword" formControlName="repeatPassword">
-      <div *ngIf="estudianteForm.errors ? estudianteForm.errors['mismatch'] : false && estudianteForm.get('repeatPassword')?.touched" class="error">
-        Las contraseñas no coinciden.
-      </div>
+        <label for="fname">Nombre</label>
+        <input type="text" id="fname" formControlName="nombre">
 
-      <input type="submit" value="GUARDAR">
-    </form>
-  </fieldset>
+        <label for="lname">Apellido</label>
+        <input type="text" id="lname" formControlName="apellido">
+
+        <label for="email">Email</label>
+        <input type="text" id="email" formControlName="email">
+
+        <label for="password">Contraseña</label>
+        <input type="password" id="password" formControlName="password">
+        <div *ngIf="estudianteForm.get('password')?.invalid && estudianteForm.get('password')?.touched" class="error">
+          La contraseña debe tener al menos 8 caracteres.
+        </div>
+
+        <label for="repeatPassword">Repetir Contraseña</label>
+        <input type="password" id="repeatPassword" formControlName="repeatPassword">
+        <div *ngIf="estudianteForm.errors?.['mismatch'] && estudianteForm.get('repeatPassword')?.touched" class="error">
+          Las contraseñas no coinciden.
+        </div>
+
+
+        <input type="submit" value="GUARDAR">
+      </form>
+    </fieldset>
+  </div>
+
 </div>
