@@ -13,6 +13,7 @@ import { FormsModule } from '@angular/forms';
 import { Material } from "../../../../interfaces/material";
 import { MaterialService } from "../../../../servicios/material.service";
 import { ActivatedRoute } from '@angular/router';
+import {MensajeService} from '../../../mensaje/mensaje.component';
 
 @Component({
   selector: 'app-home',
@@ -26,6 +27,7 @@ export default class HomeComponent implements OnInit, OnDestroy {
   file!: File;
   private readonly _storage = inject(Storage);
   subscription: Subscription | undefined;
+  mensajeSubidaArchivo:string="";
 
   // Variables para el tipo de material y el título
   tipoMaterial: string = 'Teorico'; // Valor predeterminado
@@ -39,6 +41,7 @@ export default class HomeComponent implements OnInit, OnDestroy {
 
   id_unidad?: number;
   route: ActivatedRoute = inject(ActivatedRoute);
+  mensajeService:MensajeService=inject(MensajeService); 
 
   constructor() {
     this.id_unidad = this.route.snapshot.params['id'];
@@ -61,7 +64,7 @@ export default class HomeComponent implements OnInit, OnDestroy {
     if (input.files && input.files.length > 0) {
       this.file = input.files[0];
       if (this.file.type !== 'application/pdf') {
-        console.error("ERROR FORMATO NO VALIDO DEBE SUBIR SOLO PDF");
+        this.mensajeService.mostrarMensajeError("ERROR!!","Error Formato Invalido, solo se debe subir PDFs");
         return;
       }
       this.uploadFile();
@@ -82,6 +85,7 @@ export default class HomeComponent implements OnInit, OnDestroy {
         if (progress === 100) {
           this.downloadURL = await getDownloadURL(storageRef);
           console.log('Download URL:', this.downloadURL);
+          this.mensajeSubidaArchivo="¡Archivo agregado correctamente!"
         }
       }
     );
@@ -101,7 +105,12 @@ export default class HomeComponent implements OnInit, OnDestroy {
             response => {
                 const index = this.materiales.findIndex(mat => mat.id_material === this.currentMaterialId);
                 if (index !== -1) {
+                  console.log(this.downloadURL)
+                  console.log(response)
+                 
                     this.materiales[index] = response;
+                    this.mensajeService.mostrarMensajeExito("ACTUALIZACION EXITOSA!!","Se actualizo correctamente el material");
+
                 }
                 this.resetForm(); 
             },
@@ -116,6 +125,7 @@ export default class HomeComponent implements OnInit, OnDestroy {
                 this.servicioMateriales.encontrarMaterial(idMaterial).subscribe(
                     (material: Material) => {
                         this.materiales.push(material); 
+                        this.mensajeService.mostrarMensajeExito("SUBIDA DE ARCHIVO EXITOSA!!","Se subio el archivo correctamente");
                         this.resetForm(); 
                     }
                 );
@@ -137,6 +147,7 @@ export default class HomeComponent implements OnInit, OnDestroy {
   }
 
   toggleForm(material?: Material) {
+    this.mensajeSubidaArchivo=""
     this.showForm = !this.showForm;
 
     if (material) {
