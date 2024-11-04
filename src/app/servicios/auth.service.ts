@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class AuthService {
-  private loginUrl = 'http://localhost:3000/auth/login';  // URL del login backend
+  private loginUrl = 'http://localhost:3000/auth/login';
 
   constructor(private http: HttpClient) {}
 
@@ -20,7 +20,16 @@ export class AuthService {
   saveUserData(user: any): void {
     localStorage.setItem('userId', user.id_estudiante);
     localStorage.setItem('userType', user.tipo);
-    localStorage.setItem('userProfilePic', user.Foto || '');
+    localStorage.setItem('userProfilePic', user.foto || '');
+    
+    let id:number=0;
+    if(user.tipo=="estudiante"){
+      id=user.id_estudiante;
+    }else{
+      id=user.id_profesor
+    }
+    localStorage.setItem('userId', id.toString());
+
   }
 
   getUserType(): string | null {
