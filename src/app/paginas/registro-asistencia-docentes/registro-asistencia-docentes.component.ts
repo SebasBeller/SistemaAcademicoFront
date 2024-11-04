@@ -204,6 +204,7 @@ export class RegistroAsistenciaDocentesComponent implements OnInit {
 
 
   actualizarAsistencia(asistencias: Asistencia[], fecha: string, event: any) {
+
     console.log("gg", this.cambiosAsistencias);
     console.log("gg", asistencias);
 

@@ -4,5 +4,7 @@ export interface Estudiante {
     id_estudiante: number;
     nombre: string;
     apellido: string;
+    email: string;
+    foto:string;
     paralelo?: Paralelo;
 }
