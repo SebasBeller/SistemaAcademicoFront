@@ -203,15 +203,27 @@ export class RegistroAsistenciaDocentesComponent implements OnInit {
   }
 
 
-  actualizarAsistencia(asistencias:Asistencia[], fecha:string,event:any){
-    let asistencia=this.servicioAsistencias.getAsistenciaPorFecha(asistencias, fecha);
-    asistencia!.estado=event.value;
-    this.cambiosAsistencias.push({
-      id_asistencia: asistencia!.id_asistencia,
-      estado:asistencia!.estado
-    });
+ actualizarAsistencia(asistencias: Asistencia[], fecha: string, event: any) {
+    console.log("gg", this.cambiosAsistencias);
+    console.log("gg", asistencias);
+
+    let asistencia = asistencias.find(
+      (a) => new Date(a.fecha_asistencia).toISOString().slice(0, 10) === fecha
+    );
+
+    if (asistencia) {
+      asistencia.estado = event.value;
+      this.cambiosAsistencias.push({
+        id_asistencia: asistencia.id_asistencia,
+        estado: asistencia.estado,
+      });
+    } else {
+      console.log("No se encontró la asistencia para la fecha especificada.");
+    }
+
     return event.value;
   }
+
 
   guardarCambios(){
     this.mensajeService.mostrarMensajeExito("¡Éxito","La fecha se ha guardado exitosamente")

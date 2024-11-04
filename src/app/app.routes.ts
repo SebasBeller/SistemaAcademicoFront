@@ -18,7 +18,7 @@ import{LoginComponent} from './paginas/login/login.component'
 import { MostrarNotasPorMateriaProfesorComponent } from './paginas/mostrar-notas-por-materia-profesor/mostrar-notas-por-materia-profesor.component';
 import { DetalleNotasEstudiantesComponent } from './paginas/detalle-notas-estudiantes/detalle-notas-estudiantes.component';
 import { NotasProfesorComponent } from './paginas/notas-profesor/notas-profesor.component';
-
+import { PerfilEstudianteComponent } from './paginas/perfil-estudiante/perfil-estudiante.component';
 export const routes: Routes = [
   {
     path:'',
@@ -128,7 +128,15 @@ export const routes: Routes = [
         canActivate: [AuthGuard],
         data: { roles: ['profesor'] }
 
+      },
+      {
+        path:'perfil-estudiante/:id',
+        component:PerfilEstudianteComponent,
+        canActivate:[AuthGuard],
+        data: {roles: ['estudiante']}
+
       }
+
     ],
   },
 ];

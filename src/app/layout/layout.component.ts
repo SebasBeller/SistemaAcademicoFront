@@ -1,4 +1,4 @@
-import { Component,inject } from '@angular/core';
+import { Component,OnInit} from '@angular/core';
 import { RouterModule } from '@angular/router';
 import {AuthService} from '../servicios/auth.service'
 import { CommonModule } from '@angular/common';
@@ -13,12 +13,23 @@ import { Router } from '@angular/router';
 })
 export class LayoutComponent {
   userRole:string|null="";
+  fotoPerfil: string | null = null;
+  idEstudiante: number | null = null;
+
   constructor(private authService: AuthService,private router: Router){
-    this.userRole=this.authService.getUserType();
+
   }
+ngOnInit(){
+  this.userRole=this.authService.getUserType();
+  this.fotoPerfil = this.authService.getUserProfilePic();
+  this.idEstudiante = this.authService.getUserId();
+
+  console.log("Foto de perfil cargada:", this.fotoPerfil);
+}
+
   logout() {
-    this.authService.logout(); 
-    this.router.navigate(['/']); 
+    this.authService.logout();
+    this.router.navigate(['/']);
   }
 
 
