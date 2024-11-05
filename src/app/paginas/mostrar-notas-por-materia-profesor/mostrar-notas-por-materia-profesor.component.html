@@ -1,10 +1,22 @@
+<style>
+ .loader-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; 
+}
+</style>
 <div>
 
 
   <h3 *ngIf="datos && datos.materia">Materia: {{ datos.materia.nombre }}</h3>
 
   <p *ngIf="datos.materia?.paralelo">Paralelo: {{ datos.materia?.paralelo?.paralelo }}</p>
-
+  <div *ngIf="isLoading" class="loader-container">
+    <mat-spinner></mat-spinner>
+  </div>
+  
+  <div *ngIf="!isLoading">
   <table>
     <thead>
       <tr>
@@ -19,6 +31,7 @@
       </tr>
     </thead>
     <tbody>
+
       <tr *ngFor="let estudiante of estudiantesPromedios">
 
         <td>{{ estudiante.apellido }}</td>
@@ -31,4 +44,5 @@
       </tr>
     </tbody>
   </table>
+  <div>
 </div>

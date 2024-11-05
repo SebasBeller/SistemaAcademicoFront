@@ -21,6 +21,7 @@ import {InscripcionService} from '../../servicios/inscripcion.service'
 import{Estudiante} from '../../interfaces/estudiante';
 import {JsonPipe} from '@angular/common';
 import {FormControl, FormGroup, ReactiveFormsModule} from '@angular/forms';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 @Component({
   selector: 'app-registro-asistencia-docentes',
   standalone: true,
@@ -34,13 +35,15 @@ import {FormControl, FormGroup, ReactiveFormsModule} from '@angular/forms';
     MatDatepickerModule,
     MatButtonModule,
     MatDividerModule,
-    MatIconModule,ReactiveFormsModule, JsonPipe
+    MatIconModule,ReactiveFormsModule, JsonPipe,
+    MatProgressSpinnerModule
   ],
   providers: [provideNativeDateAdapter()],
   templateUrl: './registro-asistencia-docentes.component.html',
   styleUrls: ['./registro-asistencia-docentes.component.sass']
 })
 export class RegistroAsistenciaDocentesComponent implements OnInit {
+  isLoading = true;
   readonly range = new FormGroup({
     start: new FormControl<Date | null>(null),
     end: new FormControl<Date | null>(null),
@@ -93,6 +96,7 @@ export class RegistroAsistenciaDocentesComponent implements OnInit {
   }
 
   obtenerAsistencias(){
+    this.isLoading = true; 
     this.servicioAsistencias.getAsistenciasDeMateriaAsignada(this.idMateria).subscribe(
       (response: MateriaAsignadaDocente) => {
         console.log('Datos recibidos:', response);
@@ -105,7 +109,9 @@ export class RegistroAsistenciaDocentesComponent implements OnInit {
         ;
         }
         this.filtrarFechaColumnas();
-        this.filteredAsistencias=this.asistenciasEstudiantes
+        this.filteredAsistencias=this.asistenciasEstudiantes;
+        this.isLoading = false; 
+
       },
       error => {
         console.error('Error en la petición GET:', error);
