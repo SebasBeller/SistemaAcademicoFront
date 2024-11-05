@@ -12,10 +12,20 @@ export class UnidadService {
   getUnidadesDeMateriAsignada(id_dicta:number):Observable<Unidad[]> {
     return this.http.get<Unidad[]>(`${this.apiUrl}/materia-asignada/`+id_dicta)
   }
+
   guardarUnidadDeMateriAsignada(unidad:Unidad):Observable<number> {
     return this.http.post<Unidad>(`${this.apiUrl}`, unidad)
     .pipe(
       map((response: Unidad) => response.id_unidad || 1) 
     );
   }
+
+  editarUnidad(id:number,unidad:Unidad):Observable<any>{
+    return this.http.patch<any>(`${this.apiUrl}/${id}`,unidad);
+  }
+
+  eliminarUnidad(id:number):Observable<any>{
+    return this.http.delete(`${this.apiUrl}/${id}`);
+  }
+
 }

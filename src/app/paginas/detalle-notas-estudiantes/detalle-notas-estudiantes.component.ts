@@ -9,15 +9,20 @@ import { Estudiante } from '../../interfaces/estudiante';
 import { MateriaAsignadaDocente } from '../../interfaces/materia-asignada-docente';
 import { Nota } from '../../interfaces/nota';
 import { Materia } from '../../interfaces/materia';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+
 
 @Component({
   selector: 'app-detalle-notas',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule,
+    MatProgressSpinnerModule
+  ],
   templateUrl: './detalle-notas-estudiantes.component.html',
   styleUrls: ['./detalle-notas-estudiantes.component.sass'],
 })
 export class DetalleNotasEstudiantesComponent implements OnInit {
+  isLoading = true;
   notasPorTrimestre: { [key: number]: any } = {};
   notas: Nota[] = [];
   estudiantes: Estudiante[] = [];
@@ -48,6 +53,7 @@ export class DetalleNotasEstudiantesComponent implements OnInit {
     console.log(this.idEstudiante)
   }
   ngOnInit(): void {
+    this.isLoading=true;
     this.obtenerEstudiantes();
     this.obtenerNotas();
   }
@@ -96,6 +102,7 @@ export class DetalleNotasEstudiantesComponent implements OnInit {
         this.notas = notas;
         console.log("notas",notas)
         this.filtrarNotasEstudianteMateria(this.idEstudiante, this.idDicta); // Filtra para id_estudiante = 1 y id_dicta = 130
+        this.isLoading=false;
       },
       (error: any) => {
         console.error('Error en la petición de notas:', error);

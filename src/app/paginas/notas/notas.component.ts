@@ -8,15 +8,17 @@ import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { AuthService } from '../../servicios/auth.service';
 import { RouterModule } from '@angular/router';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-notas',
   standalone: true,
-  imports: [CommonModule, HttpClientModule, RouterModule],
+  imports: [CommonModule, HttpClientModule, RouterModule,MatProgressSpinnerModule],
   templateUrl: './notas.component.html',
   styleUrls: ['./notas.component.sass']
 })
 export class NotasComponent implements OnInit {
+  isLoading = true;
   notas: Nota[] = [];
   notasPorMateria: { [id_dicta: number]: { trimestre: number; notasPorTipo: { [tipo: string]: number[] } }[] } = {};
   profesores: MateriaAsignadaDocente[] = [];
@@ -30,6 +32,7 @@ export class NotasComponent implements OnInit {
   constructor(private readonly notaService: NotaService, private readonly authService:AuthService) {}
 
   ngOnInit(): void {
+    this.isLoading=true;
     this.obtenerProfesores();
     this.obtenerEstudiantes();
     this.obtenerNotas();
@@ -64,6 +67,7 @@ export class NotasComponent implements OnInit {
   }
 
   onYearChange(event: Event): void {
+    this.isLoading=true;
     const selectElement = event.target as HTMLSelectElement;
     this.selectedYear = +selectElement.value;
     this.obtenerNotas(); // Actualizar notas al cambiar el año
@@ -74,6 +78,7 @@ export class NotasComponent implements OnInit {
       (notas: Nota[]) => {
         this.notas = notas;
         this.agruparNotasPorMateria();
+        this.isLoading=false;
       },
       (error: any) => {
         console.error('Error en la petición de notas:', error);
