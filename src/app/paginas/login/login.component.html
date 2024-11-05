@@ -1,5 +1,4 @@
-<!-- login.component.html -->
-<div class="login-container">
+<div class="login-container" [ngClass]="getColorClass()">
     <h2><b>Bienvenido al Colegio San Rafael</b></h2>
     <form (submit)="login()">
       <div class="correo">

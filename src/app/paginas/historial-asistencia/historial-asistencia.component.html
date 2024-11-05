@@ -18,7 +18,7 @@
       <p><strong>Asistencias:</strong> {{calcularTotalClases(materia).asistencias}}</p>
       <p><strong>Licencias:</strong> {{calcularTotalClases(materia).licencias}}</p>
       <p><strong>Total de clases:</strong> {{calcularTotalClases(materia).asistencias + calcularTotalClases(materia).faltas + calcularTotalClases(materia).licencias}}</p>
-      <p><strong><a [routerLink]="['/home/ver-asistencia-materia', materia.id_dicta,materia.profesor?.nombre,  materia?.materia?.nombre]" class="blue-link">DETALLE</a></strong></p>
+      <p><strong><a [routerLink]="['/home/ver-asistencia-materia', materia.id_dicta,materia.profesor?.nombre,  materia?.materia?.nombre]" class="blue-link">Detalle</a></strong></p>
       <!--
 
       -->

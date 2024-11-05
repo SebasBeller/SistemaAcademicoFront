@@ -23,10 +23,6 @@ import { CommonModule } from '@angular/common';
 })
 export class MaterialComponent {
   isOpen?:boolean; 
-  toggle() {
-    console.log("hola")
-    this.isOpen = !this.isOpen; 
-  }
   readonly panelOpenState2 = signal(false);
   panelOpenState: boolean = false;
   private src!:string;
@@ -34,7 +30,9 @@ export class MaterialComponent {
   route:ActivatedRoute=inject(ActivatedRoute) 
 
   private pdfService=inject(PdfService)
+  userPrompt: string = '';
   response?: string;
+  messages: { user: string; responseIA: string }[] = [];
 
   material?:Material;
   
@@ -46,6 +44,7 @@ export class MaterialComponent {
   }
 
   ngOnInit(): void {
+    this.pdfService.askClear()
     this.isOpen = false; 
     this.materialesServicio.encontrarMaterial(this.id_material).subscribe(
       (data)=>{
@@ -63,6 +62,11 @@ export class MaterialComponent {
     return this.src;
   }
 
+  toggle() {
+    this.messages = [];
+    this.isOpen = !this.isOpen; 
+  }
+
   async readPdf(pdf: PDFDocumentProxy) {
     this.pdfService.readPdf(pdf,this.material?.tipo).then(
       (data)=>{
@@ -72,4 +76,14 @@ export class MaterialComponent {
       (e)=>console.log(e)
     );
   }
+  async sendUserPrompt() {
+    if (this.userPrompt.trim()) {
+      const userMessage = this.userPrompt;
+      const responseIA = await this.pdfService.askUserPrompt(this.userPrompt);
+      this.messages.push({ user: userMessage, responseIA });
+      this.userPrompt = '';
+    }
+  }
+
+  
 }
