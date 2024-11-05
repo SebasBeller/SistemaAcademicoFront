@@ -153,11 +153,16 @@ async onGuardar(): Promise<void> {
     }
 
     // Actualizar el estudiante en el servicio si todas las validaciones pasan
+    // location.reload();
     this.perfilEstudianteService.actualizarEstudiante(this.idEstudiante, estudianteEditado).subscribe({
       next: (response) => {
         console.log('Estudiante actualizado:', response);
-        this.mensajeService.mostrarMensajeExito('¡Éxito!', "Los cambios se realizaron exitosamente");
-        location.reload()
+        this.mensajeService.mostrarMensajeExitoConCallback('¡Éxito!', "Los cambios se realizaron exitosamente").then((result) => {
+          if (result.isConfirmed) {
+            location.reload(); 
+          }
+        });;
+    
       },
       error: (error) => {
         console.error('Error al actualizar el estudiante:', error);

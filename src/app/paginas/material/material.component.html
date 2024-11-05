@@ -11,7 +11,19 @@
         <b>Quieres profundizar mas?</b>
       </p>
     </button>
-    <div class="accordion-content" *ngIf="isOpen">
-      <div [innerHTML]="response"></div>
+    <div class="chat" *ngIf="isOpen">
+      <div class="accordion-content">
+        <div [innerHTML]="response"></div>
+      </div>
+      <div class="responses">
+        <div *ngFor="let message of messages" >
+          <div [innerHTML]="message.user" class="mensaje-usuario"></div>
+          <div [innerHTML]="message.responseIA" class="mensaje-ia"></div>
+        </div>
+      </div>
+      <div class="interaction">
+        <input [(ngModel)]="userPrompt" placeholder="Escribe tu pregunta aquí..." />
+        <button (click)="sendUserPrompt()" class="enviar-promt">Enviar</button>
+      </div>
     </div>
 </div>

@@ -16,7 +16,7 @@ export class VerAsistenciaPorMateriaComponent implements OnInit {
   materia!: number;
   materiaNombre!: string;
   professor: string | null = 'Juan Pablo';
-  parallel: string = '1';
+  parallelo: string = '1';
 
   asistenciasPorMes: { [key: string]: Asistencia[] } = {}; // Agrupación de asistencias por mes
 

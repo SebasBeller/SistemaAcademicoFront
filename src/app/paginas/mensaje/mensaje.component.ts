@@ -5,6 +5,16 @@ import Swal from 'sweetalert2';
   providedIn: 'root'
 })
 export class MensajeService {
+  mostrarMensajeExitoConCallback(titulo: string, mensaje: string){
+    return Swal.fire({
+      title: titulo,
+      text: mensaje,
+      icon: 'success',
+      confirmButtonColor: '#3085d6',
+    })
+    ;
+  }
+
 
   mostrarMensajeExito(titulo: string, mensaje: string) {
     Swal.fire({

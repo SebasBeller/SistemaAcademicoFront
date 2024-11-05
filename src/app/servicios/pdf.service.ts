@@ -26,6 +26,7 @@ export class PdfService {
       return "Soy un estudiante, ¿me podrias proporcionar solo ejercicios practicos relacionados con el siguientSoy un estudiante. ¿Podrías proporcionarme solo ejercicios prácticos relacionados con el siguiente texto, junto con sus respuestas? Por favor, presenta todo exclusivamente en elementos de HTML, utilizando tantos como sea posible, como <h2>, <p>, <ul>, <li>,  <table>, <tr>, <td>, entre otros . No uses markdown. Si llegas a usar markdown, dejaré de utilizarte."
     }
   }
+  
   async readPdf(pdf: PDFDocumentProxy,tipo?:string) {
     this.promptProfessor= await this.getProfessorPrompt(tipo);
     this.promptStudent= await this.getStudentPrompt(tipo);
@@ -52,5 +53,18 @@ export class PdfService {
       this.promptProfessor,'system',
     );
 
+  }
+
+  async askUserPrompt(prompt: string): Promise<string> {
+    try {
+      return await this.groqService.askChat(prompt + ', dame la respuesta solo en elementos de HTML por favor. No uses markdown. Proporciona la respuesta exclusivamente en elementos HTML' , 'user');
+    } catch (error) {
+      console.error('Error en el prompt del usuario:', error);
+      return 'Hubo un error al procesar tu solicitud.';
+    }
+  }
+
+  async askClear(){
+    this.groqService.clearMessages();
   }
 }
