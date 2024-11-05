@@ -8,13 +8,12 @@ import { MensajeService } from '../mensaje/mensaje.component';
 
 
 import * as bcrypt from 'bcryptjs';
-import { CarouselModule     } from 'ngx-owl-carousel-o';
-import { OwlOptions } from 'ngx-owl-carousel-o';
+
 
 @Component({
   selector: 'app-perfil-estudiante',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, CarouselModule ],
+  imports: [CommonModule, ReactiveFormsModule ],
   templateUrl: './perfil-estudiante.component.html',
   styleUrls: ['./perfil-estudiante.component.sass']
 
@@ -41,22 +40,25 @@ export class PerfilEstudianteComponent implements OnInit {
       nombre: [{ value: '', disabled: true }],
       apellido: [{ value: '', disabled: true }],
       email: [{ value: '', disabled: true }],
-      password: [''],
-      repeatPassword: ['']
-    });
+      currentPassword: [''],
+      newPassword: [''],
+      repeatNewPassword: ['']
+    },
+    { validators: this.passwordsMatchValidator });
   }
-
+  passwordsMatchValidator(form: FormGroup) {
+    const newPassword = form.get('newPassword')?.value;
+    const repeatNewPassword = form.get('repeatNewPassword')?.value;
+    return newPassword === repeatNewPassword ? null : { mismatch: true };
+  }
 
   selectAvatar(avatar: string): void {
     this.imagenURL = avatar;
     this.estudianteForm.patchValue({ foto: avatar });
-      if (this.idEstudiante) {
-      localStorage.setItem(`foto_${this.idEstudiante}`, avatar); // Guarda la URL en localStorage
-
+    if (this.idEstudiante) {
+      localStorage.setItem(`foto_${this.idEstudiante}`, avatar);
     }
   }
-
-
 
   ngOnInit(): void {
     this.obtenerIdEstudiante();
@@ -67,6 +69,9 @@ export class PerfilEstudianteComponent implements OnInit {
         this.imagenURL = storedImage; // Usar la URL almacenada
         this.estudianteForm.patchValue({ foto: storedImage });
       }
+
+
+
     }
   }
 
@@ -85,7 +90,7 @@ export class PerfilEstudianteComponent implements OnInit {
       this.perfilEstudianteService.obtenerEstudiantePorId(this.idEstudiante).subscribe({
         next: (data: Estudiante) => {
           this.estudianteSeleccionado = data;
-          this.estudianteForm.patchValue(data);
+          this.establecerVarloresFormulario(data);
           this.imagenURL = data.foto || '../../../assets/img/silueta.png';
         },
         error: (error) => {
@@ -94,48 +99,78 @@ export class PerfilEstudianteComponent implements OnInit {
       });
     }
   }
+establecerVarloresFormulario(data: Estudiante): void{
+  this.estudianteForm.patchValue({
+    nombre:data.nombre,
+    apellido:data.apellido,
+    email:data.email
 
+  });
+}
 
-  async onGuardar(): Promise<void> {
-    if (this.estudianteForm.valid && this.idEstudiante) {
-      const estudianteEditado = { ...this.estudianteForm.value };
-      const password = estudianteEditado.password;
-      const repeatPassword = estudianteEditado.repeatPassword;
+async onGuardar(): Promise<void> {
+  if (this.estudianteForm.valid && this.idEstudiante && this.estudianteSeleccionado) {
+    const estudianteEditado = { ...this.estudianteForm.value };
+    const currentPassword = estudianteEditado.currentPassword;
+    const newPassword = estudianteEditado.newPassword;
+    const repeatNewPassword = estudianteEditado.repeatNewPassword;
 
-      // Verificar si el campo de contraseña ha sido modificado
-      if (password && repeatPassword) {
-        // Validar que las contraseñas sean iguales y tengan al menos 8 caracteres
-        if (password !== repeatPassword) {
-          this.mensajeService.mostrarMensajeError("¡Error!", "Las contraseñas no coinciden.");
-          return;
-        }
+    console.log("Contraseña actual ingresada:", currentPassword);
+    console.log("Contraseña en la base de datos:", this.estudianteSeleccionado.password);
 
-        if (password.length < 8) {
-          this.mensajeService.mostrarMensajeError("¡Error!", "La contraseña debe tener al menos 8 caracteres.");
-          return;
-        }
+    // Validar contraseña actual antes de cualquier otro cambio
+    if (this.estudianteSeleccionado.password) {
+      const passwordCorrecta = await bcrypt.compare(currentPassword, this.estudianteSeleccionado.password);
 
-        // Encriptar la nueva contraseña
-        const salt = await bcrypt.genSalt(10);
-        estudianteEditado.password = await bcrypt.hash(password, salt);
-      } else {
-        // Si no se ha ingresado una nueva contraseña, mantener la contraseña existente
-        delete estudianteEditado.password;
+      if (!passwordCorrecta) {
+        this.mensajeService.mostrarMensajeError("¡Error!", "La contraseña actual es incorrecta.");
+        return; // Detener el proceso si la contraseña es incorrecta
+      }
+    } else {
+      console.error("No se encontró la contraseña en estudianteSeleccionado.");
+      return;
+    }
+
+    // Si los campos de nueva contraseña están vacíos, omitir el cambio de contraseña
+    if (!newPassword && !repeatNewPassword) {
+      delete estudianteEditado.password; // No modificar la contraseña
+    } else {
+      // Validar que las nuevas contraseñas coincidan
+      if (newPassword !== repeatNewPassword) {
+        this.mensajeService.mostrarMensajeError("¡Error!", "Las nuevas contraseñas no coinciden.");
+        return;
       }
 
-      this.perfilEstudianteService.actualizarEstudiante(this.idEstudiante, estudianteEditado).subscribe({
-        next: (response) => {
-          console.log('Estudiante actualizado:', response);
-          this.mensajeService.mostrarMensajeExito('¡Éxito!', "Los cambios se realizaron exitosamente");
-          location.reload()
-        },
-        error: (error) => {
-          console.error('Error al actualizar el estudiante:', error);
-          this.mensajeService.mostrarMensajeError("¡Error!", "Algo ha ocurrido");
-        }
-      });
+      // Validar longitud mínima de la nueva contraseña
+      if (newPassword.length < 8) {
+        this.mensajeService.mostrarMensajeError("¡Error!", "La nueva contraseña debe tener al menos 8 caracteres.");
+        return;
+      }
+
+      // Encriptar la nueva contraseña antes de guardar
+      const salt = await bcrypt.genSalt(10);
+      estudianteEditado.password = await bcrypt.hash(newPassword, salt);
     }
+
+    // Actualizar el estudiante en el servicio si todas las validaciones pasan
+    this.perfilEstudianteService.actualizarEstudiante(this.idEstudiante, estudianteEditado).subscribe({
+      next: (response) => {
+        console.log('Estudiante actualizado:', response);
+        this.mensajeService.mostrarMensajeExito('¡Éxito!', "Los cambios se realizaron exitosamente");
+      },
+      error: (error) => {
+        console.error('Error al actualizar el estudiante:', error);
+        this.mensajeService.mostrarMensajeError("¡Error!", "Algo ha ocurrido");
+      }
+    });
   }
+}
+
+
+
+
+
+
 
 
 
