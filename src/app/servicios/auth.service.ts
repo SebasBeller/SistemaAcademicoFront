@@ -65,6 +65,7 @@ export class AuthService {
 
     return !!localStorage.getItem('userId');
   }
+  
   getUserObservable(): Observable<any> {
     return this.userSubject.asObservable();
   }
