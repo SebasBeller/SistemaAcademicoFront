@@ -122,7 +122,7 @@ async onGuardar(): Promise<void> {
     if (this.estudianteSeleccionado.password) {
       const passwordCorrecta = await bcrypt.compare(currentPassword, this.estudianteSeleccionado.password);
 
-      if (!passwordCorrecta) {
+      if (!passwordCorrecta && currentPassword!="") {
         this.mensajeService.mostrarMensajeError("¡Error!", "La contraseña actual es incorrecta.");
         return; // Detener el proceso si la contraseña es incorrecta
       }
@@ -157,6 +157,7 @@ async onGuardar(): Promise<void> {
       next: (response) => {
         console.log('Estudiante actualizado:', response);
         this.mensajeService.mostrarMensajeExito('¡Éxito!', "Los cambios se realizaron exitosamente");
+        location.reload()
       },
       error: (error) => {
         console.error('Error al actualizar el estudiante:', error);

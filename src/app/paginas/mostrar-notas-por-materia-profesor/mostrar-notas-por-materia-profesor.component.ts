@@ -5,6 +5,7 @@ import { RouterLink, ActivatedRoute } from '@angular/router';
 import { NotasProfesorService } from '../../servicios/notas-e.service';
 import { Nota } from '../../interfaces/notas';
 import { MateriaAsignadaDocente } from '../../interfaces/materia-asignada-docente';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 interface EstudianteConPromedios {
   id:number;
@@ -21,7 +22,9 @@ interface EstudianteConPromedios {
 @Component({
   selector: 'app-mostrar-notas-por-materia-profesor',
   standalone: true,
-  imports: [CommonModule, RouterLink, FormsModule],
+  imports: [CommonModule, RouterLink, FormsModule,
+    MatProgressSpinnerModule
+  ],
   templateUrl: './mostrar-notas-por-materia-profesor.component.html',
   styleUrls: ['./mostrar-notas-por-materia-profesor.component.sass']
 })
@@ -33,6 +36,8 @@ export class MostrarNotasPorMateriaProfesorComponent implements OnInit {
   paraleloSeleccionado: string = '';
   notas: Nota[] = [];
   idMateria:string="";
+  isLoading = true;
+  
 
   constructor(
     private notasProfesorService: NotasProfesorService,
@@ -40,6 +45,7 @@ export class MostrarNotasPorMateriaProfesorComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.isLoading = true;
     this.idMateria = this.route.snapshot.paramMap.get('id_dicta')||"";
     if (this.idMateria) {
       const id = +(this.idMateria);
@@ -56,6 +62,8 @@ export class MostrarNotasPorMateriaProfesorComponent implements OnInit {
       (data: MateriaAsignadaDocente) => {
         this.datos = data;
         this.paralelos = data.paralelo || [];
+  
+
       },
       (error: any) => {
         console.error('Error al cargar datos de la materia asignada:', error);
@@ -70,9 +78,9 @@ export class MostrarNotasPorMateriaProfesorComponent implements OnInit {
         this.notas = data.filter(nota =>
           nota.materiaAsignada.id_dicta==idDicta
         );
-        console.log("hola")
         console.log(this.notas)
         this.calcularPromediosPorEstudiante();
+        this.isLoading = false;
       },
       (error: any) => {
         console.error('Error al cargar notas del estudiante:', error);
