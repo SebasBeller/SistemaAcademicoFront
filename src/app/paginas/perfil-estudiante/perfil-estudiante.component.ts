@@ -49,9 +49,10 @@ export class PerfilEstudianteComponent implements OnInit {
 
   selectAvatar(avatar: string): void {
     this.imagenURL = avatar;
-    this.estudianteForm.patchValue({ foto: avatar }); // Actualizar el valor del campo 'foto' en el formulario
-    if (this.idEstudiante) {
+    this.estudianteForm.patchValue({ foto: avatar });
+      if (this.idEstudiante) {
       localStorage.setItem(`foto_${this.idEstudiante}`, avatar); // Guarda la URL en localStorage
+
     }
   }
 
@@ -102,7 +103,7 @@ export class PerfilEstudianteComponent implements OnInit {
       const repeatPassword = estudianteEditado.repeatPassword;
 
       // Verificar si el campo de contraseña ha sido modificado
-      if (password || repeatPassword) {
+      if (password && repeatPassword) {
         // Validar que las contraseñas sean iguales y tengan al menos 8 caracteres
         if (password !== repeatPassword) {
           this.mensajeService.mostrarMensajeError("¡Error!", "Las contraseñas no coinciden.");
@@ -118,7 +119,7 @@ export class PerfilEstudianteComponent implements OnInit {
         const salt = await bcrypt.genSalt(10);
         estudianteEditado.password = await bcrypt.hash(password, salt);
       } else {
-        // Si no se han ingresado nuevas contraseñas, no modificar la contraseña
+        // Si no se ha ingresado una nueva contraseña, mantener la contraseña existente
         delete estudianteEditado.password;
       }
 
@@ -126,6 +127,7 @@ export class PerfilEstudianteComponent implements OnInit {
         next: (response) => {
           console.log('Estudiante actualizado:', response);
           this.mensajeService.mostrarMensajeExito('¡Éxito!', "Los cambios se realizaron exitosamente");
+          location.reload()
         },
         error: (error) => {
           console.error('Error al actualizar el estudiante:', error);
@@ -134,6 +136,7 @@ export class PerfilEstudianteComponent implements OnInit {
       });
     }
   }
+
 
 
 
