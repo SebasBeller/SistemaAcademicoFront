@@ -111,7 +111,7 @@ export class DetalleNotasComponent implements OnInit {
     this.detalleNotasService.obtenerNotasPorAno(this.selectedYear).subscribe(
       (notas: Nota[]) => {
         this.notas = notas;
-        this.filtrarNotasEstudianteMateria(this.idEstudiante, this.idDicta); 
+        this.filtrarNotasEstudianteMateria(this.idEstudiante, this.idDicta);
       },
       (error: any) => {
         console.error('Error en la petición de notas:', error);
@@ -230,8 +230,8 @@ export class DetalleNotasComponent implements OnInit {
         console.log(this.notas)
 
         if (index !== -1) {
-          this.notas[index].nota = nota.nota; // Actualiza en la lista de notas
-          this.notas[index].fecha = nota.fecha; // Actualiza en la lista de notas
+          this.notas[index].nota = nota.nota;
+          this.notas[index].fecha = nota.fecha; 
 
 
         }

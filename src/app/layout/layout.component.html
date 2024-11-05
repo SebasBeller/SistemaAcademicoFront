@@ -22,7 +22,7 @@
   <div class="sidebar">
     <div class="fotoperfil">
       <a [routerLink]="'perfil-estudiante/' + idEstudiante">
-        <img *ngIf="fotoPerfil" [src]="fotoPerfil" alt="Foto de Perfil" />
+        <img *ngIf="'fotoPerfil' || '../../../assets/img/assets/silueta.jpg'" [src]="fotoPerfil" alt="Foto de Perfil" />
       Editar Perfil</a>
 
     </div>
