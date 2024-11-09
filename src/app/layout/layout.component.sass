@@ -1,74 +1,152 @@
-header
-    width: 100%
-    height: 120px
-    background-color: rgb(59, 89, 152)
-    color: rgb(216, 223, 234)
-    display: flex
-    justify-content: space-between
-    align-items: center
-    position: fixed
-    top: 0
-    left: 0
-    z-index: 1000
+.color-azul
+    header
+        width: 100%
+        height: 120px
+        background-color: rgb(59, 89, 152)
+        color: rgb(216, 223, 234)
+        display: flex
+        justify-content: space-between
+        align-items: center
+        position: fixed
+        top: 0
+        left: 0
+        z-index: 1000
 
-header img
-    border-radius: 50%
+    header img
+        border-radius: 50%
 
-header .escudo
-    width: 80px
-    margin-left: 55px
+    header .escudo
+        width: 80px
+        margin-left: 55px
 
-header .titulo h1
-    font-size: 70px
+    header .titulo h1
+        font-size: 70px
 
-header .notificaciones
-    width: 40px
-    margin-right: 40px
+    header .notificaciones
+        width: 40px
+        margin-right: 40px
+    
+    .sidebar
+        width: 200px
+        height: calc(100vh - 120px)
+        background-color: rgb(59, 89, 152)
+        color: rgb(216, 223, 234)
+        text-align: center
+        position: fixed
+        top: 120px 
+        left: 0
+        overflow-y: auto
 
-.sidebar
-    width: 200px
-    height: calc(100vh - 120px)
-    background-color: rgb(59, 89, 152)
-    color: rgb(216, 223, 234)
-    text-align: center
-    position: fixed
-    top: 120px 
-    left: 0
-    overflow-y: auto
+    .sidebar div.fotoperfil
+        margin-top: 50px
+        font-size: 15px
 
-.sidebar div.fotoperfil
-    margin-top: 50px
+    .sidebar div.fotoperfil img
+        width: 120px
+        height: 120px
+        border-radius: 50%
+        display: block
+        margin: 0 auto 20px
 
-.sidebar div.fotoperfil img
-    width: 110px
-    height: 120px
-    border-radius: 50%
-    display: block
-    margin: 0 auto 20px
+    .sidebar ul
+        list-style-type: none
+        padding: 0
 
-.sidebar ul
-    list-style-type: none
-    padding: 0
+    .sidebar ul li
+        margin: 50px 0
 
-.sidebar ul li
-    margin: 50px 0
+    .sidebar ul li a
+        color: rgb(216, 223, 234)
+        text-decoration: none
+        display: block
+        padding: 10px
+        font-size: 15px
+        transition: background-color 0.3s
 
-.sidebar ul li a
-    color: rgb(216, 223, 234)
-    text-decoration: none
-    display: block
-    padding: 10px
-    font-size: 15px
-    transition: background-color 0.3s
+    .sidebar ul li a:hover
+        background-color: rgb(0, 0, 0)
 
-.sidebar ul li a:hover
-    background-color: rgb(0, 0, 0)
+    .main-content
+        margin-bottom: 30px
+        margin-right: 20px
+        margin-left: 220px 
+        margin-top: 100px 
+        box-sizing: border-box
 
-.main-content
-    flex: 1
-    margin: 20px
-    margin-left: 220px 
-    padding-top: 140px 
-    box-sizing: border-box
+.color-amarillo
+    header
+        width: 100%
+        height: 120px
+        background-color: rgb(255, 215, 0)
+        color: rgb(0, 0, 128)
+        display: flex
+        justify-content: space-between
+        align-items: center
+        position: fixed
+        top: 0
+        left: 0
+        z-index: 1000
 
+    header img
+        border-radius: 50%
+
+    header .escudo
+        width: 80px
+        margin-left: 55px
+
+    header .titulo h1
+        font-size: 70px
+
+    header .notificaciones
+        width: 40px
+        margin-right: 40px
+    
+    .sidebar
+        width: 200px
+        height: calc(100vh - 120px)
+        background-color: rgb(255, 215, 0)
+        color: rgb(0, 0, 128)
+        text-align: center
+        position: fixed
+        top: 120px 
+        left: 0
+        overflow-y: auto
+
+    .sidebar div.fotoperfil
+        margin-top: 50px
+        font-size: 15px
+
+    .sidebar div.fotoperfil img
+        width: 120px
+        height: 120px
+        border-radius: 50%
+        display: block
+        margin: 0 auto 20px
+
+    .sidebar ul
+        list-style-type: none
+        padding: 0
+
+    .sidebar ul li
+        margin: 50px 0
+
+    .sidebar ul li a
+        color: rgb(0, 0, 128)
+        text-decoration: none
+        display: block
+        padding: 10px
+        font-size: 15px
+        transition: background-color 0.3s
+
+    .sidebar ul li a:hover
+        background-color: rgb(0, 0, 0)
+        color: white
+
+    .main-content
+        margin-bottom: 30px
+        margin-right: 20px
+        margin-left: 220px 
+        margin-top: 100px 
+        box-sizing: border-box
+    
 

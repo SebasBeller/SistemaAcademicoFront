@@ -1,26 +1,42 @@
 // auth.service.ts
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable,BehaviorSubject  } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private loginUrl = 'http://localhost:3000/auth/login';  // URL del login backend
+  private loginUrl = 'http://localhost:3000/auth/login';
+  private estudianteUrl  ='http://localhost:3000/estudiante';
+  private userSubject = new BehaviorSubject<any>(null);
 
   constructor(private http: HttpClient) {}
 
   login(email: string, password: string): Observable<any> {
+
     console.log(email);
     console.log(password);
-
     return this.http.post(this.loginUrl, { email:email, password:password });
   }
 
+
   saveUserData(user: any): void {
-    localStorage.setItem('userId', user.id_estudiante); 
-    localStorage.setItem('userType', user.tipo);  
+
+    localStorage.setItem('userId', user.id_estudiante || user.id_profesor || '');
+    localStorage.setItem('userType', user.tipo);
+    localStorage.setItem('userProfilePic', user.foto || '');
+
+    let id:number=0;
+    if(user.tipo=="estudiante"){
+      id=user.id_estudiante;
+    }else{
+      id=user.id_profesor
+    }
+
+    localStorage.setItem('userId', id.toString());
+    localStorage.setItem('userType', user.tipo);
+
   }
 
   getUserType(): string | null {
@@ -30,13 +46,29 @@ export class AuthService {
   getUserId(): number | 0 {
     return Number(localStorage.getItem('userId'));
   }
+  getUserProfilePic(): string | null {
+    return localStorage.getItem('userProfilePic');
+  }
+
+  obtenerFotoPerfil(id: number): Observable<any> {
+    return this.http.get(`${this.estudianteUrl}/${id}`);
+  }
 
   logout(): void {
     localStorage.removeItem('userId');
     localStorage.removeItem('userType');
+    localStorage.removeItem('userProfilePic');
+    this.userSubject.next(null);
   }
 
   isAuthenticated(): boolean {
-    return !!localStorage.getItem('userId');  
+
+    return !!localStorage.getItem('userId');
+  }
+  
+  getUserObservable(): Observable<any> {
+    return this.userSubject.asObservable();
   }
 }
+
+

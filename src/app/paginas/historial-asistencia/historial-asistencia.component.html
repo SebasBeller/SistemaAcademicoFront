@@ -14,14 +14,13 @@
       <h2>{{materia.materia?.nombre}}</h2>
       <p><strong>Profesor:</strong> {{materia.profesor?.nombre}}</p>
       <p><strong>Paralelo:</strong> {{materia.paralelo?.paralelo}}</p>
-      <p><strong>Faltas:</strong> {{calcularTotalClases(materia).faltas}}</p>
-      <p><strong>Asistencias:</strong> {{calcularTotalClases(materia).asistencias}}</p>
-      <p><strong>Licencias:</strong> {{calcularTotalClases(materia).licencias}}</p>
-      <p><strong>Total de clases:</strong> {{calcularTotalClases(materia).asistencias + calcularTotalClases(materia).faltas + calcularTotalClases(materia).licencias}}</p>
+      <div class="historial">
+        <p><strong>Faltas:</strong> {{calcularTotalClases(materia).faltas}}</p>
+        <p><strong>Asistencias:</strong> {{calcularTotalClases(materia).asistencias}}</p>
+        <p><strong>Licencias:</strong> {{calcularTotalClases(materia).licencias}}</p>
+        <p><strong>Total de clases:</strong> {{calcularTotalClases(materia).asistencias + calcularTotalClases(materia).faltas + calcularTotalClases(materia).licencias}}</p>
+      </div>
       <p><strong><a [routerLink]="['/home/ver-asistencia-materia', materia.id_dicta,materia.profesor?.nombre,  materia?.materia?.nombre]" class="blue-link">Detalle</a></strong></p>
-      <!--
-
-      -->
     </div>
   </div>
 </div>

@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common'; // Importar CommonModule
 import { ActivatedRoute } from '@angular/router';
 import { HistorialAsistenciaService } from '../../servicios/historial-asistencia.service';
 import { Asistencia } from '../../interfaces/asistencia';
+import { AuthService } from '../../servicios/auth.service';
 
 @Component({
   selector: 'app-ver-asistencia-por-materia',
@@ -21,7 +22,7 @@ export class VerAsistenciaPorMateriaComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private historialAsistenciaService: HistorialAsistenciaService
+    private historialAsistenciaService: HistorialAsistenciaService,private authService:AuthService
   ) {}
 
   ngOnInit(): void {
@@ -37,6 +38,7 @@ export class VerAsistenciaPorMateriaComponent implements OnInit {
     // Asumiendo que estás obteniendo todas las asistencias
     this.historialAsistenciaService.obtenerAsistencias().subscribe(
       (asistencias: Asistencia[]) => {
+        console.log(asistencias)
         this.agruparAsistenciasPorMes(asistencias);
       },
       (error) => {
@@ -46,12 +48,13 @@ export class VerAsistenciaPorMateriaComponent implements OnInit {
   }
 
   agruparAsistenciasPorMes(asistencias: Asistencia[]): void {
+    console.log(asistencias)
     asistencias.forEach((asistencia) => {
       if (
-        asistencia.estudiante?.id_estudiante == 5 &&
+        asistencia.estudiante?.id_estudiante == this.authService.getUserId() &&
         asistencia.id_dicta == this.materia
       ) {
-        console.log(asistencia.fecha_asistencia)
+        console.log("gg",asistencia.fecha_asistencia)
 
         const fecha = new Date(asistencia.fecha_asistencia+"T00:00:00");
         console.log(fecha)

@@ -10,15 +10,29 @@ import { Estudiante } from '../../interfaces/estudiante';
 import { MateriaAsignadaDocente } from '../../interfaces/materia-asignada-docente';
 import { Nota } from '../../interfaces/nota';
 import { Materia } from '../../interfaces/materia';
+import { MensajeService } from '../mensaje/mensaje.component';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+
+
 
 @Component({
   selector: 'app-detalle-notas',
   standalone: true,
-  imports: [CommonModule],
+  imports: [
+    CommonModule,
+    MatProgressSpinnerModule
+  ],
   templateUrl: './detalle-notas.component.html',
   styleUrls: ['./detalle-notas.component.sass'],
+
+
+
+
+
+
 })
 export class DetalleNotasComponent implements OnInit {
+  isLoading = true;
   notasPorTrimestre: { [key: number]: any } = {};
   notas: Nota[] = [];
   estudiantes: Estudiante[] = [];
@@ -43,7 +57,9 @@ export class DetalleNotasComponent implements OnInit {
     private fb: FormBuilder,
     private detalleNotasService: DetalleNotasService,
     private cd: ChangeDetectorRef,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private mensajeService:MensajeService
+
   ) {
     this.idDicta = +this.route.snapshot.params['id_dicta'];
     this.idEstudiante = +this.route.snapshot.params['id_estudiante'];
@@ -55,6 +71,7 @@ export class DetalleNotasComponent implements OnInit {
     });
   }
   ngOnInit(): void {
+    this.isLoading = true;
     this.obtenerEstudiantes();
     this.obtenerNotas();
   }
@@ -99,7 +116,8 @@ export class DetalleNotasComponent implements OnInit {
     this.detalleNotasService.obtenerNotasPorAno(this.selectedYear).subscribe(
       (notas: Nota[]) => {
         this.notas = notas;
-        this.filtrarNotasEstudianteMateria(this.idEstudiante, this.idDicta); // Filtra para id_estudiante = 1 y id_dicta = 130
+        this.filtrarNotasEstudianteMateria(this.idEstudiante, this.idDicta); 
+          this.isLoading = false;
       },
       (error: any) => {
         console.error('Error en la petición de notas:', error);
@@ -152,6 +170,7 @@ export class DetalleNotasComponent implements OnInit {
          notasAActualizar.forEach((nota: any) => {
           if (nota.id) {
             this.actualizarNota(nota);
+
           } else {
             console.warn('Nota con id no definido:', nota);
           }
@@ -209,16 +228,20 @@ export class DetalleNotasComponent implements OnInit {
     console.log(nota);
     this.detalleNotasService.actualizarNota(nota).subscribe(
       (notaActualizada: Nota) => {
+
         console.log('Nota actualizada:', notaActualizada);
 
         // Actualiza en la lista local si es necesario
         const index = this.notas.findIndex((n) => n.id === nota.id);
         console.log(this.notas)
+
         if (index !== -1) {
-          this.notas[index].nota = nota.nota; // Actualiza en la lista de notas
-          this.notas[index].fecha = nota.fecha; // Actualiza en la lista de notas
+          this.notas[index].nota = nota.nota;
+          this.notas[index].fecha = nota.fecha; 
+
 
         }
+
         // Refresca la vista localmente
         // this.filtrarNotasEstudianteMateria(this.idEstudiante, this.idDicta);
       },
@@ -227,6 +250,11 @@ export class DetalleNotasComponent implements OnInit {
       }
     );
   }
+
+
+
+
+
 
   convertToNumber(value: string): number {
     return parseFloat(value);

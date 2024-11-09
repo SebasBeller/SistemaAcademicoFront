@@ -1,50 +1,52 @@
-<header>
-  <div class="escudo">
-    <img
-      src="https://img.freepik.com/vector-premium/diseno-vectorial-logotipo-escuela-fondo-blanco_579306-14609.jpg"
-      alt="Escudo"
-    />
-  </div>
-  <div class="titulo">
-    <h1><b>Colegio San Rafael</b></h1>
-  </div>
-  <div class="notificaciones">
-    <img
-      src="https://w7.pngwing.com/pngs/832/828/png-transparent-alarm-alert-attention-bell-notification-notifications-ring-random-icon-thumbnail.png"
-      alt="Notificaciones"
-    />
-  </div>
-</header>
-
-<nav>
-  <div class="sidebar">
-    <div class="fotoperfil">
+<div [ngClass]="getColorClass()">
+  <header>
+    <div class="escudo">
+      <a routerLink="home">
       <img
-        src="https://publish-p47754-e237306.adobeaemcloud.com/adobe/dynamicmedia/deliver/dm-aid--914bcfe0-f610-4610-a77e-6ea53c53f630/_330603286208.app.webp?preferwebp=true&width=312"
-        alt="Foto de Perfil"
+        src="https://img.freepik.com/vector-premium/diseno-vectorial-logotipo-escuela-fondo-blanco_579306-14609.jpg"
+        alt="Escudo"
+      />
+      </a>
+    </div>
+    <div class="titulo">
+      <h1><b>Colegio San Rafael</b></h1>
+    </div>
+    <div class="notificaciones">
+      <img
+        src="https://w7.pngwing.com/pngs/832/828/png-transparent-alarm-alert-attention-bell-notification-notifications-ring-random-icon-thumbnail.png"
+        alt="Notificaciones"
       />
     </div>
-    <ul>
-      <li *ngIf="userRole === 'profesor'">
-        <a routerLink="ver-materias-docente">Mis materias</a>
-      </li>
-      <li *ngIf="userRole === 'estudiante'">
-        <a routerLink="historial-asistencia">Mis Asistencias</a>
-      </li>
-      <li *ngIf="userRole === 'estudiante'">
-        <a routerLink="mostrar-materia">Mis materias</a>
-      </li>
-      <li *ngIf="userRole === 'estudiante'">
-        <a routerLink="notas">Mis Notas</a>
-      </li>
-      <li *ngIf="userRole === 'profesor'">
-        <a routerLink="notas-profesor">Mis Notas</a>
-      </li>
-      <li><a (click)="logout()" routerLink="logout">Log out</a></li>
-    </ul>
-  </div>
-</nav>
-
-<main class="main-content">
-  <router-outlet></router-outlet>
-</main>
+  </header>
+  
+  <nav>
+    <div class="sidebar" >
+      <div class="fotoperfil">
+        <a  [routerLink]="userRole === 'estudiante' ? 'perfil-estudiante/' + idEstudiante : '/home/'">
+          <img *ngIf="'fotoPerfil' || '../../../assets/img/assets/silueta.jpg'" [src]="fotoPerfil" alt="Foto de Perfil" />
+          <b>Editar Perfil</b></a>
+      </div>
+      <ul>
+        <li *ngIf="userRole === 'profesor'">
+          <a routerLink="ver-materias-docente"><b>Mis materias</b></a>
+        </li>
+        <li *ngIf="userRole === 'estudiante'">
+          <a routerLink="historial-asistencia"><b>Mis Asistencias</b></a>
+        </li>
+        <li *ngIf="userRole === 'estudiante'">
+          <a routerLink="mostrar-materia"><b>Mis Materias</b></a>
+        </li>
+        <li *ngIf="userRole === 'estudiante'">
+          <a routerLink="notas"><b>Mis Notas</b></a>
+        </li>
+        <li *ngIf="userRole === 'profesor'">
+          <a routerLink="notas-profesor"><b>Mis Notas</b></a>
+        </li>
+        <li><a (click)="logout()" routerLink="logout"><b>Log out</b></a></li>
+      </ul>
+    </div>
+  </nav>
+  <main class="main-content">
+    <router-outlet></router-outlet>
+  </main>
+</div>

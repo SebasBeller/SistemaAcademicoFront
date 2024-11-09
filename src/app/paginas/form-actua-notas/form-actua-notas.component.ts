@@ -54,16 +54,19 @@ import { MatDialogModule, MatDialogActions, MatDialogContent, MatDialogTitle } f
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
+import { MensajeService } from '../mensaje/mensaje.component';
+
 
 @Component({
   selector: 'app-form-actua-notas',
   standalone: true,
+
   imports: [
     ReactiveFormsModule,
     MatDialogModule,
     MatFormFieldModule,
     MatInputModule,
-    MatButtonModule
+    MatButtonModule,
   ],
   templateUrl: './form-actua-notas.component.html',
   styleUrls: ['./form-actua-notas.component.sass']
@@ -77,6 +80,8 @@ export class FormActuaNotasComponent {
 
   constructor(
     private fb: FormBuilder,
+    private mensajeService:MensajeService,
+
     private dialogRef: MatDialogRef<FormActuaNotasComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
@@ -94,11 +99,23 @@ export class FormActuaNotasComponent {
   }
 
   actualizarNota() {
+
     if (this.form.valid) {
+
       console.log(this.form.value);
+      this.mensajeService.mostrarMensajeExito("¡Éxito!","La nota se actualizó con éxito")
+
+
       this.dialogRef.close(this.form.value);
     }
+    else{
+      this.mensajeService.mostrarMensajeError("¡Error!","Algo salio mal")
+
+    }
   }
+
+
+
 
   cerrar() {
     this.dialogRef.close();

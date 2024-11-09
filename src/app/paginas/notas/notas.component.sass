@@ -1,9 +1,22 @@
-$table-bg: #f9f9f9
-$table-border: #ccc
-$header-bg: #1D71B8
-$header-color: #fff
-$row-bg: #fff
-$row-hover-bg: #e7f4e4
+h2
+  color: rgb(109,132,180)
+  font-size: 20px
+
+select
+  color: rgb(109, 132, 180)
+  background-color: rgb(216, 223, 234)
+  font-size: 18px
+  border-radius: 30px
+  width: 100px
+  text-align: center
+  margin-top: 5px
+  margin-bottom: 5px
+
+
+.loader-container
+  margin-left: 660px
+  margin-top: 220px
+  height: 100vh
 
 table
   width: 100%
@@ -13,21 +26,25 @@ table
   th, td
     padding: 12px
     text-align: left
-    border: 1px solid $table-border
-
+    border: 3px solid #000000
+    text-align: center
 
   th
-    background-color: $header-bg
-    color: $header-color
-
+    background-color: rgb(59, 89, 152)
+    color: rgb(216, 223, 234)
 
   tr
-    &:nth-child(even)
-      background-color: $table-bg
+    &:nth-child(odd)
+      background-color: rgb(216, 223, 234)
+      color: rgb(109, 132, 180)
 
+    &:nth-child(even)
+      background-color: rgb(109, 132, 180)
+      color: rgb(216, 223, 234)
 
     &:hover
-      background-color: $row-hover-bg
+      background-color: rgb(0, 0, 0)
+      color: rgb(216, 223, 234)
 
-
-
+.mat-mdc-progress-spinner 
+  --mdc-circular-progress-active-indicator-color: rgb(109, 132, 180)

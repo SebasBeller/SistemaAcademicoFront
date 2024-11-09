@@ -14,12 +14,13 @@ export class MateriasProfesorService {
   materias: MateriaAsignadaDocente[] = [];
 obtenerMaterias():Observable<MateriaAsignadaDocente[]>{
   return this.http.get<MateriaAsignadaDocente[]>(`${this.urlApi}/todas-las-materias`)
-
+  
 }
 obtenerMateriasDeEstudiante(id:number):Observable<MateriaAsignadaDocente[]>{
   return this.http.get<MateriaAsignadaDocente[]>(`${this.urlApi}/todas-las-materias/${id}`)
 
 }
+
 obtenerMateriaAsignada(id:number):Observable<MateriaAsignadaDocente>{
   return this.http.get<MateriaAsignadaDocente>(`${this.urlApi}/${id}`)
 }

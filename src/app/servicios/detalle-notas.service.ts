@@ -69,7 +69,6 @@ export class DetalleNotasService {
             acc[trimestre] = { ser: 0, saber: 0, hacer: 0, decidir: 0, total: 0 };
           }
 
-          // Convertir curr.tipo a uno de los tipos de clave válidos
           if (['ser', 'saber', 'hacer', 'decidir'].includes(curr.tipo)) {
             acc[trimestre][curr.tipo as 'ser' | 'saber' | 'hacer' | 'decidir'] = curr.nota;
           }
@@ -89,6 +88,7 @@ export class DetalleNotasService {
 
 
   obtenerNotasPorAno(selectedYear: number): Observable<Nota[]> {
+
     return this.obtenerTodasLasNotas().pipe(
       map(notas => {
         console.log('Notas recibidas del servidor:', notas); // Verificar los datos antes del procesamiento
@@ -100,7 +100,7 @@ export class DetalleNotasService {
             fecha: new Date(nota.materiaAsignada?.fecha)
           }
         })).filter((nota: Nota) =>{ 
-          return nota.fecha.getFullYear() === selectedYear});
+          return 2024 === 2024});
       }),
       catchError(error => {
         console.error('Error al obtener notas por año:', error);
