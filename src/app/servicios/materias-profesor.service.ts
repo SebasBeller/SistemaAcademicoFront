@@ -21,6 +21,7 @@ obtenerMateriasDeEstudiante(id:number):Observable<MateriaAsignadaDocente[]>{
 
 }
 
+
 obtenerMateriaAsignada(id:number):Observable<MateriaAsignadaDocente>{
   return this.http.get<MateriaAsignadaDocente>(`${this.urlApi}/${id}`)
 }
@@ -28,4 +29,7 @@ obtenerEstudiantesMateriaAsignada(id:number):Observable<Estudiante[]>{
   return this.http.get<Estudiante[]>(`${this.urlApi}/estudiantes/${id}`)
 }
 
+agregarMateriaAsignada(materiaAsignada:MateriaAsignadaDocente):Observable<MateriaAsignadaDocente>{
+  return this.http.post<MateriaAsignadaDocente>(`${this.urlApi}`,materiaAsignada)
+}
 }

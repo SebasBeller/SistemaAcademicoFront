@@ -1,0 +1,21 @@
+<h2 mat-dialog-title>Agregar Materia</h2>
+
+<mat-dialog-content>
+    <label>
+        Fecha:
+        <input [(ngModel)]="fecha" />
+      </label>
+  <label>
+    Profesor:
+    <select [(ngModel)]="profesor">
+      <option *ngFor="let profesor of profesores" [ngValue]="profesor">
+        {{ profesor.nombre}}
+      </option>
+    </select>
+  </label>
+
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button (click)="onAdd()">Asignar</button>
+  <button mat-button (click)="onCancel()">Cancelar</button>
+</mat-dialog-actions>
