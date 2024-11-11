@@ -20,10 +20,12 @@ import { DetalleNotasEstudiantesComponent } from './paginas/detalle-notas-estudi
 import { NotasProfesorComponent } from './paginas/notas-profesor/notas-profesor.component';
 import { PerfilEstudianteComponent } from './paginas/perfil-estudiante/perfil-estudiante.component';
 import {MateriasAdministradorComponent} from './paginas/materias-administrador/materias-administrador.component';
+
+import { VerListaProfesoresComponent } from './paginas/ver-lista-profesores/ver-lista-profesores.component';
 export const routes: Routes = [
   {
     path:'',
-    component:LoginComponent
+    component:VerListaProfesoresComponent
   }
   ,
   {
