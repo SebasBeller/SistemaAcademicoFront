@@ -27,7 +27,7 @@ import { AsignarMateriaEstudiantComponent } from './paginas/asignar-materia-estu
 export const routes: Routes = [
   {
     path:'',
-    component:AsignarMateriaEstudiantComponent
+    component:LoginComponent
   }
   ,
   {
@@ -143,12 +143,16 @@ export const routes: Routes = [
       },
       {
         path:'materias-admin',
-        component:MateriasAdministradorComponent,
+        component:MateriasAdministradorComponent, 
         canActivate:[AuthGuard],
         data: {roles: ['admin']}
       },
-      
-
+      {
+        path:'ver-lista-profesores',
+        component:VerListaProfesoresComponent,
+        canActivate:[AuthGuard],
+        data: {roles: ['admin']}
+      }
     ],
   },
 ];

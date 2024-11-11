@@ -45,6 +45,9 @@
       <li *ngIf="userRole === 'admin'" >
         <a routerLink="materias-admin">Materias</a>
       </li>
+      <li *ngIf="userRole === 'admin'" >
+        <a routerLink="ver-lista-profesores">Profesores</a>
+      </li>
       <li><a (click)="logout()" routerLink="logout">Log out</a></li>
     </ul>
   </div>
