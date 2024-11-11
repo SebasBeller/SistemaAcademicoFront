@@ -42,7 +42,7 @@
       <li *ngIf="userRole === 'estudiante'">
         <a routerLink="notas">Mis Notas</a>
       </li>
-      <li >
+      <li *ngIf="userRole === 'admin'" >
         <a routerLink="materias-admin">Materias</a>
       </li>
       <li><a (click)="logout()" routerLink="logout">Log out</a></li>

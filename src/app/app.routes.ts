@@ -140,7 +140,8 @@ export const routes: Routes = [
       {
         path:'materias-admin',
         component:MateriasAdministradorComponent,
-
+        canActivate:[AuthGuard],
+        data: {roles: ['admin']}
       },
       
 

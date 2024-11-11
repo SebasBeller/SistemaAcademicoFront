@@ -142,6 +142,7 @@ export class MateriasAdministradorComponent {
             console.log("resp",response)
             let indice=this.materias.findIndex(materia=>materia.id_materia===response.materia?.id_materia)
             this.materias[indice].profesorAsignado=response.profesor;
+            this.materias[indice].id=response.id_dicta;
 
           },
           error=>{
@@ -154,6 +155,9 @@ export class MateriasAdministradorComponent {
 
   }
 
+  asignarEstudiante(id_dicta:number){
+    console.log(id_dicta);
+  }
   
   get filteredMaterias(): Materia[] {
     return this.materias.filter(materia =>
