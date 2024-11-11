@@ -22,10 +22,12 @@ import { PerfilEstudianteComponent } from './paginas/perfil-estudiante/perfil-es
 import {MateriasAdministradorComponent} from './paginas/materias-administrador/materias-administrador.component';
 
 import { VerListaProfesoresComponent } from './paginas/ver-lista-profesores/ver-lista-profesores.component';
+import { AsignarMateriaEstudiantComponent } from './paginas/asignar-materia-estudiant/asignar-materia-estudiant.component';
+
 export const routes: Routes = [
   {
     path:'',
-    component:VerListaProfesoresComponent
+    component:AsignarMateriaEstudiantComponent
   }
   ,
   {
