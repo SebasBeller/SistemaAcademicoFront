@@ -124,7 +124,7 @@ export class MateriasAdministradorComponent {
     const dialogRef = this.dialog.open(FormularioAsignarMateriaDocenteComponent, {
       width: '300px',
       data: 
-      { fecha: new Date().toISOString().split("T")[0], profesores:this.profesores}
+      { fecha: new Date().toISOString(), profesores:this.profesores}
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -133,7 +133,7 @@ export class MateriasAdministradorComponent {
           id_dicta:0,
           materia:materiaSeleccionada,
           profesor:result.profesor,
-          fecha:result.fecha
+          fecha:result.fecha.split("T")[0]
 
         }
         console.log(materiaAsignada);
