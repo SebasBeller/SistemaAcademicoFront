@@ -30,6 +30,10 @@
       <li *ngIf="userRole === 'profesor'">
         <a routerLink="ver-materias-docente">Mis materias</a>
       </li>
+      <!-- agregue esto para ver todos los estudiantes y registrarlos -->
+      <li *ngIf="userRole === 'profesor'">
+        <a routerLink="admin-ver-estudiantes">Ver todos los Estudiantes</a>
+      </li>
       <li *ngIf="userRole === 'estudiante'">
         <a routerLink="historial-asistencia">Mis Asistencias</a>
       </li>
