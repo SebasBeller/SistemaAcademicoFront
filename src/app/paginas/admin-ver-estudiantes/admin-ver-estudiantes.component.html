@@ -1,3 +1,21 @@
+<style>
+  select {
+  padding: 2px;
+  font-size: 1rem;
+  border-radius: 4px;
+  background-color: #f9f9f9;
+  color: #333;
+  margin: 2%;
+}
+
+/* Cambia el borde y el fondo cuando el campo select está en foco */
+select:focus {
+  outline: none;
+  border-color: #007bff;
+  background-color: #fff;
+}
+</style>
+
 <div class="container">
     <button class="add-button" (click)="abrirFormulario()">
       <span>+</span> Agregar Estudiante
@@ -21,12 +39,18 @@
         
                 <label>Password:</label>
                 <input [(ngModel)]="estudiante.password" name="password" type="password" required />
+                
+                
+                <div>
+                  <label >Paralelos</label>
+                  <select  (click)="actualizarParalelo($event)">
+                    <option *ngFor="let paralelo of paralelos" [ngValue]="paralelo">
+                      {{ paralelo.paralelo }}
+                    </option>
+                  </select>
+                </div>
+                
 
-                <label>Paralelo:</label>
-                <input [(ngModel)]="estudiante.paralelo" name="paralelo" type="paralelo" required value]="estudiante.paralelo?.paralelo"/>
-        
-                <label>Foto (URL):</label>
-                <input [(ngModel)]="estudiante.foto" name="foto" />
         
                 <button type="submit">{{ editando ? 'Guardar Cambios' : 'Agregar' }}</button>
               </form>
