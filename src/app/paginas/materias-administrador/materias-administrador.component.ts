@@ -19,7 +19,7 @@ import {MateriaAsignadaDocente} from '../../interfaces/materia-asignada-docente'
   standalone: true,
   imports: [CommonModule,RouterLink,FormsModule],
   templateUrl: './materias-administrador.component.html',
-  styleUrl: './materias-administrador.component.sass'
+  styleUrl: './materias-administrador.component.scss'
 })
 export class MateriasAdministradorComponent {
   materias:Materia[]=[];
@@ -86,7 +86,7 @@ export class MateriasAdministradorComponent {
   addNewMateria() {
     const dialogRef = this.dialog.open(FormularioAgregarMateriaComponent, {
       width: '300px',
-      data: 
+      data:
       { name: '', paralelos: this.paralelos }
     });
 
@@ -123,7 +123,7 @@ export class MateriasAdministradorComponent {
     console.log(materiaSeleccionada);
     const dialogRef = this.dialog.open(FormularioAsignarMateriaDocenteComponent, {
       width: '300px',
-      data: 
+      data:
       { fecha: new Date().toISOString().split("T")[0], profesores:this.profesores}
     });
 
@@ -154,7 +154,7 @@ export class MateriasAdministradorComponent {
 
   }
 
-  
+
   get filteredMaterias(): Materia[] {
     return this.materias.filter(materia =>
       materia.nombre.toLowerCase().includes(this.searchTerm.toLowerCase())

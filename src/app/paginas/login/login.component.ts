@@ -13,10 +13,15 @@ import { SelectionColorService } from '../../servicios/selection-color.service';
     CommonModule
   ],
   templateUrl: './login.component.html',
-  styleUrl: './login.component.sass'
+  styleUrl: './login.component.scss'
 })
 export class LoginComponent {
   selectedColor: string = '';
+  email: string = '';
+  password: string = '';
+  errorMessage: string | null = null;
+  passwordType: string = 'password';
+  showPassword: boolean = false;
 
   constructor(
     private colorService: SelectionColorService,
@@ -42,9 +47,7 @@ export class LoginComponent {
         return 'color-azul';
     }
   }
-  email: string = '';
-  password: string = '';
-  errorMessage: string = '';
+
 
 
     login() {
@@ -57,7 +60,7 @@ export class LoginComponent {
               } else {
                   console.error("La respuesta no contiene los datos esperados de usuario.");
                   this.mensajeService.mostrarMensajeError("Error", "Datos de usuario no recibidos.");
-                  
+
               }
           },
           error: (err) => {
@@ -67,7 +70,11 @@ export class LoginComponent {
       });
   }
 
+  togglePassword() {
 
+    this.showPassword = !this.showPassword;
+    this.passwordType = this.showPassword ? 'text' : 'password';
+  }
 
 
 }

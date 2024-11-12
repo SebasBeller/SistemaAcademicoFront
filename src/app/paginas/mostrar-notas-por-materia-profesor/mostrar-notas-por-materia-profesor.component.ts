@@ -26,7 +26,7 @@ interface EstudianteConPromedios {
     MatProgressSpinnerModule
   ],
   templateUrl: './mostrar-notas-por-materia-profesor.component.html',
-  styleUrls: ['./mostrar-notas-por-materia-profesor.component.sass']
+  styleUrls: ['./mostrar-notas-por-materia-profesor.component.scss']
 })
 export class MostrarNotasPorMateriaProfesorComponent implements OnInit {
 
@@ -37,7 +37,7 @@ export class MostrarNotasPorMateriaProfesorComponent implements OnInit {
   notas: Nota[] = [];
   idMateria:string="";
   isLoading = true;
-  
+
 
   constructor(
     private notasProfesorService: NotasProfesorService,
@@ -62,7 +62,7 @@ export class MostrarNotasPorMateriaProfesorComponent implements OnInit {
       (data: MateriaAsignadaDocente) => {
         this.datos = data;
         this.paralelos = data.paralelo || [];
-  
+
 
       },
       (error: any) => {

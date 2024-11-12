@@ -7,7 +7,7 @@ import { FormsModule } from '@angular/forms';
   standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './buscar-materia.component.html',
-  styleUrls: ['./buscar-materia.component.sass']
+  styleUrls: ['./buscar-materia.component.scss']
 })
 export class BuscarMateriaComponent {
   materias = [
@@ -33,12 +33,12 @@ export class BuscarMateriaComponent {
     console.log('Buscando:', inputValue, 'en el tipo de búsqueda:', this.tipoBusqueda);
 
     if (this.tipoBusqueda === 'materia') {
-      this.resultado = this.materias.filter(m => 
+      this.resultado = this.materias.filter(m =>
         !inputValue || m.nombre.toLowerCase().includes(inputValue.toLowerCase())
       ).map(m => `Materia: ${m.nombre}, Profesor: ${m.profesor}`);
     } else {
       // Filtrar correctamente por profesores
-      this.resultado = this.profesores.filter(p => 
+      this.resultado = this.profesores.filter(p =>
         !inputValue || p.nombre.toLowerCase().includes(inputValue.toLowerCase())
       ).map(p => `Profesor: ${p.nombre}, Materia: ${p.materia}`);
     }

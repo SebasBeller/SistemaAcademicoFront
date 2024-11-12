@@ -23,7 +23,7 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
     MatProgressSpinnerModule
   ],
   templateUrl: './detalle-notas.component.html',
-  styleUrls: ['./detalle-notas.component.sass'],
+  styleUrls: ['./detalle-notas.component.scss'],
 
 
 
@@ -116,7 +116,7 @@ export class DetalleNotasComponent implements OnInit {
     this.detalleNotasService.obtenerNotasPorAno(this.selectedYear).subscribe(
       (notas: Nota[]) => {
         this.notas = notas;
-        this.filtrarNotasEstudianteMateria(this.idEstudiante, this.idDicta); 
+        this.filtrarNotasEstudianteMateria(this.idEstudiante, this.idDicta);
           this.isLoading = false;
       },
       (error: any) => {
@@ -237,7 +237,7 @@ export class DetalleNotasComponent implements OnInit {
 
         if (index !== -1) {
           this.notas[index].nota = nota.nota;
-          this.notas[index].fecha = nota.fecha; 
+          this.notas[index].fecha = nota.fecha;
 
 
         }

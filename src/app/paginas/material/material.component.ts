@@ -18,16 +18,16 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [FormsModule, PdfViewerModule, MatExpansionModule, CommonModule],
   templateUrl: './material.component.html',
-  styleUrl: './material.component.sass',
+  styleUrl: './material.component.scss',
   // changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MaterialComponent {
-  isOpen?:boolean; 
+  isOpen?:boolean;
   readonly panelOpenState2 = signal(false);
   panelOpenState: boolean = false;
   private src!:string;
-  materialesServicio:MaterialService=inject(MaterialService) 
-  route:ActivatedRoute=inject(ActivatedRoute) 
+  materialesServicio:MaterialService=inject(MaterialService)
+  route:ActivatedRoute=inject(ActivatedRoute)
 
   private pdfService=inject(PdfService)
   userPrompt: string = '';
@@ -35,7 +35,7 @@ export class MaterialComponent {
   messages: { user: string; responseIA: string }[] = [];
 
   material?:Material;
-  
+
   id_material?:number;
   constructor(){
 
@@ -45,7 +45,7 @@ export class MaterialComponent {
 
   ngOnInit(): void {
     this.pdfService.askClear()
-    this.isOpen = false; 
+    this.isOpen = false;
     this.materialesServicio.encontrarMaterial(this.id_material).subscribe(
       (data)=>{
           this.material=data
@@ -64,7 +64,7 @@ export class MaterialComponent {
 
   toggle() {
     this.messages = [];
-    this.isOpen = !this.isOpen; 
+    this.isOpen = !this.isOpen;
   }
 
   async readPdf(pdf: PDFDocumentProxy) {
@@ -85,5 +85,5 @@ export class MaterialComponent {
     }
   }
 
-  
+
 }

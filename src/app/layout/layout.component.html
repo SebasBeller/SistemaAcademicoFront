@@ -1,55 +1,86 @@
-<header>
-  <div class="escudo">
-    <a routerLink="home">
-    <img
-      src="https://img.freepik.com/vector-premium/diseno-vectorial-logotipo-escuela-fondo-blanco_579306-14609.jpg"
-      alt="Escudo"
-    />
-    </a>
-  </div>
-  <div class="titulo">
-    <h1><b>Colegio San Rafael</b></h1>
-  </div>
-  <div class="notificaciones">
-    <img
-      src="https://w7.pngwing.com/pngs/832/828/png-transparent-alarm-alert-attention-bell-notification-notifications-ring-random-icon-thumbnail.png"
-      alt="Notificaciones"
-    />
-  </div>
-</header>
+<div class="contenido-layout">
 
-<nav>
+<nav class="panel-izquierdo">
   <div class="sidebar" >
     <div class="fotoperfil">
-      <a  [routerLink]="userRole === 'estudiante' ? 'perfil-estudiante/' + idEstudiante : '/home/'">
-        <img *ngIf="'fotoPerfil' || '../../../assets/img/assets/silueta.jpg'" [src]="fotoPerfil" alt="Foto de Perfil" />
-      Editar Perfil</a>
+      <a class="iconos-lateral-izquierdo"  [routerLink]="userRole === 'estudiante' ? 'perfil-estudiante/' + idEstudiante : '/home/'">
+        <img  *ngIf="'fotoPerfil'" [src]="fotoPerfil" alt="Foto de Perfil" />
+
+        <p>Editar Perfil</p>
+      </a>
 
     </div>
-    <ul>
+    <ul class="menuLateralIzquierdo">
       <li *ngIf="userRole === 'profesor'">
-        <a routerLink="ver-materias-docente">Mis materias</a>
+
+        <a class="iconos-lateral-izquierdo" routerLink="ver-materias-docente">
+          <span>Mis materias</span></a>
       </li>
       <li *ngIf="userRole === 'profesor'">
-        <a routerLink="notas-profesor">Mis Notas</a>
+        <a class="iconos-lateral-izquierdo" routerLink="notas-profesor"> <span>Mis Notas</span></a>
       </li>
       <li *ngIf="userRole === 'estudiante'">
-        <a routerLink="historial-asistencia">Mis Asistencias</a>
+
+        <a class="iconos-lateral-izquierdo" routerLink="historial-asistencia">
+          <img src="../../assets/img/asistencia.png" alt="Asistencia">
+          <span> Asistencias</span></a>
       </li>
       <li *ngIf="userRole === 'estudiante'">
-        <a routerLink="mostrar-materia">Mis materias</a>
+
+        <a class="iconos-lateral-izquierdo" routerLink="mostrar-materia">
+          <img src="../../assets/img/materias.png" alt="materias">
+          <span>Mis materias</span>
+        </a>
       </li>
       <li *ngIf="userRole === 'estudiante'">
-        <a routerLink="notas">Mis Notas</a>
+        <a class="iconos-lateral-izquierdo" class="iconos-lateral-izquierdo" routerLink="notas">
+          <img src="../../assets/img/notas.png" alt="materias">
+          <span>Mis Notas</span></a>
       </li>
-      <li >
-        <a routerLink="materias-admin">Materias</a>
+      <li  *ngIf="userRole === 'profesor'" >
+        <a class="iconos-lateral-izquierdo" routerLink="materias-admin"><span>Materias</span></a>
       </li>
-      <li><a (click)="logout()" routerLink="logout">Log out</a></li>
+      <li>
+        <a class="iconos-lateral-izquierdo" (click)="logout()" routerLink="logout">
+        <img src="../../assets/img/salir.png" alt="Salir">
+        <span> Lout</span></a></li>
     </ul>
   </div>
 </nav>
 
 <main class="main-content">
+  <div class="cabecera-notificaciones">
+    <div class="escudo">
+      <a class="escudo-img" routerLink="home">
+      <img
+        src="../../assets/img/logo.png"
+        alt="Escudo"
+      />
+      </a>
+    </div>
+    <div class="titulo">
+      <h1><b>Colegio San Rafael</b></h1>
+    </div>
+    <div class="notificaciones">
+      <ul class="notificaciones-ajusteas">
+        <li><a href="#"><img
+          src="../../assets/img/boton-de-notificaciones.png"
+          alt="Notificaciones"
+        /></a>
+      </li>
+        <li><a href="#">
+
+        <img src="../../assets/img/configuraciones.png" alt="Ajustes"></a></li>
+
+      </ul>
+
+    </div>
+  </div>
+  <div class="contenido-datos-componentes">
   <router-outlet></router-outlet>
+  </div>
+  <div class="contenido-footer">
+    <p>&copy; Todos los derechos reservados - 2024</p>
+  </div>
 </main>
+</div>

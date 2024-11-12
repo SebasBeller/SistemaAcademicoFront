@@ -19,7 +19,7 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
     MatProgressSpinnerModule
   ],
   templateUrl: './detalle-notas-estudiantes.component.html',
-  styleUrls: ['./detalle-notas-estudiantes.component.sass'],
+  styleUrls: ['./detalle-notas-estudiantes.component.scss'],
 })
 export class DetalleNotasEstudiantesComponent implements OnInit {
   isLoading = true;
@@ -58,7 +58,7 @@ export class DetalleNotasEstudiantesComponent implements OnInit {
     this.obtenerNotas();
   }
   filtrarNotasEstudianteMateria(idEstudiante: number, idMateria: number): void {
-    
+
     const notasEstudianteMateria = this.notas.filter(
       (nota) =>
         nota.estudiante?.id_estudiante === idEstudiante &&

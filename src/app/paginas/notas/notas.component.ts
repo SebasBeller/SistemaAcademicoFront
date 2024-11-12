@@ -15,7 +15,7 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
   standalone: true,
   imports: [CommonModule, HttpClientModule, RouterModule,MatProgressSpinnerModule],
   templateUrl: './notas.component.html',
-  styleUrls: ['./notas.component.sass']
+  styleUrls: ['./notas.component.scss']
 })
 export class NotasComponent implements OnInit {
   isLoading = true;
@@ -24,7 +24,7 @@ export class NotasComponent implements OnInit {
   profesores: MateriaAsignadaDocente[] = [];
   estudiantes: Estudiante[] = [];
   materiasAsignadas: Materias[] = [];
-  selectedYear: number = 2024; 
+  selectedYear: number = 2024;
   filteredProfesores: MateriaAsignadaDocente[] = [];
   filteredEstudiantes: Estudiante[] = [];
   nombresMaterias: { [id_materia: number]: string } = {};
@@ -105,19 +105,19 @@ export class NotasComponent implements OnInit {
       const notaValue = nota.nota;
       console.log(nota)
       if (nota.estudiante.id_estudiante==this.authService.getUserId()){
-        
-        
+
+
         if (!this.notasPorMateria[id_dicta]) {
           this.notasPorMateria[id_dicta] = [];
         }
-        
+
         let trimestreExistente = this.notasPorMateria[id_dicta].find(t => t.trimestre === trimestre);
-        
+
         if (!trimestreExistente) {
           trimestreExistente = { trimestre, notasPorTipo: { hacer: [], decidir: [], saber: [], ser: [] } };
           this.notasPorMateria[id_dicta].push(trimestreExistente);
         }
-        
+
         if (tipo in trimestreExistente.notasPorTipo) {
           trimestreExistente.notasPorTipo[tipo].push(notaValue);
         }

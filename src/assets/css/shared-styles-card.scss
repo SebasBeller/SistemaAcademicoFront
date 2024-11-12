@@ -1,0 +1,40 @@
+
+.materias-contenedor{
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1rem;
+  padding: 1rem;
+}
+.materia-card{
+  background-color: #ffffff;
+  border: 1px solid #e0e0e0 ;
+  border-radius: 10px 10px 0px 0px;
+  box-shadow: 0 5px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: transform 0.2s ease;
+}
+
+.materia-card img.imagen-card {
+  width: 100%;
+  height: auto;
+  border-bottom: 5px solid var(--primary-color);
+}
+.materia-card .detalle-contenido {
+  padding: 1rem;
+}
+
+.alinear-centro{
+   text-align: center;
+}
+.boton-detalle:hover .enlace-primario {
+  color: #f8f2f2;
+}
+@media (max-width: 600px) {
+  .materias-contenedor {
+    grid-template-columns: 1fr;
+  }
+
+  .materia-card {
+    font-size: 0.9rem;
+  }
+}

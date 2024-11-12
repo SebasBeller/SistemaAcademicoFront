@@ -1,11 +1,4 @@
-<style>
- .loader-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh; 
-}
-</style>
+
 <div>
 
 
@@ -15,7 +8,7 @@
   <div *ngIf="isLoading" class="loader-container">
     <mat-spinner></mat-spinner>
   </div>
-  
+
   <div *ngIf="!isLoading">
   <table>
     <thead>

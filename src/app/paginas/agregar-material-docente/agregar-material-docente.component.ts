@@ -5,7 +5,7 @@ import { Component } from '@angular/core';
   standalone: true,
   imports: [],
   templateUrl: './agregar-material-docente.component.html',
-  styleUrl: './agregar-material-docente.component.sass'
+  styleUrl: './agregar-material-docente.component.scss'
 })
 export class AgregarMaterialDocenteComponent {
 

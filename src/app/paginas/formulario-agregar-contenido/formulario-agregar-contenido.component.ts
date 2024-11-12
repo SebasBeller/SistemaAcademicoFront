@@ -9,7 +9,7 @@ import { MatButtonModule } from '@angular/material/button'; // Importa MatButton
   selector: 'app-formulario-agregar-contenido',
   standalone: true,
   templateUrl: './formulario-agregar-contenido.component.html',
-  styleUrls: ['./formulario-agregar-contenido.component.sass'],
+  styleUrls: ['./formulario-agregar-contenido.component.scss'],
   imports: [CommonModule, FormsModule, MatDialogModule, MatButtonModule] // Añade MatDialogModule y MatButtonModule aquí
 })
 export class FormularioAgregarContenidoComponent {

@@ -11,20 +11,20 @@ import { AuthService } from '../../servicios/auth.service';
   standalone: true,
   imports: [MatCardModule, MatButtonModule,RouterModule],
   templateUrl: './ver-materias-docente.component.html',
-  styleUrl: './ver-materias-docente.component.sass',
+  styleUrl: './ver-materias-docente.component.scss',
 })
 export class VerMateriasDocenteComponent implements OnInit {
   servicioMateriasProfesor:MateriasProfesorService=inject(MateriasProfesorService);
   authService: AuthService = inject(AuthService);
   materias:MateriaAsignadaDocente[]=[];
-  
+
 ngOnInit(): void {
   const idProfesor = this.authService.getUserId();
 
      this.servicioMateriasProfesor.obtenerMaterias().subscribe(
        response => {
          console.log('Datos recibidos:', response);
-        
+
          this.materias = response.filter(materia => materia.profesor?.id_profesor === idProfesor);
          console.log('id_dicta profesor:', idProfesor)
          console.log('Materias asignadas:', this.materias,);
@@ -33,7 +33,7 @@ ngOnInit(): void {
          console.error('Error en la petición GET:', error);
        }
      );
-     
+
   }
-  
+
 }

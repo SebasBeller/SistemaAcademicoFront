@@ -13,7 +13,7 @@ import { MatDialog } from '@angular/material/dialog';
   standalone: true,
   imports: [CommonModule,RouterLink],
   templateUrl: './detalle-materia.component.html',
-  styleUrls: ['./detalle-materia.component.sass']
+  styleUrls: ['./detalle-materia.component.scss']
 })
 export class DetalleMateriaComponent implements OnInit {
   cardCounter = 1;

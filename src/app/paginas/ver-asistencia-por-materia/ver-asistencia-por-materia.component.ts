@@ -10,7 +10,7 @@ import { AuthService } from '../../servicios/auth.service';
   standalone: true,
   imports: [CommonModule], // Asegurarse de que esté importado
   templateUrl: './ver-asistencia-por-materia.component.html',
-  styleUrls: ['./ver-asistencia-por-materia.component.sass'],
+  styleUrls: ['./ver-asistencia-por-materia.component.scss'],
 })
 export class VerAsistenciaPorMateriaComponent implements OnInit {
   materia!: number;

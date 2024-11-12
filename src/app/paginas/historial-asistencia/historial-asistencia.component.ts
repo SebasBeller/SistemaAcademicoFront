@@ -1,3 +1,4 @@
+
 import { Component, OnInit,inject } from '@angular/core';
 import { HistorialAsistenciaService } from '../../servicios/historial-asistencia.service';
 import { Asistencia } from '../../interfaces/asistencia';
@@ -10,12 +11,13 @@ import {AuthService} from '../../servicios/auth.service';
 import {InscripcionService} from '../../servicios/inscripcion.service';
 
 
+
 @Component({
   selector: 'app-historial-asistencia',
   standalone: true,
   imports: [CommonModule, RouterLink, FormsModule],
   templateUrl: './historial-asistencia.component.html',
-  styleUrls: ['./historial-asistencia.component.sass']
+  styleUrls: ['./historial-asistencia.component.scss']
 })
 export class HistorialAsistenciaComponent implements OnInit {
   asistencias: Asistencia[] = [];
@@ -38,7 +40,7 @@ export class HistorialAsistenciaComponent implements OnInit {
     this.obtenerAsistencias();
     this.obtenerProfesores();
     this.obtenerMateriasAsignadas();
-   
+
 
   }
   verAsistenciaMateria(idMateria:number): void {

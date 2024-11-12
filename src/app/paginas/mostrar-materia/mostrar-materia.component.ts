@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
@@ -13,7 +13,8 @@ import {AuthService} from '../../servicios/auth.service';
   standalone: true,
   imports: [CommonModule,RouterLink,FormsModule],
   templateUrl: './mostrar-materia.component.html',
-  styleUrls: ['./mostrar-materia.component.sass'] 
+  styleUrls: ['./mostrar-materia.component.scss'],
+  encapsulation:ViewEncapsulation.None
 })
 export class MostrarMateriaComponent implements OnInit {
   servicioMateriasProfesor:MateriasProfesorService=inject(MateriasProfesorService);

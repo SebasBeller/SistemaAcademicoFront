@@ -21,7 +21,7 @@ import { MensajeService } from '../mensaje/mensaje.component';
   selector: 'app-agregar-nuevo-contenido',
   standalone: true,
   templateUrl: './agregar-nuevo-contenido.component.html',
-  styleUrls: ['./agregar-nuevo-contenido.component.sass'],
+  styleUrls: ['./agregar-nuevo-contenido.component.scss'],
 
   imports: [
     CommonModule,
@@ -144,8 +144,8 @@ export class AgregarNuevoContenidoComponent  implements OnInit {
           this.unidadServicio.editarUnidad(unidad.id_unidad||0,unidad).subscribe(
             response => {
               this.mensajeService.mostrarMensajeExito("¡Éxito", 'Se ha editado con éxito el nuevo contenido');
-       
-              console.log(response);  
+
+              console.log(response);
             },
             error => {
               console.error('Error:', error);
@@ -165,8 +165,8 @@ export class AgregarNuevoContenidoComponent  implements OnInit {
     this.unidadServicio.eliminarUnidad(id||0).subscribe(
       response => {
         this.mensajeService.mostrarMensajeExito("¡Éxito", 'Se elimino el contenido con exito');
- 
-        console.log(response);  
+
+        console.log(response);
       },
       error => {
         console.error('Error:', error);
@@ -174,7 +174,7 @@ export class AgregarNuevoContenidoComponent  implements OnInit {
       }
     )
 
-    
+
   }
   dirigirAContenido(id?:number){
     this.router.navigate( ['/home/agregar-material-docente', id])

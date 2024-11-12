@@ -15,7 +15,7 @@ import * as bcrypt from 'bcryptjs';
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule ],
   templateUrl: './perfil-estudiante.component.html',
-  styleUrls: ['./perfil-estudiante.component.sass']
+  styleUrls: ['./perfil-estudiante.component.scss']
 
 
 })
@@ -159,10 +159,10 @@ async onGuardar(): Promise<void> {
         console.log('Estudiante actualizado:', response);
         this.mensajeService.mostrarMensajeExitoConCallback('¡Éxito!', "Los cambios se realizaron exitosamente").then((result) => {
           if (result.isConfirmed) {
-            location.reload(); 
+            location.reload();
           }
         });;
-    
+
       },
       error: (error) => {
         console.error('Error al actualizar el estudiante:', error);

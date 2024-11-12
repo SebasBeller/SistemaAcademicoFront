@@ -6,7 +6,7 @@ import {ListaMaterialesComponent} from '../../componentes/lista-materiales/lista
   standalone: true,
   imports: [ListaMaterialesComponent],
   templateUrl: './ver-materiales.component.html',
-  styleUrl: './ver-materiales.component.sass'
+  styleUrl: './ver-materiales.component.scss'
 })
 export class VerMaterialesComponent {
 

@@ -15,7 +15,7 @@ import { RouterModule } from '@angular/router';
   standalone: true,
   imports: [CommonModule, NavbarComponent, FormsModule,RouterModule],
   templateUrl: './home.component.html',
-  styleUrl: './home.component.sass'
+  styleUrl: './home.component.scss'
 })
 export class VerMaterialesEstudianteComponent implements OnInit{
   progress = signal('0%');
@@ -33,7 +33,7 @@ export class VerMaterialesEstudianteComponent implements OnInit{
   servicioMateriales:MaterialService = inject(MaterialService);
 
   id_unidad?:number;
-  route:ActivatedRoute=inject(ActivatedRoute) 
+  route:ActivatedRoute=inject(ActivatedRoute)
   constructor() {
     this.id_unidad=this.route.snapshot.params['id']
     // this.id_unidad=91
@@ -42,14 +42,14 @@ export class VerMaterialesEstudianteComponent implements OnInit{
     this.servicioMateriales.getMaterialesDeUnidad(this.id_unidad).subscribe(
       response => {
         console.log('Datos recibidos:', response);
-        this.materiales = response; 
+        this.materiales = response;
         console.log('Materia:', this.materiales);
       },
       error => {
         console.error('Error en la petición GET:', error);
       }
     )
-      
+
   }
 
 }

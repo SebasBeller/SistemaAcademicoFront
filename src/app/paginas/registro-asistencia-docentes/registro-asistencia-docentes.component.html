@@ -1,25 +1,3 @@
-<style>
-  button {
-    margin-left: 5px;
-  }
-  mat-select {
-    font-size: inherit;
-  }
-
-  td {
-    font-size: inherit; 
-  }
-  .botonGuardar{
-    margin: 2%;
-  }
- .loader-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh; 
-}
-
-</style>
 
 <mat-form-field class="example-full-width">
   <mat-label>Buscar Estudiante</mat-label>
@@ -28,7 +6,7 @@
 
   <mat-form-field class="example-full-width">
     <mat-label>Agregar Fecha</mat-label>
-    <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="singlePicker" 
+    <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="singlePicker"
            (dateChange)="agregarFecha($event)"/>
     <mat-hint>MM/DD/YYYY</mat-hint>
     <mat-datepicker-toggle matIconSuffix [for]="singlePicker"></mat-datepicker-toggle>
@@ -46,7 +24,7 @@
   <div *ngIf="isLoading" class="loader-container">
     <mat-spinner></mat-spinner>
   </div>
-  
+
   <div *ngIf="!isLoading">
 <table mat-table [dataSource]="filteredAsistencias" class="mat-elevation-z8">
   <ng-container matColumnDef="nombre">
@@ -77,4 +55,3 @@
   <mat-icon>save</mat-icon>
   </button>
 </div>
-  

@@ -1,0 +1,50 @@
+.table-contenido {
+  width: 100%;
+  overflow-x: auto;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+th, td {
+  padding: 8px;
+  text-align: left;
+  border: 1px solid #ddd;
+}
+thead{
+  background-color: rgb(52, 109, 109, 0.5);
+
+}
+thead tr th{
+  text-align: center;
+}
+tbody tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+tbody tr:hover {
+  background-color: #e6f7ff;
+  cursor: pointer;
+}
+td button{
+  background-color: rgb(52, 109, 109, 0.3);
+  width: 100%;
+  padding: 5px;
+  border-radius: 5px;
+}
+td button:hover{
+  background-color: rgb(52, 109, 109, 0.5);
+  cursor: pointer;
+}
+@media (max-width: 600px) {
+  th, td {
+    font-size: 12px;
+    padding: 4px;
+  }
+  th:nth-child(1), td:nth-child(1) {
+    min-width: 120px;
+  }
+
+  th:nth-child(7), td:nth-child(7) {
+    min-width: 100px;
+  }
+}

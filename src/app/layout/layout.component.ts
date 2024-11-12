@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
   standalone: true,
   imports: [RouterModule,CommonModule],
   templateUrl: './layout.component.html',
-  styleUrl: './layout.component.sass'
+  styleUrl: './layout.component.scss'
 })
 export class LayoutComponent {
   userRole:string|null="";
@@ -22,7 +22,7 @@ export class LayoutComponent {
 ngOnInit(){
   this.userRole=this.authService.getUserType();
   this.idEstudiante = this.authService.getUserId();
-  
+
   if (this.idEstudiante) {
     this.authService.obtenerFotoPerfil(this.idEstudiante).subscribe({
       next: (data: any) => {

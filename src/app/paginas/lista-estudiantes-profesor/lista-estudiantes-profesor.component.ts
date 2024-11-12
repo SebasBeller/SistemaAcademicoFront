@@ -8,7 +8,7 @@ import { ActivatedRoute } from '@angular/router';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './lista-estudiantes-profesor.component.html',
-  styleUrl: './lista-estudiantes-profesor.component.sass'
+  styleUrl: './lista-estudiantes-profesor.component.scss'
 })
 export class ListaEstudiantesProfesorComponent implements OnInit {
   estudiantes: Estudiante[] = [];

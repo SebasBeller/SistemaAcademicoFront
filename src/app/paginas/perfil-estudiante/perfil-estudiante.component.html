@@ -1,74 +1,12 @@
-<style>
-
- img{
-  border-radius: 50%;
- }
- .elegir-avatar{
-  width: 40%;
-  margin: 0 auto;
- }
- ul {
-  display: flex;
- }
- ul li img{
-  width: 50px;
-  cursor: pointer;
- }
-
-
-  input[type=text], input[type=password], select {
-    width: 100%;
-    padding: 12px 20px;
-    margin: 8px 0;
-    display: inline-block;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
-  }
-
-  input[type=submit] {
-    width: 100%;
-    background-color: #4CAF50;
-    color: white;
-    padding: 14px 20px;
-    margin: 8px 0;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-
-  input[type=submit]:hover {
-    background-color: #45a049;
-  }
-
-  div {
-    border-radius: 5px;
-    background-color: #f2f2f2;
-    padding: 20px;
-  }
-  .foto-perfil{
-    width: 20%;
-    margin: 0 auto;
-    text-align: center;
-
-  }
-
-  .error {
-    color: red;
-    font-size: 0.8em;
-  }
-</style>
-
-
 <div>
   <div>
     <fieldset>
-      <legend>PERFIL DEL ESTUDIANTE: {{estudianteSeleccionado?.email}}</legend>
+       {{estudianteSeleccionado?.email}}
 
-      <form [formGroup]="estudianteForm" (ngSubmit)="onGuardar()">
+      <form class="formulario-perfil" [formGroup]="estudianteForm" (ngSubmit)="onGuardar()">
 
         <div class="foto-perfil">
-          <img [src]="imagenURL || '../../../assets/img/silueta.png'" width="200" alt="Foto de perfil seleccionada">
+          <img [src]="imagenURL || '../../../assets/img/silueta.png'"  alt="Foto de perfil seleccionada">
         </div>
 
         <div class="elegir-avatar">
@@ -83,9 +21,6 @@
             <li><img src="../../../assets/img/avatar8.png" (click)="selectAvatar('../../../assets/img/avatar8.png')"></li>
           </ul>
         </div>
-
-
-
 
         <label for="fname">Nombre</label>
         <input type="text" id="fname" formControlName="nombre">

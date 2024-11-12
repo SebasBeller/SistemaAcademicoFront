@@ -40,7 +40,7 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
   ],
   providers: [provideNativeDateAdapter()],
   templateUrl: './registro-asistencia-docentes.component.html',
-  styleUrls: ['./registro-asistencia-docentes.component.sass']
+  styleUrls: ['./registro-asistencia-docentes.component.scss']
 })
 export class RegistroAsistenciaDocentesComponent implements OnInit {
   isLoading = true;
@@ -96,7 +96,7 @@ export class RegistroAsistenciaDocentesComponent implements OnInit {
   }
 
   obtenerAsistencias(){
-    this.isLoading = true; 
+    this.isLoading = true;
     this.servicioAsistencias.getAsistenciasDeMateriaAsignada(this.idMateria).subscribe(
       (response: MateriaAsignadaDocente) => {
         console.log('Datos recibidos:', response);
@@ -110,7 +110,7 @@ export class RegistroAsistenciaDocentesComponent implements OnInit {
         }
         this.filtrarFechaColumnas();
         this.filteredAsistencias=this.asistenciasEstudiantes;
-        this.isLoading = false; 
+        this.isLoading = false;
 
       },
       error => {

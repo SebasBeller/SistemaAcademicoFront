@@ -11,14 +11,14 @@ import { AuthService } from '../../servicios/auth.service';
   standalone: true,
   imports: [MatCardModule, MatButtonModule,RouterModule],
   templateUrl: './notas-profesor.component.html',
-  styleUrl: './notas-profesor.component.sass'
+  styleUrl: './notas-profesor.component.scss'
 })
 export class NotasProfesorComponent implements OnInit {
   servicioMateriasProfesor:MateriasProfesorService=inject(MateriasProfesorService);
   materias:MateriaAsignadaDocente[]=[];
   authService: AuthService = inject(AuthService);
 
-  
+
   ngOnInit(): void {
     const idProfesor = this.authService.getUserId();
      this.servicioMateriasProfesor.obtenerMaterias().subscribe(
@@ -31,7 +31,7 @@ export class NotasProfesorComponent implements OnInit {
          console.error('Error en la petición GET:', error);
        }
      );
-     
+
   }
-  
+
 }

@@ -69,7 +69,7 @@ import { MensajeService } from '../mensaje/mensaje.component';
     MatButtonModule,
   ],
   templateUrl: './form-actua-notas.component.html',
-  styleUrls: ['./form-actua-notas.component.sass']
+  styleUrls: ['./form-actua-notas.component.scss']
 })
 export class FormActuaNotasComponent {
   form: FormGroup;
