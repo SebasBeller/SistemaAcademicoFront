@@ -32,7 +32,7 @@
       </li>
       <!-- agregue esto para ver todos los estudiantes y registrarlos -->
       <li *ngIf="userRole === 'profesor'">
-        <a routerLink="admin-ver-estudiantes">Ver todos los Estudiantes</a>
+        <a routerLink="notas-profesor">Mis Notas</a>
       </li>
       <li *ngIf="userRole === 'estudiante'">
         <a routerLink="historial-asistencia">Mis Asistencias</a>
@@ -43,8 +43,11 @@
       <li *ngIf="userRole === 'estudiante'">
         <a routerLink="notas">Mis Notas</a>
       </li>
-      <li *ngIf="userRole === 'profesor'">
-        <a routerLink="notas-profesor">Mis Notas</a>
+      <li *ngIf="userRole === 'admin'">
+        <a routerLink="admin-ver-estudiantes">Ver todos los Estudiantes</a>
+      </li>
+      <li *ngIf="userRole === 'admin'" >
+        <a routerLink="materias-admin">Materias</a>
       </li>
       <li><a (click)="logout()" routerLink="logout">Log out</a></li>
     </ul>

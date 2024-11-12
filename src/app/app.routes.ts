@@ -20,6 +20,7 @@ import { DetalleNotasEstudiantesComponent } from './paginas/detalle-notas-estudi
 import { NotasProfesorComponent } from './paginas/notas-profesor/notas-profesor.component';
 import { PerfilEstudianteComponent } from './paginas/perfil-estudiante/perfil-estudiante.component';
 import { AdminVerEstudiantesComponent } from './paginas/admin-ver-estudiantes/admin-ver-estudiantes.component';
+import {MateriasAdministradorComponent} from './paginas/materias-administrador/materias-administrador.component';
 export const routes: Routes = [
   {
     path:'',
@@ -141,9 +142,16 @@ export const routes: Routes = [
         path:'admin-ver-estudiantes',
         component:AdminVerEstudiantesComponent,
         canActivate:[AuthGuard],
-        data: {roles: ['profesor']}
+        data: {roles: ['admin']}
 
-      }
+      },
+      {
+        path:'materias-admin',
+        component:MateriasAdministradorComponent,
+        canActivate:[AuthGuard],
+        data: {roles: ['admin']}
+      },
+      
 
     ],
   },
