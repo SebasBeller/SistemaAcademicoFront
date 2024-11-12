@@ -30,6 +30,7 @@
       <li *ngIf="userRole === 'profesor'">
         <a routerLink="ver-materias-docente">Mis materias</a>
       </li>
+      <!-- agregue esto para ver todos los estudiantes y registrarlos -->
       <li *ngIf="userRole === 'profesor'">
         <a routerLink="notas-profesor">Mis Notas</a>
       </li>
@@ -41,6 +42,9 @@
       </li>
       <li *ngIf="userRole === 'estudiante'">
         <a routerLink="notas">Mis Notas</a>
+      </li>
+      <li *ngIf="userRole === 'admin'">
+        <a routerLink="admin-ver-estudiantes">Ver todos los Estudiantes</a>
       </li>
       <li *ngIf="userRole === 'admin'" >
         <a routerLink="materias-admin">Materias</a>
