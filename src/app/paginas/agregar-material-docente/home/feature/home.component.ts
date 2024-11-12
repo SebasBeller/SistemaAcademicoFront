@@ -1,6 +1,5 @@
 import { Component, inject, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NavbarComponent } from '../../../agregar-material-docente/shared/ui/navbar/navbar.component';
 import {
   Storage,
   ref,
@@ -14,14 +13,17 @@ import { Material } from "../../../../interfaces/material";
 import { MaterialService } from "../../../../servicios/material.service";
 import { ActivatedRoute } from '@angular/router';
 import {MensajeService} from '../../../mensaje/mensaje.component';
+import { SelectionColorService } from '../../../../servicios/selection-color.service';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, NavbarComponent, FormsModule],
+  imports: [CommonModule,FormsModule],
   templateUrl: './home.component.html',
+  styleUrl: './home.component.sass'
 })
 export default class HomeComponent implements OnInit, OnDestroy {
+  selectedColor: string = '';
   progress = '0%';
   downloadURL: string | undefined;
   file!: File;
@@ -43,7 +45,7 @@ export default class HomeComponent implements OnInit, OnDestroy {
   route: ActivatedRoute = inject(ActivatedRoute);
   mensajeService:MensajeService=inject(MensajeService); 
 
-  constructor() {
+  constructor(private colorService: SelectionColorService) {
     this.id_unidad = this.route.snapshot.params['id'];
   }
 
@@ -57,6 +59,21 @@ export default class HomeComponent implements OnInit, OnDestroy {
         console.error('Error en la petición GET:', error);
       }
     );
+    this.colorService.currentColor$.subscribe(color => {
+      this.selectedColor = color; // Actualiza el color recibido
+      console.log('Color recibido en Login:', this.selectedColor);
+    });
+  }
+
+  getColorClass(): string {
+    switch (this.selectedColor) {
+      case 'verde':
+        return 'color-verde';
+      case 'amarillo':
+        return 'color-amarillo';
+      default:
+        return 'color-azul';
+    }
   }
 
   changeInput(event: Event) {

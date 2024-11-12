@@ -5,7 +5,7 @@ import { PerfilEstudianteService } from '../../servicios/perfil-estudiante.servi
 import { Estudiante } from '../../interfaces/estudiante';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { MensajeService } from '../mensaje/mensaje.component';
-
+import { SelectionColorService } from '../../servicios/selection-color.service';
 
 import * as bcrypt from 'bcryptjs';
 
@@ -20,6 +20,7 @@ import * as bcrypt from 'bcryptjs';
 
 })
 export class PerfilEstudianteComponent implements OnInit {
+  selectedColor: string = '';
   estudiantes: Estudiante[] = [];
   estudianteSeleccionado: Estudiante | null = null;
   idEstudiante: number | null = null;
@@ -29,6 +30,7 @@ export class PerfilEstudianteComponent implements OnInit {
 
 
   constructor(
+    private colorService: SelectionColorService,
     private perfilEstudianteService: PerfilEstudianteService,
     private route: ActivatedRoute,
     private fb: FormBuilder,
@@ -61,6 +63,10 @@ export class PerfilEstudianteComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.colorService.currentColor$.subscribe(color => {
+      this.selectedColor = color; // Actualiza el color recibido
+      console.log('Color recibido en Login:', this.selectedColor);
+    });
     this.obtenerIdEstudiante();
 
     if (this.idEstudiante) {
@@ -75,7 +81,16 @@ export class PerfilEstudianteComponent implements OnInit {
     }
   }
 
-
+  getColorClass(): string {
+    switch (this.selectedColor) {
+      case 'verde':
+        return 'color-verde';
+      case 'amarillo':
+        return 'color-amarillo';
+      default:
+        return 'color-azul';
+    }
+  }
 
   obtenerIdEstudiante(): void {
     this.route.paramMap.subscribe(params => {

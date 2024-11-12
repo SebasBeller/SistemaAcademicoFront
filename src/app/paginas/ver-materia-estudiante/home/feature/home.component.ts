@@ -10,14 +10,17 @@ import {Material} from "../../../../interfaces/material"
 import {MaterialService} from "../../../../servicios/material.service"
 import { ActivatedRoute} from '@angular/router';
 import { RouterModule } from '@angular/router';
+import { SelectionColorService } from '../../../../servicios/selection-color.service';
+
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, NavbarComponent, FormsModule,RouterModule],
+  imports: [CommonModule, FormsModule,RouterModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.sass'
 })
 export class VerMaterialesEstudianteComponent implements OnInit{
+  selectedColor: string = '';
   progress = signal('0%');
   downloadURL: string | undefined = undefined;
   file!: File;
@@ -34,7 +37,7 @@ export class VerMaterialesEstudianteComponent implements OnInit{
 
   id_unidad?:number;
   route:ActivatedRoute=inject(ActivatedRoute) 
-  constructor() {
+  constructor(private colorService: SelectionColorService) {
     this.id_unidad=this.route.snapshot.params['id']
     // this.id_unidad=91
   }
@@ -49,7 +52,19 @@ export class VerMaterialesEstudianteComponent implements OnInit{
         console.error('Error en la petición GET:', error);
       }
     )
-      
+    this.colorService.currentColor$.subscribe(color => {
+      this.selectedColor = color; // Actualiza el color recibido
+      console.log('Color recibido en Login:', this.selectedColor);
+    });
   }
-
+  getColorClass(): string {
+    switch (this.selectedColor) {
+      case 'verde':
+        return 'color-verde';
+      case 'amarillo':
+        return 'color-amarillo';
+      default:
+        return 'color-azul';
+    }
+  }
 }

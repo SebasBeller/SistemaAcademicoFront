@@ -9,6 +9,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { AuthService } from '../../servicios/auth.service';
 import { RouterModule } from '@angular/router';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { SelectionColorService } from '../../servicios/selection-color.service';
 
 @Component({
   selector: 'app-notas',
@@ -18,6 +19,7 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
   styleUrls: ['./notas.component.sass']
 })
 export class NotasComponent implements OnInit {
+  selectedColor: string = '';
   isLoading = true;
   notas: Nota[] = [];
   notasPorMateria: { [id_dicta: number]: { trimestre: number; notasPorTipo: { [tipo: string]: number[] } }[] } = {};
@@ -29,14 +31,30 @@ export class NotasComponent implements OnInit {
   filteredEstudiantes: Estudiante[] = [];
   nombresMaterias: { [id_materia: number]: string } = {};
 
-  constructor(private readonly notaService: NotaService, private readonly authService:AuthService) {}
+  constructor(private colorService: SelectionColorService,private readonly notaService: NotaService, private readonly authService:AuthService) {}
 
   ngOnInit(): void {
     this.isLoading=true;
     this.obtenerProfesores();
     this.obtenerEstudiantes();
     this.obtenerNotas();
+    this.colorService.currentColor$.subscribe(color => {
+      this.selectedColor = color; // Actualiza el color recibido
+      console.log('Color recibido en Login:', this.selectedColor);
+    });
   }
+
+  getColorClass(): string {
+    switch (this.selectedColor) {
+      case 'verde':
+        return 'color-verde';
+      case 'amarillo':
+        return 'color-amarillo';
+      default:
+        return 'color-azul';
+    }
+  }
+  
   obtenerIdEstudiante():number{
     return this.authService.getUserId()
   }

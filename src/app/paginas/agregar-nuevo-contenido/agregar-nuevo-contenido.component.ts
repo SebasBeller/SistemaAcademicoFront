@@ -15,7 +15,7 @@ import {MateriaAsignadaDocente} from '../../interfaces/materia-asignada-docente'
 import { Router } from '@angular/router';
 import { RouterLink } from '@angular/router';
 import { MensajeService } from '../mensaje/mensaje.component';
-
+import { SelectionColorService } from '../../servicios/selection-color.service';
 
 @Component({
   selector: 'app-agregar-nuevo-contenido',
@@ -33,6 +33,7 @@ import { MensajeService } from '../mensaje/mensaje.component';
   ] // Asegúrate de que FormsModule esté en la lista de imports
 })
 export class AgregarNuevoContenidoComponent  implements OnInit {
+  selectedColor: string = '';
   cardCounter = 1;
   unidades: Unidad[] = [];
   showForm = false;
@@ -46,6 +47,7 @@ export class AgregarNuevoContenidoComponent  implements OnInit {
 
   route:ActivatedRoute=inject(ActivatedRoute)
   constructor(
+    private colorService: SelectionColorService,
     private dialog: MatDialog,
     private router: Router,
     private mensajeService: MensajeService
@@ -56,6 +58,10 @@ export class AgregarNuevoContenidoComponent  implements OnInit {
 
 
   ngOnInit(): void {
+    this.colorService.currentColor$.subscribe(color => {
+      this.selectedColor = color; // Actualiza el color recibido
+      console.log('Color recibido en Login:', this.selectedColor);
+    });
     this.materiaAsignadaServicio.obtenerMateriaAsignada(this.id_dicta).subscribe(
       response => {
         console.log('Datos recibidos:', response);
@@ -81,6 +87,17 @@ export class AgregarNuevoContenidoComponent  implements OnInit {
 
   }
 
+  getColorClass(): string {
+    switch (this.selectedColor) {
+      case 'verde':
+        return 'color-verde';
+      case 'amarillo':
+        return 'color-amarillo';
+      default:
+        return 'color-azul';
+    }
+  }
+  
   addNewModule() {
     const dialogRef = this.dialog.open(FormularioAgregarContenidoComponent, {
       width: '300px',

@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { HistorialAsistenciaService } from '../../servicios/historial-asistencia.service';
 import { Asistencia } from '../../interfaces/asistencia';
 import { AuthService } from '../../servicios/auth.service';
+import { SelectionColorService } from '../../servicios/selection-color.service';
 
 @Component({
   selector: 'app-ver-asistencia-por-materia',
@@ -13,6 +14,7 @@ import { AuthService } from '../../servicios/auth.service';
   styleUrls: ['./ver-asistencia-por-materia.component.sass'],
 })
 export class VerAsistenciaPorMateriaComponent implements OnInit {
+  selectedColor: string = '';
   materia!: number;
   materiaNombre!: string;
   professor: string | null = 'Juan Pablo';
@@ -21,6 +23,7 @@ export class VerAsistenciaPorMateriaComponent implements OnInit {
   asistenciasPorMes: { [key: string]: Asistencia[] } = {}; // Agrupación de asistencias por mes
 
   constructor(
+    private colorService: SelectionColorService,
     private route: ActivatedRoute,
     private historialAsistenciaService: HistorialAsistenciaService,private authService:AuthService
   ) {}
@@ -29,11 +32,24 @@ export class VerAsistenciaPorMateriaComponent implements OnInit {
     this.professor = this.route.snapshot.paramMap.get('professor');
     this.materia = this.route.snapshot.params['materia'];
     this.materiaNombre = this.route.snapshot.params['materiaNombre'];
-
-
     this.obtenerAsistencias();
+    this.colorService.currentColor$.subscribe(color => {
+      this.selectedColor = color; // Actualiza el color recibido
+      console.log('Color recibido en Login:', this.selectedColor);
+    });
   }
 
+  getColorClass(): string {
+    switch (this.selectedColor) {
+      case 'verde':
+        return 'color-verde';
+      case 'amarillo':
+        return 'color-amarillo';
+      default:
+        return 'color-azul';
+    }
+  }
+  
   obtenerAsistencias(): void {
     // Asumiendo que estás obteniendo todas las asistencias
     this.historialAsistenciaService.obtenerAsistencias().subscribe(

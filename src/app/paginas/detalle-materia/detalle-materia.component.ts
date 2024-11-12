@@ -7,6 +7,7 @@ import { MateriaAsignadaDocente } from '../../interfaces/materia-asignada-docent
 import { UnidadService } from '../../servicios/unidad.service';
 import { MateriasProfesorService } from '../../servicios/materias-profesor.service';
 import { MatDialog } from '@angular/material/dialog';
+import { SelectionColorService } from '../../servicios/selection-color.service';
 
 @Component({
   selector: 'app-detalle-materia',
@@ -16,6 +17,7 @@ import { MatDialog } from '@angular/material/dialog';
   styleUrls: ['./detalle-materia.component.sass']
 })
 export class DetalleMateriaComponent implements OnInit {
+  selectedColor: string = '';
   cardCounter = 1;
   unidades: Unidad[] = [];
   showForm = false;
@@ -29,7 +31,7 @@ export class DetalleMateriaComponent implements OnInit {
 
   route:ActivatedRoute=inject(ActivatedRoute)
 
-  constructor(private dialog: MatDialog, private router: Router) {
+  constructor(private colorService: SelectionColorService,private dialog: MatDialog, private router: Router) {
     this.id_dicta=this.route.snapshot.params['id_dicta']
   }
 
@@ -59,6 +61,19 @@ export class DetalleMateriaComponent implements OnInit {
     } else {
       console.error('ID Dicta es undefined');
     }
+    this.colorService.currentColor$.subscribe(color => {
+      this.selectedColor = color; // Actualiza el color recibido
+      console.log('Color recibido en Login:', this.selectedColor);
+    });
   }
-
+  getColorClass(): string {
+    switch (this.selectedColor) {
+      case 'verde':
+        return 'color-verde';
+      case 'amarillo':
+        return 'color-amarillo';
+      default:
+        return 'color-azul';
+    }
+  }
 }

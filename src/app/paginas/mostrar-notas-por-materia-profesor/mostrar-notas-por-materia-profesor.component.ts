@@ -6,6 +6,7 @@ import { NotasProfesorService } from '../../servicios/notas-e.service';
 import { Nota } from '../../interfaces/notas';
 import { MateriaAsignadaDocente } from '../../interfaces/materia-asignada-docente';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { SelectionColorService } from '../../servicios/selection-color.service';
 
 interface EstudianteConPromedios {
   id:number;
@@ -29,7 +30,7 @@ interface EstudianteConPromedios {
   styleUrls: ['./mostrar-notas-por-materia-profesor.component.sass']
 })
 export class MostrarNotasPorMateriaProfesorComponent implements OnInit {
-
+  selectedColor: string = '';
   datos: MateriaAsignadaDocente = {} as MateriaAsignadaDocente;
   estudiantesPromedios: EstudianteConPromedios[] = [];
   paralelos: string[] = [];
@@ -40,11 +41,16 @@ export class MostrarNotasPorMateriaProfesorComponent implements OnInit {
   
 
   constructor(
+    private colorService: SelectionColorService,
     private notasProfesorService: NotasProfesorService,
     private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
+    this.colorService.currentColor$.subscribe(color => {
+      this.selectedColor = color; // Actualiza el color recibido
+      console.log('Color recibido en Login:', this.selectedColor);
+    });
     this.isLoading = true;
     this.idMateria = this.route.snapshot.paramMap.get('id_dicta')||"";
     if (this.idMateria) {
@@ -57,6 +63,17 @@ export class MostrarNotasPorMateriaProfesorComponent implements OnInit {
     console.log(this.estudiantesPromedios)
   }
 
+  getColorClass(): string {
+    switch (this.selectedColor) {
+      case 'verde':
+        return 'color-verde';
+      case 'amarillo':
+        return 'color-amarillo';
+      default:
+        return 'color-azul';
+    }
+  }
+  
   cargarDatosMateriaAsignada(id: number) {
     this.notasProfesorService.getMateriaAsignadaProfesor(id).subscribe(
       (data: MateriaAsignadaDocente) => {

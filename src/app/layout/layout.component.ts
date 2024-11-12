@@ -17,6 +17,7 @@ export class LayoutComponent {
   userRole: string | null = "";
   fotoPerfil: string | null = null;
   idEstudiante: number | null = null;
+  isSidebarOpen = false;
 
   constructor(private colorService: SelectionColorService,private authService: AuthService, private router: Router) {}
 
@@ -24,8 +25,8 @@ export class LayoutComponent {
     this.userRole = this.authService.getUserType();
     this.idEstudiante = this.authService.getUserId();
     this.colorService.currentColor$.subscribe(color => {
-      this.selectedColor = color; // Actualiza el color recibido
-      console.log('Color recibido en Login:', this.selectedColor);
+      this.selectedColor = color;
+      console.log('Color recibido', this.selectedColor);
     });
     if (this.idEstudiante) {
       this.authService.obtenerFotoPerfil(this.idEstudiante).subscribe({
@@ -59,6 +60,9 @@ export class LayoutComponent {
     this.router.navigate(['/']);
   }
 
+  toggleSidebar() {
+    this.isSidebarOpen = !this.isSidebarOpen;
+  }
 
 }
 

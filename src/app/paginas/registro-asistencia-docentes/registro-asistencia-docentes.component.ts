@@ -19,9 +19,9 @@ import { MensajeService } from '../mensaje/mensaje.component';
 import Swal from 'sweetalert2';
 import {InscripcionService} from '../../servicios/inscripcion.service'
 import{Estudiante} from '../../interfaces/estudiante';
-import {JsonPipe} from '@angular/common';
 import {FormControl, FormGroup, ReactiveFormsModule} from '@angular/forms';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { SelectionColorService } from '../../servicios/selection-color.service';
 @Component({
   selector: 'app-registro-asistencia-docentes',
   standalone: true,
@@ -35,7 +35,7 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
     MatDatepickerModule,
     MatButtonModule,
     MatDividerModule,
-    MatIconModule,ReactiveFormsModule, JsonPipe,
+    MatIconModule,ReactiveFormsModule,
     MatProgressSpinnerModule
   ],
   providers: [provideNativeDateAdapter()],
@@ -43,6 +43,7 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
   styleUrls: ['./registro-asistencia-docentes.component.sass']
 })
 export class RegistroAsistenciaDocentesComponent implements OnInit {
+  selectedColor: string = '';
   isLoading = true;
   readonly range = new FormGroup({
     start: new FormControl<Date | null>(null),
@@ -66,7 +67,7 @@ export class RegistroAsistenciaDocentesComponent implements OnInit {
   readonly maxDate = new Date(this.currentYear + 1, 11, 31);
   route:ActivatedRoute=inject(ActivatedRoute)
   idMateria!:number;
-  constructor( private mensajeService:MensajeService) {
+  constructor( private colorService: SelectionColorService,private mensajeService:MensajeService) {
     this.idMateria=this.route.snapshot.params['idMateria']
   }
   estaFechaEntreSemana(fecha:Date){
@@ -126,10 +127,24 @@ export class RegistroAsistenciaDocentesComponent implements OnInit {
   }
 
   ngOnInit(): void {
-   this.obtenerAsistencias();
+    this.obtenerAsistencias();
+    this.colorService.currentColor$.subscribe(color => {
+      this.selectedColor = color; // Actualiza el color recibido
+      console.log('Color recibido en Login:', this.selectedColor);
+    });
   }
 
-
+  getColorClass(): string {
+    switch (this.selectedColor) {
+      case 'verde':
+        return 'color-verde';
+      case 'amarillo':
+        return 'color-amarillo';
+      default:
+        return 'color-azul';
+    }
+  }
+  
   getEstadoAsistencia(asistencias: Asistencia[], fecha: string): string {
 
     return this.servicioAsistencias.getAsistenciaPorFecha(asistencias, fecha)?.estado ||"Falta" ;

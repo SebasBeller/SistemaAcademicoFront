@@ -1,27 +1,57 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterOutlet } from '@angular/router';
 import { MatDialogModule } from '@angular/material/dialog';
 import { SelectionColorService } from './servicios/selection-color.service';
+
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule,RouterOutlet, FormsModule],
+  imports: [CommonModule, RouterOutlet, FormsModule],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.sass'
+  styleUrls: ['./app.component.sass']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'sistema-estudiantil-ia';
-
   selectedColor: string = 'azul';
 
-  constructor(private colorService: SelectionColorService) {}
+  constructor(
+    private colorService: SelectionColorService
+  ) {}
 
-  onColorChange(event: Event): void {
-    const selectElement = event.target as HTMLSelectElement;
-    this.selectedColor = selectElement.value;
+  ngOnInit(): void {
+    this.colorService.currentColor$.subscribe((color) => {
+      this.updateCSSVariables(color);
+      console.log('Color actualizado a:', color); // Verifica el color recibido
+    });
+  }
+
+  onColorChange(color: string): void {
+    this.selectedColor = color;
     this.colorService.changeColor(this.selectedColor);
     console.log('Color seleccionado:', this.selectedColor);
+  }
+
+  updateCSSVariables(color: string): void {
+    let backgroundColorFooter: string;
+    let colorFooter: string;
+    let backgroundColor: string;
+
+    switch (color) {
+      case 'amarillo':
+        backgroundColorFooter = 'rgb(255, 215, 0)';
+        colorFooter = 'rgb(0,0,0)';
+        backgroundColor = 'rgb(245, 245, 245)';
+        break;
+      default:
+        backgroundColorFooter = 'rgb(13, 71, 161)';
+        colorFooter = 'rgb(255,255,255)';
+        backgroundColor = 'rgb(255,255,255)';
+        break;
+    }
+    document.documentElement.style.setProperty('--background-color-footer', backgroundColorFooter);
+    document.documentElement.style.setProperty('--color-footer', colorFooter);
+    document.documentElement.style.setProperty('--background-color', backgroundColor);
   }
 }

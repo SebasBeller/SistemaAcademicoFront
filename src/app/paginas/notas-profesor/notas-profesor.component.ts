@@ -6,18 +6,24 @@ import {Materia} from '../../interfaces/materia';
 import {MateriaAsignadaDocente} from '../../interfaces/materia-asignada-docente';
 import {RouterModule} from '@angular/router';
 import { AuthService } from '../../servicios/auth.service';
+import { CommonModule } from '@angular/common';
+import { SelectionColorService } from '../../servicios/selection-color.service';
 @Component({
   selector: 'app-notas-profesor',
   standalone: true,
-  imports: [MatCardModule, MatButtonModule,RouterModule],
+  imports: [MatCardModule, MatButtonModule,RouterModule, CommonModule],
   templateUrl: './notas-profesor.component.html',
   styleUrl: './notas-profesor.component.sass'
 })
 export class NotasProfesorComponent implements OnInit {
+  selectedColor: string = '';
   servicioMateriasProfesor:MateriasProfesorService=inject(MateriasProfesorService);
   materias:MateriaAsignadaDocente[]=[];
   authService: AuthService = inject(AuthService);
 
+  constructor(
+    private colorService: SelectionColorService,
+  ) {}
   
   ngOnInit(): void {
     const idProfesor = this.authService.getUserId();
@@ -31,7 +37,19 @@ export class NotasProfesorComponent implements OnInit {
          console.error('Error en la petición GET:', error);
        }
      );
-     
+     this.colorService.currentColor$.subscribe(color => {
+      this.selectedColor = color; // Actualiza el color recibido
+      console.log('Color recibido en Login:', this.selectedColor);
+    });
   }
-  
+  getColorClass(): string {
+    switch (this.selectedColor) {
+      case 'verde':
+        return 'color-verde';
+      case 'amarillo':
+        return 'color-amarillo';
+      default:
+        return 'color-azul';
+    }
+  }
 }

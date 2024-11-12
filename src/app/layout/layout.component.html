@@ -1,30 +1,32 @@
 <div [ngClass]="getColorClass()">
   <header>
-    <div class="escudo">
-      <a routerLink="home">
-      <img
-        src="https://img.freepik.com/vector-premium/diseno-vectorial-logotipo-escuela-fondo-blanco_579306-14609.jpg"
-        alt="Escudo"
-      />
-      </a>
-    </div>
+    <button (click)="toggleSidebar()" class="menu-button">&#9776;</button>
     <div class="titulo">
       <h1><b>Colegio San Rafael</b></h1>
     </div>
-    <div class="notificaciones">
-      <img
-        src="https://w7.pngwing.com/pngs/832/828/png-transparent-alarm-alert-attention-bell-notification-notifications-ring-random-icon-thumbnail.png"
-        alt="Notificaciones"
-      />
+    <div class="acciones">
+      <div class="perfil-notificaciones">
+        <img
+          class="notificaciones"
+          src="https://w7.pngwing.com/pngs/832/828/png-transparent-alarm-alert-attention-bell-notification-notifications-ring-random-icon-thumbnail.png"
+          alt="Notificaciones"
+        />
+        <a [routerLink]="userRole === 'estudiante' ? 'perfil-estudiante/' + idEstudiante : '/home/'">
+          <img *ngIf="fotoPerfil || '../../../assets/img/assets/silueta.jpg'" [src]="fotoPerfil" alt="Foto de Perfil" />
+        </a>
+      </div>
     </div>
   </header>
-  
+
   <nav>
-    <div class="sidebar" >
-      <div class="fotoperfil">
-        <a  [routerLink]="userRole === 'estudiante' ? 'perfil-estudiante/' + idEstudiante : '/home/'">
-          <img *ngIf="'fotoPerfil' || '../../../assets/img/assets/silueta.jpg'" [src]="fotoPerfil" alt="Foto de Perfil" />
-          <b>Editar Perfil</b></a>
+    <div class="sidebar" [class.open]="isSidebarOpen">
+      <div class="escudo">
+        <a routerLink="home">
+          <img
+            src="https://img.freepik.com/vector-premium/diseno-vectorial-logotipo-escuela-fondo-blanco_579306-14609.jpg"
+            alt="Escudo"
+          />
+        </a>
       </div>
       <ul>
         <li *ngIf="userRole === 'profesor'">
@@ -46,7 +48,8 @@
       </ul>
     </div>
   </nav>
-  <main class="main-content">
+
+  <main class="main-content" [ngClass]="{'sidebar-open': isSidebarOpen}">
     <router-outlet></router-outlet>
   </main>
 </div>

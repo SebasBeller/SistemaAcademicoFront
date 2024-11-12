@@ -10,7 +10,7 @@ import { MateriaAsignadaDocente } from '../../interfaces/materia-asignada-docent
 import { Nota } from '../../interfaces/nota';
 import { Materia } from '../../interfaces/materia';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
-
+import { SelectionColorService } from '../../servicios/selection-color.service';
 
 @Component({
   selector: 'app-detalle-notas',
@@ -23,6 +23,7 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 })
 export class DetalleNotasEstudiantesComponent implements OnInit {
   isLoading = true;
+  selectedColor: string = '';
   notasPorTrimestre: { [key: number]: any } = {};
   notas: Nota[] = [];
   estudiantes: Estudiante[] = [];
@@ -43,6 +44,7 @@ export class DetalleNotasEstudiantesComponent implements OnInit {
   idEstudiante: number = 0;
   route: ActivatedRoute = inject(ActivatedRoute);
   constructor(
+    private colorService: SelectionColorService,
     private detalleNotasService: DetalleNotasService,
     private cd: ChangeDetectorRef,
     private dialog: MatDialog
@@ -56,7 +58,23 @@ export class DetalleNotasEstudiantesComponent implements OnInit {
     this.isLoading=true;
     this.obtenerEstudiantes();
     this.obtenerNotas();
+    this.colorService.currentColor$.subscribe(color => {
+      this.selectedColor = color; // Actualiza el color recibido
+      console.log('Color recibido en Login:', this.selectedColor);
+    });
   }
+
+  getColorClass(): string {
+    switch (this.selectedColor) {
+      case 'verde':
+        return 'color-verde';
+      case 'amarillo':
+        return 'color-amarillo';
+      default:
+        return 'color-azul';
+    }
+  }
+  
   filtrarNotasEstudianteMateria(idEstudiante: number, idMateria: number): void {
     
     const notasEstudianteMateria = this.notas.filter(

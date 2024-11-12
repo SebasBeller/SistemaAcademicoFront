@@ -1,4 +1,4 @@
-<div>
+<div [ngClass]="getColorClass()">
   <h2><b>Notas:</b></h2>
   <select (change)="onYearChange($event)">
     <option *ngFor="let year of [2024, 2023, 2022, 2021]" [value]="year">{{ year }}</option>

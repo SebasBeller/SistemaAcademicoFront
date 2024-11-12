@@ -8,6 +8,7 @@ import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import {AuthService} from '../../servicios/auth.service';
 import {InscripcionService} from '../../servicios/inscripcion.service';
+import { SelectionColorService } from '../../servicios/selection-color.service';
 
 
 @Component({
@@ -18,6 +19,7 @@ import {InscripcionService} from '../../servicios/inscripcion.service';
   styleUrls: ['./historial-asistencia.component.sass']
 })
 export class HistorialAsistenciaComponent implements OnInit {
+  selectedColor: string = '';
   asistencias: Asistencia[] = [];
   profesores: Profesor[] = [];
   materiasAsignadas: MateriaAsignadaDocente[] = [];
@@ -32,15 +34,29 @@ export class HistorialAsistenciaComponent implements OnInit {
   servicioInscripcion:InscripcionService=inject(InscripcionService);
 
 
-  constructor(private readonly historialAsistenciaService: HistorialAsistenciaService) {}
+  constructor(private colorService: SelectionColorService,private readonly historialAsistenciaService: HistorialAsistenciaService) {}
 
   ngOnInit(): void {
     this.obtenerAsistencias();
     this.obtenerProfesores();
     this.obtenerMateriasAsignadas();
-   
-
+    this.colorService.currentColor$.subscribe(color => {
+      this.selectedColor = color;
+      console.log('Color recibido en Login:', this.selectedColor);
+    });
   }
+
+  getColorClass(): string {
+    switch (this.selectedColor) {
+      case 'verde':
+        return 'color-verde';
+      case 'amarillo':
+        return 'color-amarillo';
+      default:
+        return 'color-azul';
+    }
+  }
+  
   verAsistenciaMateria(idMateria:number): void {
     this.router.navigate(['/asistencia-materia', idMateria.toString()]);
   }

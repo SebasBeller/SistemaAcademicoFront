@@ -13,6 +13,8 @@ import { MaterialService } from '../../servicios/material.service';
 import {ActivatedRoute} from '@angular/router'
 import { Material } from '../../interfaces/material';
 import { CommonModule } from '@angular/common';
+import { SelectionColorService } from '../../servicios/selection-color.service';
+
 @Component({
   selector: 'app-material',
   standalone: true,
@@ -22,6 +24,7 @@ import { CommonModule } from '@angular/common';
   // changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MaterialComponent {
+  selectedColor: string = '';
   isOpen?:boolean; 
   readonly panelOpenState2 = signal(false);
   panelOpenState: boolean = false;
@@ -37,7 +40,7 @@ export class MaterialComponent {
   material?:Material;
   
   id_material?:number;
-  constructor(){
+  constructor(private colorService: SelectionColorService){
 
     this.id_material=this.route.snapshot.params['id'];
 
@@ -57,7 +60,23 @@ export class MaterialComponent {
         console.error('Error en la petición GET:', error);
       }
     )
+    this.colorService.currentColor$.subscribe(color => {
+      this.selectedColor = color; // Actualiza el color recibido
+      console.log('Color recibido en Login:', this.selectedColor);
+    });
   }
+  
+  getColorClass(): string {
+    switch (this.selectedColor) {
+      case 'verde':
+        return 'color-verde';
+      case 'amarillo':
+        return 'color-amarillo';
+      default:
+        return 'color-azul';
+    }
+  }
+
   getSrc():string{
     return this.src;
   }

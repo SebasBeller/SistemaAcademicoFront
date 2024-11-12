@@ -6,7 +6,7 @@ import { MateriaAsignadaDocente } from '../../interfaces/materia-asignada-docent
 import { MateriasProfesorService } from '../../servicios/materias-profesor.service';
 import {InscripcionService} from '../../servicios/inscripcion.service';
 import {AuthService} from '../../servicios/auth.service';
-
+import { SelectionColorService } from '../../servicios/selection-color.service';
 
 @Component({
   selector: 'app-mostrar-materia',
@@ -16,9 +16,14 @@ import {AuthService} from '../../servicios/auth.service';
   styleUrls: ['./mostrar-materia.component.sass'] 
 })
 export class MostrarMateriaComponent implements OnInit {
+  selectedColor: string = '';
   servicioMateriasProfesor:MateriasProfesorService=inject(MateriasProfesorService);
   servicioInscripcion:InscripcionService=inject(InscripcionService);
   servicioAutenticacion:AuthService=inject(AuthService);
+
+  constructor(
+    private colorService: SelectionColorService,
+  ) {}
 
   materias:MateriaAsignadaDocente[]=[];
   materiaAsignada: any;
@@ -35,8 +40,23 @@ export class MostrarMateriaComponent implements OnInit {
         console.error('Error en la petición GET:', error);
       }
     );
+    this.colorService.currentColor$.subscribe(color => {
+      this.selectedColor = color; // Actualiza el color recibido
+      console.log('Color recibido en Login:', this.selectedColor);
+    });
   }
 
+  getColorClass(): string {
+    switch (this.selectedColor) {
+      case 'verde':
+        return 'color-verde';
+      case 'amarillo':
+        return 'color-amarillo';
+      default:
+        return 'color-azul';
+    }
+  }
+  
   get filteredMaterias(): MateriaAsignadaDocente[] {
     return this.materias.filter(materia =>
       materia.materia?.nombre.toLowerCase().includes(this.searchTerm.toLowerCase())

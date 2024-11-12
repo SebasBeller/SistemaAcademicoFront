@@ -1,40 +1,41 @@
-<h1 mat-dialog-title>Actualizar Nota</h1>
-<div mat-dialog-content>
-  <form [formGroup]="form">
+<div class="form-modal">
+  <h2 mat-dialog-title>Actualizar Nota</h2>
+  <div mat-dialog-content>
+    <form [formGroup]="form">
 
-    <div formGroupName="ser">
-      <mat-form-field>
-        <mat-label>Ser</mat-label>
-        <input matInput type="number" formControlName="nota">
-      </mat-form-field>
-    </div>
+      <div formGroupName="ser">
+        <mat-form-field>
+          <mat-label>Ser</mat-label>
+          <input matInput type="number" formControlName="nota">
+        </mat-form-field>
+      </div>
 
-    <div formGroupName="saber">
-      <mat-form-field>
-        <mat-label>Saber</mat-label>
-        <input matInput type="number" formControlName="nota">
-      </mat-form-field>
-    </div>
+      <div formGroupName="saber">
+        <mat-form-field>
+          <mat-label>Saber</mat-label>
+          <input matInput type="number" formControlName="nota">
+        </mat-form-field>
+      </div>
 
-    <div formGroupName="hacer">
-      <mat-form-field>
-        <mat-label>Hacer</mat-label>
-        <input matInput type="number" formControlName="nota">
-      </mat-form-field>
-    </div>
+      <div formGroupName="hacer">
+        <mat-form-field>
+          <mat-label>Hacer</mat-label>
+          <input matInput type="number" formControlName="nota">
+        </mat-form-field>
+      </div>
 
-    <div formGroupName="decidir">
-      <mat-form-field>
-        <mat-label>Decidir</mat-label>
-        <input matInput type="number" formControlName="nota">
-      </mat-form-field>
-    </div>
+      <div formGroupName="decidir">
+        <mat-form-field>
+          <mat-label>Decidir</mat-label>
+          <input matInput type="number" formControlName="nota">
+        </mat-form-field>
+      </div>
 
-  </form>
+    </form>
+  </div>
+  <div mat-dialog-actions>
+    <button mat-button (click)="cerrar()">Cancelar</button>
+    <button mat-button (click)="actualizarNota()">Guardar</button>
+
+  </div>
 </div>
-<div mat-dialog-actions>
-  <button mat-button (click)="cerrar()">Cancelar</button>
-  <button mat-button (click)="actualizarNota()">Guardar</button>
-
-</div>
-

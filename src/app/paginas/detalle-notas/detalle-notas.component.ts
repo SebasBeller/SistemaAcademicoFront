@@ -12,7 +12,7 @@ import { Nota } from '../../interfaces/nota';
 import { Materia } from '../../interfaces/materia';
 import { MensajeService } from '../mensaje/mensaje.component';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
-
+import { SelectionColorService } from '../../servicios/selection-color.service';
 
 
 @Component({
@@ -32,6 +32,7 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 })
 export class DetalleNotasComponent implements OnInit {
+  selectedColor: string = '';
   isLoading = true;
   notasPorTrimestre: { [key: number]: any } = {};
   notas: Nota[] = [];
@@ -54,6 +55,7 @@ export class DetalleNotasComponent implements OnInit {
   route: ActivatedRoute = inject(ActivatedRoute);
   form: FormGroup;
   constructor(
+    private colorService: SelectionColorService,
     private fb: FormBuilder,
     private detalleNotasService: DetalleNotasService,
     private cd: ChangeDetectorRef,
@@ -74,7 +76,23 @@ export class DetalleNotasComponent implements OnInit {
     this.isLoading = true;
     this.obtenerEstudiantes();
     this.obtenerNotas();
+    this.colorService.currentColor$.subscribe(color => {
+      this.selectedColor = color; // Actualiza el color recibido
+      console.log('Color recibido en Login:', this.selectedColor);
+    });
   }
+
+  getColorClass(): string {
+    switch (this.selectedColor) {
+      case 'verde':
+        return 'color-verde';
+      case 'amarillo':
+        return 'color-amarillo';
+      default:
+        return 'color-azul';
+    }
+  }
+  
   filtrarNotasEstudianteMateria(idEstudiante: number, idMateria: number): void {
     const notasEstudianteMateria = this.notas.filter(
       (nota) =>
