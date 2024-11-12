@@ -9,29 +9,29 @@
     <table>
       <thead>
         <tr>
-          <th>nombre</th>
-          <th>apllido</th>
-          <th>Correo Electronico</th>
+          <th>Nombre</th>
+          <th>Apellido</th>
+          <th>Correo Electrónico</th>
           <th>Configuraciones</th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let profesor of profesoresFiltrados">
-          <td>{{ profesor.nombre }}</td>
-          <td>{{ profesor.apellido }}</td>
-          <td>{{ profesor.email }}</td>
-          <td>
-            <!-- Contenedor para los botones, con clase para aplicar el estilo de alineación horizontal -->
-            <div class="button-container">
-              <button mat-button>
-                <img src="https://png.pngtree.com/png-clipart/20230921/original/pngtree-comicstyle-notepad-with-editing-pencil-icon-edit-isolated-note-vector-png-image_12814232.png" alt="Editar" width="60" height="60">
-              </button>
-              <button mat-button>
-                <img src="https://cdn-icons-png.flaticon.com/512/7347/7347206.png" alt="Editar" width="60" height="60">
-              </button>
-            </div>
-          </td>
-        </tr>
+            <td>{{ profesor.nombre }}</td>
+            <td>{{ profesor.apellido }}</td>
+            <td>{{ profesor.email }}</td>
+            <td>
+              <!-- Contenedor para los botones, con clase para aplicar el estilo de alineación horizontal -->
+              <div class="button-container">
+                <button mat-button>
+                  <img src="https://png.pngtree.com/png-clipart/20230921/original/pngtree-comicstyle-notepad-with-editing-pencil-icon-edit-isolated-note-vector-png-image_12814232.png" alt="Editar" width="60" height="60">
+                </button>
+                <button mat-button>
+                  <img src="https://cdn-icons-png.flaticon.com/512/7347/7347206.png" alt="Editar" width="60" height="60">
+                </button>
+              </div>
+            </td>
+          </tr>
       </tbody>
     </table>
   </div>
