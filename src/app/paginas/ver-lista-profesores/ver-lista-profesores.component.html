@@ -1,15 +1,20 @@
 <div class="profesores-container">
-    <h2>LISTA DE PROFESORES</h2>
-    
+  <h2>LISTA DE PROFESORES</h2>
+
+  <div *ngIf="profesores.length === 0">
+    <p>No se han encontrado profesores.</p>
+  </div>
+
+  <div *ngIf="profesores.length > 0">
     <div class="search-bar">
-      <input type="text" placeholder="search" [(ngModel)]="terminoBusqueda" (input)="filtrarProfesores()" />
+      <input type="text" placeholder="Buscar" [(ngModel)]="terminoBusqueda" (input)="filtrarProfesores()" />
       <button class="add-button">+</button>
     </div>
-    
+
     <table>
       <thead>
         <tr>
-          <th>Nombre</th>
+          <th>Nombres</th>
           <th>Apellido</th>
           <th>Correo Electrónico</th>
           <th>Configuraciones</th>
@@ -17,22 +22,21 @@
       </thead>
       <tbody>
         <tr *ngFor="let profesor of profesoresFiltrados">
-            <td>{{ profesor.nombre }}</td>
-            <td>{{ profesor.apellido }}</td>
-            <td>{{ profesor.email }}</td>
-            <td>
-              <!-- Contenedor para los botones, con clase para aplicar el estilo de alineación horizontal -->
-              <div class="button-container">
-                <button mat-button>
-                  <img src="https://png.pngtree.com/png-clipart/20230921/original/pngtree-comicstyle-notepad-with-editing-pencil-icon-edit-isolated-note-vector-png-image_12814232.png" alt="Editar" width="60" height="60">
-                </button>
-                <button mat-button>
-                  <img src="https://cdn-icons-png.flaticon.com/512/7347/7347206.png" alt="Editar" width="60" height="60">
-                </button>
-              </div>
-            </td>
-          </tr>
+          <td>{{ profesor.nombre }}</td>
+          <td>{{ profesor.apellido }}</td>
+          <td>{{ profesor.email }}</td>
+          <td>
+            <div class="button-container">
+              <button mat-button (click)="editarProfesor(profesor)">
+                <img src="https://png.pngtree.com/png-clipart/20230921/original/pngtree-comicstyle-notepad-with-editing-pencil-icon-edit-isolated-note-vector-png-image_12814232.png" alt="Editar" width="60" height="60">
+              </button>
+              <button mat-button (click)="(profesor.id_profesor)">
+                <img src="https://cdn-icons-png.flaticon.com/512/7347/7347206.png" alt="Eliminar" width="60" height="60">
+              </button>
+            </div>
+          </td>
+        </tr>
       </tbody>
     </table>
   </div>
-  
+</div>
