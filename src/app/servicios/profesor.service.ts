@@ -20,4 +20,8 @@ export class ProfesorService {
     return this.http.patch<Profesor>(`${this.apiUrl}/${id}`, profesorData).pipe(
     );
   }
+  addProfesor(profesor: Profesor): Observable<Profesor> {
+  return this.http.post<Profesor>(this.apiUrl , profesor);
+}
+
 }

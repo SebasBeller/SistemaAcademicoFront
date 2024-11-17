@@ -73,8 +73,8 @@ export class VerListaProfesoresComponent implements OnInit {
       this.profesorService.updateProfesor(this.profesorSeleccionado.id_profesor, this.profesorSeleccionado).subscribe(
         (updatedProfesor) => {
           console.log('Profesor actualizado:', updatedProfesor);
-          this.getProfesores(); // Refresca la lista de profesores
-          this.profesorSeleccionado = null; // Cierra el modo de edición
+          this.getProfesores(); 
+          this.profesorSeleccionado = null; 
         },
         (error) => {
           console.error('Error al actualizar el profesor:', error);
@@ -82,9 +82,25 @@ export class VerListaProfesoresComponent implements OnInit {
       );
     }
   }
-  // Cancela la edición
   cancelarEdicion() {
     this.profesorSeleccionado = null;
   }
+  crearProfesor() {
+    const nuevoProfesor: Profesor = { id_profesor: 32, nombre: 'pepe', apellido: 'pepe', email: 'pepe.pepe@profesor.com'};
+    const dialogRef = this.dialog.open(FormEditarProfesorComponent, {
+      width: '300px',
+      data: nuevoProfesor
+    });
+
+    dialogRef.afterClosed().subscribe((result: Profesor | undefined) => {
+      if (result) {
+        this.profesorService.addProfesor(result).subscribe(
+          () => this.getProfesores(),
+          (error) => console.error('Error al añadir el profesor:', error)
+        );
+      }
+    });
+  }
+  
   
 }

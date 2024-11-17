@@ -23,32 +23,55 @@ import { updateMetadata } from '@angular/fire/storage';
 })
 export class FormEditarProfesorComponent {
   profesor: Profesor;
+  profesores: Profesor[] = [];
+
 
   constructor(
     public dialogRef: MatDialogRef<FormEditarProfesorComponent>,
     @Inject(MAT_DIALOG_DATA) public data: Profesor,
     private profesorService: ProfesorService
   ) {
-    this.profesor = { ...data }; 
+    this.profesor = { ...data };
+    this.profesorService.getProfesores().subscribe({
+      next: (profesores) => (this.profesores = profesores),
+      error: (error) => console.error('Error al obtener los profesores:', error),
+    });
+  }
+  idProfesorExiste(id: number): boolean {
+    return this.profesores.some((profesor) => profesor.id_profesor === id);
   }
 
   guardar() {
     const profesorData = {
+      id_profesor: this.profesor.id_profesor,
       nombre: this.profesor.nombre,
       apellido: this.profesor.apellido,
-      email: this.profesor.email
+      email: this.profesor.email,
     };
-  
-    this.profesorService.updateProfesor(this.profesor.id_profesor, profesorData).subscribe({
-      next: (updatedProfesor) => {
-        console.log('Profesor actualizado:', updatedProfesor);
-        this.dialogRef.close(updatedProfesor);
-      },
-      error: (error) => {
-        console.error('Error al actualizar el profesor:', error);
-      }
-    });
+
+    if (this.idProfesorExiste(this.profesor.id_profesor)) {
+      this.profesorService.updateProfesor(this.profesor.id_profesor, profesorData).subscribe({
+        next: (updatedProfesor) => {
+          console.log('Profesor actualizado:', updatedProfesor);
+          this.dialogRef.close(updatedProfesor);
+        },
+        error: (error) => {
+          console.error('Error al actualizar el profesor:', error);
+        },
+      });
+    } else {
+      this.profesorService.addProfesor(profesorData).subscribe({
+        next: (newProfesor) => {
+          console.log('Profesor agregado:', newProfesor);
+          this.dialogRef.close(newProfesor);
+        },
+        error: (error) => {
+          console.error('Error al agregar el profesor:', error);
+        },
+      });
+    }
   }
+
   cancelar() {
     this.dialogRef.close();
   }

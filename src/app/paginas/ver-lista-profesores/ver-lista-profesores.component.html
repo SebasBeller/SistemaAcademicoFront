@@ -7,8 +7,13 @@
 
   <div *ngIf="profesores.length > 0">
     <div class="search-bar">
-      <input type="text" placeholder="Buscar" [(ngModel)]="terminoBusqueda" (input)="filtrarProfesores()" />
-      <button class="add-button">+</button>
+      <input
+        type="text"
+        placeholder="Buscar"
+        [(ngModel)]="terminoBusqueda"
+        (input)="filtrarProfesores()"
+      />
+      <button class="add-button" mat-button color="primary" (click)="crearProfesor()">+</button>
     </div>
 
     <table>
@@ -28,10 +33,21 @@
           <td>
             <div class="button-container">
               <button mat-button (click)="editarProfesor(profesor)">
-                <img src="https://png.pngtree.com/png-clipart/20230921/original/pngtree-comicstyle-notepad-with-editing-pencil-icon-edit-isolated-note-vector-png-image_12814232.png" alt="Editar" width="60" height="60">
+                <img
+                  src="https://png.pngtree.com/png-clipart/20230921/original/pngtree-comicstyle-notepad-with-editing-pencil-icon-edit-isolated-note-vector-png-image_12814232.png"
+                  alt="Editar"
+                  width="30"
+                  height="30"
+                />
               </button>
+
               <button mat-button (click)="(profesor.id_profesor)">
-                <img src="https://cdn-icons-png.flaticon.com/512/7347/7347206.png" alt="Eliminar" width="60" height="60">
+                <img
+                  src="https://cdn-icons-png.flaticon.com/512/7347/7347206.png"
+                  alt="Eliminar"
+                  width="30"
+                  height="30"
+                />
               </button>
             </div>
           </td>
