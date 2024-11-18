@@ -23,6 +23,8 @@
     "@angular/router": "^17.3.12",
     "bcryptjs": "^2.4.3",
     "groq-sdk": "^0.7.0",
+    "jspdf": "^2.5.2",
+    "jspdf-autotable": "^3.8.4",
     "ng2-pdf-viewer": "^10.3.1",
     "ngx-owl-carousel-o": "^17.0.0",
     "primeicons": "^7.0.0",
@@ -30,6 +32,7 @@
     "rxjs": "~7.8.0",
     "sweetalert2": "^11.14.4",
     "tslib": "^2.3.0",
+    "xlsx": "^0.18.5",
     "zone.js": "~0.14.3"
   },
   "devDependencies": {
