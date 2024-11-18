@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 import { NotaService } from '../../servicios/nota.service';
 import { Nota } from '../../interfaces/nota';
 import { MateriaAsignadaDocente } from '../../interfaces/materia-asignada-docente';
@@ -9,11 +11,13 @@ import { HttpClientModule } from '@angular/common/http';
 import { AuthService } from '../../servicios/auth.service';
 import { RouterModule } from '@angular/router';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import jsPDF from 'jspdf';
+import 'jspdf-autotable';
 
 @Component({
   selector: 'app-notas',
   standalone: true,
-  imports: [CommonModule, HttpClientModule, RouterModule,MatProgressSpinnerModule],
+  imports: [CommonModule, HttpClientModule, RouterModule,MatProgressSpinnerModule,MatButtonModule,MatIconModule],
   templateUrl: './notas.component.html',
   styleUrls: ['./notas.component.sass']
 })
@@ -24,7 +28,7 @@ export class NotasComponent implements OnInit {
   profesores: MateriaAsignadaDocente[] = [];
   estudiantes: Estudiante[] = [];
   materiasAsignadas: Materias[] = [];
-  selectedYear: number = 2024; 
+  selectedYear: number = 2024;
   filteredProfesores: MateriaAsignadaDocente[] = [];
   filteredEstudiantes: Estudiante[] = [];
   nombresMaterias: { [id_materia: number]: string } = {};
@@ -105,19 +109,19 @@ export class NotasComponent implements OnInit {
       const notaValue = nota.nota;
       console.log(nota)
       if (nota.estudiante.id_estudiante==this.authService.getUserId()){
-        
-        
+
+
         if (!this.notasPorMateria[id_dicta]) {
           this.notasPorMateria[id_dicta] = [];
         }
-        
+
         let trimestreExistente = this.notasPorMateria[id_dicta].find(t => t.trimestre === trimestre);
-        
+
         if (!trimestreExistente) {
           trimestreExistente = { trimestre, notasPorTipo: { hacer: [], decidir: [], saber: [], ser: [] } };
           this.notasPorMateria[id_dicta].push(trimestreExistente);
         }
-        
+
         if (tipo in trimestreExistente.notasPorTipo) {
           trimestreExistente.notasPorTipo[tipo].push(notaValue);
         }
@@ -176,4 +180,78 @@ export class NotasComponent implements OnInit {
     if (promedio >= 50) return 'En recuperación';
     return 'Reprobado';
   }
+
+  //Agregamos exportación a pdf
+  exportarPDF(): void {
+    const doc: any = new jsPDF();
+    const userId = this.authService.getUserId();
+    const estudiante = this.estudiantes.find(est => est.id_estudiante === userId);
+    const estudianteNombre = estudiante ? `${estudiante.nombre} ${estudiante.apellido}` : 'Estudiante desconocido';
+
+    doc.setFontSize(18);
+    doc.text('Reporte de Notas', 10, 10);
+    doc.setFontSize(12);
+
+    doc.text(`Estudiante: ${estudianteNombre}`, 10, 20);
+    let currentY = 30;
+
+    for (const id_dicta in this.notasPorMateria) {
+      const materia = this.nombresMaterias[id_dicta] || 'Materia desconocida';
+      doc.text(`Materia: ${materia}`, 10, currentY);
+      currentY += 10;
+
+      const rows: any[] = [];
+      const trimestres = this.notasPorMateria[id_dicta];
+
+      const trimestresAgrupados: Record<number, { hacer: number; decidir: number; saber: number; ser: number }> = {};
+
+      trimestres.forEach(trimestreData => {
+        const trimestre = trimestreData.trimestre;
+        if (!trimestresAgrupados[trimestre]) {
+          trimestresAgrupados[trimestre] = { hacer: 0, decidir: 0, saber: 0, ser: 0 };
+        }
+
+        const tipos = ['hacer', 'decidir', 'saber', 'ser'] as const;
+
+        tipos.forEach(tipo => {
+          trimestresAgrupados[trimestre][tipo] = this.calcularPromedioPorTipo(Number(id_dicta), trimestre, tipo);
+
+        });
+      });
+
+      for (const trimestre in trimestresAgrupados) {
+        const datos = trimestresAgrupados[trimestre];
+        const promedioTrimestre = (datos.hacer + datos.decidir + datos.saber + datos.ser) / 4;
+        rows.push([
+          `Trimestre ${trimestre}`,
+          datos.hacer.toFixed(2),
+          datos.decidir.toFixed(2),
+          datos.saber.toFixed(2),
+          datos.ser.toFixed(2),
+          promedioTrimestre.toFixed(2),
+        ]);
+      }
+
+      doc.autoTable({
+        head: [['Trimestre', 'Hacer', 'Decidir', 'Saber', 'Ser', 'Promedio']],
+        body: rows,
+        startY: currentY,
+      });
+
+      currentY = (doc as any).lastAutoTable.finalY + 10;
+
+      const promedioGeneral = this.calcularPromedioGeneral(Number(id_dicta));
+      const estado = this.determinarEstado(promedioGeneral);
+      doc.text(`Promedio General: ${promedioGeneral.toFixed(2)} (${estado})`, 10, currentY);
+      currentY += 10;
+    }
+
+    doc.save(`reporte_notas_usuario_${userId}.pdf`);
+  }
+
+
+
+
+
+
 }
