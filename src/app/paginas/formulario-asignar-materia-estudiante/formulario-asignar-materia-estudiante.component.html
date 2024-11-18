@@ -1,0 +1,31 @@
+<h2 mat-dialog-title>Asignar Estudiantes</h2>
+
+<mat-dialog-content>
+  <form>
+    <!-- Lista de estudiantes con checkboxes -->
+    <mat-list>
+      <mat-list-item *ngFor="let estudiante of estudiantes">
+        <mat-checkbox
+          [(ngModel)]="estudiante.seleccionado"
+          (change)="onCheckboxChange(estudiante)"
+        >
+          {{ estudiante.nombre }} {{ estudiante.apellido }}
+        </mat-checkbox>
+      </mat-list-item>
+    </mat-list>
+
+    <!-- Fecha de inscripción -->
+    <mat-form-field appearance="fill">
+      <mat-label>Fecha de Inscripción</mat-label>
+      <input matInput [matDatepicker]="picker" [(ngModel)]="fechaInscripcion" name="fechaInscripcion" required />
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button mat-button (click)="onAdd()">Asignar</button>
+  <button mat-button (click)="onCancel()">Cancelar</button>
+</mat-dialog-actions>

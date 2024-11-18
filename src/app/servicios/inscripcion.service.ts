@@ -23,6 +23,12 @@ export class InscripcionService {
   
   }
 
+    // Asignar estudiantes a una materia
+  asignarEstudiantes(
+    materiaEstudiantes: { id_dicta: number; id_estudiante: number; fecha_inscripcion: string; anio: number }[]
+  ): Observable<any> {
+      return this.http.post(`${this.urlApi}/asignar-estudiantes`, materiaEstudiantes);
+  }
 
 }
 
