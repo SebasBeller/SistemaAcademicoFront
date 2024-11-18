@@ -30,7 +30,7 @@ interface EstudianteConSeleccion extends Estudiante {
     FormsModule,
     MatDialogModule,
     MatButtonModule,
-    MatNativeDateModule, // Necesario para el adaptador de fechas
+    MatNativeDateModule,
     MatCheckboxModule,
     MatListModule,
     MatFormFieldModule,
@@ -41,9 +41,9 @@ interface EstudianteConSeleccion extends Estudiante {
   styleUrls: ['./formulario-asignar-materia-estudiante.component.sass'],
 })
 export class FormularioAsignarMateriaEstudianteComponent {
-  estudiantes: EstudianteConSeleccion[] = []; // Lista extendida de estudiantes
-  seleccionados: Estudiante[] = []; // Lista de seleccionados con el formato original
-  fechaInscripcion: Date | null = null; // Definir la propiedad 'fechaInscripcion'
+  estudiantes: EstudianteConSeleccion[] = []; 
+  seleccionados: Estudiante[] = []; 
+  fechaInscripcion: Date | null = null; 
 
   constructor(
     public dialogRef: MatDialogRef<FormularioAsignarMateriaEstudianteComponent>,
@@ -63,11 +63,10 @@ export class FormularioAsignarMateriaEstudianteComponent {
     }));
   }
 
-  // Guardar estudiantes seleccionados
   onAdd() {
     // Filtra solo los seleccionados
     this.seleccionados = this.estudiantes
-      .filter(est => est.seleccionado) // Filtra los seleccionados
+      .filter(est => est.seleccionado) 
       .map(est => ({
         id_estudiante: est.id_estudiante,
         nombre: est.nombre,
@@ -75,9 +74,8 @@ export class FormularioAsignarMateriaEstudianteComponent {
         email: est.email,
         foto: est.foto,
         paralelo: est.paralelo,
-      })); // Devuelve solo las propiedades originales
+      })); 
 
-    // Validar selección
     if (this.seleccionados.length === 0) {
       this.mensajeService.mostrarMensajeError(
         'Error!',
@@ -86,7 +84,6 @@ export class FormularioAsignarMateriaEstudianteComponent {
       return;
     }
 
-    // Validar que se haya seleccionado una fecha de inscripción
     if (!this.fechaInscripcion) {
       this.mensajeService.mostrarMensajeError(
         'Error!',
@@ -95,7 +92,6 @@ export class FormularioAsignarMateriaEstudianteComponent {
       return;
     }
 
-    // Cerrar diálogo con los seleccionados y la fecha de inscripción
     this.dialogRef.close({
       estudiantes: this.seleccionados,
       fechaInscripcion: this.fechaInscripcion,
@@ -112,7 +108,6 @@ export class FormularioAsignarMateriaEstudianteComponent {
     estudiante.seleccionado = !estudiante.seleccionado; // Alterna el estado
   }
 
-  // Cierra el diálogo sin guardar
   onCancel() {
     this.dialogRef.close();
   }

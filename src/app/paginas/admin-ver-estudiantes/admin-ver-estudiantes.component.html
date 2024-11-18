@@ -1,3 +1,10 @@
+
+  <div class="search-section">
+    <label>Buscar por Nombre: </label>
+    <input [(ngModel)]="filtroNombre" name="filtroNombre" placeholder="Nombre">
+    <input [(ngModel)]="filtroapellido" name="filtroapellido" placeholder="Apellido">
+  </div>
+
 <div class="container">
   <button class="add-button" (click)="abrirFormulario()">
     <span>+</span> Agregar Estudiante
@@ -43,7 +50,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let estudiante of estudiantes">
+      <tr *ngFor="let estudiante of estudiantesFiltrados">
         <td>{{ estudiante.nombre }}</td>
         <td>{{ estudiante.apellido }}</td>
         <td>{{ estudiante.email }}</td>
