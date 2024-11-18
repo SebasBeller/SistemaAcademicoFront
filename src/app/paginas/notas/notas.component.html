@@ -5,6 +5,9 @@
    align-items: center;
    height: 100vh;
  }
+ .mat-raised-button.mat-success{
+  background-color: rgb(12, 134, 53);
+ }
  </style>
 <div>
   <h1>Notas</h1>
@@ -16,6 +19,10 @@
   <button mat-raised-button color="primary" (click)="exportarPDF()">
     <mat-icon>picture_as_pdf</mat-icon> Exportar a PDF
   </button>
+  <button  mat-raised-button color="success"  (click)="exportarExcel()">
+    <mat-icon>insert_drive_file</mat-icon> Exportar a EXCEL
+  </button>
+
   <div *ngIf="isLoading" class="loader-container">
     <mat-spinner></mat-spinner>
   </div>

@@ -13,6 +13,7 @@ import { RouterModule } from '@angular/router';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
+import * as XLSX from 'xlsx';
 
 @Component({
   selector: 'app-notas',
@@ -249,7 +250,65 @@ export class NotasComponent implements OnInit {
     doc.save(`reporte_notas_usuario_${userId}.pdf`);
   }
 
+  //Agregamos exportar a excel
 
+  exportarExcel(): void {
+    const userId = this.authService.getUserId();
+    const estudiante = this.estudiantes.find(est => est.id_estudiante === userId);
+    const estudianteNombre = estudiante ? `${estudiante.nombre} ${estudiante.apellido}` : 'Estudiante desconocido';
+
+    // Datos que queremos exportar a Excel
+    let data: any[] = [];
+    data.push(['Reporte de Notas']);
+    data.push([`Estudiante: ${estudianteNombre}`]);
+
+    for (const id_dicta in this.notasPorMateria) {
+      const materia = this.nombresMaterias[id_dicta] || 'Materia desconocida';
+      data.push([`Materia: ${materia}`]);
+
+      const trimestres = this.notasPorMateria[id_dicta];
+      const trimestresAgrupados: Record<number, { hacer: number; decidir: number; saber: number; ser: number }> = {};
+
+      trimestres.forEach(trimestreData => {
+        const trimestre = trimestreData.trimestre;
+        if (!trimestresAgrupados[trimestre]) {
+          trimestresAgrupados[trimestre] = { hacer: 0, decidir: 0, saber: 0, ser: 0 };
+        }
+
+        const tipos = ['hacer', 'decidir', 'saber', 'ser'] as const;
+
+        tipos.forEach(tipo => {
+          trimestresAgrupados[trimestre][tipo] = this.calcularPromedioPorTipo(Number(id_dicta), trimestre, tipo);
+        });
+      });
+
+      // Agregar los datos por trimestre a la tabla
+      for (const trimestre in trimestresAgrupados) {
+        const datos = trimestresAgrupados[trimestre];
+        const promedioTrimestre = (datos.hacer + datos.decidir + datos.saber + datos.ser) / 4;
+        data.push([
+          `Trimestre ${trimestre}`,
+          datos.hacer.toFixed(2),
+          datos.decidir.toFixed(2),
+          datos.saber.toFixed(2),
+          datos.ser.toFixed(2),
+          promedioTrimestre.toFixed(2),
+        ]);
+      }
+
+      // Promedio general de la materia
+      const promedioGeneral = this.calcularPromedioGeneral(Number(id_dicta));
+      const estado = this.determinarEstado(promedioGeneral);
+      data.push([`Promedio General: ${promedioGeneral.toFixed(2)} (${estado})`]);
+    }
+
+    // Crear un libro de trabajo (workbook)
+    const ws: XLSX.WorkSheet = XLSX.utils.aoa_to_sheet(data);
+    const wb: XLSX.WorkBook = { Sheets: { 'Reporte de Notas': ws }, SheetNames: ['Reporte de Notas'] };
+
+    // Exportar el archivo Excel
+    XLSX.writeFile(wb, `reporte_notas_usuario_${userId}.xlsx`);
+  }
 
 
 
