@@ -21,6 +21,10 @@ import { NotasProfesorComponent } from './paginas/notas-profesor/notas-profesor.
 import { PerfilEstudianteComponent } from './paginas/perfil-estudiante/perfil-estudiante.component';
 import { AdminVerEstudiantesComponent } from './paginas/admin-ver-estudiantes/admin-ver-estudiantes.component';
 import {MateriasAdministradorComponent} from './paginas/materias-administrador/materias-administrador.component';
+
+import { VerListaProfesoresComponent } from './paginas/ver-lista-profesores/ver-lista-profesores.component';
+import { AsignarMateriaEstudiantComponent } from './paginas/asignar-materia-estudiant/asignar-materia-estudiant.component';
+
 export const routes: Routes = [
   {
     path:'',
@@ -147,12 +151,16 @@ export const routes: Routes = [
       },
       {
         path:'materias-admin',
-        component:MateriasAdministradorComponent,
+        component:MateriasAdministradorComponent, 
         canActivate:[AuthGuard],
         data: {roles: ['admin']}
       },
-      
-
+      {
+        path:'ver-lista-profesores',
+        component:VerListaProfesoresComponent,
+        canActivate:[AuthGuard],
+        data: {roles: ['admin']}
+      }
     ],
   },
 ];

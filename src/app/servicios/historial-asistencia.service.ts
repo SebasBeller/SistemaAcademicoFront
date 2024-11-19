@@ -6,6 +6,8 @@ import { Profesor } from '../interfaces/profesor';
 import { Materia } from '../interfaces/materia';
 import { MateriaAsignadaDocente } from '../interfaces/materia-asignada-docente';
 import { map } from 'rxjs';
+import { Inscripcion } from '../interfaces/Inscripcion';
+import { Estudiante } from '../interfaces/estudiante';
 
 @Injectable({
   providedIn: 'root'
@@ -15,6 +17,9 @@ export class HistorialAsistenciaService {
   private readonly profesorUrl = 'http://localhost:3000/Profesor';
   private readonly materiasAsignadasUrl = 'http://localhost:3000/materia-asignada-profesor';
   private readonly materiasUrl = 'http://localhost:3000/materias';
+  private readonly estudianteUrl = 'http://localhost:3000/estudiante';
+  private readonly InscripcionUrl = 'http://localhost:3000/inscripcion';
+
 
   constructor(private readonly http: HttpClient) {}
 
@@ -45,4 +50,10 @@ export class HistorialAsistenciaService {
       )
     );
   }
+  obtenerInscripciones(): Observable<Inscripcion[]> {
+    return this.http.get<Inscripcion[]>(this.InscripcionUrl);
+  }
+  obtenerEstudaintes(): Observable<Estudiante[]> {
+    return this.http.get<Estudiante[]>(this.estudianteUrl);
+    }
 }

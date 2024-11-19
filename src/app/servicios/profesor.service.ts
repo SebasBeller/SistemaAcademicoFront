@@ -16,5 +16,12 @@ export class ProfesorService {
   getProfesores():Observable<Profesor[]>{
     return this.http.get<Profesor[]>(this.apiUrl);
   }
+  updateProfesor(id: number, profesorData: Partial<Profesor>): Observable<Profesor> {
+    return this.http.patch<Profesor>(`${this.apiUrl}/${id}`, profesorData).pipe(
+    );
+  }
+  addProfesor(profesor: Profesor): Observable<Profesor> {
+  return this.http.post<Profesor>(this.apiUrl , profesor);
+}
 
 }
