@@ -43,6 +43,8 @@ export class AdminVerEstudiantesComponent implements OnInit {
   paralelos:Paralelo[]=[];
   paraleloSelec?:Paralelo;
   password?:string;
+  filtroNombre:string = "";
+  filtroapellido: string = "";
 
 
   constructor(
@@ -184,4 +186,13 @@ guardarEstudiante(): void {
       (error) => console.error('Error al obtener estudiante:', error)
     );
   }
+
+  get estudiantesFiltrados(): Estudiante[]{
+    return this.estudiantes.filter(estudiante =>
+    (this.filtroNombre? estudiante.nombre.toLowerCase().includes(this.filtroNombre.toLowerCase()):true) &&
+    (this.filtroapellido? estudiante.apellido.toLowerCase().includes(this.filtroapellido.toLowerCase()):true)
+  
+  )
+  }
+
 }
