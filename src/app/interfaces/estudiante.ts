@@ -8,4 +8,5 @@ export interface Estudiante {
     password?:string;
     foto:string;
     paralelo?: Paralelo;
+    
 }
