@@ -16,16 +16,14 @@
   </div>
 
   <div class="titulo-contenido">
-    <h2><b>Primer Trimestre</b></h2>
+    <h2><b>Contenidos</b></h2>
     <button class="add-content-btn" (click)="addNewModule()"><b>Agregar Nuevo Contenido</b></button>
   </div>
 
   <div class="contenido-materia-detalle">
     <div *ngFor="let card of unidades" class="card-wrapper">
       <div (click)="dirigirAContenido(card.id_unidad)" class="content-img">
-        <div class="img-content">
-          <img [src]="card.imagen_url" alt="Module Image" />
-        </div>
+        <img [src]="card.imagen_url" alt="Module Image" />
         <div><b>{{ card.nombre }}</b></div>
       </div>
       <div class="button-group">

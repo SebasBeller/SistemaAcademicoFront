@@ -1,31 +1,22 @@
-<style>
-  select {
-  padding: 2px;
-  font-size: 1rem;
-  border-radius: 4px;
-  background-color: #f9f9f9;
-  color: #333;
-  margin: 2%;
-}
-
-/* Cambia el borde y el fondo cuando el campo select está en foco */
-select:focus {
-  outline: none;
-  border-color: #007bff;
-  background-color: #fff;
-}
-</style>
+<div [ngClass]="getColorClass()">
+  
+  <div class="search-section">
+    <label>Buscar por Nombre: </label>
+    <input [(ngModel)]="filtroNombre" name="filtroNombre" placeholder="Nombre">
+    <label>Buscar por Apellido:</label>
+    <input [(ngModel)]="filtroapellido" name="filtroapellido" placeholder="Apellido">
+  </div>
 
 <div class="container">
-    <button class="add-button" (click)="abrirFormulario()">
-      <span>+</span> Agregar Estudiante
-    </button>
+  <button class="add-button" (click)="abrirFormulario()">
+    <span>+</span> <b>Agregar Estudiante</b>
+  </button>
 
         <!-- Modal para agregar/editar estudiante -->
         <div class="modal" *ngIf="mostrarFormulario">
             <div class="modal-content">
               <span class="close" (click)="cerrarFormulario()">&times;</span>
-              <h2>{{ editando ? 'Editar Estudiante' : 'Agregar Estudiante' }}</h2>
+              <h2><b>{{ editando ? 'Editar Estudiante' : 'Agregar Estudiante' }}</b></h2>
         
               <form (ngSubmit)="guardarEstudiante()">
                   <label>Nombre:</label>
@@ -42,7 +33,7 @@ select:focus {
                 
                 
                 <div>
-                  <label >Paralelos</label>
+                  <label >Paralelo: </label>
                   <select  (click)="actualizarParalelo($event)">
                     <option *ngFor="let paralelo of paralelos" [ngValue]="paralelo">
                       {{ paralelo.paralelo }}
@@ -57,27 +48,28 @@ select:focus {
             </div>
           </div>
   
-    <table class="table">
-      <thead>
-        <tr>
-          <th>Nombre</th>
-          <th>Apellido</th>
-          <th>Email</th>
-          <th>Paralelo</th>
-          <th>Acciones</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let estudiante of estudiantes">
-          <td>{{ estudiante.nombre }}</td>
-          <td>{{ estudiante.apellido }}</td>
-          <td>{{ estudiante.email }}</td>
-          <td>{{ estudiante.paralelo?.paralelo }}</td>
-          <td>
-            <button (click)="editarEstudiante(estudiante.id_estudiante)">Editar</button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-  
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Apellido</th>
+        <th>Email</th>
+        <th>Paralelo</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let estudiante of estudiantesFiltrados">
+        <td>{{ estudiante.nombre }}</td>
+        <td>{{ estudiante.apellido }}</td>
+        <td>{{ estudiante.email }}</td>
+        <td>{{ estudiante.paralelo?.paralelo }}</td>
+        <td>
+          <button (click)="editarEstudiante(estudiante.id_estudiante)">Editar</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+</div>

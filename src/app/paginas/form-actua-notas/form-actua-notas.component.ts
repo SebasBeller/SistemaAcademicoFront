@@ -55,13 +55,15 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MensajeService } from '../mensaje/mensaje.component';
-
+import { SelectionColorService } from '../../servicios/selection-color.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-form-actua-notas',
   standalone: true,
 
   imports: [
+    CommonModule,
     ReactiveFormsModule,
     MatDialogModule,
     MatFormFieldModule,
@@ -72,6 +74,7 @@ import { MensajeService } from '../mensaje/mensaje.component';
   styleUrls: ['./form-actua-notas.component.sass']
 })
 export class FormActuaNotasComponent {
+  selectedColor: string = '';
   form: FormGroup;
   serForm: FormGroup;
   saberForm: FormGroup;
@@ -79,6 +82,7 @@ export class FormActuaNotasComponent {
   decidirForm: FormGroup;
 
   constructor(
+    private colorService: SelectionColorService,
     private fb: FormBuilder,
     private mensajeService:MensajeService,
 
@@ -96,6 +100,24 @@ export class FormActuaNotasComponent {
     this.saberForm = this.form.get('saber') as FormGroup;
     this.hacerForm = this.form.get('hacer') as FormGroup;
     this.decidirForm = this.form.get('decidir') as FormGroup;
+  }
+
+  ngOnInit() {
+    this.colorService.currentColor$.subscribe(color => {
+      this.selectedColor = color; // Actualiza el color recibido
+      console.log('Color recibido en Login:', this.selectedColor);
+    });
+  }
+
+  getColorClass(): string {
+    switch (this.selectedColor) {
+      case 'verde':
+        return 'color-verde';
+      case 'amarillo':
+        return 'color-amarillo';
+      default:
+        return 'color-azul';
+    }
   }
 
   actualizarNota() {

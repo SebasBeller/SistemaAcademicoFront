@@ -8,11 +8,11 @@
       <div class="perfil-notificaciones">
         <img
           class="notificaciones"
-          src="https://w7.pngwing.com/pngs/832/828/png-transparent-alarm-alert-attention-bell-notification-notifications-ring-random-icon-thumbnail.png"
+          src="../../../assets/img/boton-de-notificaciones.png"
           alt="Notificaciones"
         />
         <a [routerLink]="userRole === 'estudiante' ? 'perfil-estudiante/' + idEstudiante : '/home/'">
-          <img *ngIf="fotoPerfil || '../../../assets/img/assets/silueta.jpg'" [src]="fotoPerfil" alt="Foto de Perfil" />
+          <img *ngIf="fotoPerfil || '../../../assets/img/silueta.jpg'" [src]="fotoPerfil" alt="Foto de Perfil" />
         </a>
       </div>
     </div>
@@ -21,12 +21,13 @@
   <nav>
     <div class="sidebar" [class.open]="isSidebarOpen">
       <div class="escudo">
-        <a routerLink="home">
+        <a [routerLink]="['/home']">
           <img
-            src="https://img.freepik.com/vector-premium/diseno-vectorial-logotipo-escuela-fondo-blanco_579306-14609.jpg"
+            src="../../../assets/img/logo.png"
             alt="Escudo"
           />
         </a>
+        <b>Inicio</b>
       </div>
       <ul>
         <li *ngIf="userRole === 'profesor'">
@@ -46,6 +47,9 @@
         </li>
         <li *ngIf="userRole === 'admin'">
           <a routerLink="admin-ver-estudiantes"><b>Estudiantes</b></a>
+        </li>
+        <li *ngIf="userRole === 'admin'" >
+          <a routerLink="ver-lista-profesores"><b>Profesores</b></a>
         </li>
         <li *ngIf="userRole === 'admin'" >
           <a routerLink="materias-admin"><b>Materias</b></a>

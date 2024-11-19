@@ -5,11 +5,23 @@ import { BehaviorSubject } from 'rxjs';
   providedIn: 'root'
 })
 export class SelectionColorService {
-
-  private colorSubject = new BehaviorSubject<string>('azul'); 
+  private colorKey = 'selectedColor'; 
+  private defaultColor = 'azul'; 
+  private colorSubject = new BehaviorSubject<string>(this.getSavedColor());
   currentColor$ = this.colorSubject.asObservable(); 
 
-  changeColor(color: string) {
-    this.colorSubject.next(color);
+  constructor() {}
+
+  changeColor(color: string): void {
+    this.saveColor(color);
+    this.colorSubject.next(color); 
+  }
+
+  private getSavedColor(): string {
+    return localStorage.getItem(this.colorKey) || this.defaultColor;
+  }
+
+  private saveColor(color: string): void {
+    localStorage.setItem(this.colorKey, color);
   }
 }

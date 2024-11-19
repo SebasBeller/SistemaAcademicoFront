@@ -1,21 +1,23 @@
 <div class="login-container" [ngClass]="getColorClass()">
-    <h2><b>Bienvenido al Colegio San Rafael</b></h2>
-    <form (submit)="login()">
-      <div class="correo">
-        <label for="email"><b>Email</b></label>
-        <input id="email" [(ngModel)]="email" name="email" type="email" required />
-      </div>
-  
-      <div class="contra">
-        <label for="password"><b>Contraseña</b></label>
-        <input id="password" [(ngModel)]="password" name="password" type="password" required />
-      </div>
-  
-      <div *ngIf="errorMessage" class="error-message">
-        {{ errorMessage }}
-      </div>
-  
-      <button type="submit"><b>Iniciar Sesión</b></button>
-    </form>
+  <h2><b>Bienvenido al Colegio San Rafael</b></h2>
+  <div class="escudo">
+    <img src="../../../assets/img/logo.png" alt="Escudo" />
   </div>
-  
+  <form (submit)="login()">
+    <div class="correo">
+      <label for="email"><b>Email</b></label>
+      <input id="email" [(ngModel)]="email" name="email" type="email" required />
+    </div>
+
+    <div class="contra">
+      <label for="password"><b>Contraseña</b></label>
+      <input id="password" [(ngModel)]="password" name="password" type="password" required />
+    </div>
+
+    <div *ngIf="errorMessage" class="error-message">
+      {{ errorMessage }}
+    </div>
+
+    <button type="submit"><b>Iniciar Sesión</b></button>
+  </form>
+</div>

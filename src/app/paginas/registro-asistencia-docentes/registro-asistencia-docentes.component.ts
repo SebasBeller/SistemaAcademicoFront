@@ -229,9 +229,9 @@ export class RegistroAsistenciaDocentesComponent implements OnInit {
 
     console.log("gg", this.cambiosAsistencias);
     console.log("gg", asistencias);
-
+    console.log("fecha",fecha)
     let asistencia = asistencias.find(
-      (a) => new Date(a.fecha_asistencia).toISOString().slice(0, 10) === fecha
+      (a) => new Date(a.fecha_asistencia+"T23:59:59").toLocaleDateString() === fecha
     );
 
     if (asistencia) {
@@ -240,6 +240,7 @@ export class RegistroAsistenciaDocentesComponent implements OnInit {
         id_asistencia: asistencia.id_asistencia,
         estado: asistencia.estado,
       });
+      console.log(this.cambiosAsistencias)
     } else {
       console.log("No se encontró la asistencia para la fecha especificada.");
     }

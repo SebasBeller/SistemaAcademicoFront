@@ -22,8 +22,9 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     this.colorService.currentColor$.subscribe((color) => {
+      this.selectedColor = color;
       this.updateCSSVariables(color);
-      console.log('Color actualizado a:', color); // Verifica el color recibido
+      console.log('Color inicial o actualizado a:', color);
     });
   }
 

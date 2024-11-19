@@ -9,6 +9,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
+import { SelectionColorService } from '../../servicios/selection-color.service';
 @Component({
   selector: 'app-formulario-agregar-materia',
   standalone: true,
@@ -26,11 +27,13 @@ import { MatNativeDateModule } from '@angular/material/core';
 
 })
 export class FormularioAgregarMateriaComponent {
+  selectedColor: string = '';
   newMateriaName: string;
   paralelos: Paralelo[]=[];
   paralelo?:Paralelo;
   
   constructor(
+    private colorService: SelectionColorService,
     public dialogRef: MatDialogRef<FormularioAgregarMateriaComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private readonly mensajeService:MensajeService
@@ -38,6 +41,24 @@ export class FormularioAgregarMateriaComponent {
     this.newMateriaName = data.name || '';
     this.paralelos = data.paralelos || '';
   }
+  ngOnInit() {
+    this.colorService.currentColor$.subscribe(color => {
+      this.selectedColor = color; // Actualiza el color recibido
+      console.log('Color recibido en Login:', this.selectedColor);
+    });
+  }
+
+  getColorClass(): string {
+    switch (this.selectedColor) {
+      case 'verde':
+        return 'color-verde';
+      case 'amarillo':
+        return 'color-amarillo';
+      default:
+        return 'color-azul';
+    }
+  }
+
   onAdd() {
     if(!this.newMateriaName || ! this.paralelo){
       this.mensajeService.mostrarMensajeError("Error!!!","Complete todos los campos!!")

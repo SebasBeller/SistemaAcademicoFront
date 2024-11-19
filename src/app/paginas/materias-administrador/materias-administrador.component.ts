@@ -14,7 +14,11 @@ import type { Profesor } from '../../interfaces/profesor';
 import {ProfesorService} from '../../servicios/profesor.service'
 import {MateriasProfesorService} from '../../servicios/materias-profesor.service'
 import {MateriaAsignadaDocente} from '../../interfaces/materia-asignada-docente'
+import { EstudiantesAdminService } from '../../servicios/estudiantes-admin.service';
+import { Estudiante } from '../../interfaces/estudiante';
+import { InscripcionService } from '../../servicios/inscripcion.service';
 import { SelectionColorService } from '../../servicios/selection-color.service';
+import { FormularioAsignarMateriaEstudianteComponent } from '../formulario-asignar-materia-estudiante/formulario-asignar-materia-estudiante.component';
 @Component({
   selector: 'app-materias-administrador',
   standalone: true,
@@ -28,16 +32,18 @@ export class MateriasAdministradorComponent {
   paralelos:Paralelo[]=[];
   searchTerm: string = '';
   profesores:Profesor[]=[];
+  estudiantes:Estudiante[]=[];
 
   constructor(
     private colorService: SelectionColorService,
-    private servicioMaterias:MateriaService,
+    private servicioMaterias: MateriaService,
     private dialog: MatDialog,
     private mensajeService: MensajeService,
-    private paraleloService:ParaleloService,
-    private profesorService:ProfesorService,
-    private materiasProfesorService:MateriasProfesorService
-
+    private paraleloService: ParaleloService,
+    private profesorService: ProfesorService,
+    private materiasProfesorService: MateriasProfesorService,
+    private estudiantesAdminService: EstudiantesAdminService,
+    private inscripcionService: InscripcionService
   ){
     servicioMaterias.getMaterias().subscribe(
       response=>{
@@ -83,6 +89,16 @@ export class MateriasAdministradorComponent {
         console.log(error)
       }
     )
+
+    this.estudiantesAdminService.obtenerListaEstudiantes().subscribe(
+      response => {
+        this.estudiantes = response; // Asegúrate de que `response` contenga estudiantes válidos
+        console.log('Lista de estudiantes cargada:', this.estudiantes);
+      },
+      error => {
+        console.error('Error al cargar estudiantes:', error);
+      }
+    );
 
   }
 
@@ -142,7 +158,7 @@ export class MateriasAdministradorComponent {
   asignarProfesor(materiaSeleccionada:Materia) {
     console.log(materiaSeleccionada);
     const dialogRef = this.dialog.open(FormularioAsignarMateriaDocenteComponent, {
-      width: '300px',
+      width: '320px',
       data: 
       { fecha: new Date().toISOString(), profesores:this.profesores}
     });
@@ -174,10 +190,81 @@ export class MateriasAdministradorComponent {
     });
 
   }
+  asignarEstudiante(materia:any) {
 
-  asignarEstudiante(id_dicta:number){
-    console.log(id_dicta);
+    let dialogRef = null;
+
+    let id_dicta: number=materia.id
+    if(!id_dicta){
+      this.mensajeService.mostrarMensajeError(
+        'Error',
+        'Debe asignar un docente a la materia para asignar estudiantes.'
+      );
+      return;
+    }
+    console.log("materia",materia)
+    console.log('Estudiantes enviados al formulario:', this.estudiantes);
+    console.log('ID de la materia asignada:', id_dicta);
+    if (this.estudiantes && this.estudiantes.length > 0) {
+      
+      dialogRef = this.dialog.open(FormularioAsignarMateriaEstudianteComponent, {
+        width: '500px',
+        data: {
+          estudiantes: this.estudiantes, 
+          id_dicta: id_dicta, 
+        },
+      });
+    } else {
+      console.error('No hay estudiantes disponibles');
+    }
+  
+    // Aquí solo se ejecuta después de que dialogRef se haya definido
+    if (dialogRef) {
+      dialogRef.afterClosed().subscribe((result) => {
+        if(result.estudiantesSeleccionados.length==0){
+          this.mensajeService.mostrarMensajeError(
+            'Error',
+            'Debe asignar al menos un estudiante.'
+          );
+          return;
+        }
+        if (result && result.estudiantesSeleccionados.length > 0) {
+          console.log('Estudiantes seleccionados para asignar:', result);
+  
+          const fechaInscripcion = result.fechaInscripcion;
+  
+          const asignaciones = result.estudiantesSeleccionados.map((estudiante: Estudiante) => ({
+            id_dicta,
+            id_estudiante: estudiante.id_estudiante,
+            fecha_inscripcion: fechaInscripcion.toISOString().split("T")[0],
+            anio: new Date(fechaInscripcion).getFullYear(),
+          }));
+          
+          // return;
+          // Llamar al servicio para asignar los estudiantes
+          this.inscripcionService.asignarEstudiantes(asignaciones).subscribe(
+            (response) => {
+              console.log('Estudiantes asignados con éxito:', response);
+              this.mensajeService.mostrarMensajeExito(
+                'Asignación Exitosa',
+                'Los estudiantes se asignaron correctamente a la materia.'
+              );
+            },
+            (error) => {
+              console.error('Error al asignar estudiantes:', error);
+              this.mensajeService.mostrarMensajeError(
+                'Error',
+                'Hubo un problema al asignar los estudiantes. Intenta de nuevo.'
+              );
+            }
+          );
+        }
+      });
+    }
   }
+  
+  
+
   
   get filteredMaterias(): Materia[] {
     return this.materias.filter(materia =>

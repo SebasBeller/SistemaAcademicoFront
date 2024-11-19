@@ -1,5 +1,5 @@
-
-<div class="search-box">
+<div [ngClass]="getColorClass()">
+  <div class="search-box">
     <input
       type="text"
       [(ngModel)]="searchTerm"
@@ -16,19 +16,24 @@
       
       
       <div class="enlace-detalles">
-        <button class="materia-nombre"><b>Materia:{{materia.nombre}}</b></button>
+        <button class="materia-nombre"><b>Materia: {{materia.nombre}}</b></button>
        <div>
-        <b>Paralelo:{{materia?.paralelo?.paralelo}}</b>
+        <b>Paralelo: {{materia?.paralelo?.paralelo}}</b>
         </div>
         <div>
-            <b>Profesor:{{materia.profesorAsignado?.nombre || "No Asignado"}}</b>
+            <b>Profesor: {{materia.profesorAsignado?.nombre || "No Asignado"}}</b>
         </div>
         
         <div>
             <button  class="materia-nombre" (click)="asignarProfesor(materia)"><b>Asignar Profesor</b></button>
         </div>
         <div>
-            <button  class="materia-nombre" [disabled]="!materia.profesorAsignado" (click)="asignarEstudiante(materia.id)"><b>Agregar Estudiantes</b></button>
-        </div>
+          <button
+          class="materia-nombre"
+          (click)="asignarEstudiante(materia)"
+        >
+          <b>Agregar Estudiantes</b>
+        </button>        </div>
     </div>
+</div>
 </div>
