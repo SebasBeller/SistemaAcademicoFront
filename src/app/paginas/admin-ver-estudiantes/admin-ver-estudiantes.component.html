@@ -46,33 +46,6 @@
             </div>
           </div>
   
-    <table class="table">
-      <thead>
-        <tr>
-          <th>Nombre</th>
-          <th>Apellido</th>
-          <th>Email</th>
-          <th>Paralelo</th>
-          <th>Acciones</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let estudiante of estudiantesFiltrados">
-          <td>{{ estudiante.nombre }}</td>
-          <td>{{ estudiante.apellido }}</td>
-          <td>{{ estudiante.email }}</td>
-          <td>{{ estudiante.paralelo?.paralelo }}</td>
-          <td>
-            <button (click)="editarEstudiante(estudiante.id_estudiante)">Editar</button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-<<<<<<< HEAD
-  
-=======
-
   <table class="table">
     <thead>
       <tr>
@@ -96,4 +69,3 @@
     </tbody>
   </table>
 </div>
->>>>>>> e7504babc0052b3f27d951439b1955c873fd2f03
