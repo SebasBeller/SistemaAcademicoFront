@@ -19,6 +19,7 @@ import { MensajeService } from '../mensaje/mensaje.component';
 import Swal from 'sweetalert2';
 import {InscripcionService} from '../../servicios/inscripcion.service'
 import{Estudiante} from '../../interfaces/estudiante';
+import {JsonPipe} from '@angular/common';
 import {FormControl, FormGroup, ReactiveFormsModule} from '@angular/forms';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { SelectionColorService } from '../../servicios/selection-color.service';
@@ -127,11 +128,11 @@ export class RegistroAsistenciaDocentesComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.obtenerAsistencias();
-    this.colorService.currentColor$.subscribe(color => {
-      this.selectedColor = color; // Actualiza el color recibido
-      console.log('Color recibido en Login:', this.selectedColor);
-    });
+   this.obtenerAsistencias();
+   this.colorService.currentColor$.subscribe(color => {
+    this.selectedColor = color; // Actualiza el color recibido
+    console.log('Color recibido en Login:', this.selectedColor);
+  });
   }
 
   getColorClass(): string {

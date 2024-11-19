@@ -56,6 +56,7 @@ export class DetalleNotasEstudiantesComponent implements OnInit {
   }
   ngOnInit(): void {
     this.isLoading=true;
+    this.isLoading=true;
     this.obtenerEstudiantes();
     this.obtenerNotas();
     this.colorService.currentColor$.subscribe(color => {
@@ -120,6 +121,7 @@ export class DetalleNotasEstudiantesComponent implements OnInit {
         this.notas = notas;
         console.log("notas",notas)
         this.filtrarNotasEstudianteMateria(this.idEstudiante, this.idDicta); // Filtra para id_estudiante = 1 y id_dicta = 130
+        this.isLoading=false;
         this.isLoading=false;
       },
       (error: any) => {

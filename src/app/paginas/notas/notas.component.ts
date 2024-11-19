@@ -35,6 +35,7 @@ export class NotasComponent implements OnInit {
 
   ngOnInit(): void {
     this.isLoading=true;
+    this.isLoading=true;
     this.obtenerProfesores();
     this.obtenerEstudiantes();
     this.obtenerNotas();
@@ -86,6 +87,7 @@ export class NotasComponent implements OnInit {
 
   onYearChange(event: Event): void {
     this.isLoading=true;
+    this.isLoading=true;
     const selectElement = event.target as HTMLSelectElement;
     this.selectedYear = +selectElement.value;
     this.obtenerNotas(); // Actualizar notas al cambiar el año
@@ -96,6 +98,7 @@ export class NotasComponent implements OnInit {
       (notas: Nota[]) => {
         this.notas = notas;
         this.agruparNotasPorMateria();
+        this.isLoading=false;
         this.isLoading=false;
       },
       (error: any) => {

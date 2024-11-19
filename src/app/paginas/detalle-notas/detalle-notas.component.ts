@@ -24,12 +24,6 @@ import { SelectionColorService } from '../../servicios/selection-color.service';
   ],
   templateUrl: './detalle-notas.component.html',
   styleUrls: ['./detalle-notas.component.sass'],
-
-
-
-
-
-
 })
 export class DetalleNotasComponent implements OnInit {
   selectedColor: string = '';
@@ -73,6 +67,7 @@ export class DetalleNotasComponent implements OnInit {
     });
   }
   ngOnInit(): void {
+    this.isLoading = true;
     this.isLoading = true;
     this.obtenerEstudiantes();
     this.obtenerNotas();
@@ -136,6 +131,8 @@ export class DetalleNotasComponent implements OnInit {
         this.notas = notas;
         this.filtrarNotasEstudianteMateria(this.idEstudiante, this.idDicta); 
           this.isLoading = false;
+        this.filtrarNotasEstudianteMateria(this.idEstudiante, this.idDicta); 
+          this.isLoading = false;
       },
       (error: any) => {
         console.error('Error en la petición de notas:', error);
@@ -188,6 +185,7 @@ export class DetalleNotasComponent implements OnInit {
          notasAActualizar.forEach((nota: any) => {
           if (nota.id) {
             this.actualizarNota(nota);
+
 
           } else {
             console.warn('Nota con id no definido:', nota);
@@ -247,18 +245,24 @@ export class DetalleNotasComponent implements OnInit {
     this.detalleNotasService.actualizarNota(nota).subscribe(
       (notaActualizada: Nota) => {
 
+
         console.log('Nota actualizada:', notaActualizada);
 
         // Actualiza en la lista local si es necesario
         const index = this.notas.findIndex((n) => n.id === nota.id);
         console.log(this.notas)
 
+
         if (index !== -1) {
+          this.notas[index].nota = nota.nota;
+          this.notas[index].fecha = nota.fecha; 
+
           this.notas[index].nota = nota.nota;
           this.notas[index].fecha = nota.fecha; 
 
 
         }
+
 
         // Refresca la vista localmente
         // this.filtrarNotasEstudianteMateria(this.idEstudiante, this.idDicta);
@@ -268,6 +272,11 @@ export class DetalleNotasComponent implements OnInit {
       }
     );
   }
+
+
+
+
+
 
 
 

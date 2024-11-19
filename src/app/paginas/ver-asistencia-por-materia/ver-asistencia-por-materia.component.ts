@@ -55,6 +55,7 @@ export class VerAsistenciaPorMateriaComponent implements OnInit {
     this.historialAsistenciaService.obtenerAsistencias().subscribe(
       (asistencias: Asistencia[]) => {
         console.log(asistencias)
+        console.log(asistencias)
         this.agruparAsistenciasPorMes(asistencias);
       },
       (error) => {
@@ -65,11 +66,14 @@ export class VerAsistenciaPorMateriaComponent implements OnInit {
 
   agruparAsistenciasPorMes(asistencias: Asistencia[]): void {
     console.log(asistencias)
+    console.log(asistencias)
     asistencias.forEach((asistencia) => {
       if (
         asistencia.estudiante?.id_estudiante == this.authService.getUserId() &&
+        asistencia.estudiante?.id_estudiante == this.authService.getUserId() &&
         asistencia.id_dicta == this.materia
       ) {
+        console.log("gg",asistencia.fecha_asistencia)
         console.log("gg",asistencia.fecha_asistencia)
 
         const fecha = new Date(asistencia.fecha_asistencia+"T00:00:00");

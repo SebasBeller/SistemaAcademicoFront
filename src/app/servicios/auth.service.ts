@@ -30,8 +30,10 @@ export class AuthService {
     let id:number=0;
     if(user.tipo=="estudiante"){
       id=user.id_estudiante;
-    }else{
+    }else if(user.tipo=="profesor"){
       id=user.id_profesor
+    } else{
+      id=user.id_admin;
     }
 
     localStorage.setItem('userId', id.toString());

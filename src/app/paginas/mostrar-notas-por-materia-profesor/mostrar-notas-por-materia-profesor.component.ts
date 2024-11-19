@@ -39,7 +39,6 @@ export class MostrarNotasPorMateriaProfesorComponent implements OnInit {
   idMateria:string="";
   isLoading = true;
   
-
   constructor(
     private colorService: SelectionColorService,
     private notasProfesorService: NotasProfesorService,
@@ -81,6 +80,8 @@ export class MostrarNotasPorMateriaProfesorComponent implements OnInit {
         this.paralelos = data.paralelo || [];
   
 
+  
+
       },
       (error: any) => {
         console.error('Error al cargar datos de la materia asignada:', error);
@@ -97,6 +98,7 @@ export class MostrarNotasPorMateriaProfesorComponent implements OnInit {
         );
         console.log(this.notas)
         this.calcularPromediosPorEstudiante();
+        this.isLoading = false;
         this.isLoading = false;
       },
       (error: any) => {

@@ -3,6 +3,7 @@ import {Material} from '../interfaces/material'
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
+
 @Injectable({
   providedIn: 'root'
 })

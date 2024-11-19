@@ -1,24 +1,30 @@
 <div [ngClass]="getColorClass()">
   <div class="titulo">
-    <h1><b>{{materiaAsiganda?.materia?.nombre}}</b></h1>
+    <h1><b>{{ materiaAsignada?.materia?.nombre }}</b></h1>
     <div class="area-materias"><b>Área: Ciencias</b></div>
-    <div class="profesor-nombre"><b>Profesor: {{materiaAsiganda?.profesor?.nombre}}</b></div>
-    <div class="Paralelo"><b>Paralelo: {{materiaAsiganda?.materia?.paralelo?.paralelo}}</b></div>
+    <div class="profesor-nombre"><b>Profesor: {{ materiaAsignada?.profesor?.nombre }}</b></div>
+    <div class="paralelo"><b>Paralelo: {{ materiaAsignada?.materia?.paralelo?.paralelo }}</b></div>
   </div>
-   <div class="asistencia-lista-btn">
-    <button class="asistencias-btn" [routerLink]="['/home/registro-asistencias-estudiantes', this.id_dicta]" ><b>Asistencias</b></button>
-    <button class="lista-btn" [routerLink]="['/home/lista-estudiantes-profesor',this.id_dicta]" ><b>Lista de estudiantes</b></button>
-   </div>
+
+  <div class="asistencia-lista-btn">
+    <button class="asistencias-btn" [routerLink]="['/home/registro-asistencias-estudiantes', id_dicta]">
+      <b>Asistencias</b>
+    </button>
+    <button class="lista-btn" [routerLink]="['/home/lista-estudiantes-profesor', id_dicta]">
+      <b>Lista de estudiantes</b>
+    </button>
+  </div>
+
   <div class="titulo-contenido">
     <h2><b>Primer Trimestre</b></h2>
-    <button class="add-content-btn" (click)="addNewModule()" ><b>Agregar Nuevo Contenido</b></button>
-    
+    <button class="add-content-btn" (click)="addNewModule()"><b>Agregar Nuevo Contenido</b></button>
   </div>
+
   <div class="contenido-materia-detalle">
-    <div *ngFor="let card of this. unidades" class="card-wrapper">
+    <div *ngFor="let card of unidades" class="card-wrapper">
       <div (click)="dirigirAContenido(card.id_unidad)" class="content-img">
         <div class="img-content">
-          <img [src]="card.imagen_url" alt="Module Image"/>
+          <img [src]="card.imagen_url" alt="Module Image" />
         </div>
         <div><b>{{ card.nombre }}</b></div>
       </div>

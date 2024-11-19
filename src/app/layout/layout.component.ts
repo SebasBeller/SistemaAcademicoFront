@@ -58,6 +58,8 @@ export class LayoutComponent {
   logout() {
     this.authService.logout();
     this.router.navigate(['/']);
+    this.authService.logout();
+    this.router.navigate(['/']);
   }
 
   toggleSidebar() {

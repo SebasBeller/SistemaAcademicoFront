@@ -31,6 +31,7 @@ export class NotasProfesorComponent implements OnInit {
        response => {
          console.log('Datos recibidos:', response);
          this.materias = response.filter(materia => materia.profesor?.id_profesor === idProfesor); // Asigna los datos cuando la respuesta es recibida
+         this.materias = response.filter(materia => materia.profesor?.id_profesor === idProfesor); // Asigna los datos cuando la respuesta es recibida
          console.log('Materias asignadas:', this.materias);
        },
        error => {

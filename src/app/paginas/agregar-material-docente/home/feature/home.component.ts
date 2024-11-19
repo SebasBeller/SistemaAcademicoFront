@@ -1,26 +1,20 @@
 import { Component, inject, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {
-  Storage,
-  ref,
-  uploadBytesResumable,
-  getDownloadURL,
-  percentage,
-} from '@angular/fire/storage';
+import { Storage, ref, uploadBytesResumable, getDownloadURL, percentage } from '@angular/fire/storage';
 import { Subscription } from 'rxjs';
 import { FormsModule } from '@angular/forms';
 import { Material } from "../../../../interfaces/material";
 import { MaterialService } from "../../../../servicios/material.service";
 import { ActivatedRoute } from '@angular/router';
-import {MensajeService} from '../../../mensaje/mensaje.component';
+import { MensajeService } from '../../../mensaje/mensaje.component';
 import { SelectionColorService } from '../../../../servicios/selection-color.service';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule,FormsModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './home.component.html',
-  styleUrl: './home.component.sass'
+  styleUrls: ['./home.component.sass']
 })
 export default class HomeComponent implements OnInit, OnDestroy {
   selectedColor: string = '';
@@ -29,10 +23,9 @@ export default class HomeComponent implements OnInit, OnDestroy {
   file!: File;
   private readonly _storage = inject(Storage);
   subscription: Subscription | undefined;
-  mensajeSubidaArchivo:string="";
+  mensajeSubidaArchivo: string = "";
 
-  // Variables para el tipo de material y el título
-  tipoMaterial: string = 'Teorico'; // Valor predeterminado
+  tipoMaterial: string = 'Teorico';
   nombreMaterial: string = '';
   currentMaterialId: number | null = null;
 
@@ -40,10 +33,9 @@ export default class HomeComponent implements OnInit, OnDestroy {
   materiales: Material[] = [];
 
   servicioMateriales: MaterialService = inject(MaterialService);
-
   id_unidad?: number;
   route: ActivatedRoute = inject(ActivatedRoute);
-  mensajeService:MensajeService=inject(MensajeService); 
+  mensajeService: MensajeService = inject(MensajeService);
 
   constructor(private colorService: SelectionColorService) {
     this.id_unidad = this.route.snapshot.params['id'];
@@ -59,8 +51,9 @@ export default class HomeComponent implements OnInit, OnDestroy {
         console.error('Error en la petición GET:', error);
       }
     );
+
     this.colorService.currentColor$.subscribe(color => {
-      this.selectedColor = color; // Actualiza el color recibido
+      this.selectedColor = color;
       console.log('Color recibido en Login:', this.selectedColor);
     });
   }
@@ -81,7 +74,7 @@ export default class HomeComponent implements OnInit, OnDestroy {
     if (input.files && input.files.length > 0) {
       this.file = input.files[0];
       if (this.file.type !== 'application/pdf') {
-        this.mensajeService.mostrarMensajeError("ERROR!!","Error Formato Invalido, solo se debe subir PDFs");
+        this.mensajeService.mostrarMensajeError("ERROR!!", "Error Formato Invalido, solo se debe subir PDFs");
         return;
       }
       this.uploadFile();
@@ -102,7 +95,7 @@ export default class HomeComponent implements OnInit, OnDestroy {
         if (progress === 100) {
           this.downloadURL = await getDownloadURL(storageRef);
           console.log('Download URL:', this.downloadURL);
-          this.mensajeSubidaArchivo="¡Archivo agregado correctamente!"
+          this.mensajeSubidaArchivo = "¡Archivo agregado correctamente!";
         }
       }
     );
@@ -110,53 +103,50 @@ export default class HomeComponent implements OnInit, OnDestroy {
 
   confirm() {
     const newMaterial: Material = {
-        id_material: this.currentMaterialId !== null ? this.currentMaterialId : this.materiales.length + 1,
-        tipo: this.tipoMaterial,
-        nombre: this.nombreMaterial,
-        url: this.downloadURL,
-        id_unidad: this.id_unidad,
+      id_material: this.currentMaterialId !== null ? this.currentMaterialId : this.materiales.length + 1,
+      tipo: this.tipoMaterial,
+      nombre: this.nombreMaterial,
+      url: this.downloadURL,
+      id_unidad: this.id_unidad,
     };
 
     if (this.currentMaterialId !== null) {
-        this.servicioMateriales.actualizarMaterial(this.currentMaterialId, newMaterial).subscribe(
-            response => {
-                const index = this.materiales.findIndex(mat => mat.id_material === this.currentMaterialId);
-                if (index !== -1) {
-                  console.log(this.downloadURL)
-                  console.log(response)
-                 
-                    this.materiales[index] = response;
-                    this.mensajeService.mostrarMensajeExito("ACTUALIZACION EXITOSA!!","Se actualizo correctamente el material");
-
-                }
-                this.resetForm(); 
-            },
-            error => {
-                console.error('Error al actualizar el material:', error);
-            }
-        );
+      this.servicioMateriales.actualizarMaterial(this.currentMaterialId, newMaterial).subscribe(
+        response => {
+          const index = this.materiales.findIndex(mat => mat.id_material === this.currentMaterialId);
+          if (index !== -1) {
+            console.log(this.downloadURL);
+            console.log(response);
+            this.materiales[index] = response;
+            this.mensajeService.mostrarMensajeExito("ACTUALIZACION EXITOSA!!", "Se actualizo correctamente el material");
+          }
+          this.resetForm();
+        },
+        error => {
+          console.error('Error al actualizar el material:', error);
+        }
+      );
     } else {
-        this.servicioMateriales.guardadMaterial(newMaterial).subscribe(
-            idMaterial => {
-                console.log('Material guardado con ID:', idMaterial);
-                this.servicioMateriales.encontrarMaterial(idMaterial).subscribe(
-                    (material: Material) => {
-                        this.materiales.push(material); 
-                        this.mensajeService.mostrarMensajeExito("SUBIDA DE ARCHIVO EXITOSA!!","Se subio el archivo correctamente");
-                        this.resetForm(); 
-                    }
-                );
-            },
-            error => {
-                console.error('Error al guardar el material:', error);
+      this.servicioMateriales.guardadMaterial(newMaterial).subscribe(
+        idMaterial => {
+          console.log('Material guardado con ID:', idMaterial);
+          this.servicioMateriales.encontrarMaterial(idMaterial).subscribe(
+            (material: Material) => {
+              this.materiales.push(material);
+              this.mensajeService.mostrarMensajeExito("SUBIDA DE ARCHIVO EXITOSA!!", "Se subio el archivo correctamente");
+              this.resetForm();
             }
-        );
+          );
+        },
+        error => {
+          console.error('Error al guardar el material:', error);
+        }
+      );
     }
 
-    this.showForm = false; 
-    this.downloadURL = ''; 
-}
-
+    this.showForm = false;
+    this.downloadURL = '';
+  }
 
   cancel() {
     this.resetForm();
@@ -164,16 +154,16 @@ export default class HomeComponent implements OnInit, OnDestroy {
   }
 
   toggleForm(material?: Material) {
-    this.mensajeSubidaArchivo=""
+    this.mensajeSubidaArchivo = "";
     this.showForm = !this.showForm;
 
     if (material) {
       this.currentMaterialId = material.id_material || null;
-      this.tipoMaterial = material.tipo; // Pre-cargar tipo
-      this.nombreMaterial = material.nombre; // Pre-cargar nombre
-      this.downloadURL = material.url; // Pre-cargar URL
+      this.tipoMaterial = material.tipo;
+      this.nombreMaterial = material.nombre;
+      this.downloadURL = material.url;
     } else {
-      this.resetForm(); // Reiniciar el formulario si no hay material
+      this.resetForm();
     }
   }
 
@@ -186,7 +176,7 @@ export default class HomeComponent implements OnInit, OnDestroy {
     this.tipoMaterial = 'Teorico';
     this.downloadURL = undefined;
     this.progress = '0%';
-    this.currentMaterialId = null; // Reset ID material
+    this.currentMaterialId = null;
   }
 
   eliminarMaterial(id: number | undefined) {
