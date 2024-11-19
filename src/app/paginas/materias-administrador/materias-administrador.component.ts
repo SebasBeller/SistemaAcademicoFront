@@ -171,12 +171,22 @@ export class MateriasAdministradorComponent {
     });
 
   }
-  asignarEstudiante(id_dicta: number) {
+  asignarEstudiante(materia:any) {
+
     let dialogRef = null;
-  
+
+    let id_dicta: number=materia.id
+    if(!id_dicta){
+      this.mensajeService.mostrarMensajeError(
+        'Error',
+        'Debe asignar un docente a la materia para asignar estudiantes.'
+      );
+      return;
+    }
+    console.log("materia",materia)
+    console.log('Estudiantes enviados al formulario:', this.estudiantes);
+    console.log('ID de la materia asignada:', id_dicta);
     if (this.estudiantes && this.estudiantes.length > 0) {
-      console.log('Estudiantes enviados al formulario:', this.estudiantes);
-      console.log('ID de la materia asignada:', id_dicta);
       
       dialogRef = this.dialog.open(FormularioAsignarMateriaEstudianteComponent, {
         width: '500px',
@@ -192,7 +202,14 @@ export class MateriasAdministradorComponent {
     // Aquí solo se ejecuta después de que dialogRef se haya definido
     if (dialogRef) {
       dialogRef.afterClosed().subscribe((result) => {
-        if (result && result.estudiantes.length > 0) {
+        if(result.estudiantesSeleccionados.length==0){
+          this.mensajeService.mostrarMensajeError(
+            'Error',
+            'Debe asignar al menos un estudiante.'
+          );
+          return;
+        }
+        if (result && result.estudiantesSeleccionados.length > 0) {
           console.log('Estudiantes seleccionados para asignar:', result);
   
           const fechaInscripcion = result.fechaInscripcion;
@@ -200,10 +217,11 @@ export class MateriasAdministradorComponent {
           const asignaciones = result.estudiantesSeleccionados.map((estudiante: Estudiante) => ({
             id_dicta,
             id_estudiante: estudiante.id_estudiante,
-            fecha_inscripcion: fechaInscripcion,
+            fecha_inscripcion: fechaInscripcion.toISOString().split("T")[0],
             anio: new Date(fechaInscripcion).getFullYear(),
           }));
-  
+          
+          // return;
           // Llamar al servicio para asignar los estudiantes
           this.inscripcionService.asignarEstudiantes(asignaciones).subscribe(
             (response) => {

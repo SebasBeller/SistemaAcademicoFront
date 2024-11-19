@@ -43,7 +43,7 @@ interface EstudianteConSeleccion extends Estudiante {
 export class FormularioAsignarMateriaEstudianteComponent {
   estudiantes: EstudianteConSeleccion[] = []; // Lista extendida de estudiantes
   seleccionados: Estudiante[] = []; // Lista de seleccionados con el formato original
-  fechaInscripcion: Date | null = null; // Definir la propiedad 'fechaInscripcion'
+  fechaInscripcion: Date = new Date(); // Definir la propiedad 'fechaInscripcion'
 
   constructor(
     public dialogRef: MatDialogRef<FormularioAsignarMateriaEstudianteComponent>,
@@ -77,39 +77,23 @@ export class FormularioAsignarMateriaEstudianteComponent {
         paralelo: est.paralelo,
       })); // Devuelve solo las propiedades originales
 
+      console.log(this.seleccionados)
     // Validar selección
-    if (this.seleccionados.length === 0) {
-      this.mensajeService.mostrarMensajeError(
-        'Error!',
-        'Debe seleccionar al menos un estudiante'
-      );
-      return;
-    }
+    
 
     // Validar que se haya seleccionado una fecha de inscripción
-    if (!this.fechaInscripcion) {
-      this.mensajeService.mostrarMensajeError(
-        'Error!',
-        'Debe seleccionar una fecha de inscripción'
-      );
-      return;
-    }
+
 
     // Cerrar diálogo con los seleccionados y la fecha de inscripción
     this.dialogRef.close({
-      estudiantes: this.seleccionados,
+      estudiantesSeleccionados: this.seleccionados,
       fechaInscripcion: this.fechaInscripcion,
     });
 
-    this.mensajeService.mostrarMensajeExito(
-      'Éxito!',
-      'Se asignaron los estudiantes correctamente'
-    );
   }
 
-  // Maneja los cambios en los checkboxes
   onCheckboxChange(estudiante: EstudianteConSeleccion) {
-    estudiante.seleccionado = !estudiante.seleccionado; // Alterna el estado
+
   }
 
   // Cierra el diálogo sin guardar
