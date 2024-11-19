@@ -36,10 +36,13 @@
 
         <td>{{ estudiante.apellido }}</td>
         <td>{{ estudiante.nombre }}</td>
-        <td>{{ estudiante.trimestre1 || 'N/A' }}</td>
+        <td>{{ estudiante.trimestre1  }}</td>
+        <td>{{ estudiante.trimestre2  }}</td>
+        <td>{{ estudiante.trimestre3  }}</td>
+        <!-- <td>{{ estudiante.trimestre1 || 'N/A' }}</td>
         <td>{{ estudiante.trimestre2 || 'N/A' }}</td>
-        <td>{{ estudiante.trimestre3 || 'N/A' }}</td>
-        <td>{{ estudiante.promedio?.toFixed(2) }}</td>
+        <td>{{ estudiante.trimestre3 || 'N/A' }}</td> -->
+        <td>{{ estudiante.promedio?.toFixed(2)  }}</td>
         <td><button [routerLink]="['/home/detalle-notas', this.idMateria,estudiante.id_estudiante]">Mas detalle</button></td>
       </tr>
     </tbody>

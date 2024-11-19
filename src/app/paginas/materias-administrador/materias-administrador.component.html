@@ -28,7 +28,11 @@
             <button  class="materia-nombre" (click)="asignarProfesor(materia)"><b>Asignar Profesor</b></button>
         </div>
         <div>
-            <button  class="materia-nombre" [disabled]="!materia.profesorAsignado" (click)="asignarEstudiante(materia.id)"><b>Agregar Estudiantes</b></button>
-        </div>
+          <button
+          class="materia-nombre"
+          (click)="asignarEstudiante(materia)"
+        >
+          <b>Agregar Estudiantes</b>
+        </button>        </div>
     </div>
 </div>
