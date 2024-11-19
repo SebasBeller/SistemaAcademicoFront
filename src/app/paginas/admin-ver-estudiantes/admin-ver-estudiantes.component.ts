@@ -46,7 +46,6 @@ export class AdminVerEstudiantesComponent implements OnInit {
   filtroNombre:string = "";
   filtroapellido: string = "";
 
-
   constructor(
     private estudiantesService: EstudiantesAdminService,
     private paraleloService: ParaleloService,

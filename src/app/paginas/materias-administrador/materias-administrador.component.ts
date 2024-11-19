@@ -86,7 +86,6 @@ export class MateriasAdministradorComponent {
         console.log(error)
       }
     )
-    
 
     this.estudiantesAdminService.obtenerListaEstudiantes().subscribe(
       response => {

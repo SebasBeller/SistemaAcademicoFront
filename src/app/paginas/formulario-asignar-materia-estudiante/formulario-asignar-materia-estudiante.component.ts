@@ -30,7 +30,7 @@ interface EstudianteConSeleccion extends Estudiante {
     FormsModule,
     MatDialogModule,
     MatButtonModule,
-    MatNativeDateModule, // Necesario para el adaptador de fechas
+    MatNativeDateModule,
     MatCheckboxModule,
     MatListModule,
     MatFormFieldModule,
@@ -63,11 +63,10 @@ export class FormularioAsignarMateriaEstudianteComponent {
     }));
   }
 
-  // Guardar estudiantes seleccionados
   onAdd() {
     // Filtra solo los seleccionados
     this.seleccionados = this.estudiantes
-      .filter(est => est.seleccionado) // Filtra los seleccionados
+      .filter(est => est.seleccionado) 
       .map(est => ({
         id_estudiante: est.id_estudiante,
         nombre: est.nombre,
@@ -75,7 +74,7 @@ export class FormularioAsignarMateriaEstudianteComponent {
         email: est.email,
         foto: est.foto,
         paralelo: est.paralelo,
-      })); // Devuelve solo las propiedades originales
+      })); 
 
       console.log(this.seleccionados)
     // Validar selección
@@ -84,7 +83,6 @@ export class FormularioAsignarMateriaEstudianteComponent {
     // Validar que se haya seleccionado una fecha de inscripción
 
 
-    // Cerrar diálogo con los seleccionados y la fecha de inscripción
     this.dialogRef.close({
       estudiantesSeleccionados: this.seleccionados,
       fechaInscripcion: this.fechaInscripcion,
@@ -96,7 +94,6 @@ export class FormularioAsignarMateriaEstudianteComponent {
 
   }
 
-  // Cierra el diálogo sin guardar
   onCancel() {
     this.dialogRef.close();
   }
