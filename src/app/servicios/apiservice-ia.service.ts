@@ -29,7 +29,7 @@ export class APIServiceIAService {
     try {
       const response = await this.groq.chat.completions.create({
         messages: this.messages,
-        model: 'llama-3.1-70b-versatile',
+        model: 'llama-3.2-90b-vision-preview',
       });
       const htmlResponse = response.choices[0].message.content;
       console.log('API Response:', htmlResponse);
@@ -46,7 +46,7 @@ export class APIServiceIAService {
     try {
       const response = await this.groq.chat.completions.create({
         messages: this.messages, 
-        model: 'llama-3.1-70b-versatile',
+        model: 'llama-3.2-90b-vision-preview',
       });
       const htmlResponse = response.choices[0].message.content;
       console.log('API Response:', htmlResponse);

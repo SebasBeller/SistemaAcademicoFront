@@ -41,7 +41,7 @@ export class AppComponent implements OnInit {
 
     switch (color) {
       case 'amarillo':
-        backgroundColorFooter = 'rgb(255, 215, 0)';
+        backgroundColorFooter = 'rgb(255, 204, 0)';
         colorFooter = 'rgb(0,0,0)';
         backgroundColor = 'rgb(245, 245, 245)';
         break;
