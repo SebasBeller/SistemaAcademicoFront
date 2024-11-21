@@ -4,11 +4,12 @@ import { AuthService } from '../servicios/auth.service'
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { SelectionColorService } from '../servicios/selection-color.service';
+import { MatIcon } from '@angular/material/icon';
 
 @Component({
   selector: 'app-layout',
   standalone: true,
-  imports: [RouterModule, CommonModule],
+  imports: [RouterModule, CommonModule, MatIcon],
   templateUrl: './layout.component.html',
   styleUrl: './layout.component.sass'
 })

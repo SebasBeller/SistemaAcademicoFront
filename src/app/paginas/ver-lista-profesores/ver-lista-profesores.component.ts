@@ -6,6 +6,7 @@ import { ProfesorService } from '../../servicios/profesor.service';
 import { MatDialog } from '@angular/material/dialog';
 import { FormEditarProfesorComponent } from '../form-editar-profesor/form-editar-profesor.component';
 import { SelectionColorService } from '../../servicios/selection-color.service';
+import { FormCrearProfesorComponent } from '../form-crear-profesor/form-crear-profesor.component';
 
 @Component({
   selector: 'app-ver-lista-profesores',
@@ -103,8 +104,8 @@ export class VerListaProfesoresComponent implements OnInit {
     this.profesorSeleccionado = null;
   }
   crearProfesor() {
-    const nuevoProfesor: Profesor = { id_profesor: 32, nombre: 'pepe', apellido: 'pepe', email: 'pepe.pepe@profesor.com'};
-    const dialogRef = this.dialog.open(FormEditarProfesorComponent, {
+    const nuevoProfesor: Profesor = { id_profesor: 0, nombre: ' ', apellido: ' ', email: ' '};
+    const dialogRef = this.dialog.open(FormCrearProfesorComponent, {
       width: '300px',
       data: nuevoProfesor
     });

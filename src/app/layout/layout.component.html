@@ -6,11 +6,7 @@
     </div>
     <div class="acciones">
       <div class="perfil-notificaciones">
-        <img
-          class="notificaciones"
-          src="../../../assets/img/boton-de-notificaciones.png"
-          alt="Notificaciones"
-        />
+        <img class="notificaciones" src="../../../assets/img/boton-de-notificaciones.png" alt="Notificaciones" />
         <a [routerLink]="userRole === 'estudiante' ? 'perfil-estudiante/' + idEstudiante : '/home/'">
           <img *ngIf="fotoPerfil || '../../../assets/img/silueta.jpg'" [src]="fotoPerfil" alt="Foto de Perfil" />
         </a>
@@ -22,39 +18,73 @@
     <div class="sidebar" [class.open]="isSidebarOpen">
       <div class="escudo">
         <a [routerLink]="['/home']">
-          <img
-            src="../../../assets/img/logo.png"
-            alt="Escudo"
-          />
+          <img src="../../../assets/img/logo.png" alt="Escudo" />
         </a>
-        <b>Inicio</b>
       </div>
       <ul>
-        <li *ngIf="userRole === 'profesor'">
-          <a routerLink="ver-materias-docente"><b>Mis Materias</b></a>
-        </li>
-        <li *ngIf="userRole === 'estudiante'">
-          <a routerLink="historial-asistencia"><b>Mis Asistencias</b></a>
-        </li>
-        <li *ngIf="userRole === 'estudiante'">
-          <a routerLink="mostrar-materia"><b>Mis Materias</b></a>
-        </li>
-        <li *ngIf="userRole === 'estudiante'">
-          <a routerLink="notas"><b>Mis Notas</b></a>
+        <li>
+          <a [routerLink]="['/home']">
+            <mat-icon>home</mat-icon>
+            <div><b>Inicio</b></div>
+          </a>
         </li>
         <li *ngIf="userRole === 'profesor'">
-          <a routerLink="notas-profesor"><b>Mis Notas</b></a>
+
+          <a routerLink="ver-materias-docente">
+            <mat-icon>book</mat-icon>
+            <div><b>Mis Materias</b></div>
+          </a>
+        </li>
+        <li *ngIf="userRole === 'estudiante'">
+
+          <a routerLink="historial-asistencia">
+            <mat-icon>check_circle</mat-icon>
+            <div><b>Mis Asistencias</b></div>
+          </a>
+        </li>
+        <li *ngIf="userRole === 'estudiante'">
+
+          <a routerLink="mostrar-materia">
+            <mat-icon>book</mat-icon>
+            <div><b>Mis Materias</b></div>
+          </a>
+        </li>
+        <li *ngIf="userRole === 'estudiante'">
+
+          <a routerLink="notas">
+            <mat-icon>task</mat-icon>
+            <div><b>Mis Notas</b></div>
+          </a>
+        </li>
+        <li *ngIf="userRole === 'profesor'">
+          <a routerLink="notas-profesor">
+            <mat-icon>task</mat-icon>
+            <div><b>Mis Notas</b></div>
+          </a>
         </li>
         <li *ngIf="userRole === 'admin'">
-          <a routerLink="admin-ver-estudiantes"><b>Estudiantes</b></a>
+          <a routerLink="admin-ver-estudiantes">
+            <mat-icon>school</mat-icon>
+            <div><b>Estudiantes</b></div>
+          </a>
         </li>
-        <li *ngIf="userRole === 'admin'" >
-          <a routerLink="ver-lista-profesores"><b>Profesores</b></a>
+        <li *ngIf="userRole === 'admin'">
+          <a routerLink="ver-lista-profesores">
+            <mat-icon>supervisor_account</mat-icon>
+            <div><b>Profesores</b></div>
+          </a>
         </li>
-        <li *ngIf="userRole === 'admin'" >
-          <a routerLink="materias-admin"><b>Materias</b></a>
+        <li *ngIf="userRole === 'admin'">
+
+          <a routerLink="materias-admin">
+            <mat-icon>book</mat-icon>
+            <div><b>Materias</b></div>
+          </a>
         </li>
-        <li><a (click)="logout()" routerLink="logout"><b>Log out</b></a></li>
+        <li><a (click)="logout()" routerLink="logout">
+            <mat-icon>logout</mat-icon>
+            <div><b>Log out</b></div>
+          </a></li>
       </ul>
     </div>
   </nav>

@@ -45,6 +45,11 @@ export class AppComponent implements OnInit {
         colorFooter = 'rgb(0,0,0)';
         backgroundColor = 'rgb(245, 245, 245)';
         break;
+      case 'verde':
+        backgroundColorFooter = 'rgb(42, 122, 86)';
+        colorFooter = 'rgb(255,255,255)';
+        backgroundColor = 'rgb(255,255,255)';
+        break;
       default:
         backgroundColorFooter = 'rgb(13, 71, 161)';
         colorFooter = 'rgb(255,255,255)';

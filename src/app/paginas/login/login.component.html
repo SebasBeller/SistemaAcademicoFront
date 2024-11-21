@@ -6,12 +6,18 @@
   <form (submit)="login()">
     <div class="correo">
       <label for="email"><b>Email</b></label>
+      <img class="input-icon input-email" src="../../../assets/img/email.png" alt="Email" />
       <input id="email" [(ngModel)]="email" name="email" type="email" required />
     </div>
 
     <div class="contra">
       <label for="password"><b>Contraseña</b></label>
-      <input id="password" [(ngModel)]="password" name="password" type="password" required />
+      <div class="password-container">
+        <img class="input-icon" src="../../../assets/img/cerrar.png" alt="Email" />
+        <input id="password" [(ngModel)]="password" name="password" [type]="passwordType" required />
+        <img class="eye-icon"  [src]="eyeIcon"  alt="Ver Contraseña"  (click)="togglePassword()">
+
+      </div>
     </div>
 
     <div *ngIf="errorMessage" class="error-message">
