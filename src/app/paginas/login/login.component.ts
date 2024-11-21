@@ -17,7 +17,12 @@ import { SelectionColorService } from '../../servicios/selection-color.service';
 })
 export class LoginComponent {
   selectedColor: string = '';
-
+  email: string = '';
+  password: string = '';
+  errorMessage: string | null = null;
+  passwordType: string = 'password';
+  showPassword: boolean = false;
+  eyeIcon: string = '../../../assets/img/ver.png';
   constructor(
     private colorService: SelectionColorService,
     private authService: AuthService,
@@ -42,9 +47,7 @@ export class LoginComponent {
         return 'color-azul';
     }
   }
-  email: string = '';
-  password: string = '';
-  errorMessage: string = '';
+
 
 
     login() {
@@ -57,7 +60,7 @@ export class LoginComponent {
               } else {
                   console.error("La respuesta no contiene los datos esperados de usuario.");
                   this.mensajeService.mostrarMensajeError("Error", "Datos de usuario no recibidos.");
-                  
+
               }
           },
           error: (err) => {
@@ -67,7 +70,16 @@ export class LoginComponent {
       });
   }
 
+  togglePassword() {
 
+    if (this.passwordType === 'password') {
+      this.passwordType = 'text';
+      this.eyeIcon = '../../../assets/img/esconder.png';
+    } else {
+      this.passwordType = 'password';
+      this.eyeIcon = '../../../assets/img/ver.png'; 
+    }
+  }
 
 
 }
