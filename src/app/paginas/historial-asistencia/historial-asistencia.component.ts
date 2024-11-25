@@ -32,8 +32,8 @@ export class HistorialAsistenciaComponent implements OnInit {
   router: any;
   servicioAutenticacion:AuthService=inject(AuthService);
   servicioInscripcion:InscripcionService=inject(InscripcionService);
-
-
+  selectedYear: number = 2024;
+  anios:string[]=[];
   constructor(private colorService: SelectionColorService,private readonly historialAsistenciaService: HistorialAsistenciaService) {}
 
   ngOnInit(): void {
@@ -45,7 +45,15 @@ export class HistorialAsistenciaComponent implements OnInit {
       console.log('Color recibido en Login:', this.selectedColor);
     });
   }
+  filtrarAnios(){
 
+    this.anios=[...new Set(this.materiasAsignadas.map((materia)=>materia.anio.toString()))]
+    console.log(this.anios)
+  }
+  filtrarMateriasAnio(){
+    this.materiasFiltradas=this.materiasAsignadas.filter((materia)=>materia.anio===this.selectedYear);
+
+  }
   getColorClass(): string {
     switch (this.selectedColor) {
       case 'verde':
@@ -88,11 +96,12 @@ export class HistorialAsistenciaComponent implements OnInit {
   obtenerMateriasAsignadas(): void {
     this.servicioInscripcion.obtenerMaterias(this.servicioAutenticacion.getUserId()).subscribe(
       (materiasAsignadas) => {
-
         console.log('Materias asignadas recibidas:', materiasAsignadas);
         this.materiasAsignadas = materiasAsignadas;
-        this.materiasFiltradas = materiasAsignadas;
-    console.log("f",this.materiasFiltradas)
+        this.materiasFiltradas=this.materiasAsignadas;
+        this.filtrarMateriasAnio()
+         this.filtrarAnios();
+
 
 
 
@@ -104,26 +113,23 @@ export class HistorialAsistenciaComponent implements OnInit {
   }
 
   filtrarMaterias(): void {
-    this.materiasFiltradas = this.materiasAsignadas; // Resetea a todas las materias
-    console.log("gg",this.materiasFiltradas)
-    // Filtrar por búsqueda de título
+    this.filtrarMateriasAnio()
+
     if (this.busqueda.trim() !== '') {
       this.materiasFiltradas = this.materiasFiltradas.filter(materia =>
-        materia.materia?.nombre.toLowerCase().includes(this.busqueda.toLowerCase()) // Filtra según el nombre
+        materia.materia?.nombre.toLowerCase().includes(this.busqueda.toLowerCase())
       );
     }
 
-    // Filtrar por profesor
     if (this.selectedProfesorId !== null) {
       this.materiasFiltradas = this.materiasFiltradas.filter(materia =>
         materia.profesor && materia.profesor.id_profesor === this.selectedProfesorId
       );
     }
 
-    // Filtrar por paralelo
     if (this.selectedParalelo) {
       this.materiasFiltradas = this.materiasFiltradas.filter(materia =>
-        materia.materia && materia.materia.paralelo && materia.materia.paralelo.paralelo === this.selectedParalelo // Filtra según el paralelo
+        materia.materia && materia.materia.paralelo && materia.materia.paralelo.paralelo === this.selectedParalelo 
       );
     }
   }
@@ -145,7 +151,6 @@ export class HistorialAsistenciaComponent implements OnInit {
     // console.log(this.asistencias)
     this.asistencias.forEach(asistencia => {
       if (asistencia.materiaAsignada.id_dicta === materia.id_dicta && asistencia.estudiante?.id_estudiante==this.servicioAutenticacion.getUserId()) {
-      // if (asistencia.materiaAsignada.id_dicta === materia.id_dicta ) {
         switch (asistencia.estado) {
           case 'Falta':
             faltas++;
@@ -161,5 +166,10 @@ export class HistorialAsistenciaComponent implements OnInit {
     });
 
     return { faltas, asistencias, licencias };
+  }
+  onYearChange(event: Event): void {
+    const selectElement = event.target as HTMLSelectElement;
+    this.selectedYear = +selectElement.value;
+    this.filtrarMateriasAnio()
   }
 }

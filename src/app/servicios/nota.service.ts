@@ -31,6 +31,9 @@ export class NotaService {
     return this.http.get<Nota[]>(`${this.apiUrl}/nota`);
   }
   
+  obtenerTodosLosAnios(): Observable<string[]> {
+    return this.http.get<string[]>(`${this.apiUrl}/nota/years`);
+  }
 
   obtenerNotasPorAno(selectedYear: number): Observable<Nota[]> {
     return this.http.get<Nota[]>(`${this.apiUrl}/nota`).pipe(

@@ -86,7 +86,7 @@ export const routes: Routes = [
         data: { roles: ['estudiante'] },
       },
       {
-        path: 'detalle-notas-estudiantes/:id_dicta/:id_estudiante',
+        path: 'detalle-notas-estudiantes/:id_dicta/:id_estudiante/:anio',
         component: DetalleNotasEstudiantesComponent,
         canActivate: [AuthGuard],
         data: { roles: ['estudiante'] }
