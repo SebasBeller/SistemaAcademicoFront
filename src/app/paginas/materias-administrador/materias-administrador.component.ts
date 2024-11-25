@@ -127,6 +127,7 @@ export class MateriasAdministradorComponent {
             materia.id_materia=response.id_materia
             materia.id=response.id_materia
             this.materias.push(materia)
+            this.mensajeService.mostrarMensajeExito("Exito!!","Se agrego correctamente la materia.");
           },
           error=>{
             console.log(error)

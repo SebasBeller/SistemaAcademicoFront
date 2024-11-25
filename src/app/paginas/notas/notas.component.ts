@@ -35,6 +35,7 @@ export class NotasComponent implements OnInit {
   filteredProfesores: MateriaAsignadaDocente[] = [];
   filteredEstudiantes: Estudiante[] = [];
   nombresMaterias: { [id_materia: number]: string } = {};
+  anios:string[]=[];
 
   constructor(private colorService: SelectionColorService,private readonly notaService: NotaService, private readonly authService:AuthService) {}
 
@@ -44,10 +45,24 @@ export class NotasComponent implements OnInit {
     this.obtenerProfesores();
     this.obtenerEstudiantes();
     this.obtenerNotas();
+    this.obtenerAniosNotas();
     this.colorService.currentColor$.subscribe(color => {
       this.selectedColor = color; // Actualiza el color recibido
       console.log('Color recibido en Login:', this.selectedColor);
     });
+  }
+
+  obtenerAniosNotas(){
+    this.notaService.obtenerTodosLosAnios().subscribe(
+      (response)=>{
+        console.log("anios",response)
+        this.anios=response;
+      }
+      ,
+      (error)=>{
+        console.log(error)
+      }
+    )
   }
 
   getColorClass(): string {
@@ -92,7 +107,6 @@ export class NotasComponent implements OnInit {
 
   onYearChange(event: Event): void {
     this.isLoading=true;
-    this.isLoading=true;
     const selectElement = event.target as HTMLSelectElement;
     this.selectedYear = +selectElement.value;
     this.obtenerNotas(); // Actualizar notas al cambiar el año
@@ -129,7 +143,7 @@ export class NotasComponent implements OnInit {
       const trimestre = nota.trimestre;
       const tipo = nota.tipo; // "hacer", "decidir", "saber", "ser"
       const notaValue = nota.nota;
-      console.log(nota)
+      // console.log(nota)
       if (nota.estudiante.id_estudiante==this.authService.getUserId()){
 
 
