@@ -18,4 +18,5 @@ export interface MateriaAsignadaDocente {
   trimestre3?: number;
   promedio?: number;
   anio:number;
+  id_materia?:number;
 }
