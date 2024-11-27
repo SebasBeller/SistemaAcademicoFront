@@ -1,0 +1,27 @@
+<div [ngClass]="getColorClass()">
+    <div class="profesores-container">
+      <h2>Lista de profesores asignados a la materia</h2>
+  
+  
+        <table>
+          <thead>
+            <tr>
+              <th>Nombres</th>
+              <th>Apellido</th>
+              <th>Configuraciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let profesor of profesoresAsignadosAMateria">
+              <td>{{ profesor.nombre }}</td>
+              <td>{{ profesor.apellido }}</td>
+              <td>
+                <!-- <div class="button-container">
+                </div> -->
+                <button mat-raised-button>Basic</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>

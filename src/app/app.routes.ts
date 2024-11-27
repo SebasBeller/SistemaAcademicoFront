@@ -23,7 +23,8 @@ import { AdminVerEstudiantesComponent } from './paginas/admin-ver-estudiantes/ad
 import {MateriasAdministradorComponent} from './paginas/materias-administrador/materias-administrador.component';
 import { InicioCarrucelComponent } from './paginas/inicio-carrucel/inicio-carrucel.component';
 import { VerListaProfesoresComponent } from './paginas/ver-lista-profesores/ver-lista-profesores.component';
-import { AsignarMateriaEstudiantComponent } from './paginas/asignar-materia-estudiant/asignar-materia-estudiant.component';
+import {AsignarMateriaDocenteComponent} from './paginas/asignar-materia-docente/asignar-materia-docente.component'
+import {AsignarMateriaEstudianteComponent} from "./paginas/asignar-materia-estudiante/asignar-materia-estudiante.component"
 
 export const routes: Routes = [
   {
@@ -137,21 +138,33 @@ export const routes: Routes = [
       { path: 'agregar-material-docente/:id', loadChildren: () => import('./paginas/agregar-material-docente/home/feature/home-routing') ,
         canActivate: [AuthGuard],
         data: { roles: ['profesor'] }
-
+        
       },
       {
         path:'perfil-estudiante/:id',
         component:PerfilEstudianteComponent,
         canActivate:[AuthGuard],
         data: {roles: ['estudiante']}
-
+        
       },
       {
         path:'admin-ver-estudiantes',
         component:AdminVerEstudiantesComponent,
         canActivate:[AuthGuard],
         data: {roles: ['admin']}
-
+        
+      },
+      {
+        path: 'asignar-materia-docente/:id_materia',
+        component: AsignarMateriaDocenteComponent,
+        canActivate: [AuthGuard],
+        data: { roles: ['admin'] }
+      },
+      {
+        path: 'asignar-materia-estudiante/:id_materia',
+        component: AsignarMateriaEstudianteComponent,
+        canActivate: [AuthGuard],
+        data: { roles: ['admin'] }
       },
       {
         path:'materias-admin',
