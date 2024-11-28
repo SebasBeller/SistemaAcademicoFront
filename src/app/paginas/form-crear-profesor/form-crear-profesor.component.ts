@@ -29,6 +29,8 @@ export class FormCrearProfesorComponent {
   profesor: Profesor;
   profesores: Profesor[] = [];
   plainPassword: string = 'password123'; // Contraseña sin hashear por defecto
+  editando = false;
+
 
 
 
@@ -95,4 +97,6 @@ export class FormCrearProfesorComponent {
   cancelar() {
     this.dialogRef.close();
   }
+  
+
 }
