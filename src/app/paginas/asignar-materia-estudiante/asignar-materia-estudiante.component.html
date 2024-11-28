@@ -1,7 +1,9 @@
 <div [ngClass]="getColorClass()">
+  <select (change)="onYearChange($event)">
+    <option *ngFor="let year of [2024,2023]" [value]="year">{{ year }}</option>
+  </select>
     <div class="profesores-container">
       <h2>Lista de profesores asignados a la materia</h2>
-  
   
         <table>
           <thead>
@@ -18,7 +20,9 @@
               <td>
                 <!-- <div class="button-container">
                 </div> -->
-                <button mat-raised-button>Basic</button>
+                <button mat-raised-button
+                (click)="asignarEstudiante(profesor.id_profesor)"
+                >Estudiantes</button>
               </td>
             </tr>
           </tbody>

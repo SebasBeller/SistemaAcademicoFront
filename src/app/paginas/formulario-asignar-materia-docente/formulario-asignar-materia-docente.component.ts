@@ -55,6 +55,7 @@ export class FormularioAsignarMateriaDocenteComponent {
   ) {
     this.profesores= data.profesores || '';
     this.fecha = data.fecha || new Date();
+    console.log(this.fecha)
   }
 
   ngOnInit() {
@@ -73,7 +74,10 @@ export class FormularioAsignarMateriaDocenteComponent {
   private _filter(value: string): string[] {
     const filterValue = value.toLowerCase();
     let profs= this.profesores.filter(profe => profe.nombre.toLowerCase().includes(filterValue));
-    this.profesor=profs[0];
+    if(value){
+      this.profesor=profs[0];
+    }
+
     return profs.map(
       profe =>profe.nombre
     );

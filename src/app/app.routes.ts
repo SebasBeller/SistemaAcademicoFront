@@ -25,6 +25,8 @@ import { InicioCarrucelComponent } from './paginas/inicio-carrucel/inicio-carruc
 import { VerListaProfesoresComponent } from './paginas/ver-lista-profesores/ver-lista-profesores.component';
 import {AsignarMateriaDocenteComponent} from './paginas/asignar-materia-docente/asignar-materia-docente.component'
 import {AsignarMateriaEstudianteComponent} from "./paginas/asignar-materia-estudiante/asignar-materia-estudiante.component"
+import {AsignarMateriaAsignadaAEstudianteComponent} from "./paginas/asignar-materia-asignada-a-estudiante/asignar-materia-asignada-a-estudiante.component"
+
 
 export const routes: Routes = [
   {
@@ -150,6 +152,13 @@ export const routes: Routes = [
       {
         path:'admin-ver-estudiantes',
         component:AdminVerEstudiantesComponent,
+        canActivate:[AuthGuard],
+        data: {roles: ['admin']}
+        
+      },
+      {
+        path:'asignar-materia-asignada-a-estudiante/:id_dicta/:anio',
+        component:AsignarMateriaAsignadaAEstudianteComponent,
         canActivate:[AuthGuard],
         data: {roles: ['admin']}
         
