@@ -45,7 +45,7 @@ export class NotasComponent implements OnInit {
     this.obtenerProfesores();
     this.obtenerEstudiantes();
     this.obtenerNotas();
-    this.obtenerAniosNotas();
+ 
     this.colorService.currentColor$.subscribe(color => {
       this.selectedColor = color; // Actualiza el color recibido
       console.log('Color recibido en Login:', this.selectedColor);
@@ -55,6 +55,7 @@ export class NotasComponent implements OnInit {
   obtenerAniosNotas(){
     this.notaService.obtenerTodosLosAnios().subscribe(
       (response)=>{
+        console.log("notasPorMateria",this.notasPorMateria)
         console.log("anios",response)
         this.anios=response;
       }
@@ -116,7 +117,9 @@ export class NotasComponent implements OnInit {
     this.notaService.obtenerNotasPorAno(this.selectedYear).subscribe(
       (notas: Nota[]) => {
         this.notas = notas;
+        console.log(notas)
         this.agruparNotasPorMateria();
+        this.obtenerAniosNotas();
         this.isLoading=false;
         this.isLoading=false;
       },
@@ -193,6 +196,7 @@ export class NotasComponent implements OnInit {
     });
 
     return tiposConNotas > 0 ? sumaPromedios / tiposConNotas : 0;
+
   }
 
   calcularPromedioGeneral(id_dicta: number): number {
@@ -208,7 +212,10 @@ export class NotasComponent implements OnInit {
       }
     });
 
-    return trimestresConNotas > 0 ? sumaPromedios / trimestresConNotas : 0; // Retorna el promedio general
+    // return trimestresConNotas > 0 ? sumaPromedios / trimestresConNotas : 0; // Retorna el promedio general
+    return trimestresConNotas > 0 ? sumaPromedios / 3 : 0; // Retorna el promedio general
+
+
   }
 
   determinarEstado(promedio: number): string {

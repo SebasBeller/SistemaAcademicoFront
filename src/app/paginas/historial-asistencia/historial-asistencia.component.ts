@@ -32,11 +32,12 @@ export class HistorialAsistenciaComponent implements OnInit {
   router: any;
   servicioAutenticacion:AuthService=inject(AuthService);
   servicioInscripcion:InscripcionService=inject(InscripcionService);
-  selectedYear: number = 2024;
+  selectedYear: number = new Date().getFullYear();
   anios:string[]=[];
   constructor(private colorService: SelectionColorService,private readonly historialAsistenciaService: HistorialAsistenciaService) {}
 
   ngOnInit(): void {
+
     this.obtenerAsistencias();
     this.obtenerProfesores();
     this.obtenerMateriasAsignadas();
@@ -44,6 +45,8 @@ export class HistorialAsistenciaComponent implements OnInit {
       this.selectedColor = color;
       console.log('Color recibido en Login:', this.selectedColor);
     });
+    // this.filtrarMateriasAnio()
+    // console.log("materias Filtradas",this.materiasFiltradas)
   }
   filtrarAnios(){
 
@@ -51,8 +54,9 @@ export class HistorialAsistenciaComponent implements OnInit {
     console.log(this.anios)
   }
   filtrarMateriasAnio(){
+    console.log(this.selectedYear)
     this.materiasFiltradas=this.materiasAsignadas.filter((materia)=>materia.anio===this.selectedYear);
-
+    console.log(this.materiasFiltradas)
   }
   getColorClass(): string {
     switch (this.selectedColor) {
@@ -99,8 +103,10 @@ export class HistorialAsistenciaComponent implements OnInit {
         console.log('Materias asignadas recibidas:', materiasAsignadas);
         this.materiasAsignadas = materiasAsignadas;
         this.materiasFiltradas=this.materiasAsignadas;
+        console.log("materiasFin",this.materiasFiltradas) 
+        this.filtrarAnios();
+        this.selectedYear=+this.anios[0];
         this.filtrarMateriasAnio()
-         this.filtrarAnios();
 
 
 

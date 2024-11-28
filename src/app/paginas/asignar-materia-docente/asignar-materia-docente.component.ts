@@ -62,7 +62,7 @@ export class AsignarMateriaDocenteComponent {
       
   }
 
-  selectedYear: number = 2024;
+  selectedYear: number = new Date().getFullYear();
 
   filtrarProfesores(){
     this.profesoresAsignadosAMateria=this.asignacionesMateriaFiltradas.map((materiaAsignada)=>materiaAsignada.profesor)
@@ -80,6 +80,7 @@ export class AsignarMateriaDocenteComponent {
     this.selectedYear = +selectElement.value;
     this.filtrarMateriasAnio()
     this.filtrarProfesores();
+    this.getProfesores();
   }
 
   getProfesores(){
@@ -113,7 +114,7 @@ export class AsignarMateriaDocenteComponent {
     const dialogRef = this.dialog.open(FormularioAsignarMateriaDocenteComponent, {
       width: '300px',
       data: 
-      { fecha: new Date().toISOString(), profesores:this.profesores}
+      { fecha: `${this.selectedYear}-02-02T06:08:02.442Z`, profesores:this.profesores}
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -130,17 +131,6 @@ export class AsignarMateriaDocenteComponent {
           response=>{
             console.log("resp",response)
             this.actualizarDatos();
-            // this.profesoresAsignadosAMateria.push(response.profesor)
-            // this.asignacionesMateria.push(response);
-            // this.filtrarMateriasAnio();
-            // this.filtrarProfesores();
-            // this.filtrarAnios();
-            // this.getProfesores()
-            // console.log("profes",this.profesoresAsignadosAMateria)
-            // console.log("asignaciones",this.asignacionesMateria)
-
-            
-
           },
           error=>{
             console.log(error)
@@ -155,20 +145,11 @@ export class AsignarMateriaDocenteComponent {
   desAsignar(profesor:Profesor){
     console.log(profesor.id_profesor)
     console.log(this.id_materia)
-
-    // console.log(this.asignacionesMateriaFiltradas)
     let id_eliminarMatAsi=this.asignacionesMateriaFiltradas.filter((materia) =>{
       return materia.profesor.id_profesor==profesor.id_profesor && materia.id_materia==this.id_materia && this.selectedYear==materia.anio
     })[0].id_dicta
-    // console.log(id_eliminarMatAsi[0].id_dicta)
     this.materiasProfesorService.eliminarMateriaAsignada(id_eliminarMatAsi).subscribe(
       (response:any)=>{
-        // this.profesoresAsignadosAMateria = this.profesoresAsignadosAMateria.filter(p => p.id_profesor !== profesor.id_profesor);
-        // this.asignacionesMateria = this.asignacionesMateria.filter(materiaAsignada => materiaAsignada.id_dicta !== id_eliminarMatAsi);
-        // this.filtrarMateriasAnio();
-        // this.filtrarProfesores();
-        // this.filtrarAnios();
-        // this.getProfesores()
         this.actualizarDatos();
         this.mensajeService.mostrarMensajeExito("Exito!!!","Docente eliminado de la materia con la informacion relacionada");
       },
