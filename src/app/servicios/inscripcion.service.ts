@@ -8,24 +8,24 @@ import{Estudiante} from '../interfaces/estudiante';
 })
 export class InscripcionService {
 
-  urlApi:string='http://localhost:3000/inscripcion'
+  urlApi:string='https://academicoapi.onrender.com/inscripcion'
   constructor(private readonly http: HttpClient) {
 
   }
 
   obtenerMaterias(id_estudiante:number):Observable<MateriaAsignadaDocente[]>{
     return this.http.get<MateriaAsignadaDocente[]>(`${this.urlApi}/estudiante/${id_estudiante}`)
-  
+
   }
 
   obtenerInscritosDeMateriaAsignada(id_dicta:number):Observable<Estudiante[]>{
     return this.http.get<Estudiante[]>(`${this.urlApi}/estudiantes/${id_dicta}`)
-  
+
   }
 
   obtenerInscripcionesDeMateriaAsignada(id_dicta:number):Observable<Estudiante[]>{
     return this.http.get<Estudiante[]>(`${this.urlApi}/inscripciones/estudiantes/${id_dicta}`)
-  
+
   }
 
     // Asignar estudiantes a una materia

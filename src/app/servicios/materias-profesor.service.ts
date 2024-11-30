@@ -7,14 +7,14 @@ import {Estudiante} from '../interfaces/estudiante'
   providedIn: 'root'
 })
 export class MateriasProfesorService {
-  urlApi:string='http://localhost:3000/materia-asignada-profesor'
+  urlApi:string='https://academicoapi.onrender.com/materia-asignada-profesor'
   constructor(private readonly http: HttpClient) {
 
   }
   materias: MateriaAsignadaDocente[] = [];
 obtenerMaterias():Observable<MateriaAsignadaDocente[]>{
   return this.http.get<MateriaAsignadaDocente[]>(`${this.urlApi}/todas-las-materias`)
-  
+
 }
 obtenerMateriasDeEstudiante(id:number):Observable<MateriaAsignadaDocente[]>{
   return this.http.get<MateriaAsignadaDocente[]>(`${this.urlApi}/todas-las-materias/${id}`)

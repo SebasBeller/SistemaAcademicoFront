@@ -9,7 +9,7 @@ import {map} from 'rxjs/operators';
 })
 export class MaterialService {
   materiales:Material[]=[]
-  urlApi:string='http://localhost:3000/material'
+  urlApi:string='https://academicoapi.onrender.com/material'
   constructor(private readonly http: HttpClient) { }
   getMateriales():Material[]{
     return this.materiales;

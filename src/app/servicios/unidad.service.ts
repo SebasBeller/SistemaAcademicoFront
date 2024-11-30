@@ -7,7 +7,7 @@ import { map } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class UnidadService {
-  apiUrl:string='http://localhost:3000/unidad'
+  apiUrl:string='https://academicoapi.onrender.com/unidad'
   constructor(private http: HttpClient) { }
   getUnidadesDeMateriAsignada(id_dicta:number):Observable<Unidad[]> {
     return this.http.get<Unidad[]>(`${this.apiUrl}/materia-asignada/`+id_dicta)
@@ -16,7 +16,7 @@ export class UnidadService {
   guardarUnidadDeMateriAsignada(unidad:Unidad):Observable<number> {
     return this.http.post<Unidad>(`${this.apiUrl}`, unidad)
     .pipe(
-      map((response: Unidad) => response.id_unidad || 1) 
+      map((response: Unidad) => response.id_unidad || 1)
     );
   }
 

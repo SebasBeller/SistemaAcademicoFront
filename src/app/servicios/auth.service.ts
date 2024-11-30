@@ -7,8 +7,8 @@ import { Observable,BehaviorSubject  } from 'rxjs';
   providedIn: 'root'
 })
 export class AuthService {
-  private loginUrl = 'http://localhost:3000/auth/login';
-  private estudianteUrl  ='http://localhost:3000/estudiante';
+  private loginUrl = 'https://academicoapi.onrender.com/auth/login';
+  private estudianteUrl  ='https://academicoapi.onrender.com/estudiante';
   private userSubject = new BehaviorSubject<any>(null);
 
   constructor(private http: HttpClient) {}
@@ -68,7 +68,7 @@ export class AuthService {
 
     return !!localStorage.getItem('userId');
   }
-  
+
   getUserObservable(): Observable<any> {
     return this.userSubject.asObservable();
   }

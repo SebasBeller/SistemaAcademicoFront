@@ -13,12 +13,12 @@ import { Estudiante } from '../interfaces/estudiante';
   providedIn: 'root'
 })
 export class HistorialAsistenciaService {
-  private readonly asistenciaUrl = 'http://localhost:3000/Asistencia';
-  private readonly profesorUrl = 'http://localhost:3000/Profesor';
-  private readonly materiasAsignadasUrl = 'http://localhost:3000/materia-asignada-profesor';
-  private readonly materiasUrl = 'http://localhost:3000/materias';
-  private readonly estudianteUrl = 'http://localhost:3000/estudiante';
-  private readonly InscripcionUrl = 'http://localhost:3000/inscripcion';
+  private readonly asistenciaUrl = 'https://academicoapi.onrender.com/Asistencia';
+  private readonly profesorUrl = 'https://academicoapi.onrender.com/Profesor';
+  private readonly materiasAsignadasUrl = 'https://academicoapi.onrender.com/materia-asignada-profesor';
+  private readonly materiasUrl = 'https://academicoapi.onrender.com/materias';
+  private readonly estudianteUrl = 'https://academicoapi.onrender.com/estudiante';
+  private readonly InscripcionUrl = 'https://academicoapi.onrender.com/inscripcion';
 
 
   constructor(private readonly http: HttpClient) {}

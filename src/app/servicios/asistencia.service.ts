@@ -11,7 +11,7 @@ import { map } from 'rxjs/operators';
 export class AsistenciaService {
   asistencias: any = {};
   private urlApi: string =
-    'http://localhost:3000/materia-asignada-profesor/asistencias';
+    'https://academicoapi.onrender.com/materia-asignada-profesor/asistencias';
 
   constructor(private http: HttpClient) {}
 
@@ -20,7 +20,7 @@ export class AsistenciaService {
   ): Observable<MateriaAsignadaDocente> {
     return this.http.get<MateriaAsignadaDocente>(`${this.urlApi}/${id}`);
   }
-  
+
   getAsistenciasAgrupadasPor(asistencias?: any[]):any[]{
     return Object.entries(
       asistencias?.reduce((acc: any, asistencia: any) => {
@@ -51,7 +51,7 @@ export class AsistenciaService {
     console.log("hh",this.asistencias)
     return this.asistencias;
   }
-  
+
 
 
   getUniqueFechas(): string[] {
@@ -66,30 +66,30 @@ export class AsistenciaService {
   }
 
   getAsistenciaPorFecha(asistencias: Asistencia[], fecha: string):Asistencia|undefined {
-        
+
     const asistencia = asistencias.find(
-      (a) => 
+      (a) =>
             new Date(a.fecha_asistencia+"T00:00:00").toLocaleDateString() === fecha
     );
     return asistencia;
   }
 
   guardarAsistencia(asistencia:Asistencia):Observable<number>{
-    return this.http.post<Asistencia>("http://localhost:3000/asistencia", asistencia)
+    return this.http.post<Asistencia>("https://academicoapi.onrender.com/asistencia", asistencia)
     .pipe(
-      map((response: Asistencia) => response.id_asistencia|| -1) 
+      map((response: Asistencia) => response.id_asistencia|| -1)
     );
   }
   guardarAsistencias(asistencia:Asistencia[]):Observable<Asistencia[]>{
-    return this.http.post<Asistencia[]>("http://localhost:3000/asistencia/all", asistencia)
+    return this.http.post<Asistencia[]>("https://academicoapi.onrender.com/asistencia/all", asistencia)
   }
 
   actualizarAsistencia(id:number,asistencia:any):Observable<Asistencia>{
-    return this.http.patch<Asistencia>(`http://localhost:3000/asistencia/${id}`, asistencia)
+    return this.http.patch<Asistencia>(`https://academicoapi.onrender.com/asistencia/${id}`, asistencia)
   }
 
   eliminarAsistencia(id:number):Observable<Asistencia>{
-    return this.http.delete<Asistencia>(`http://localhost:3000/asistencia/${id}`)
+    return this.http.delete<Asistencia>(`https://academicoapi.onrender.com/asistencia/${id}`)
   }
    // Método para obtener asistencias por estudiante y materia
    getAsistenciasPorEstudianteYMateria(idEstudiante: number, idMateria: number): Observable<Asistencia[]> {
