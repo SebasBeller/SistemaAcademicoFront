@@ -1,24 +1,46 @@
+<head>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+
+</head>
 <div [ngClass]="getColorClass()">
   <div class="form-modal">
     <h2><b>Editar Profesor</b></h2>
     <mat-form-field>
       <mat-label>Nombre</mat-label>
-      <input matInput [(ngModel)]="profesor.nombre" name="nombre">
-    </mat-form-field>
+      <input matInput [(ngModel)]="profesor.nombre" name="nombre" required maxlength="50" pattern="^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$" #nombreInput="ngModel">
+      <div *ngIf="nombreInput.invalid && (nombreInput.dirty || nombreInput.touched)">
+        <small *ngIf="nombreInput.errors?.['required']" class="error-text">El nombre es obligatorio.</small>
+        <small *ngIf="nombreInput.errors?.['maxlength']" class="error-text">Máximo 50 caracteres.</small>
+        <small *ngIf="nombreInput.errors?.['pattern']" class="error-text">Solo letras permitidas.</small>
+      </div>    </mat-form-field>
 
     <mat-form-field>
       <mat-label>Apellido</mat-label>
-      <input matInput [(ngModel)]="profesor.apellido" name="apellido">
-    </mat-form-field>
+      <input matInput [(ngModel)]="profesor.apellido" name="apellido" required maxlength="50" pattern="^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$" #apellidoInput="ngModel">
+      <div *ngIf="apellidoInput.invalid && (apellidoInput.dirty || apellidoInput.touched)">
+        <small *ngIf="apellidoInput.errors?.['required']" class="error-text">El apellido es obligatorio.</small>
+        <small *ngIf="apellidoInput.errors?.['maxlength']" class="error-text">Máximo 50 caracteres.</small>
+        <small *ngIf="apellidoInput.errors?.['pattern']" class="error-text">Solo letras permitidas.</small>
+      </div>    </mat-form-field>
 
     <mat-form-field>
       <mat-label>Correo Electrónico</mat-label>
-      <input matInput [(ngModel)]="profesor.email" name="email">
+      <input matInput [(ngModel)]="profesor.email" name="email" required maxlength="80" required email #emailInput="ngModel">
+      <div *ngIf="emailInput.invalid && (emailInput.dirty || emailInput.touched)">
+        <small *ngIf="emailInput.errors?.['required']" class="error-text">El correo electrónico es obligatorio.</small>
+        <small *ngIf="emailInput.errors?.['maxlength']" class="error-text">Máximo 80 caracteres.</small>
+
+      </div>
     </mat-form-field>
+
     <mat-form-field>
       <mat-label>password</mat-label>
-      <input matInput [(ngModel)]="plainPassword" name="email">
-    </mat-form-field>
+ <input matInput [(ngModel)]="plainPassword" name="password" [type]="passwordVisible ? 'text' : 'password'" required #passwordInput="ngModel">
+      <i class="fa" [class.fa-eye]="!passwordVisible" [class.fa-eye-slash]="passwordVisible" (click)="togglePasswordVisibility()"></i>
+      <div *ngIf="passwordInput.invalid && (passwordInput.dirty || passwordInput.touched)">
+        <small *ngIf="passwordInput.errors?.['required']" class="error-text">La contraseña es obligatoria.</small>
+      </div>
+        </mat-form-field>
 
     <div class="dialog-buttons">
       <button mat-button (click)="cancelar()">Cancelar</button>

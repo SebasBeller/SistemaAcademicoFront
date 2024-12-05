@@ -51,7 +51,7 @@ export class FormCrearProfesorComponent {
       error: (error) => console.error('Error al obtener los profesores:', error),
     });
   }
-
+  
   ngOnInit() {
     this.colorService.currentColor$.subscribe(color => {
       this.selectedColor = color; // Actualiza el color recibido
@@ -72,11 +72,9 @@ export class FormCrearProfesorComponent {
         return 'color-azul';
     }
   }
-  async generateDefaultPassword(): Promise<string> {
-    const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(this.plainPassword, salt);
-    console.log('Contraseña hasheada:', hashedPassword);
-    return hashedPassword;
+  // Generación de contraseña predeterminada sin hashear
+  generateDefaultPassword(): string {
+    return 'password123'; 
   }
   async guardar() {
      // Verificar si los campos están completos
@@ -87,16 +85,16 @@ export class FormCrearProfesorComponent {
 
    if (!camposCompletos) {
      this.mensajeService.mostrarMensajeError("Error!!!", "Complete todos los campos");
-     return; // Si hay campos vacíos, no continuar con el guardado
+     return; 
    }
       // Si todos los campos están completos, proceder a guardar
-      const hashedPassword = await this.generateDefaultPassword(); // Hashear la contraseña
+      const generatedPassword = this.generateDefaultPassword();
       const profesorData = {
         id_profesor: this.profesor.id_profesor,
         nombre: this.profesor.nombre,
         apellido: this.profesor.apellido,
         email: this.profesor.email,
-        password: hashedPassword
+        password: 'password123'
       };
   
       this.profesorService.addProfesor(profesorData).subscribe({
@@ -118,5 +116,5 @@ export class FormCrearProfesorComponent {
   togglePasswordVisibility(): void {
     this.passwordVisible = !this.passwordVisible;
   }
-
+  
 }
