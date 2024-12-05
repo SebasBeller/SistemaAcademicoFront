@@ -41,8 +41,8 @@ export class MostrarMateriaComponent implements OnInit {
     )
   }
   filtrarAnios(){
-    this.anios=[...new Set(this.materias.map((materia)=>materia.anio.toString()))]
-    console.log(this.anios)
+    this.anios = [...new Set(this.materias.map((materia) => materia.anio.toString()))]
+    .sort((a, b) => parseInt(b) - parseInt(a));  
   }
   
   onYearChange(event: Event): void {

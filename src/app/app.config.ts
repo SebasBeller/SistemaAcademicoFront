@@ -5,12 +5,15 @@ import { routes } from './app.routes';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { getStorage, provideStorage } from '@angular/fire/storage';
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http'; // Agregar withInterceptorsFromDi
+import { AuthInterceptor } from './auth.interceptor'; // Importa tu interceptor
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideRouter(routes),provideHttpClient()
-    ,
+    provideRouter(routes),
+    provideHttpClient(withInterceptorsFromDi()), // Asegúrate de agregar withInterceptorsFromDi()
     provideAnimationsAsync(),
     provideFirebaseApp(() =>
       initializeApp({
@@ -23,9 +26,11 @@ export const appConfig: ApplicationConfig = {
         measurementId: 'G-W80L0CRFZM',
       })
     ),
-    provideStorage(() => getStorage()), provideAnimationsAsync(), provideAnimationsAsync(),
+    provideStorage(() => getStorage()),
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true,
+    },
   ],
 };
-
-
-

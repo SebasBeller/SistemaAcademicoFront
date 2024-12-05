@@ -1,44 +1,44 @@
 // auth.service.ts
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { Injectable,inject} from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable,BehaviorSubject  } from 'rxjs';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private loginUrl = 'https://academicoapi.onrender.com/auth/login';
-  private estudianteUrl  ='https://academicoapi.onrender.com/estudiante';
+  private loginUrl = 'http://localhost:3000/auth/login';
+  private estudianteUrl  ='http://localhost:3000/estudiante';
   private userSubject = new BehaviorSubject<any>(null);
+
 
   constructor(private http: HttpClient) {}
 
+  getHeadersForAuth(){
+    let token = localStorage.getItem('authToken'); 
+    let headers = new HttpHeaders({
+        Authorization: `Bearer ${token}` 
+    })
+    return headers;
+  }
+
   login(email: string, password: string): Observable<any> {
 
-    console.log(email);
-    console.log(password);
     return this.http.post(this.loginUrl, { email:email, password:password });
   }
 
 
 
-  saveUserData(user: any): void {
-
-    localStorage.setItem('userId', user.id_estudiante || user.id_profesor || '');
+  saveUserData(data: any): void {
+    let user=data.usuario;
+    console.log(user)
+    localStorage.setItem('userId', user.id_usuario );
     localStorage.setItem('userType', user.tipo);
     localStorage.setItem('userProfilePic', user.foto || '');
+    localStorage.setItem('authToken',data.access_token)
 
-    let id:number=0;
-    if(user.tipo=="estudiante"){
-      id=user.id_estudiante;
-    }else if(user.tipo=="profesor"){
-      id=user.id_profesor
-    } else{
-      id=user.id_admin;
-    }
 
-    localStorage.setItem('userId', id.toString());
-    localStorage.setItem('userType', user.tipo);
 
   }
 
@@ -54,7 +54,8 @@ export class AuthService {
   }
 
   obtenerFotoPerfil(id: number): Observable<any> {
-    return this.http.get(`${this.estudianteUrl}/${id}`);
+    let headers=this.getHeadersForAuth();
+    return this.http.get(`${this.estudianteUrl}/${id}`,{headers});
   }
 
   logout(): void {

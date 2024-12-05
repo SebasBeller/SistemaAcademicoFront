@@ -26,7 +26,7 @@ import { VerListaProfesoresComponent } from './paginas/ver-lista-profesores/ver-
 import {AsignarMateriaDocenteComponent} from './paginas/asignar-materia-docente/asignar-materia-docente.component'
 import {AsignarMateriaEstudianteComponent} from "./paginas/asignar-materia-estudiante/asignar-materia-estudiante.component"
 import {AsignarMateriaAsignadaAEstudianteComponent} from "./paginas/asignar-materia-asignada-a-estudiante/asignar-materia-asignada-a-estudiante.component"
-
+import { UnauthorizedComponent } from './paginas/unauthorized/unauthorized.component';
 
 export const routes: Routes = [
   {
@@ -38,6 +38,7 @@ export const routes: Routes = [
     path: 'home',
     component: LayoutComponent,
     children: [
+      { path: 'unauthorized', component: UnauthorizedComponent },
       {
         path:'',
         component:InicioCarrucelComponent

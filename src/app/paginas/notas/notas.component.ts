@@ -53,9 +53,11 @@ export class NotasComponent implements OnInit {
   }
 
   obtenerAniosNotas(){
+    console.log("aver",this.notasPorMateria)
     this.notaService.obtenerTodosLosAnios().subscribe(
       (response)=>{
-        console.log("notasPorMateria",this.notasPorMateria)
+
+        // console.log("notasPorMateria",this.notasPorMateria)
         console.log("anios",response)
         this.anios=response;
       }
@@ -147,6 +149,7 @@ export class NotasComponent implements OnInit {
       const tipo = nota.tipo; // "hacer", "decidir", "saber", "ser"
       const notaValue = nota.nota;
       // console.log(nota)
+
       if (nota.estudiante.id_estudiante==this.authService.getUserId()){
 
 

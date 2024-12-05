@@ -33,10 +33,13 @@ export class VerMateriasDocenteComponent implements OnInit {
       materia.anio===this.selectedYear
     )
   }
-  filtrarAnios(){
-    this.anios=[...new Set(this.materiasFiltradas.map((materia)=>materia.anio.toString()))]
-    console.log(this.anios)
+  
+  filtrarAnios() {
+    this.anios = [...new Set(this.materiasFiltradas.map((materia) => materia.anio.toString()))]
+      .sort((a, b) => parseInt(b) - parseInt(a)); // Ordenar descendente
+    console.log('Años únicos ordenados (descendentes):', this.anios);
   }
+  
   
   onYearChange(event: Event): void {
     const selectElement = event.target as HTMLSelectElement;

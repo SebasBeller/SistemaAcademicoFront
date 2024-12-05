@@ -10,12 +10,12 @@ import {Paralelo} from '../interfaces/paralelo'
 
 })
 export class ParaleloService {
-  urlApi:string='https://academicoapi.onrender.com/paralelo'
+  urlApi:string='http://localhost:3000/paralelo'
 
   constructor(private readonly http: HttpClient) { }
 
   obtenerParaleloPorNombre(nombreParalelo: string): Observable<any> {
-    return this.http.get<any>(`https://academicoapi.onrender.com/paralelo?nombre=${nombreParalelo}`);
+    return this.http.get<any>(`http://localhost:3000/paralelo?nombre=${nombreParalelo}`);
   }
 
   getParalelo():Observable<Paralelo[]>{

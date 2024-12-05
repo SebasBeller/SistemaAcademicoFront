@@ -70,7 +70,6 @@ export class FormCrearProfesorComponent {
   async generateDefaultPassword(): Promise<string> {
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(this.plainPassword, salt);
-    console.log('Contraseña hasheada:', hashedPassword);
     return hashedPassword;
   }
   async guardar() {

@@ -56,9 +56,9 @@ export class NotasProfesorComponent implements OnInit {
       materia.anio===this.selectedYear
     )
   }
-  filtrarAnios(){
-    this.anios=[...new Set(this.materiasFiltradas.map((materia)=>materia.anio.toString()))]
-    console.log(this.anios)
+  filtrarAnios() {
+    this.anios = [...new Set(this.materiasFiltradas.map((materia) => materia.anio.toString()))]
+      .sort((a, b) => parseInt(b) - parseInt(a));
   }
   
   onYearChange(event: Event): void {

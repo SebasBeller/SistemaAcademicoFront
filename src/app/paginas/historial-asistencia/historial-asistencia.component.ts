@@ -48,11 +48,12 @@ export class HistorialAsistenciaComponent implements OnInit {
     // this.filtrarMateriasAnio()
     // console.log("materias Filtradas",this.materiasFiltradas)
   }
-  filtrarAnios(){
-
-    this.anios=[...new Set(this.materiasAsignadas.map((materia)=>materia.anio.toString()))]
-    console.log(this.anios)
+  filtrarAnios() {
+    this.anios = [...new Set(this.materiasAsignadas.map((materia) => materia.anio.toString()))]
+      .sort((a, b) => parseInt(b) - parseInt(a)); 
   }
+  
+  
   filtrarMateriasAnio(){
     console.log(this.selectedYear)
     this.materiasFiltradas=this.materiasAsignadas.filter((materia)=>materia.anio===this.selectedYear);

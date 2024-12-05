@@ -7,6 +7,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { FormEditarProfesorComponent } from '../form-editar-profesor/form-editar-profesor.component';
 import { SelectionColorService } from '../../servicios/selection-color.service';
 import { FormCrearProfesorComponent } from '../form-crear-profesor/form-crear-profesor.component';
+import {MensajeService} from '../mensaje/mensaje.component'
+
 
 @Component({
   selector: 'app-ver-lista-profesores',
@@ -22,7 +24,11 @@ export class VerListaProfesoresComponent implements OnInit {
   terminoBusqueda: string = '';
   profesorSeleccionado: Profesor | null = null; 
 
-  constructor(private colorService: SelectionColorService,private profesorService: ProfesorService,public dialog: MatDialog) {}
+  constructor(private colorService: SelectionColorService,
+    private profesorService: ProfesorService,public dialog: MatDialog,
+    private readonly mensajeService:MensajeService
+  
+  ) {}
   
   ngOnInit(): void {
     this.getProfesores();
@@ -104,7 +110,7 @@ export class VerListaProfesoresComponent implements OnInit {
     this.profesorSeleccionado = null;
   }
   crearProfesor() {
-    const nuevoProfesor: Profesor = { id_profesor: 0, nombre: ' ', apellido: ' ', email: ' '};
+    const nuevoProfesor: Profesor = { id_profesor: 0, nombre: '', apellido: '', email: ''};
     const dialogRef = this.dialog.open(FormCrearProfesorComponent, {
       width: '300px',
       data: nuevoProfesor
@@ -112,6 +118,10 @@ export class VerListaProfesoresComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result: Profesor | undefined) => {
       if (result) {
+        console.log(result)
+        if(!result.nombre || !result.apellido || !result.email ||!result.password ){
+          this.mensajeService.mostrarMensajeError("Error!!","Complete todos los campos")
+        }
         this.profesorService.addProfesor(result).subscribe(
           () => this.getProfesores(),
           (error) => console.error('Error al añadir el profesor:', error)
