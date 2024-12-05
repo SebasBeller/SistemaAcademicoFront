@@ -180,8 +180,10 @@
 
 
   .contenido-materia-detalle
-    display: grid
-    grid-template-columns: repeat(4, 1fr) 
+    display: flex
+    flex-wrap: wrap
+    gap:20px
+    justify-content: flex-start
     
   .card-wrapper
     margin-top: 30px
@@ -191,12 +193,14 @@
     flex-direction: column
     border: 3px solid #000000
     border-radius: 10px
-    width: 300px 
+    width: 100%
+    max-width:300px
     height: 440px
     text-align: center
     color: rgb(0, 0, 0)
     background-color: rgb(255, 255, 255)
     font-size: 16px
+    align-items:center
     
     .content-img
       img
@@ -305,7 +309,6 @@
     border-radius: 10px
     width: 300px 
     height: 440px
-    text-align: center
     color: rgb(51, 51, 51)
     background-color: rgb(245, 245, 245)
     font-size: 16px
@@ -338,3 +341,12 @@
 
     &:hover
       background-color: rgb(59, 157, 105)
+
+  @media (max-width: 768px)
+    .contenido-material-detalle
+      flex-direccion:column
+      align-items: center
+
+      .card-wrapper
+        width: 90%
+        max-width: none

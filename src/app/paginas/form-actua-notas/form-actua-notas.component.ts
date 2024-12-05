@@ -1,52 +1,3 @@
-// import { Component, Inject } from '@angular/core';
-// import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-// import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
-// import { MatDialogModule, MatDialogActions, MatDialogContent, MatDialogTitle } from '@angular/material/dialog';
-// import { MatFormFieldModule } from '@angular/material/form-field';
-// import { MatInputModule } from '@angular/material/input';
-// import { MatButtonModule } from '@angular/material/button';
-
-// @Component({
-//   selector: 'app-form-actua-notas',
-//   standalone: true,
-//   imports: [
-//     ReactiveFormsModule,
-//     MatDialogModule,
-//     MatFormFieldModule,
-//     MatInputModule,
-//     MatButtonModule
-//   ],
-//   templateUrl: './form-actua-notas.component.html',
-//   styleUrls: ['./form-actua-notas.component.sass']
-// })
-// export class FormActuaNotasComponent {
-//   form: FormGroup;
-
-//   constructor(
-//     private fb: FormBuilder,
-//     private dialogRef: MatDialogRef<FormActuaNotasComponent>,
-//     @Inject(MAT_DIALOG_DATA) public data: any
-//   ) {
-//     console.log(data.value.ser)
-//     this.form = this.fb.group({
-//       ser:     [data.value.ser],
-//       saber:   [data.value.saber, Validators.required],
-//       hacer:   [data.value.hacer, Validators.required],
-//       decidir: [data.value.decidir, Validators.required]
-//     });
-//   }
-
-//   actualizarNota() {
-//     if (this.form.valid) {
-//       console.log(this.form.value)
-//       this.dialogRef.close(this.form.value);
-//     }
-//   }
-
-//   cerrar() {
-//     this.dialogRef.close();
-//   }
-// }
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
@@ -89,13 +40,38 @@ export class FormActuaNotasComponent {
     private dialogRef: MatDialogRef<FormActuaNotasComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
-    this.form = this.fb.group({
-      ser:     this.fb.group(data.value.ser[0]),
-      saber:   this.fb.group(data.value.saber[0]),
-      hacer:   this.fb.group(data.value.hacer[0]),
-      decidir: this.fb.group(data.value.decidir[0])
-    });
-
+      // Validadores para las notas, asegurando que estén en el rango de 0 a 100
+      this.form = this.fb.group({
+        ser: this.fb.group({
+          nota: [data.value.ser[0].nota, [
+            Validators.required,
+            Validators.min(0),
+            Validators.max(100)
+          ]]
+        }),
+        saber: this.fb.group({
+          nota: [data.value.saber[0].nota, [
+            Validators.required,
+            Validators.min(0),
+            Validators.max(100)
+          ]]
+        }),
+        hacer: this.fb.group({
+          nota: [data.value.hacer[0].nota, [
+            Validators.required,
+            Validators.min(0),
+            Validators.max(100)
+          ]]
+        }),
+        decidir: this.fb.group({
+          nota: [data.value.decidir[0].nota, [
+            Validators.required,
+            Validators.min(0),
+            Validators.max(100)
+          ]]
+        })
+      });
+      
     this.serForm = this.form.get('ser') as FormGroup;
     this.saberForm = this.form.get('saber') as FormGroup;
     this.hacerForm = this.form.get('hacer') as FormGroup;
@@ -131,7 +107,7 @@ export class FormActuaNotasComponent {
       this.dialogRef.close(this.form.value);
     }
     else{
-      this.mensajeService.mostrarMensajeError("¡Error!","Algo salio mal")
+      this.mensajeService.mostrarMensajeError("¡Error!", "Algo salió mal. Verifique que las notas estén entre 0 y 100.");
 
     }
   }

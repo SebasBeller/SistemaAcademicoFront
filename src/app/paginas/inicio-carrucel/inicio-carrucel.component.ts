@@ -1,5 +1,7 @@
 import { Component} from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { CarruselService } from '../../servicios/carrusel.service';
+import { Anuncio } from '../../interfaces/carrusel';
 
 @Component({
   selector: 'app-inicio-carrucel',
@@ -9,17 +11,23 @@ import { CommonModule } from '@angular/common';
   styleUrl: './inicio-carrucel.component.sass'
 })
 export class InicioCarrucelComponent {
-  images: string[] = [
-    '../../../assets/img/slide1.jpg',
-    '../../../assets/img/slide2.jpg',
-    '../../../assets/img/slide3.jpg'
-  ];
+  anuncios: Anuncio[] = []; // Ahora es un arreglo de objetos Anuncio
   currentIndex = 0;
 
-  constructor() {
+  constructor(private anuncioService: CarruselService) {
     setInterval(() => {
       this.nextSlide();
     }, 5000); 
+  }
+
+  ngOnInit(): void {
+    this.obtenerAnuncios(); // Cargar los anuncios cuando el componente se inicializa
+  }
+
+  obtenerAnuncios(): void {
+    this.anuncioService.getImages().subscribe((data: Anuncio[]) => {
+      this.anuncios = data; // Asignamos los anuncios a la propiedad 'anuncios'
+    });
   }
 
   getTransform(): string {
@@ -27,11 +35,11 @@ export class InicioCarrucelComponent {
   }
 
   nextSlide(): void {
-    this.currentIndex = (this.currentIndex + 1) % this.images.length;
+    this.currentIndex = (this.currentIndex + 1) % this.anuncios.length;
   }
 
   prevSlide(): void {
-    this.currentIndex = (this.currentIndex - 1 + this.images.length) % this.images.length;
+    this.currentIndex = (this.currentIndex - 1 + this.anuncios.length) % this.anuncios.length;
   }
 
   goToSlide(index: number): void {
