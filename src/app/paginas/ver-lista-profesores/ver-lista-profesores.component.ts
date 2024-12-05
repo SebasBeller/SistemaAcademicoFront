@@ -7,6 +7,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { FormEditarProfesorComponent } from '../form-editar-profesor/form-editar-profesor.component';
 import { SelectionColorService } from '../../servicios/selection-color.service';
 import { FormCrearProfesorComponent } from '../form-crear-profesor/form-crear-profesor.component';
+import { MensajeService } from '../mensaje/mensaje.component';
 
 @Component({
   selector: 'app-ver-lista-profesores',
@@ -22,7 +23,11 @@ export class VerListaProfesoresComponent implements OnInit {
   terminoBusqueda: string = '';
   profesorSeleccionado: Profesor | null = null; 
 
-  constructor(private colorService: SelectionColorService,private profesorService: ProfesorService,public dialog: MatDialog) {}
+  constructor(private colorService: SelectionColorService,
+    private profesorService: ProfesorService,
+    public dialog: MatDialog,
+    private mensajeService: MensajeService
+  ) {}
   
   ngOnInit(): void {
     this.getProfesores();
@@ -121,17 +126,22 @@ export class VerListaProfesoresComponent implements OnInit {
   }
   eliminarProfesor(id: number): void {
     console.log(`Eliminar profesor con ID: ${id}`);
-    if (confirm('¿Estás seguro de que deseas eliminar este profesor?')) {
-      this.profesorService.deleteProfesor(id).subscribe({
-        next: () => {
-          console.log('Profesor eliminado con exito.');
-          this.getProfesores();
-        },
-        error: (error) => {
-          console.error('Error al eliminar el profesor:', error);
-        },
-      });
-    }
+    this.mensajeService.mostrarMensajeConfirmacion(
+      'Confirmar eliminación',
+      '¿Estás seguro de que deseas eliminar este profesor?',
+      () => {
+        this.profesorService.deleteProfesor(id).subscribe({
+          next: () => {
+            console.log('Profesor eliminado con exito.');
+            this.mensajeService.mostrarMensajeExito('se elimino al profesor','exitosamente ')
+            this.getProfesores();
+          },
+          error: (error) => {
+            console.error('Error al eliminar el profesor:', error);
+          },
+        });
+      }
+    );
   }
   
   

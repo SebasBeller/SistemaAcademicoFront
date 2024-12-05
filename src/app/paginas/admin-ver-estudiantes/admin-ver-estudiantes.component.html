@@ -1,3 +1,7 @@
+<head>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+
+</head>
 <div [ngClass]="getColorClass()">
   
   <div class="search-section">
@@ -20,17 +24,47 @@
         
               <form (ngSubmit)="guardarEstudiante()">
                   <label>Nombre:</label>
-                  <input [(ngModel)]="estudiante.nombre" name="nombre" required (ngModelChange)="generarEmailYPassword()" />
+                  <input 
+                  [(ngModel)]="estudiante.nombre" 
+                  name="nombre" 
+                  required 
+                  maxlength="50" 
+                  pattern="^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$"
+                  #nombreInput="ngModel"
+                  (ngModelChange)="generarEmailYPassword()" />
+                  
+                <div *ngIf="nombreInput.invalid && (nombreInput.dirty || nombreInput.touched)">
+                  <small *ngIf="nombreInput.errors?.['required']"  class="error-text">El nombre es obligatorio.</small>
+                  <small *ngIf="nombreInput.errors?.['maxlength']"  class="error-text">Máximo 50 caracteres.</small>
+                  <small *ngIf="nombreInput.errors?.['pattern']"  class="error-text" >Solo letras permitidas.</small>
+                </div>
+              
           
                   <label>Apellido:</label>
-                  <input [(ngModel)]="estudiante.apellido" name="apellido" required (ngModelChange)="generarEmailYPassword()" />
+                  <input [(ngModel)]="estudiante.apellido" name="apellido" required (ngModelChange)="generarEmailYPassword()" 
+                  [(ngModel)]="estudiante.apellido" 
+                  name="apellido" 
+                  required 
+                  maxlength="50" 
+                  pattern="^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$"
+                  #ApellidoInput="ngModel"
+                  (ngModelChange)="generarEmailYPassword()" />
+                  <div *ngIf="ApellidoInput.invalid && (ApellidoInput.dirty || ApellidoInput.touched)">
+                    <small *ngIf="ApellidoInput.errors?.['required']" class="error-text">El apellido es obligatorio.</small>
+                    <small *ngIf="ApellidoInput.errors?.['maxlength']" class="error-text">Máximo 50 caracteres.</small>
+                    <small *ngIf="ApellidoInput.errors?.['pattern']" class="error-text">Solo letras permitidas.</small>
+                  </div>
            
                 <label>Email:</label>
                 <input [(ngModel)]="estudiante.email" name="email" required />
         
                 <label>Password:</label>
-                <input [(ngModel)]="estudiante.password" name="password" type="password" required />
-                
+                <div class="password-container">
+                  <input [(ngModel)]="estudiante.password" name="password" [type]="passwordVisible ? 'text' : 'password'" required />
+  
+                  <!-- Icono de ojo  -->
+                  <i class="fa" [class.fa-eye]="!passwordVisible" [class.fa-eye-slash]="passwordVisible" (click)="togglePasswordVisibility()"></i>
+                </div>
                 
                 <div>
                   <label >Paralelo: </label>

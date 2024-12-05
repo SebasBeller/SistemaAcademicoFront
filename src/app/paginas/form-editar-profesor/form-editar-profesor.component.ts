@@ -10,7 +10,7 @@ import { ProfesorService } from '../../servicios/profesor.service';
 import { updateMetadata } from '@angular/fire/storage';
 import { SelectionColorService } from '../../servicios/selection-color.service';
 import * as bcrypt from 'bcryptjs'
-
+import { MensajeService } from '../mensaje/mensaje.component';
 
 @Component({
   selector: 'app-form-editar-profesor',
@@ -30,6 +30,8 @@ export class FormEditarProfesorComponent {
   profesor: Profesor;
   profesores: Profesor[] = [];
   plainPassword: string = ''; 
+  passwordVisible: boolean = false; 
+
 
 
 
@@ -37,7 +39,8 @@ export class FormEditarProfesorComponent {
     private colorService: SelectionColorService,
     public dialogRef: MatDialogRef<FormEditarProfesorComponent>,
     @Inject(MAT_DIALOG_DATA) public data: Profesor,
-    private profesorService: ProfesorService
+    private profesorService: ProfesorService,
+    private mensajeServicce:MensajeService
   ) {
     this.profesor = { ...data };
     this.profesorService.getProfesores().subscribe({
@@ -65,40 +68,54 @@ export class FormEditarProfesorComponent {
         return 'color-azul';
     }
   }
-  
+  async generateDefaultPassword(): Promise<string> {
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(this.plainPassword, salt);
+    console.log('Contraseña hasheada:', hashedPassword);
+    return hashedPassword;
+  }
   idProfesorExiste(id: number): boolean {
     return this.profesores.some((profesor) => profesor.id_profesor === id);
   }
 
-  async  guardar() {
-    let updatedPassword = this.profesor.password;
-     if (this.plainPassword.trim()) {
-      const salt = await bcrypt.genSalt(10);
-      updatedPassword = await bcrypt.hash(this.plainPassword.trim(), salt);
-    }
-    const profesorData = {
-      id_profesor: this.profesor.id_profesor,
-      nombre: this.profesor.nombre,
-      apellido: this.profesor.apellido,
-      email: this.profesor.email,
-      password: updatedPassword
-    };
+  async guardar() {
+    // Verificar si los campos están completos
+    const camposCompletos = 
+    this.profesor.nombre.trim() !== '' &&
+    this.profesor.apellido.trim() !== '' &&
+    this.profesor.email.trim() !== '';
 
-   
-      this.profesorService.updateProfesor(this.profesor.id_profesor, profesorData).subscribe({
-        next: (updatedProfesor) => {
-          console.log('Profesor actualizado:', updatedProfesor);
-          this.dialogRef.close(updatedProfesor);
-        },
-        error: (error) => {
-          console.error('Error al actualizar el profesor:', error);
-        },
-      });
-    
-     
+  if (!camposCompletos) {
+    this.mensajeServicce.mostrarMensajeError("Error!!!", "Complete todos los campos");
+    return; // Si hay campos vacíos, no continuar con el guardado
   }
-
+     // Si todos los campos están completos, proceder a guardar
+     const hashedPassword = await this.generateDefaultPassword(); // Hashear la contraseña
+     const profesorData = {
+       id_profesor: this.profesor.id_profesor,
+       nombre: this.profesor.nombre,
+       apellido: this.profesor.apellido,
+       email: this.profesor.email,
+       password: hashedPassword
+     };
+ 
+     this.profesorService.addProfesor(profesorData).subscribe({
+       next: (newProfesor) => {
+         this.mensajeServicce.mostrarMensajeExito("Exito!!!", "Profesor agregado correctamente");
+         console.log('Profesor agregado:', newProfesor);
+         this.dialogRef.close(newProfesor);
+       },
+       error: (error) => {
+         this.mensajeServicce.mostrarMensajeError("Error :(", "No se pudo añadir al profesor");
+         console.error('Error al agregar el profesor:', error);
+       },
+     });
+   }
   cancelar() {
     this.dialogRef.close();
   }
+  togglePasswordVisibility(): void {
+    this.passwordVisible = !this.passwordVisible;
+  }
+
 }
