@@ -10,7 +10,7 @@ import { MateriaAsignadaDocente } from '../interfaces/materia-asignada-docente';
 })
 export class AdminAsignarEstudiantesMateriaService {
 
-  private apiUrl = 'https://academicoapi.onrender.com/inscripcion';
+  private apiUrl = 'http://localhost:3000/inscripcion';
 
   constructor(private http: HttpClient) {}
 

@@ -18,7 +18,7 @@ interface Datos {
   providedIn: 'root',
 })
 export class DetalleNotasEstudiantesService {
-  private apiUrl = 'https://academicoapi.onrender.com/nota';
+  private apiUrl = 'http://localhost:3000/nota';
 
   constructor(private http: HttpClient) {}
 

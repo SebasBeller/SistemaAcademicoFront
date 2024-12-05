@@ -9,8 +9,7 @@ import { Estudiante } from '../interfaces/estudiante';
 })
 export class PerfilEstudianteService {
 
-  private apiUrl = 'https://academicoapi.onrender.com/estudiante';
-
+  private apiUrl = 'http://localhost:3000/estudiante';
 
   constructor(private http: HttpClient) { }
 
@@ -31,10 +30,8 @@ export class PerfilEstudianteService {
     );
   }
 
-
-
   private handleError(error: HttpErrorResponse) {
-    // Puedes personalizar este manejo de errores según tu necesidad
+
     console.error('Ocurrió un error:', error);
     return throwError('Algo salió mal; por favor intente de nuevo más tarde.');
   }

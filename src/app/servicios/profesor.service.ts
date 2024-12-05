@@ -8,7 +8,7 @@ import { Profesor } from '../interfaces/profesor';
   providedIn: 'root'
 })
 export class ProfesorService {
-  private apiUrl = 'https://academicoapi.onrender.com/profesor';
+  private apiUrl = 'http://localhost:3000/profesor';
 
 
   constructor(private http: HttpClient) { }

@@ -17,6 +17,14 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
+            "allowedCommonJsDependencies": [
+              "canvg",
+              "sweetalert2",
+              "jspdf-autotable",
+              "bcryptjs",
+              "html2canvas",
+              "dompurify"
+            ],
             "outputPath": "dist/sistema-estudiantil-ia",
             "index": "src/index.html",
             "browser": "src/main.ts",
