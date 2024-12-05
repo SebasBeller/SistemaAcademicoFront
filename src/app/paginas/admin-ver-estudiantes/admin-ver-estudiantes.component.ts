@@ -13,6 +13,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatDialogModule } from '@angular/material/dialog';
 import {MensajeService} from '../mensaje/mensaje.component'
 import { SelectionColorService } from '../../servicios/selection-color.service';
+import { ReactiveFormsModule } from '@angular/forms';
 @Component({
   selector: 'app-admin-ver-estudiantes',
   standalone: true,
@@ -22,7 +23,7 @@ import { SelectionColorService } from '../../servicios/selection-color.service';
     MatFormFieldModule,
     MatInputModule,
     MatDatepickerModule,
-    MatNativeDateModule,
+    MatNativeDateModule,ReactiveFormsModule
   ],
   templateUrl: './admin-ver-estudiantes.component.html',
   styleUrl: './admin-ver-estudiantes.component.sass'
@@ -47,6 +48,8 @@ export class AdminVerEstudiantesComponent implements OnInit {
   password?:string;
   filtroNombre:string = "";
   filtroapellido: string = "";
+  passwordVisible: boolean = false;
+
 
   constructor(
     private colorService: SelectionColorService,
@@ -74,7 +77,9 @@ export class AdminVerEstudiantesComponent implements OnInit {
         return 'color-azul';
     }
   }
-  
+  togglePasswordVisibility(): void {
+    this.passwordVisible = !this.passwordVisible;
+  }
   obtenerParalelos(){
     this.paraleloService.getParalelo().subscribe(
       (data) => {this.paralelos = data
@@ -133,57 +138,55 @@ export class AdminVerEstudiantesComponent implements OnInit {
     }
   }
 
-guardarEstudiante(): void {
-
-  // Verificar si paraleloInput tiene un valor
-  if (
-    !this.estudiante.nombre &&
-    !this.estudiante.apellido &&
-    !this.estudiante.email &&
-    !this.estudiante.password 
-  ) {
-    // console.error("El campo paralelo está vacío");
-    this.mostrarFormulario=false;
-    this.mensajeService.mostrarMensajeError("Error!!!","Complete todos los campos")
-    return;
-  }
-
-  // Obtener el ID del paralelo por el nombre proporcionado en paraleloInput
-
-        this.estudiante.paralelo=this.paraleloSelec ;
-        if (this.editando) {
-          if(this.estudiante.password==""){
-            delete this.estudiante.password
-          }
-          // Actualizar estudiante
-          this.estudiantesService.actualizarEstudiante(this.estudiante.id_estudiante, this.estudiante).subscribe(
-            () => {
-              console.log("Estudiante actualizado correctamente");
-              this.obtenerEstudiantes();
-              this.cerrarFormulario();
-              this.mensajeService.mostrarMensajeExito("Exito!!!","Estudiante editado correctamente")
-              
-             
-            },
-            (error) => {
-              console.error('Error al actualizar estudiante:', error);
-              this.mensajeService.mostrarMensajeError("Error!!!","No se edito al estudiante")
-            }
-          );
-        } else {
-          // Agregar nuevo estudiante
-          this.estudiantesService.addEstudiante(this.estudiante).subscribe(
-            () => {
-              this.obtenerEstudiantes();
-              this.cerrarFormulario();
-              this.mensajeService.mostrarMensajeExito("Exito!!!","Estudiante agregado correctamente")
-            },
-            (error) => {console.error('Error al agregar estudiante:', error)
-              this.mensajeService.mostrarMensajeError("Error!!!","No se agrego al estudiante")
-            }
-          );
+  guardarEstudiante(): void {
+    // Verificar si los campos están llenos
+    const camposCompletos = 
+      this.estudiante.nombre.trim() !== '' &&
+      this.estudiante.apellido.trim() !== '' &&
+      this.estudiante.email.trim() !== '' &&
+      this.estudiante.paralelo?.paralelo?.trim() !== '';
+  
+    if (!camposCompletos) {
+      this.mostrarFormulario = false;
+      this.mensajeService.mostrarMensajeError("Error!!!", "Complete todos los campos");
+      return;
+    }
+  
+    // Asignar el paralelo seleccionado al estudiante
+    this.estudiante.paralelo = this.paraleloSelec;
+  
+    if (this.editando) {
+      if (this.estudiante.password === '') {
+        delete this.estudiante.password; // Eliminar campo si está vacío al editar
+      }
+      // Actualizar estudiante
+      this.estudiantesService.actualizarEstudiante(this.estudiante.id_estudiante, this.estudiante).subscribe(
+        () => {
+          this.obtenerEstudiantes();
+          this.cerrarFormulario();
+          this.mensajeService.mostrarMensajeExito("Exito!!!", "Estudiante editado correctamente");
+        },
+        (error) => {
+          console.error('Error al actualizar estudiante:', error);
+          this.mensajeService.mostrarMensajeError("Error!!!", "No se editó al estudiante");
         }
-}
+      );
+    } else {
+      // Agregar nuevo estudiante
+      this.estudiantesService.addEstudiante(this.estudiante).subscribe(
+        () => {
+          this.obtenerEstudiantes();
+          this.cerrarFormulario();
+          this.mensajeService.mostrarMensajeExito("Exito!!!", "Estudiante agregado correctamente");
+        },
+        (error) => {
+          console.error('Error al agregar estudiante:', error);
+          this.mensajeService.mostrarMensajeError("Error!!!", "No se agregó al estudiante");
+        }
+      );
+    }
+  }
+  
 
   
 
