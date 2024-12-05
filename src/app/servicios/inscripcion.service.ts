@@ -8,7 +8,7 @@ import{Estudiante} from '../interfaces/estudiante';
 })
 export class InscripcionService {
 
-  urlApi:string='https://academicoapi.onrender.com/inscripcion'
+  urlApi:string='http://localhost:3000/inscripcion'
   constructor(private readonly http: HttpClient) {
 
   }

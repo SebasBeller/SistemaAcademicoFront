@@ -98,7 +98,13 @@ export class AgregarNuevoContenidoComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
+        if (!result.name || !this.isValidText(result.name)) {
+          this.mensajeService.mostrarMensajeError('¡Error!', 'El nombre del contenido es inválido. Asegúrate de que no esté vacío y no contenga caracteres especiales.');
+          return;
+        }
+
         let nuevaUnidad: Unidad = {
+
           id_dicta: this.id_dicta,
           nombre: result.name || `Nuevo Contenido ${this.cardCounter}`,
           trimestre: '1er',
@@ -160,6 +166,11 @@ export class AgregarNuevoContenidoComponent implements OnInit {
   }
 
   deleteCard(id?: number) {
+    this.mensajeService.mostrarMensajeConfirmacion(
+      'Confirmar Eliminación',
+      '¿Estás seguro de que deseas eliminar este contenido? Esta acción no se puede deshacer.',
+      () => {
+
     this.unidadServicio.eliminarUnidad(id || 0).subscribe(
       response => {
         this.unidades = this.unidades.filter(card => card.id_unidad !== id);
@@ -175,11 +186,18 @@ export class AgregarNuevoContenidoComponent implements OnInit {
       }
     );
   }
+ );
+}
 
   dirigirAContenido(id?: number) {
     this.router.navigate(['/home/agregar-material-docente', id]);
   }
 
+  isValidText(text: string): boolean {
+
+    const regex = /^[a-zA-Z0-9\s_-]+$/;
+    return regex.test(text);
+  }
   cancel() {
     this.showForm = false;
     this.resetForm();

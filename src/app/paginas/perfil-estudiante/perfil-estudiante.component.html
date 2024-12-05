@@ -1,7 +1,7 @@
 <div [ngClass]="getColorClass()">
   <div class="content">
     <fieldset>
-      <legend>PERFIL DEL ESTUDIANTE: {{estudianteSeleccionado?.email}}</legend>
+      <legend>PERFIL DEL ESTUDIANTE: {{estudianteSeleccionado?.email}} </legend>
 
       <form [formGroup]="estudianteForm" (ngSubmit)="onGuardar()">
 
@@ -21,9 +21,6 @@
             <li><img src="../../../assets/img/avatar8.png" (click)="selectAvatar('../../../assets/img/avatar8.png')"></li>
           </ul>
         </div>
-
-
-
 
         <label for="fname">Nombre</label>
         <input type="text" id="fname" formControlName="nombre">

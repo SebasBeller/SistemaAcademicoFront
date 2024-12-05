@@ -1,150 +1,148 @@
-.color-azul
-  h2
-    color: rgb(51, 51, 51)
-    font-size: 20px
-    margin-left: 40px
-    
-  .card-container
-    margin-top: 15px
-    display: grid
-    grid-template-columns: repeat(4, 1fr)
 
-    .materia-card
-      border: 3px solid #000000
-      width: 300px
-      height: 420px
-      margin-top: 30px
-      margin-bottom: 30px
-      border-radius: 10px
-      text-align: center
-      margin-left: 40px
-      background-color: rgb(245, 245, 245)
-      font-size: 16px
-      color: rgb(51, 51, 51)
+$color-negro: #000000
+$color-gris: rgb(245, 245, 245)
+$color-blanco: rgb(255, 255, 255)
+$fuente-base: 16px
+$ancho-card: 310px
+$alto-card: 450px
 
-      img
-        margin-bottom: 10px
-        width: 300px
-        border-radius: 10px
-        height: auto
-      
-      .Area
-        margin-top: 10px
 
-      .Paralelo
-        margin-top: 10px
+.text-input
+  width: 100%
+  padding: 10px 10px 10px 40px
+  font-size: $fuente-base
+  border: 1px solid #ccc
+  border-radius: 5px
 
-      .enlace-detalles 
-          button
-            margin-top: 10px 
-          b
-            margin-top: 10px
-            color: rgb(51, 51, 51)
-            font-size: 16px
-          b:hover
-            color: rgb(21, 101, 192)
+  &:focus
+    border-color: #007bff
+    outline: none
 
-.color-amarillo
-  h2
-    color: rgb(0, 0, 0)
-    font-size: 20px
-    margin-left: 40px
-    
-  .card-container
-    margin-top: 15px
-    display: grid
-    grid-template-columns: repeat(4, 1fr)
+.input-container
+  position: relative
+  display: inline-block
+  width: 100%
 
-    .materia-card
-      border: 3px solid #000000
-      padding: 20px
-      width: 300px
-      height: 420px
-      margin-top: 30px
-      margin-bottom: 30px
-      border-radius: 10px
-      text-align: center
-      margin-left: 40px
-      background-color: rgb(255, 255, 255)
-      font-size: 16px
-      color: rgb(0, 0, 0)
 
-      img
-        margin-bottom: 10px
-        width: 300px
-        border-radius: 10px
-        height: auto
-      
-      .Area
-        margin-top: 15px
-
-      .Paralelo
-        margin-top: 10px
-
-      .enlace-detalles
-          button
-            margin-top: 10px 
-          b
-            margin-top: 10px
-            color: rgb(0, 0, 0)
-            font-size: 16px
-          b:hover
-            color: rgb(255, 193, 7)
-
-.color-verde
-  h2
-    color: rgb(51, 51, 51)
-    font-size: 20px
-    margin-left: 40px
-    
-  .card-container
-    margin-top: 15px
-    display: grid
-    grid-template-columns: repeat(4, 1fr)
-
-    .materia-card
-      border: 3px solid #000000
-      width: 300px
-      height: 420px
-      margin-top: 30px
-      margin-bottom: 30px
-      border-radius: 10px
-      text-align: center
-      margin-left: 40px
-      background-color: rgb(245, 245, 245)
-      font-size: 16px
-      color: rgb(51, 51, 51)
-
-      img
-        margin-bottom: 10px
-        width: 300px
-        border-radius: 10px
-        height: auto
-      
-      .Area
-        margin-top: 10px
-
-      .Paralelo
-        margin-top: 10px
-
-      .enlace-detalles 
-          button
-            margin-top: 10px 
-          b
-            margin-top: 10px
-            color: rgb(51, 51, 51)
-            font-size: 16px
-          b:hover
-            color: rgb(59, 157, 105)
+.input-icon
+  position: absolute
+  top: 50%
+  left: 10px
+  transform: translateY(-50%)
+  width: 20px
+  height: 20px
+  pointer-events: none
 
 select
+  color: rgb(51, 51, 51)
+  background-color: $color-gris
+  font-size: $fuente-base + 2px
+  border-radius: 30px
+  border: 3px solid $color-negro
+  width: 100px
+  text-align: center
+  margin: 5px 0 5px 30px
+
+
+.custom-button
+  background-color: #007bff
+  margin: 15px
+  padding: 15px
+  font-size: $fuente-base
+  font-weight: bold
+  color: $color-blanco
+  text-decoration: none
+  border: none
+  border-radius: 5px
+  text-align: center
+  transition: background-color 0.3s ease, transform 0.2s ease
+
+  &:hover
+    background-color: #0056b3
+    color: #ffffff
+    transform: scale(1.05)
+
+.color-section
+  h2
     color: rgb(51, 51, 51)
-    background-color: rgb(245, 245, 245)
-    font-size: 18px
-    border-radius: 30px
-    border: 3px solid #000000
-    width: 100px
-    text-align: center
-    margin-left: 40px
-    margin-top: 5px
-    margin-bottom: 5px
+    margin-left: 30px
+    font-size: 20px
+
+
+  .buscador
+    margin: 10px auto
+    margin-left: 500px
+    margin-right: 150px
+
+
+  .text-input
+    width: 60%
+    padding: 5px 5px 5px 35px
+    border-radius: 5px
+    border: 3px solid $color-negro
+    background-color: $color-gris
+
+
+  .materias-contenedor
+    margin-top: 15px
+    display: grid
+    grid-template-columns: repeat(4, 1fr)
+    gap: 15px
+
+    .materia-card
+      border: 3px solid $color-negro
+      width: $ancho-card
+      height: $alto-card
+      border-radius: 10px
+      text-align: center
+      margin-bottom: 30px
+      background-color: $color-gris
+      font-size: $fuente-base
+      color: rgb(51, 51, 51)
+
+      h2
+        margin-top: 10px
+        margin-left: 20px
+
+
+      img
+        width: 100%
+        height: auto
+        border-radius: 10px
+
+
+      .historial
+        display: grid
+        grid-template-columns: repeat(2, 140px)
+        gap: 5px
+        margin-bottom: 20px
+
+
+      p
+        margin-top: 5px
+
+
+.color-azul
+  @extend .color-section
+  h2
+    color: rgb(51, 51, 51)
+
+
+
+.color-amarillo
+  @extend .color-section
+  h2
+    color: rgb(0, 0, 0)
+
+  .text-input
+    background-color: $color-blanco
+
+  .materias-contenedor
+    overflow-x: hidden
+
+.color-verde
+  @extend .color-section
+  h2
+    color: rgb(51, 51, 51)
+
+

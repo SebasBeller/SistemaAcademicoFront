@@ -77,7 +77,7 @@ export class LoginComponent {
       this.eyeIcon = '../../../assets/img/esconder.png';
     } else {
       this.passwordType = 'password';
-      this.eyeIcon = '../../../assets/img/ver.png'; 
+      this.eyeIcon = '../../../assets/img/ver.png';
     }
   }
 
