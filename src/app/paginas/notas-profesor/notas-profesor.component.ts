@@ -22,7 +22,8 @@ export class NotasProfesorComponent implements OnInit {
   materiasFiltradas:MateriaAsignadaDocente[]=[];
 
   authService: AuthService = inject(AuthService);
-
+  anios:string[]=[];
+  selectedYear: number = 2024;
   constructor(
     private colorService: SelectionColorService,
   ) {}
@@ -36,8 +37,11 @@ export class NotasProfesorComponent implements OnInit {
         //  this.materias = response.filter(materia => materia.profesor?.id_profesor === idProfesor); // Asigna los datos cuando la respuesta es recibida
          console.log('Materias asignadas:', this.materias);
          this.materiasFiltradas=this.materias;
-         this.filtrarMateriasAnio();
+         console.log("")
          this.filtrarAnios()
+         this.selectedYear=+this.anios[0] || 2024
+         this.filtrarMateriasAnio();
+         
        },
        error => {
          console.error('Error en la petición GET:', error);
@@ -49,8 +53,7 @@ export class NotasProfesorComponent implements OnInit {
     });
   }
   
-  anios:string[]=[];
-  selectedYear: number = 2024;
+
   filtrarMateriasAnio(){
     this.materias=this.materiasFiltradas.filter((materia:MateriaAsignadaDocente)=>
       materia.anio===this.selectedYear

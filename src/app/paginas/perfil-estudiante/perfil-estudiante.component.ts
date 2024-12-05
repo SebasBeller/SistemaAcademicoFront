@@ -9,16 +9,14 @@ import { SelectionColorService } from '../../servicios/selection-color.service';
 
 import * as bcrypt from 'bcryptjs';
 
-
 @Component({
   selector: 'app-perfil-estudiante',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule ],
   templateUrl: './perfil-estudiante.component.html',
   styleUrls: ['./perfil-estudiante.component.sass']
-
-
 })
+
 export class PerfilEstudianteComponent implements OnInit {
   selectedColor: string = '';
   estudiantes: Estudiante[] = [];
@@ -48,6 +46,7 @@ export class PerfilEstudianteComponent implements OnInit {
     },
     { validators: this.passwordsMatchValidator });
   }
+
   passwordsMatchValidator(form: FormGroup) {
     const newPassword = form.get('newPassword')?.value;
     const repeatNewPassword = form.get('repeatNewPassword')?.value;
@@ -82,14 +81,11 @@ export class PerfilEstudianteComponent implements OnInit {
   }
 
   getColorClass(): string {
-    switch (this.selectedColor) {
-      case 'verde':
-        return 'color-verde';
-      case 'amarillo':
-        return 'color-amarillo';
-      default:
-        return 'color-azul';
-    }
+    const colorClasses: { [key: string]: string } = {
+      'verde': 'color-verde',
+      'amarillo': 'color-amarillo',
+    };
+    return colorClasses[this.selectedColor] || 'color-azul';
   }
 
   obtenerIdEstudiante(): void {
@@ -124,68 +120,49 @@ establecerVarloresFormulario(data: Estudiante): void{
 }
 
 async onGuardar(): Promise<void> {
-  if (this.estudianteForm.valid && this.idEstudiante && this.estudianteSeleccionado) {
-    const estudianteEditado = { ...this.estudianteForm.value };
-    const currentPassword = estudianteEditado.currentPassword;
-    const newPassword = estudianteEditado.newPassword;
-    const repeatNewPassword = estudianteEditado.repeatNewPassword;
+  try {
+    if (this.estudianteForm.valid && this.idEstudiante && this.estudianteSeleccionado) {
+      const estudianteEditado = { ...this.estudianteForm.value };
 
-    console.log("Contraseña actual ingresada:", currentPassword);
-    console.log("Contraseña en la base de datos:", this.estudianteSeleccionado.password);
-
-    // Validar contraseña actual antes de cualquier otro cambio
-    if (this.estudianteSeleccionado.password) {
-      const passwordCorrecta = await bcrypt.compare(currentPassword, this.estudianteSeleccionado.password);
-
-      if (!passwordCorrecta && currentPassword!="") {
-        this.mensajeService.mostrarMensajeError("¡Error!", "La contraseña actual es incorrecta.");
-        return; // Detener el proceso si la contraseña es incorrecta
+      // Validar contraseña actual
+      if (this.estudianteSeleccionado.password && estudianteEditado.currentPassword) {
+        const passwordCorrecta = await bcrypt.compare(estudianteEditado.currentPassword, this.estudianteSeleccionado.password);
+        if (!passwordCorrecta) {
+          this.mensajeService.mostrarMensajeError("¡Error!", "La contraseña actual es incorrecta.");
+          return;
+        }
       }
-    } else {
-      console.error("No se encontró la contraseña en estudianteSeleccionado.");
-      return;
+
+      // Validar nueva contraseña
+      if (estudianteEditado.newPassword) {
+        if (estudianteEditado.newPassword.length < 8) {
+          throw new Error("La nueva contraseña debe tener al menos 8 caracteres.");
+        }
+        const salt = await bcrypt.genSalt(10);
+        estudianteEditado.password = await bcrypt.hash(estudianteEditado.newPassword, salt);
+      }
+
+      // Actualizar estudiante
+      this.perfilEstudianteService.actualizarEstudiante(this.idEstudiante, estudianteEditado).subscribe({
+        next: () => {
+          this.mensajeService.mostrarMensajeExitoConCallback('¡Éxito!', "Los cambios se realizaron exitosamente").then((result) => {
+            if (result.isConfirmed) {
+              location.reload();
+            }
+          });
+        },
+        error: (err) => {
+          console.error('Error al actualizar el estudiante:', err);
+          this.mensajeService.mostrarMensajeError("¡Error!", "Algo ocurrió. Intente de nuevo más tarde.");
+        }
+      });
     }
-
-    // Si los campos de nueva contraseña están vacíos, omitir el cambio de contraseña
-    if (!newPassword && !repeatNewPassword) {
-      delete estudianteEditado.password; // No modificar la contraseña
-    } else {
-      // Validar que las nuevas contraseñas coincidan
-      if (newPassword !== repeatNewPassword) {
-        this.mensajeService.mostrarMensajeError("¡Error!", "Las nuevas contraseñas no coinciden.");
-        return;
-      }
-
-      // Validar longitud mínima de la nueva contraseña
-      if (newPassword.length < 8) {
-        this.mensajeService.mostrarMensajeError("¡Error!", "La nueva contraseña debe tener al menos 8 caracteres.");
-        return;
-      }
-
-      // Encriptar la nueva contraseña antes de guardar
-      const salt = await bcrypt.genSalt(10);
-      estudianteEditado.password = await bcrypt.hash(newPassword, salt);
-    }
-
-    // Actualizar el estudiante en el servicio si todas las validaciones pasan
-    // location.reload();
-    this.perfilEstudianteService.actualizarEstudiante(this.idEstudiante, estudianteEditado).subscribe({
-      next: (response) => {
-        console.log('Estudiante actualizado:', response);
-        this.mensajeService.mostrarMensajeExitoConCallback('¡Éxito!', "Los cambios se realizaron exitosamente").then((result) => {
-          if (result.isConfirmed) {
-            location.reload(); 
-          }
-        });;
-    
-      },
-      error: (error) => {
-        console.error('Error al actualizar el estudiante:', error);
-        this.mensajeService.mostrarMensajeError("¡Error!", "Algo ha ocurrido");
-      }
-    });
+  } catch (err) {
+    console.error(err);
+    this.mensajeService.mostrarMensajeError("¡Error!", (err as Error).message);
   }
 }
+
 
 
 

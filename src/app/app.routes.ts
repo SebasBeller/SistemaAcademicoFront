@@ -121,13 +121,13 @@ export const routes: Routes = [
         data: { roles: ['profesor'] }
       },
       {
-        path: 'mostrar-notas-por-materia-profesor/:id_dicta',
+        path: 'mostrar-notas-por-materia-profesor/:id_dicta/:anio',
         component: MostrarNotasPorMateriaProfesorComponent,
         canActivate: [AuthGuard],
         data: { roles: ['profesor'] }
       },
       {
-        path: 'detalle-notas/:id_dicta/:id_estudiante',
+        path: 'detalle-notas/:id_dicta/:id_estudiante/:anio',
         component: DetalleNotasComponent,
         canActivate: [AuthGuard],
         data: { roles: ['profesor'] }

@@ -38,6 +38,7 @@ export class MostrarNotasPorMateriaProfesorComponent implements OnInit {
   notas: Nota[] = [];
   idMateria:string="";
   isLoading = true;
+  anio?:number=new Date().getFullYear();
   
   constructor(
     private colorService: SelectionColorService,
@@ -52,6 +53,9 @@ export class MostrarNotasPorMateriaProfesorComponent implements OnInit {
     });
     this.isLoading = true;
     this.idMateria = this.route.snapshot.paramMap.get('id_dicta')||"";
+    this.anio = +(this.route.snapshot.paramMap.get('anio')||new Date().getFullYear());
+
+
     if (this.idMateria) {
       const id = +(this.idMateria);
       this.cargarDatosMateriaAsignada(id);
@@ -92,9 +96,9 @@ export class MostrarNotasPorMateriaProfesorComponent implements OnInit {
 
   cargarNotasEstudiantes(idDicta: number, idEstudiante?: number, tipo?: string) {
     this.notasProfesorService.getNota().subscribe(
-      (data: Nota[]) => {
+      (data: any[]) => {
         this.notas = data.filter(nota =>
-          nota.materiaAsignada.id_dicta==idDicta
+          nota.materiaAsignada.id_dicta==idDicta && nota.materiaAsignada.anio==this.anio
         );
         console.log(this.notas)
         this.calcularPromediosPorEstudiante();

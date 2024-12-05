@@ -82,6 +82,10 @@ export default class HomeComponent implements OnInit, OnDestroy {
   }
 
   uploadFile() {
+    if(!this.nombreMaterial||!this.tipoMaterial){
+      this.mensajeService.mostrarMensajeError("Error!!!","Complete todos los campos!!");
+      return
+    }
     const storageRef = ref(this._storage, `uploads/${this.file.name}`);
     const task = uploadBytesResumable(storageRef, this.file);
 
@@ -103,12 +107,16 @@ export default class HomeComponent implements OnInit, OnDestroy {
 
   confirm() {
     const newMaterial: Material = {
-      id_material: this.currentMaterialId !== null ? this.currentMaterialId : this.materiales.length + 1,
+      // id_material: this.currentMaterialId !== null ? this.currentMaterialId : this.materiales.length + 1,
       tipo: this.tipoMaterial,
       nombre: this.nombreMaterial,
       url: this.downloadURL,
       id_unidad: this.id_unidad,
     };
+    if(!this.nombreMaterial||!this.tipoMaterial||!this.downloadURL){
+      this.mensajeService.mostrarMensajeError("Error!!!","Complete todos los campos!!");
+      return
+    }
 
     if (this.currentMaterialId !== null) {
       this.servicioMateriales.actualizarMaterial(this.currentMaterialId, newMaterial).subscribe(
@@ -129,6 +137,7 @@ export default class HomeComponent implements OnInit, OnDestroy {
     } else {
       this.servicioMateriales.guardadMaterial(newMaterial).subscribe(
         idMaterial => {
+
           console.log('Material guardado con ID:', idMaterial);
           this.servicioMateriales.encontrarMaterial(idMaterial).subscribe(
             (material: Material) => {

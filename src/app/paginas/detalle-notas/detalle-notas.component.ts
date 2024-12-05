@@ -60,7 +60,7 @@ export class DetalleNotasComponent implements OnInit {
   ) {
     this.idDicta = +this.route.snapshot.params['id_dicta'];
     this.idEstudiante = +this.route.snapshot.params['id_estudiante'];
-    // this.anio = +this.route.snapshot.params['anio'];
+    this.anio = +this.route.snapshot.params['anio'];
     this.form = this.fb.group({
       ser: [0],
       saber: [0],
@@ -89,15 +89,16 @@ export class DetalleNotasComponent implements OnInit {
         return 'color-azul';
     }
   }
-  
+
   filtrarNotasEstudianteMateria(idEstudiante: number, idMateria: number): void {
     // console.log("anio",this.anio)
     const notasEstudianteMateria = this.notas.filter(
       (nota) =>
         nota.estudiante?.id_estudiante === idEstudiante &&
-        nota.materiaAsignada?.id_dicta === idMateria 
-        // && nota.anio==this.anio
+        nota.materiaAsignada?.id_dicta === idMateria
+        && nota.anio==this.anio
     );
+    console.log("as",notasEstudianteMateria)
 
     const notasAgrupadasPorTrimestre: {
       [trimestre: number]: { [tipo: string]: any[] };
@@ -133,9 +134,9 @@ export class DetalleNotasComponent implements OnInit {
     this.detalleNotasService.obtenerNotasPorAno(this.selectedYear).subscribe(
       (notas: Nota[]) => {
         this.notas = notas;
-        this.filtrarNotasEstudianteMateria(this.idEstudiante, this.idDicta); 
+        this.filtrarNotasEstudianteMateria(this.idEstudiante, this.idDicta);
           this.isLoading = false;
-        this.filtrarNotasEstudianteMateria(this.idEstudiante, this.idDicta); 
+        this.filtrarNotasEstudianteMateria(this.idEstudiante, this.idDicta);
           this.isLoading = false;
       },
       (error: any) => {
@@ -245,6 +246,11 @@ export class DetalleNotasComponent implements OnInit {
   }
 
   actualizarNota(nota: Nota): void {
+
+    if (nota.nota > 100 || nota.nota < 30) {
+      this.mensajeService.mostrarMensajeError('La nota debe estar entre 30 y 100.', 'error');
+      return;
+  }
     console.log(nota);
     this.detalleNotasService.actualizarNota(nota).subscribe(
       (notaActualizada: Nota) => {
@@ -259,10 +265,10 @@ export class DetalleNotasComponent implements OnInit {
 
         if (index !== -1) {
           this.notas[index].nota = nota.nota;
-          this.notas[index].fecha = nota.fecha; 
+          this.notas[index].fecha = nota.fecha;
 
           this.notas[index].nota = nota.nota;
-          this.notas[index].fecha = nota.fecha; 
+          this.notas[index].fecha = nota.fecha;
 
 
         }

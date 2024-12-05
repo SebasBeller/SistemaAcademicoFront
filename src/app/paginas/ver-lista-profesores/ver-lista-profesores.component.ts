@@ -69,6 +69,10 @@ export class VerListaProfesoresComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result: Profesor | undefined) => {
       if (result) {
+        if(!result.nombre || !result.apellido || !result.email ||!result.password ){
+          this.mensajeService.mostrarMensajeError("Error!!","Complete todos los campos")
+          return ;
+        }
         this.actualizarProfesor(result.id_profesor, result);
       }
     });
@@ -121,6 +125,7 @@ export class VerListaProfesoresComponent implements OnInit {
         console.log(result)
         if(!result.nombre || !result.apellido || !result.email ||!result.password ){
           this.mensajeService.mostrarMensajeError("Error!!","Complete todos los campos")
+          return ;
         }
         this.profesorService.addProfesor(result).subscribe(
           () => this.getProfesores(),

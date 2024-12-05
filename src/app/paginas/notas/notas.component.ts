@@ -119,7 +119,7 @@ export class NotasComponent implements OnInit {
     this.notaService.obtenerNotasPorAno(this.selectedYear).subscribe(
       (notas: Nota[]) => {
         this.notas = notas;
-        console.log(notas)
+        console.log("lo",notas)
         this.agruparNotasPorMateria();
         this.obtenerAniosNotas();
         this.isLoading=false;
