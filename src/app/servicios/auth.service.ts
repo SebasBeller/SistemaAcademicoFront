@@ -32,7 +32,6 @@ export class AuthService {
 
   saveUserData(data: any): void {
     let user=data.usuario;
-    console.log(user)
     localStorage.setItem('userId', user.id_usuario );
     localStorage.setItem('userType', user.tipo);
     localStorage.setItem('userProfilePic', user.foto || '');

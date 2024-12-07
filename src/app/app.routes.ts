@@ -32,16 +32,20 @@ export const routes: Routes = [
   {
     path:'',
     component:LoginComponent
-  }
+  },
+  { path: 'unauthorized', component: UnauthorizedComponent }
   ,
   {
     path: 'home',
     component: LayoutComponent,
     children: [
-      { path: 'unauthorized', component: UnauthorizedComponent },
+
+     
       {
         path:'',
-        component:InicioCarrucelComponent
+        component:InicioCarrucelComponent,
+        canActivate: [AuthGuard],
+        data: { roles: ['estudiante','profesor','admin'] },
       },
       {
         path: 'ver-material/:id',

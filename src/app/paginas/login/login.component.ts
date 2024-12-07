@@ -52,23 +52,22 @@ export class LoginComponent {
 
     login() {
       this.authService.login(this.email, this.password).subscribe({
-          next: (response) => {
-              console.log("Respuesta completa del login:", response);
-              if (response && response.usuario) {
-                  this.authService.saveUserData(response);
-                  this.router.navigate(['/home']);
-              } else {
-                  console.error("La respuesta no contiene los datos esperados de usuario.");
-                  this.mensajeService.mostrarMensajeError("Error", "Datos de usuario no recibidos.");
+        next: (response) => {
+            console.log("Respuesta completa del login:", response);
+            if (response && response.usuario) {
+                this.authService.saveUserData(response);
+                this.router.navigate(['/home']);
+            } else {
+                console.error("La respuesta no contiene los datos esperados de usuario.");
+                this.mensajeService.mostrarMensajeError("Error", "Datos de usuario no recibidos.");
 
-              }
-          },
-          error: (err) => {
-              console.error('Error en el login:', err);
-              this.mensajeService.mostrarMensajeError("¡Error!", "La contraseña o su correo es incorrecto");
-          }
-      });
-  }
+            }
+        },
+        error: (err) => {
+            console.error('Error en el login:', err);
+            this.mensajeService.mostrarMensajeError("¡Error!", "La contraseña o su correo es incorrecto");
+        }
+    }); }
 
   togglePassword() {
 
