@@ -1,7 +1,8 @@
 <div [ngClass]="getColorClass()">
   <div class="content">
     <fieldset>
-      <legend>PERFIL DEL ESTUDIANTE: {{estudianteSeleccionado?.email}}</legend>
+      <legend>PERFIL DEL ESTUDIANTE: <br>
+        {{estudianteSeleccionado?.email}}</legend>
 
       <form [formGroup]="estudianteForm" (ngSubmit)="onGuardar()">
 
