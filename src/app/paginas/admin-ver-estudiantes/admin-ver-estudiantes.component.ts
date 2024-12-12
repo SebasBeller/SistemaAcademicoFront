@@ -32,18 +32,19 @@ export class AdminVerEstudiantesComponent implements OnInit {
   estudiantes: Estudiante[] = [];
   mostrarFormulario = false;
   editando = false;
-  estudiante: Estudiante = {
+  estudiante: any = {
     id_estudiante: 0,
     nombre: '',
     apellido: '',
     email: '',
     password: '',
     paralelo: { nombre:'', id:0, paralelo:''}, 
-    foto: ''
+    foto: '',
+    
   };
   paraleloInput: string = '';
   paralelos:Paralelo[]=[];
-  paraleloSelec?:Paralelo;
+  paraleloSelec?:any;
   password?:string;
   filtroNombre:string = "";
   filtroapellido: string = "";
@@ -93,28 +94,14 @@ export class AdminVerEstudiantesComponent implements OnInit {
 
   actualizarParalelo(event:any){
     console.log(event.target)
-
-    console.log(event.target.value)
     this.paraleloSelec=this.paralelos.find(paralelo=>paralelo.paralelo==event.target.value)
-    console.log(this.paraleloSelec)
-
-    // para
 
   }
   abrirFormulario(): void {
     this.mostrarFormulario = true;
 
     this.editando = false;
-    this.estudiante = { id_estudiante: 0, nombre: '', apellido: '', email: '', password: '',   paralelo: { nombre:'', id:0, paralelo:''}, foto: '../../../assets/img/avatar3.png' };
-
-    // Obtener el último ID y generar el nuevo ID
-    // this.estudiantesService.obtenerUltimoEstudiante().subscribe(
-    //   (ultimoEstudiante) => {
-    //     const nuevoId = ultimoEstudiante ? ultimoEstudiante.id_estudiante + 1 : 1;
-    //     this.estudiante.id_estudiante = nuevoId;
-    //   },
-    //   (error) => console.error('Error al obtener el último estudiante:', error)
-    // );
+    this.estudiante = { id_estudiante: 0, nombre: '', apellido: '', email: '', password: '',   paralelo: { nombre:'', id:0, paralelo:''}, foto: '../../../assets/img/avatar3.png', id_paralelo:0};
   }
 
   cerrarFormulario(): void {
@@ -134,28 +121,33 @@ export class AdminVerEstudiantesComponent implements OnInit {
   }
 
 guardarEstudiante(): void {
-
+  this.mostrarFormulario = false;
   // Verificar si paraleloInput tiene un valor
-  if (
-    !this.estudiante.nombre &&
-    !this.estudiante.apellido &&
-    !this.estudiante.email &&
-    !this.estudiante.password 
-  ) {
-    // console.error("El campo paralelo está vacío");
-    this.mostrarFormulario=false;
-    this.mensajeService.mostrarMensajeError("Error!!!","Complete todos los campos")
-    return;
-  }
+  // if (
+  //   !this.estudiante.nombre &&
+  //   !this.estudiante.apellido &&
+  //   !this.estudiante.email &&
+  //   !this.estudiante.password 
+  // ) {
+  //   // console.error("El campo paralelo está vacío");
+  //   this.mostrarFormulario=false;
+  //   this.mensajeService.mostrarMensajeError("Error!!!","Complete todos los campos")
+  //   return;
+  // }
 
   // Obtener el ID del paralelo por el nombre proporcionado en paraleloInput
 
-        this.estudiante.paralelo=this.paraleloSelec ;
+        // this.estudiante.paralelo=this.paraleloSelec ;
+        this.estudiante.id_paralelo=this.paraleloSelec?.id_paralelo;
+        console.log(this.paraleloSelec)
+       
         if (this.editando) {
           if(this.estudiante.password==""){
             delete this.estudiante.password
           }
-          // Actualizar estudiante
+          delete this.estudiante.paralelo;
+          delete this.estudiante.asistencias;
+          this.mensajeService.mostrarMensajeConfirmacion("Confirmacion.","Esta seguro que quiere editar al estudiante?",()=>{
           this.estudiantesService.actualizarEstudiante(this.estudiante.id_estudiante, this.estudiante).subscribe(
             () => {
               console.log("Estudiante actualizado correctamente");
@@ -166,22 +158,29 @@ guardarEstudiante(): void {
              
             },
             (error) => {
+              this.mensajeService.mostrarMensajesError("Error!!",error.error.message);
               console.error('Error al actualizar estudiante:', error);
-              this.mensajeService.mostrarMensajeError("Error!!!","No se edito al estudiante")
             }
           );
+        });
         } else {
-          // Agregar nuevo estudiante
+          this.mensajeService.mostrarMensajeConfirmacion("Confirmacion.","Esta seguro que quiere agregar al estudiante?",()=>{
+          delete this.estudiante.paralelo;
+          delete this.estudiante.id_estudiante;
+          console.log(this.estudiante)
+
           this.estudiantesService.addEstudiante(this.estudiante).subscribe(
             () => {
               this.obtenerEstudiantes();
               this.cerrarFormulario();
               this.mensajeService.mostrarMensajeExito("Exito!!!","Estudiante agregado correctamente")
             },
-            (error) => {console.error('Error al agregar estudiante:', error)
-              this.mensajeService.mostrarMensajeError("Error!!!","No se agrego al estudiante")
+            (error) => {
+              console.error('Error al agregar estudiante:', error.error.message)
+              this.mensajeService.mostrarMensajesError("Error!!",error.error.message);
             }
           );
+        });
         }
 }
 

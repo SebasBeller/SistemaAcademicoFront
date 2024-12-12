@@ -51,7 +51,7 @@ export class NotaService {
               fecha: nota.materiaAsignada.fecha // Convierte también la fecha de materiaAsignada
             }
           }))
-          .filter((nota: Nota) => new Date(nota.fecha).getFullYear() === selectedYear) // Filtra las notas por año
+          .filter((nota: Nota) => nota.anio === selectedYear) // Filtra las notas por año
       )
     );
   }

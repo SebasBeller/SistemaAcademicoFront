@@ -73,23 +73,26 @@ export class FormCrearProfesorComponent {
     return hashedPassword;
   }
   async guardar() {
-    const hashedPassword = await this.generateDefaultPassword(); // Hashear la contraseña
+    // const hashedPassword = await this.generateDefaultPassword(); // Hashear la contraseña
     const profesorData = {
-      id_profesor: this.profesor.id_profesor,
+      // id_profesor: this.profesor.id_profesor,
       nombre: this.profesor.nombre,
       apellido: this.profesor.apellido,
       email: this.profesor.email,
-      password: hashedPassword
+      password: this.plainPassword
     };
-      this.profesorService.addProfesor(profesorData).subscribe({
-        next: (newProfesor) => {
-          console.log('Profesor agregado:', newProfesor);
-          this.dialogRef.close(newProfesor);
-        },
-        error: (error) => {
-          console.error('Error al agregar el profesor:', error);
-        },
-      });
+    console.log(profesorData)
+    this.dialogRef.close(profesorData);
+
+      // this.profesorService.addProfesor(profesorData).subscribe({
+      //   next: (newProfesor) => {
+      //     console.log('Profesor agregado:', newProfesor);
+      //     this.dialogRef.close(newProfesor);
+      //   },
+      //   error: (error) => {
+      //     console.error('Error al agregar el profesor:', error);
+      //   },
+      // });
     
   }
 

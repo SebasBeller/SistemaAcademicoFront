@@ -31,10 +31,8 @@ export class PerfilEstudianteService {
     );
   }
 
-
-
   private handleError(error: HttpErrorResponse) {
-    // Puedes personalizar este manejo de errores según tu necesidad
+
     console.error('Ocurrió un error:', error);
     return throwError('Algo salió mal; por favor intente de nuevo más tarde.');
   }

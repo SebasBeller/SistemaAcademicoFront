@@ -21,6 +21,7 @@ export class UnidadService {
   }
 
   editarUnidad(id:number,unidad:Unidad):Observable<any>{
+    console.log(id,unidad)
     return this.http.patch<any>(`${this.apiUrl}/${id}`,unidad);
   }
 

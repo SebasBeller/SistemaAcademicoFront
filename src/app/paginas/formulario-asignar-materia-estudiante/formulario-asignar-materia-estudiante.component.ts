@@ -100,7 +100,7 @@ export class FormularioAsignarMateriaEstudianteComponent {
   
   onAdd() {
     if(!this.estudiante){
-      this.mensajeService.mostrarMensajeError("Error!!","Debe asignar un estudiante para la materia");
+      this.mensajeService.mostrarMensajesError("Error!!",["Debe asignar un estudiante para la materia"]);
       return;
     }
     this.dialogRef.close({

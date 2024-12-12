@@ -5,8 +5,16 @@
   </select>
 
   <div class="buscador">
-    <input type="text" class="text-input" placeholder="Escribe tu búsqueda..." [(ngModel)]="busqueda"
-      (ngModelChange)="filtrarMaterias()" />
+    <div class="input-container">
+      <img src="../../../assets/img/buscar.png" alt="Buscar" class="input-icon" />
+      <input
+        type="text"
+        class="text-input"
+        placeholder="Escribe tu búsqueda..."
+        [(ngModel)]="busqueda"
+        (ngModelChange)="filtrarMaterias()"
+      />
+    </div>
   </div>
 
   <div class="materias-contenedor">
@@ -17,7 +25,7 @@
       <div>
         <h2><b>{{materia.materia?.nombre}}</b></h2>
         <p><strong>Profesor:</strong> {{materia.profesor?.nombre}}</p>
-        <p><strong>Paralelo:</strong> {{materia.paralelo?.paralelo}}</p>
+        <p><strong>Paralelo:</strong> {{materia.materia?.paralelo?.paralelo}}</p>
         <div class="historial">
           <p><strong>Faltas:</strong> {{calcularTotalClases(materia).faltas}}</p>
           <p><strong>Asistencias:</strong> {{calcularTotalClases(materia).asistencias}}</p>
@@ -25,9 +33,10 @@
           <p><strong>Total de clases:</strong> {{calcularTotalClases(materia).asistencias +
             calcularTotalClases(materia).faltas + calcularTotalClases(materia).licencias}}</p>
         </div>
-        <p><strong><a
-              [routerLink]="['/home/ver-asistencia-materia', materia.id_dicta,materia.profesor?.nombre,  materia?.materia?.nombre]"
-              class="blue-link">Detalle</a></strong></p>
+        <a [routerLink]="['/home/ver-asistencia-materia', materia.id_dicta, materia.profesor?.nombre, materia?.materia?.nombre]"
+        class="custom-button">
+       Detalle
+     </a>
       </div>
     </div>
   </div>

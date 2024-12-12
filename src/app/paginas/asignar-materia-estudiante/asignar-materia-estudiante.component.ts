@@ -41,6 +41,9 @@ export class AsignarMateriaEstudianteComponent {
   }
   filtrarAnios(){
     this.anios=[...new Set(this.asignacionesMateria.map((materia)=>materia.anio.toString()))]
+    if(!this.anios.includes(new Date().getFullYear().toString())){
+      this.anios.push(new Date().getFullYear().toString());
+    }
   }
   
   onYearChange(event: Event): void {

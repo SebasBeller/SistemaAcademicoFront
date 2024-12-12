@@ -140,12 +140,10 @@ export class AsignarMateriaAsignadaAEstudianteComponent {
   }
 
   desAsignar(estudiante:Estudiante){
-    // console.log(profesor.id_profesor)
-
-    // // console.log(this.asignacionesMateriaFiltradas)
     let id_eliminarInscr=this.inscripcionesMateriaFiltradas.filter((inscripcion) =>{
       return inscripcion.estudiante.id_estudiante==estudiante.id_estudiante && inscripcion.id_dicta==this.id_dicta && this.selectedYear==inscripcion.anio
     })[0].id_inscripcion
+    this.mensajeService.mostrarMensajeConfirmacion("Confirmacion.","¿Estás seguro de que deseas desasignar la materia al estudiante? Esta acción no se puede deshacer.",()=>{
     this.inscripcionService.desAsignarEstudiante(id_eliminarInscr).subscribe(
       (response:any)=>{
         this.actualizarDatos();
@@ -153,9 +151,10 @@ export class AsignarMateriaAsignadaAEstudianteComponent {
       },
       (error:any)=>{
         console.log(error)
-        this.mensajeService.mostrarMensajeError("Error!!!","Ocurrio un error al eliminar al estudiante de la materia");
+        this.mensajeService.mostrarMensajesError("Error!!!",["Ocurrio un error al eliminar al estudiante de la materia"]);
       }
     )
+  });
 
 
   }

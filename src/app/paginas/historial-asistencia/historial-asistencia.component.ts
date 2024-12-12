@@ -108,10 +108,6 @@ export class HistorialAsistenciaComponent implements OnInit {
         this.filtrarAnios();
         this.selectedYear=+this.anios[0];
         this.filtrarMateriasAnio()
-
-
-
-
       },
       error => {
         console.error('Error en la petición de materias asignadas:', error);

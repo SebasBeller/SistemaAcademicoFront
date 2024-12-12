@@ -12,7 +12,7 @@ export class MateriaService {
   getMaterias():Observable<Materia[]>{
     return this.http.get<Materia[]>(this.urlApi);
   }
-  postMateria(materia:Materia):Observable<Materia>{
+  postMateria(materia:any):Observable<Materia>{
     return this.http.post<Materia>(this.urlApi,materia);
   }
 }

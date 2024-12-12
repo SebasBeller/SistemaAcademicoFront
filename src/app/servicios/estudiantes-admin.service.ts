@@ -16,14 +16,10 @@ export class EstudiantesAdminService {
   constructor(private http: HttpClient) { }
 
   obtenerListaEstudiantes(): Observable<Estudiante[]> {
-    return this.http.get<Estudiante[]>(this.apiUrl).pipe(
-      catchError(this.handleError)
-    );
+    return this.http.get<Estudiante[]>(this.apiUrl)
   }
   obtenerEstudiantePorId(id: number): Observable<Estudiante> {
-    return this.http.get<Estudiante>(`${this.apiUrl}/${id}`).pipe(
-      catchError(this.handleError)
-    );
+    return this.http.get<Estudiante>(`${this.apiUrl}/${id}`)
   }
 
   obtenerUltimoEstudiante(): Observable<Estudiante | null> {
@@ -34,16 +30,12 @@ export class EstudiantesAdminService {
   }
 
   actualizarEstudiante(id: number, estudiante: Partial<Estudiante>): Observable<Estudiante> {
-    return this.http.patch<Estudiante>(`http://localhost:3000/auth/update/estudiante/${id}`, estudiante).pipe(
-      catchError(this.handleError)
-    );
+    return this.http.patch<Estudiante>(`http://localhost:3000/auth/update/estudiante/${id}`, estudiante)
   }
 
 
   addEstudiante(estudiante: Estudiante): Observable<Estudiante> {
-    return this.http.post<Estudiante>('http://localhost:3000/auth/register/estudiante', estudiante).pipe(
-    catchError(this.handleError)
-    );
+    return this.http.post<Estudiante>('http://localhost:3000/auth/register/estudiante', estudiante)
   }
 
   buscarEstudiante(nombre: string, apellido: string): Observable<any> {

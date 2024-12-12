@@ -73,6 +73,9 @@ export class AsignarMateriaDocenteComponent {
   }
   filtrarAnios(){
     this.anios=[...new Set(this.asignacionesMateria.map((materia)=>materia.anio.toString()))]
+    if(!this.anios.includes(new Date().getFullYear().toString())){
+        this.anios.push(new Date().getFullYear().toString());
+    }
   }
   
   onYearChange(event: Event): void {
@@ -119,11 +122,13 @@ export class AsignarMateriaDocenteComponent {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
+
         let materiaAsignada:any={
-          id_dicta:0,
-          id_materia:this.id_materia,
-          profesor:result.profesor,
-          fecha:result.fecha.split("T")[0]
+          // id_dicta:0,
+          id_materia:+this.id_materia,
+          id_profesor:+result.profesor.id_profesor,
+          fecha:result.fecha.split("T")[0],
+          anio:+this.selectedYear
 
         }
         console.log("ingresa",materiaAsignada);
@@ -148,6 +153,7 @@ export class AsignarMateriaDocenteComponent {
     let id_eliminarMatAsi=this.asignacionesMateriaFiltradas.filter((materia) =>{
       return materia.profesor.id_profesor==profesor.id_profesor && materia.id_materia==this.id_materia && this.selectedYear==materia.anio
     })[0].id_dicta
+    this.mensajeService.mostrarMensajeConfirmacion("Confirmacion.","¿Estás seguro de que deseas desasignar la materia al docente? Esta acción no se puede deshacer.",()=>{
     this.materiasProfesorService.eliminarMateriaAsignada(id_eliminarMatAsi).subscribe(
       (response:any)=>{
         this.actualizarDatos();
@@ -159,7 +165,7 @@ export class AsignarMateriaDocenteComponent {
       }
     )
 
-
+  });
   }
 
 }

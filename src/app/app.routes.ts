@@ -26,7 +26,7 @@ import { VerListaProfesoresComponent } from './paginas/ver-lista-profesores/ver-
 import {AsignarMateriaDocenteComponent} from './paginas/asignar-materia-docente/asignar-materia-docente.component'
 import {AsignarMateriaEstudianteComponent} from "./paginas/asignar-materia-estudiante/asignar-materia-estudiante.component"
 import {AsignarMateriaAsignadaAEstudianteComponent} from "./paginas/asignar-materia-asignada-a-estudiante/asignar-materia-asignada-a-estudiante.component"
-import { UnauthorizedComponent } from './paginas/unauthorized/unauthorized.component';
+import {NotFoundComponent} from './paginas/not-found/not-found.component'
 
 export const routes: Routes = [
   {
@@ -37,8 +37,9 @@ export const routes: Routes = [
   {
     path: 'home',
     component: LayoutComponent,
+    canActivate: [AuthGuard],
+    data: { roles: ['estudiante','admin','profesor']},
     children: [
-      { path: 'unauthorized', component: UnauthorizedComponent },
       {
         path:'',
         component:InicioCarrucelComponent
@@ -121,13 +122,13 @@ export const routes: Routes = [
         data: { roles: ['profesor'] }
       },
       {
-        path: 'mostrar-notas-por-materia-profesor/:id_dicta',
+        path: 'mostrar-notas-por-materia-profesor/:id_dicta/:anio',
         component: MostrarNotasPorMateriaProfesorComponent,
         canActivate: [AuthGuard],
         data: { roles: ['profesor'] }
       },
       {
-        path: 'detalle-notas/:id_dicta/:id_estudiante',
+        path: 'detalle-notas/:id_dicta/:id_estudiante/:anio',
         component: DetalleNotasComponent,
         canActivate: [AuthGuard],
         data: { roles: ['profesor'] }
@@ -189,5 +190,7 @@ export const routes: Routes = [
         data: {roles: ['admin']}
       }
     ],
+
   },
+  { path: '**', component: NotFoundComponent }
 ];

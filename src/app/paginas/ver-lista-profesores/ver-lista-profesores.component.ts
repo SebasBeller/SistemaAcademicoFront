@@ -33,7 +33,7 @@ export class VerListaProfesoresComponent implements OnInit {
   ngOnInit(): void {
     this.getProfesores();
     this.colorService.currentColor$.subscribe(color => {
-      this.selectedColor = color; // Actualiza el color recibido
+      this.selectedColor = color;
       console.log('Color recibido en Login:', this.selectedColor);
     });
   }
@@ -69,19 +69,24 @@ export class VerListaProfesoresComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result: Profesor | undefined) => {
       if (result) {
+        this.mensajeService.mostrarMensajeConfirmacion("Confirmacion.","Estas seguro que quieres editar al profesor?",()=>{
         this.actualizarProfesor(result.id_profesor, result);
+        });
       }
     });
   }
   
   actualizarProfesor(id: number, profesorData: Partial<Profesor>) {
+    delete profesorData.id_profesor;
     this.profesorService.updateProfesor(id, profesorData).subscribe(
       (updatedProfesor) => {
         console.log('Profesor actualizado:', updatedProfesor);
         this.getProfesores();
+        this.mensajeService.mostrarMensajeExito("Exito!!!","Se actualizo correctamente al profesor!!")
       },
       (error) => {
         console.error('Error al actualizar el profesor:', error);
+        this.mensajeService.mostrarMensajesError("Error!!",error.error.message);
       }
     );
   }
@@ -92,25 +97,25 @@ export class VerListaProfesoresComponent implements OnInit {
       profesor.apellido.toLowerCase().includes(termino) 
     );
   }
-  guardarCambios() {
-    if (this.profesorSeleccionado) {
-      this.profesorService.updateProfesor(this.profesorSeleccionado.id_profesor, this.profesorSeleccionado).subscribe(
-        (updatedProfesor) => {
-          console.log('Profesor actualizado:', updatedProfesor);
-          this.getProfesores(); 
-          this.profesorSeleccionado = null; 
-        },
-        (error) => {
-          console.error('Error al actualizar el profesor:', error);
-        }
-      );
-    }
-  }
+  // guardarCambios() {
+  //   if (this.profesorSeleccionado) {
+  //     this.profesorService.updateProfesor(this.profesorSeleccionado.id_profesor, this.profesorSeleccionado).subscribe(
+  //       (updatedProfesor) => {
+  //         console.log('Profesor actualizado:', updatedProfesor);
+  //         this.getProfesores(); 
+  //         this.profesorSeleccionado = null; 
+  //       },
+  //       (error) => {
+  //         console.error('Error al actualizar el profesor:', error);
+  //       }
+  //     );
+  //   }
+  // }
   cancelarEdicion() {
     this.profesorSeleccionado = null;
   }
   crearProfesor() {
-    const nuevoProfesor: Profesor = { id_profesor: 0, nombre: '', apellido: '', email: ''};
+    const nuevoProfesor: Partial<Profesor> = {  nombre: '', apellido: '', email: ''};
     const dialogRef = this.dialog.open(FormCrearProfesorComponent, {
       width: '300px',
       data: nuevoProfesor
@@ -118,14 +123,20 @@ export class VerListaProfesoresComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result: Profesor | undefined) => {
       if (result) {
-        console.log(result)
-        if(!result.nombre || !result.apellido || !result.email ||!result.password ){
-          this.mensajeService.mostrarMensajeError("Error!!","Complete todos los campos")
-        }
+        this.mensajeService.mostrarMensajeConfirmacion("Confirmacion.","Estas seguro que quieres agregar al profesor?",()=>{
         this.profesorService.addProfesor(result).subscribe(
-          () => this.getProfesores(),
-          (error) => console.error('Error al añadir el profesor:', error)
+          () => {
+            this.getProfesores();
+            this.mensajeService.mostrarMensajeExito("Exito!!!","Se agrego correctamente al profesor!!")
+          }
+            ,
+          (error) => {
+            console.error('Error al añadir el profesor:', error)
+            this.mensajeService.mostrarMensajesError("Error!!",error.error.message);
+          }
         );
+      });
+
       }
     });
   }

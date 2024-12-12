@@ -52,23 +52,25 @@ export class LoginComponent {
 
     login() {
       this.authService.login(this.email, this.password).subscribe({
-          next: (response) => {
-              console.log("Respuesta completa del login:", response);
-              if (response && response.usuario) {
-                  this.authService.saveUserData(response);
-                  this.router.navigate(['/home']);
-              } else {
-                  console.error("La respuesta no contiene los datos esperados de usuario.");
-                  this.mensajeService.mostrarMensajeError("Error", "Datos de usuario no recibidos.");
-
-              }
-          },
-          error: (err) => {
-              console.error('Error en el login:', err);
-              this.mensajeService.mostrarMensajeError("¡Error!", "La contraseña o su correo es incorrecto");
-          }
-      });
-  }
+        next: (response) => {
+            console.log("Respuesta completa del login:", response);
+            if (response && response.usuario) {
+                this.authService.saveUserData(response);
+                this.router.navigate(['/home']);
+            }
+        },
+        error: (err) => {
+            console.error('Error en el login:', err);
+            // this.mensajeService.mostrarMensajeError("¡Error!",  "<p>Ocurrio un error, intentalo mas tarde!!</p>");
+            let mensajes:string[]=[err.error.message[0]];
+            if(mensajes[0].length==1){
+              this.mensajeService.mostrarMensajeError("¡Error!", err.error.message ||["Ocurrio un error, intentalo mas tarde!!"]);
+          
+            }else{
+            this.mensajeService.mostrarMensajeError("¡Error!", mensajes[0] ||"Ocurrio un error, intentalo mas tarde!!");
+            }
+        }
+    }); }
 
   togglePassword() {
 
@@ -77,7 +79,7 @@ export class LoginComponent {
       this.eyeIcon = '../../../assets/img/esconder.png';
     } else {
       this.passwordType = 'password';
-      this.eyeIcon = '../../../assets/img/ver.png'; 
+      this.eyeIcon = '../../../assets/img/ver.png';
     }
   }
 

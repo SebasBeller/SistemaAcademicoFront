@@ -1,19 +1,28 @@
 import { ApplicationConfig } from '@angular/core';
 import { provideRouter } from '@angular/router';
-import { MatDialogModule } from '@angular/material/dialog';
 import { routes } from './app.routes';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { getStorage, provideStorage } from '@angular/fire/storage';
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http'; // Agregar withInterceptorsFromDi
-import { AuthInterceptor } from './auth.interceptor'; // Importa tu interceptor
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import {
+  provideHttpClient,
+  withInterceptorsFromDi,
+  withInterceptors,
+} from '@angular/common/http';
+import { authInterceptor } from './interceptors/auth.interceptor'; 
+import { errorHandlerInterceptor } from './interceptors/error-handler.interceptor';
+import { offlineInterceptor } from './interceptors/offline.interceptor';
+// import {emptyFieldsInterceptor } from './interceptors/empty-fields.interceptor';
+
 
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes),
-    provideHttpClient(withInterceptorsFromDi()), // Asegúrate de agregar withInterceptorsFromDi()
+    provideHttpClient(withInterceptorsFromDi(),
+    withInterceptors([offlineInterceptor,authInterceptor,errorHandlerInterceptor])
+  ), 
+
     provideAnimationsAsync(),
     provideFirebaseApp(() =>
       initializeApp({
@@ -27,10 +36,7 @@ export const appConfig: ApplicationConfig = {
       })
     ),
     provideStorage(() => getStorage()),
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: AuthInterceptor,
-      multi: true,
-    },
+
+    
   ],
 };

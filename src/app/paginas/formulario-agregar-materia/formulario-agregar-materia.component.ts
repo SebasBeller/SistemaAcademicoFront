@@ -60,13 +60,10 @@ export class FormularioAgregarMateriaComponent {
   }
 
   onAdd() {
-    if(!this.newMateriaName || ! this.paralelo){
-      this.mensajeService.mostrarMensajeError("Error!!!","Complete todos los campos!!")
-      return;
-    }
+
     this.dialogRef.close({
-      name: this.newMateriaName,
-      paralelo: this.paralelo,
+      name: this.newMateriaName || '',
+      paralelo: this.paralelo || '',
     });
   }
 

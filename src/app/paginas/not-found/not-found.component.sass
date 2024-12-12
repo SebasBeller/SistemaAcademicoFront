@@ -1,0 +1,56 @@
+$primary-color: #1E3A8A // Un tono elegante de azul
+$font-color: #ffffff
+
+
+.not-found-container
+  display: flex
+  align-items: center
+  justify-content: center
+  min-height: 100vh
+  background: linear-gradient(to bottom right, #1e3a8a, #1e40af, #1d4ed8)
+  padding: 0
+  box-sizing: border-box
+  text-align: center
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif
+
+.content
+  max-width: 500px
+  color: $font-color
+  background-color: rgba(255,255,255,0.1)
+  backdrop-filter: blur(8px)
+  padding: 2rem
+  border-radius: 10px
+  box-shadow: 0 8px 20px rgba(0,0,0,0.3)
+
+.status-code
+  font-size: 6rem
+  margin: 0
+  font-weight: 700
+  letter-spacing: -2px
+  color: $font-color
+
+.message
+  font-size: 1.8rem
+  margin: 0.5rem 0 1rem
+  font-weight: 600
+  letter-spacing: -0.5px
+
+.description
+  font-size: 1rem
+  line-height: 1.6
+  margin-bottom: 2rem
+  color: lighten($font-color, 10%)
+
+.home-link
+  display: inline-block
+  text-decoration: none
+  background-color: $font-color
+  color: $primary-color
+  padding: 0.8rem 1.2rem
+  border-radius: 5px
+  font-weight: 600
+  transition: background-color 0.3s ease, color 0.3s ease
+
+  &:hover
+    background-color: lighten($font-color, 10%)
+    color: darken($primary-color, 10%)

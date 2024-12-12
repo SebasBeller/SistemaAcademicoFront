@@ -22,7 +22,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let profesor of profesoresFiltrados">
+          <tr *ngFor="let profesor of profesoresFiltrados.reverse()">
             <td>{{ profesor.nombre }}</td>
             <td>{{ profesor.apellido }}</td>
             <td>{{ profesor.email }}</td>
@@ -32,11 +32,6 @@
                   <img
                     src="https://png.pngtree.com/png-clipart/20230921/original/pngtree-comicstyle-notepad-with-editing-pencil-icon-edit-isolated-note-vector-png-image_12814232.png"
                     alt="Editar" width="30" height="30" />
-                </button>
-
-                <button mat-button (click)="eliminarProfesor(profesor.id_profesor)">
-                  <img src="https://cdn-icons-png.flaticon.com/512/7347/7347206.png" alt="Eliminar" width="30"
-                    height="30" />
                 </button>
               </div>
             </td>

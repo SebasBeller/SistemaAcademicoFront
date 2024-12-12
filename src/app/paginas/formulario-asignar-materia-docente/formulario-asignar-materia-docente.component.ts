@@ -96,7 +96,7 @@ export class FormularioAsignarMateriaDocenteComponent {
   
   onAdd() {
     if(!this.profesor){
-      this.mensajeService.mostrarMensajeError("Error!!","Debe asignar un profesor para la materia");
+      this.mensajeService.mostrarMensajesError("Error!!",["Debe asignar un profesor para la materia"]);
       return;
     }
     // console.log(this.profesor)

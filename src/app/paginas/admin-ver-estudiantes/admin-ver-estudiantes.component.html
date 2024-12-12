@@ -29,7 +29,7 @@
                 <input [(ngModel)]="estudiante.email" name="email" required />
         
                 <label>Password:</label>
-                <input [(ngModel)]="estudiante.password" name="password" type="password" required />
+                <input [(ngModel)]="estudiante.password" name="password"  required />
                 
                 
                 <div>
@@ -59,13 +59,17 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let estudiante of estudiantesFiltrados">
+      <tr *ngFor="let estudiante of estudiantesFiltrados.reverse()">
         <td>{{ estudiante.nombre }}</td>
         <td>{{ estudiante.apellido }}</td>
         <td>{{ estudiante.email }}</td>
         <td>{{ estudiante.paralelo?.paralelo }}</td>
         <td>
-          <button (click)="editarEstudiante(estudiante.id_estudiante)">Editar</button>
+          <button mat-button (click)="editarEstudiante(estudiante.id_estudiante)">
+            <img
+              src="https://png.pngtree.com/png-clipart/20230921/original/pngtree-comicstyle-notepad-with-editing-pencil-icon-edit-isolated-note-vector-png-image_12814232.png"
+              alt="Editar" width="30" height="30" />
+          </button>
         </td>
       </tr>
     </tbody>

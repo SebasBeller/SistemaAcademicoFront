@@ -1,6 +1,6 @@
 import { Component, inject, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Storage, ref, uploadBytesResumable, getDownloadURL, percentage } from '@angular/fire/storage';
+import { Storage, ref, uploadBytesResumable,deleteObject, getDownloadURL, percentage } from '@angular/fire/storage';
 import { Subscription } from 'rxjs';
 import { FormsModule } from '@angular/forms';
 import { Material } from "../../../../interfaces/material";
@@ -81,7 +81,12 @@ export default class HomeComponent implements OnInit, OnDestroy {
     }
   }
 
-  uploadFile() {
+  async uploadFile() {
+    if(!this.nombreMaterial||!this.tipoMaterial){
+      this.mensajeService.mostrarMensajeError("Error!!!","Complete todos los campos!!");
+      return
+    }
+    console.log(this.file.name)
     const storageRef = ref(this._storage, `uploads/${this.file.name}`);
     const task = uploadBytesResumable(storageRef, this.file);
 
@@ -89,7 +94,7 @@ export default class HomeComponent implements OnInit, OnDestroy {
       this.subscription.unsubscribe();
     }
 
-    this.subscription = percentage(task).subscribe(
+    this.subscription = await percentage(task).subscribe(
       async ({ progress }) => {
         this.progress = `${progress}%`;
         if (progress === 100) {
@@ -100,15 +105,41 @@ export default class HomeComponent implements OnInit, OnDestroy {
       }
     );
   }
-
+  deleteFileByUrl(fileUrl?:string) {
+    if (!fileUrl) {
+      console.error("No se proporcionó una URL para eliminar.");
+      return;
+    }
+  
+    try {
+      const filePath = fileUrl.split("/o/")[1].split("?")[0]; 
+      const decodedPath = decodeURIComponent(filePath); 
+      const fileRef = ref(this._storage, decodedPath);
+      deleteObject(fileRef)
+        .then(() => {
+          console.log("Archivo eliminado correctamente.");
+        })
+        .catch((error) => {
+          console.error("Error al eliminar el archivo:", error);
+        });
+    } catch (error) {
+      console.error("Error procesando la URL del archivo:", error);
+    }
+  }
+  
   confirm() {
     const newMaterial: Material = {
-      id_material: this.currentMaterialId !== null ? this.currentMaterialId : this.materiales.length + 1,
       tipo: this.tipoMaterial,
       nombre: this.nombreMaterial,
       url: this.downloadURL,
-      id_unidad: this.id_unidad,
+      id_unidad: +(this.id_unidad||0),
     };
+    console.log("nuevo",newMaterial)
+    if(!this.nombreMaterial||!this.tipoMaterial||!this.downloadURL){
+      this.mensajeService.mostrarMensajeError("Error!!!","Complete todos los campos!!");
+      this.deleteFileByUrl(this.downloadURL);
+      return;
+    }
 
     if (this.currentMaterialId !== null) {
       this.servicioMateriales.actualizarMaterial(this.currentMaterialId, newMaterial).subscribe(
@@ -119,27 +150,33 @@ export default class HomeComponent implements OnInit, OnDestroy {
             console.log(response);
             this.materiales[index] = response;
             this.mensajeService.mostrarMensajeExito("ACTUALIZACION EXITOSA!!", "Se actualizo correctamente el material");
+
           }
           this.resetForm();
         },
         error => {
           console.error('Error al actualizar el material:', error);
+          this.mensajeService.mostrarMensajesError("Error!!", error.error.message);
         }
       );
     } else {
       this.servicioMateriales.guardadMaterial(newMaterial).subscribe(
         idMaterial => {
+
           console.log('Material guardado con ID:', idMaterial);
           this.servicioMateriales.encontrarMaterial(idMaterial).subscribe(
             (material: Material) => {
               this.materiales.push(material);
               this.mensajeService.mostrarMensajeExito("SUBIDA DE ARCHIVO EXITOSA!!", "Se subio el archivo correctamente");
               this.resetForm();
+
             }
           );
         },
         error => {
           console.error('Error al guardar el material:', error);
+          this.mensajeService.mostrarMensajesError("Error!!", error.error.message);
+          this.deleteFileByUrl(newMaterial.url);
         }
       );
     }
@@ -168,7 +205,7 @@ export default class HomeComponent implements OnInit, OnDestroy {
   }
 
   goToMaterial(material: Material) {
-    window.open('/api' + material.url, '_blank');
+    window.open( material.url, '_blank');
   }
 
   resetForm() {
@@ -180,19 +217,26 @@ export default class HomeComponent implements OnInit, OnDestroy {
   }
 
   eliminarMaterial(id: number | undefined) {
+    this.mensajeService.mostrarMensajeConfirmacion(
+      'Confirmar Eliminación',
+      '¿Estás seguro de que deseas eliminar este contenido? Esta acción no se puede deshacer.',
+      () => {
     if (id !== undefined) {
+      // this.mensajeService.
       this.servicioMateriales.eliminarMaterial(id).subscribe(
         () => {
           this.materiales = this.materiales.filter(material => material.id_material !== id);
-          console.log('Material eliminado');
+          // console.log('Material eliminado');
         },
         error => {
           console.error('Error al eliminar el material:', error);
+          this.mensajeService.mostrarMensajesError("Error!!", error.error.message);
         }
       );
     } else {
       console.error('ID de material es undefined');
     }
+  });
   }
 
   ngOnDestroy() {

@@ -99,15 +99,12 @@ export class AgregarNuevoContenidoComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         let nuevaUnidad: Unidad = {
-          id_dicta: this.id_dicta,
-          nombre: result.name || `Nuevo Contenido ${this.cardCounter}`,
+          id_dicta: +this.id_dicta,
+          nombre: result.name,
           trimestre: '1er',
-          imagen_url: result.imageUrl || 'default-image-url.jpg',
-          descripcion: undefined,
-          imagen: undefined
+          imagen_url: result.imageUrl ,
         };
         this.mensajeService.mostrarMensajeExito("¡Éxito!", 'Se ha agregado con éxito un nuevo contenido');
-        console.log(nuevaUnidad);
         this.unidadServicio.guardarUnidadDeMateriAsignada(nuevaUnidad).subscribe(
           response => {
             console.log('Respuesta:', response);
@@ -118,7 +115,7 @@ export class AgregarNuevoContenidoComponent implements OnInit {
           },
           error => {
             console.error('Error:', error);
-            this.mensajeService.mostrarMensajeError('¡Error!', 'Algo ha pasado');
+            this.mensajeService.mostrarMensajesError('¡Error!', error.error.message );
           }
         );
       }
@@ -141,17 +138,18 @@ export class AgregarNuevoContenidoComponent implements OnInit {
       if (result) {
         const index = this.unidades.findIndex(card => card.id_unidad === id);
         if (index !== -1) {
-          let unidad: Unidad = this.unidades[index];
+          let unidad: Unidad = {...this.unidades[index]};
           unidad.imagen_url = result.imageUrl;
           unidad.nombre = result.name;
           this.unidadServicio.editarUnidad(unidad.id_unidad || 0, unidad).subscribe(
             response => {
+              this.unidades[index]=unidad
               this.mensajeService.mostrarMensajeExito("¡Éxito!", 'Se ha editado con éxito el contenido');
               console.log(response);
             },
             error => {
               console.error('Error:', error);
-              this.mensajeService.mostrarMensajeError('¡Error!', 'Algo ha pasado');
+              this.mensajeService.mostrarMensajesError('¡Error!', error.error.message);
             }
           );
         }
@@ -160,6 +158,11 @@ export class AgregarNuevoContenidoComponent implements OnInit {
   }
 
   deleteCard(id?: number) {
+    this.mensajeService.mostrarMensajeConfirmacion(
+      'Confirmar Eliminación',
+      '¿Estás seguro de que deseas eliminar este contenido? Esta acción no se puede deshacer.',
+      () => {
+
     this.unidadServicio.eliminarUnidad(id || 0).subscribe(
       response => {
         this.unidades = this.unidades.filter(card => card.id_unidad !== id);
@@ -175,11 +178,18 @@ export class AgregarNuevoContenidoComponent implements OnInit {
       }
     );
   }
+ );
+}
 
   dirigirAContenido(id?: number) {
     this.router.navigate(['/home/agregar-material-docente', id]);
   }
 
+  isValidText(text: string): boolean {
+
+    const regex = /^[a-zA-Z0-9\s_-]+$/;
+    return regex.test(text);
+  }
   cancel() {
     this.showForm = false;
     this.resetForm();
