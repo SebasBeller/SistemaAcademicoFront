@@ -12,7 +12,7 @@ import { MateriaAsignadaDocente } from '../interfaces/materia-asignada-docente';
 export class NotasProfesorService {
 
 
-  private apiUrl = 'http://localhost:3000';
+  private apiUrl = 'https://academicoapi.onrender.com';
 
   constructor(private http: HttpClient) {}
 

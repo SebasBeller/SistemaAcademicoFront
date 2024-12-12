@@ -6,7 +6,7 @@ import {Materia} from '../interfaces/materia'
   providedIn: 'root'
 })
 export class MateriaService {
-  urlApi:string='http://localhost:3000/materias'
+  urlApi:string='https://academicoapi.onrender.com/materias'
   constructor(private readonly http: HttpClient) {
   }
   getMaterias():Observable<Materia[]>{

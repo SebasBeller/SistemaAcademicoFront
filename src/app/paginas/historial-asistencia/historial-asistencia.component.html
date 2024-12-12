@@ -5,16 +5,8 @@
   </select>
 
   <div class="buscador">
-    <div class="input-container">
-      <img src="../../../assets/img/buscar.png" alt="Buscar" class="input-icon" />
-      <input
-        type="text"
-        class="text-input"
-        placeholder="Escribe tu búsqueda..."
-        [(ngModel)]="busqueda"
-        (ngModelChange)="filtrarMaterias()"
-      />
-    </div>
+    <input type="text" class="text-input" placeholder="Escribe tu búsqueda..." [(ngModel)]="busqueda"
+      (ngModelChange)="filtrarMaterias()" />
   </div>
 
   <div class="materias-contenedor">
@@ -33,10 +25,9 @@
           <p><strong>Total de clases:</strong> {{calcularTotalClases(materia).asistencias +
             calcularTotalClases(materia).faltas + calcularTotalClases(materia).licencias}}</p>
         </div>
-        <a [routerLink]="['/home/ver-asistencia-materia', materia.id_dicta, materia.profesor?.nombre, materia?.materia?.nombre]"
-        class="custom-button">
-       Detalle
-     </a>
+        <p><strong><a
+              [routerLink]="['/home/ver-asistencia-materia', materia.id_dicta,materia.profesor?.nombre,  materia?.materia?.nombre]"
+              class="blue-link">Detalle</a></strong></p>
       </div>
     </div>
   </div>

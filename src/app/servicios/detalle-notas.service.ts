@@ -11,7 +11,7 @@ import { Nota } from '../interfaces/nota';
   providedIn: 'root',
 })
 export class DetalleNotasService {
-  private apiUrl = 'http://localhost:3000';
+  private apiUrl = 'https://academicoapi.onrender.com';
 
   constructor(private http: HttpClient) {}
 
@@ -110,6 +110,6 @@ export class DetalleNotasService {
   }
    // Método para actualizar la nota
    actualizarNota(nota: Nota): Observable<Nota> {
-    return this.http.patch<Nota>(`http://localhost:3000/nota/${nota.id}`, nota);
+    return this.http.patch<Nota>(`https://academicoapi.onrender.com/nota/${nota.id}`, nota);
   }
 }

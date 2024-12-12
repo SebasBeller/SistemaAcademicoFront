@@ -1,155 +1,245 @@
-
-$color-negro: #000000
-$color-gris: rgb(245, 245, 245)
-$color-blanco: rgb(255, 255, 255)
-$fuente-base: 16px
-$ancho-card: 310px
-$alto-card: 510px
-
-
-.text-input
-  width: 100%
-  padding: 10px 10px 10px 40px
-  font-size: $fuente-base
-  border: 1px solid #ccc
-  border-radius: 5px
-
-  &:focus
-    border-color: #007bff
-    outline: none
-
-
-.input-container
-  position: relative
-  display: inline-block
-  width: 100%
-
-
-.input-icon
-  position: absolute
-  top: 50%
-  left: 10px
-  transform: translateY(-50%)
-  width: 20px
-  height: 20px
-  pointer-events: none
-
-
-
-select
-  color: rgb(51, 51, 51)
-  background-color: $color-gris
-  font-size: $fuente-base + 2px
-  border-radius: 30px
-  border: 3px solid $color-negro
-  width: 100px
-  text-align: center
-  margin: 5px 0 5px 30px
-
-
-.custom-button
-  background-color: #007bff
-  margin: 15px
-  padding: 15px
-  font-size: $fuente-base
-  font-weight: bold
-  color: #fff
-  text-decoration: none
-  border: none
-  border-radius: 5px
-  text-align: center
-  transition: background-color 0.3s ease, transform 0.2s ease
-
-  &:hover
-    background-color: #0056b3
-    transform: scale(1.05)
-
-
-
-
-.color-section
+.color-azul
   h2
     color: rgb(51, 51, 51)
     margin-left: 30px
     font-size: 20px
 
-
   .buscador
-    margin: 10px auto
+    margin: 0 auto
     margin-left: 500px
+    margin-top: 10px
     margin-right: 150px
+    margin-bottom: 10px
 
 
   .text-input
     width: 60%
-    padding: 5px 5px 5px 35px
+    padding: 5px
     border-radius: 5px
-    border: 3px solid $color-negro
-    background-color: $color-gris
-
+    border: 3px solid #000000
+    background-color: rgb(245, 245, 245)
 
   .materias-contenedor
     margin-top: 15px
     display: grid
     grid-template-columns: repeat(4, 1fr)
-    gap: 15px
 
     .materia-card
-      border: 3px solid $color-negro
-      width: $ancho-card
-      height: $alto-card
+      border: 3px solid #000000
+      width: 310px
+      height: 510px
       border-radius: 10px
       text-align: center
       margin-bottom: 30px
-      background-color: $color-gris
-      font-size: $fuente-base
+      margin-left: 30px
+      background-color: rgb(245, 245, 245)
+      font-size: 16px
       color: rgb(51, 51, 51)
 
       h2
         margin-top: 10px
         margin-left: 20px
-
-
       img
-        width: 100%
+        width: 350px
         height: auto
         border-radius: 10px
-
-
+      
       .historial
         display: grid
         grid-template-columns: repeat(2, 140px)
         gap: 5px
-        margin-bottom: 20px
-
 
       p
-        margin-top: 5px
+        margin-top: 10px
 
-
-.color-azul
-  @extend .color-section
-  h2
-    color: rgb(51, 51, 51)
-
-
+      a:hover
+        color: rgb(21, 101, 192)
 
 .color-amarillo
-  @extend .color-section
   h2
     color: rgb(0, 0, 0)
+    margin-left: 30px
+    font-size: 20px
+
+  .buscador
+    margin: 0 auto
+    margin-left: 500px
+    margin-top: 10px
+    margin-right: 150px
+    margin-bottom: 10px
+
 
   .text-input
-    background-color: $color-blanco
+    width: 60%
+    padding: 5px
+    border-radius: 5px
+    border: 3px solid #000000
+    background-color: rgb(255, 255, 255)
 
   .materias-contenedor
+    margin-top: 15px
+    display: grid
+    grid-template-columns: repeat(4, 1fr)
     overflow-x: hidden
 
+    .materia-card
+      border: 3px solid #000000
+      width: 310px
+      height: 510px
+      border-radius: 10px
+      text-align: center
+      margin-left: 30px
+      margin-bottom: 30px
+      background-color: rgb(255, 255, 255)
+      font-size: 16px
+      color: rgb(0, 0, 0)
 
+      h2
+        margin-top: 10px
+        margin-left: 20px
+      img
+        width: 350px
+        height: auto
+        border-radius: 10px
+      
+      .historial
+        display: grid
+        grid-template-columns: repeat(2, 140px)
+        gap: 5px
+
+      p
+        margin-top: 10px
+
+      a:hover
+        color: rgb(255, 193, 7)
 
 .color-verde
-  @extend .color-section
   h2
     color: rgb(51, 51, 51)
+    margin-left: 30px
+    font-size: 20px
+
+  .buscador
+    margin: 0 auto
+    margin-left: 500px
+    margin-top: 10px
+    margin-right: 150px
+    margin-bottom: 10px
+
+
+  .text-input
+    width: 60%
+    padding: 5px
+    border-radius: 5px
+    border: 3px solid #000000
+    background-color: rgb(245, 245, 245)
+
+  .materias-contenedor
+    margin-top: 15px
+    display: grid
+    grid-template-columns: repeat(4, 1fr)
+
+    .materia-card
+      border: 3px solid #000000
+      width: 310px
+      height: 510px
+      border-radius: 10px
+      text-align: center
+      margin-bottom: 30px
+      margin-left: 30px
+      background-color: rgb(245, 245, 245)
+      font-size: 16px
+      color: rgb(51, 51, 51)
+
+      h2
+        margin-top: 10px
+        margin-left: 20px
+      img
+        width: 350px
+        height: auto
+        border-radius: 10px
+      
+      .historial
+        display: grid
+        grid-template-columns: repeat(2, 140px)
+        gap: 5px
+
+      p
+        margin-top: 10px
+
+      a:hover
+        color: rgb(59, 157, 105)
+
+select
+    color: rgb(51, 51, 51)
+    background-color: rgb(245, 245, 245)
+    font-size: 18px
+    border-radius: 30px
+    border: 3px solid #000000
+    width: 100px
+    text-align: center
+    margin-left: 30px
+    margin-top: 5px
+    margin-bottom: 5px
+
+@media (max-width: 768px)
+  .color-azul, .color-amarillo, .color-verde
+      h2
+        margin-left: 30px
+        font-size: 15px
+
+      .buscador
+        margin-left: 35px
+        margin-top: 10px
+        margin-bottom: 10px
+
+
+      .text-input
+        width: 270px
+        padding: 5px
+        border-radius: 5px
+        border: 3px solid #000000
+
+      .materias-contenedor
+        margin-top: 15px
+        display: grid
+        grid-template-columns: repeat(1, 1fr)
+
+        .materia-card
+          border: 3px solid #000000
+          width: 280px
+          height: 450px
+          border-radius: 10px
+          text-align: center
+          margin-bottom: 30px
+          margin-left: 30px
+          font-size: 12px
+
+          h2
+            margin-top: 10px
+            margin-left: 20px
+          img
+            width: 350px
+            height: auto
+            border-radius: 10px
+          
+          .historial
+            display: grid
+            grid-template-columns: repeat(2, 140px)
+            gap: 5px
+
+          p
+            margin-top: 10px
+  select
+      color: rgb(51, 51, 51)
+      background-color: rgb(245, 245, 245)
+      font-size: 12px
+      border-radius: 30px
+      border: 3px solid #000000
+      width: 80px
+      text-align: center
+      margin-left: 40px
+      margin-top: 5px
+      margin-bottom: 5px
 
 

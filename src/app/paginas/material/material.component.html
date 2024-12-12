@@ -3,7 +3,7 @@
     <a href="{{getSrc()}}"><b>Ver</b></a>
     <pdf-viewer [src]="getSrc()" [rotation]="0" [original-size]="false" [show-all]="true" [fit-to-page]="false"
       [zoom]="1" [zoom-scale]="'page-width'" [stick-to-page]="false" [render-text]="true"
-      [external-link-target]="'blank'" [autoresize]="true" [show-borders]="false" style="width: 50%; height: 85vh;"
+      [external-link-target]="'blank'" [autoresize]="true" [show-borders]="false" style="width: 75%; height: 85vh;"
       (after-load-complete)="readPdf($event)"></pdf-viewer>
   </div>
   <div class="accordion">

@@ -8,7 +8,7 @@ import { Profesor } from '../interfaces/profesor';
   providedIn: 'root'
 })
 export class ProfesorService {
-  private apiUrl = 'http://localhost:3000/profesor';
+  private apiUrl = 'https://academicoapi.onrender.com/profesor';
 
 
   constructor(private http: HttpClient) { }
@@ -17,11 +17,11 @@ export class ProfesorService {
     return this.http.get<Profesor[]>(this.apiUrl);
   }
   updateProfesor(id: number, profesorData: Partial<Profesor>): Observable<Profesor> {
-    return this.http.patch<Profesor>(`http://localhost:3000/auth/update/profesor/${id}`, profesorData).pipe(
+    return this.http.patch<Profesor>(`https://academicoapi.onrender.com/auth/update/profesor/${id}`, profesorData).pipe(
     );
   }
   addProfesor(profesor: Profesor): Observable<Profesor> {
-  return this.http.post<Profesor>("http://localhost:3000/auth/register/profesor", profesor);
+  return this.http.post<Profesor>("https://academicoapi.onrender.com/auth/register/profesor", profesor);
   }
 
   deleteProfesor(id: number): Observable<any> {

@@ -8,7 +8,7 @@ import { EstudiantesMateria } from '../interfaces/Lista-estudiantes-materia';
   providedIn: 'root'
 })
 export class EstudiantesService {
-  urlApi:string = 'http://localhost:3000/estudiante'
+  urlApi:string = 'https://academicoapi.onrender.com/estudiante'
   constructor(private http: HttpClient) { }
 
   obtenerEstudiantes(): Observable<EstudiantesMateria[]> {

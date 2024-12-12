@@ -12,7 +12,7 @@ import { Estudiante } from '../interfaces/estudiante';
 })
 export class NotaService {
 
-  private apiUrl = 'http://localhost:3000'; // Cambia esto a tu URL de API real
+  private apiUrl = 'https://academicoapi.onrender.com'; // Cambia esto a tu URL de API real
 
   constructor(private http: HttpClient) {}
 

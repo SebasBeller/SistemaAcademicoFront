@@ -10,7 +10,7 @@ import { Estudiante } from '../interfaces/estudiante';
 })
 export class EstudiantesAdminService {
 
-  private apiUrl = 'http://localhost:3000/estudiante';
+  private apiUrl = 'https://academicoapi.onrender.com/estudiante';
 
 
   constructor(private http: HttpClient) { }
@@ -30,12 +30,12 @@ export class EstudiantesAdminService {
   }
 
   actualizarEstudiante(id: number, estudiante: Partial<Estudiante>): Observable<Estudiante> {
-    return this.http.patch<Estudiante>(`http://localhost:3000/auth/update/estudiante/${id}`, estudiante)
+    return this.http.patch<Estudiante>(`https://academicoapi.onrender.com/auth/update/estudiante/${id}`, estudiante)
   }
 
 
   addEstudiante(estudiante: Estudiante): Observable<Estudiante> {
-    return this.http.post<Estudiante>('http://localhost:3000/auth/register/estudiante', estudiante)
+    return this.http.post<Estudiante>('https://academicoapi.onrender.com/auth/register/estudiante', estudiante)
   }
 
   buscarEstudiante(nombre: string, apellido: string): Observable<any> {

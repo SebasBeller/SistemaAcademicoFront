@@ -284,3 +284,75 @@
     &:hover
       background-color: darken(rgb(59, 157, 105), 10%)
 
+@media (max-width: 768px)
+  .color-azul, .color-amarillo, .color-verde
+    .form-modal
+      border-radius: 3px
+      border: 3px solid #000000
+      overflow: hidden
+      h2
+        margin-top: 15px
+        margin-bottom: 15px
+        margin-left: 80px
+        font-size: 16px
+      mat-form-field
+          margin-left: 40px
+      .dialog-buttons
+          margin-top: 15px
+          margin-bottom: 15px
+          margin-left: 150px
+          button
+              margin-right: 20px
+    .modal
+      position: fixed
+      top: 0
+      left: 0
+      width: 100%
+      height: 200px
+      display: flex
+      justify-content: center
+      align-items: center
+      border-radius: 30px
+      border: 3px solid #000000
+      z-index: 1000
+
+    .modal-dialog-content
+      background: #ffffff
+      padding: 20px
+      overflow: hidden 
+      display: flex
+      flex-direction: column
+      border: none
+      gap: 20px
+      border-radius: 30px 
+      border: 3px solid #000000
+      max-width: 400px
+      width: 70%
+      box-shadow: none
+
+    label
+      display: flex
+      flex-direction: column
+      font-size: 14px
+      gap: 5px
+      margin-bottom: 15px
+
+    input
+      padding: 5px
+      font-size: 10px
+      outline: none
+      transition: border-color 0.3s
+
+    mat-dialog-actions
+      display: flex
+      justify-content: flex-end
+      gap: 10px
+
+    button[mat-button]
+      padding: 4px 8px
+      font-size: 10px
+      border: none
+      border-radius: 20px
+      cursor: pointer
+      transition: background-color 0.3s, transform 0.2s
+      color: #ffffff

@@ -9,7 +9,7 @@ import { Estudiante } from '../interfaces/estudiante';
 })
 export class PerfilEstudianteService {
 
-  private apiUrl = 'http://localhost:3000/estudiante';
+  private apiUrl = 'https://academicoapi.onrender.com/estudiante';
 
 
   constructor(private http: HttpClient) { }
