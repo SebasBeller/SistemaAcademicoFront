@@ -3,16 +3,12 @@
     border-radius: 8px
     background-color: rgb(245, 245, 245)
     padding: 20px
-    max-width: 500px
     margin: 0 auto
     color: rgb(51, 51, 51)
 
-  legend
-    font-size: 1.5em
-    font-weight: bold
-    text-align: center
-    color: rgb(51, 51, 51)
-    margin-bottom: 15px
+  .content
+    border: 3px solid #000000
+    width: 50%
 
   .foto-perfil
     width: 150px
@@ -27,13 +23,13 @@
     border: 2px solid rgb(51, 51, 51)
 
   .elegir-avatar
-    width: 60%
+    width: 50%
     margin: 0 auto
 
   ul
     display: flex
     flex-wrap: wrap
-    justify-content: center
+    justify-content: space-evenly
     gap: 10px
 
   li img
@@ -46,6 +42,7 @@
       border-color: rgb(51, 51, 51)
 
   input[type=text], input[type=password], select
+    display: inline-block
     width: 100%
     padding: 10px
     margin: 10px 0
@@ -66,14 +63,16 @@
     margin-top: -8px
     margin-bottom: 8px
 
+  .dialog-buttons
+      width: 100%
+      text-align: center
+
   input[type=submit]
     width: 120px
     background-color: rgb(13, 71, 161)
     color: rgb(255, 255, 255)
     padding: 12px 20px
     margin: 12px 0
-    margin-left: 300px
-    border: none
     border-radius: 4px
     cursor: pointer
     font-size: 1em
@@ -82,8 +81,7 @@
     &:hover
       background-color: rgb(21, 101, 192)
 
-  .content
-    border: 3px solid #000000
+
 
 .color-amarillo
   div
@@ -266,17 +264,11 @@
       border-radius: 8px
       padding: 20px
       max-width: 300px
-      margin-left: 30px
-
-    legend
-      font-size: 16px
-      margin-bottom: 15px
-      margin-left: 20px
+      width:100%
 
     .foto-perfil
       width: 100px
       height: 100px
-      margin-left: 80px
 
     img
       border-radius: 50%
@@ -284,8 +276,8 @@
       height: auto
 
     .elegir-avatar
-      width: 60%
-      margin-left: 20px
+      width: 100%
+
 
     ul
       display: flex
@@ -301,7 +293,7 @@
       border: 2px solid transparent
 
     input[type=text], input[type=password], select
-      width: 240px
+      width: 100%
       padding: 10px
       margin: 10px 0
       border: 1px solid rgb(51, 51, 51)
@@ -325,11 +317,16 @@
       width: 80px
       padding: 12px 20px
       margin: 12px 0
-      margin-left: 280px
       border: none
       border-radius: 4px
       cursor: pointer
       font-size: 10px
       font-weight: bold
-    .content
-      border: 3px solid #000000
+    .dialog-buttons
+      width: 100%
+      text-align: center
+    .content>div
+      text-align: center
+      width: 100%
+
+

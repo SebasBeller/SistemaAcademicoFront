@@ -1,5 +1,5 @@
 <div [ngClass]="getColorClass()">
-  
+
   <div class="search-section">
     <label>Buscar por Nombre: </label>
     <input [(ngModel)]="filtroNombre" name="filtroNombre" placeholder="Nombre">
@@ -8,30 +8,31 @@
   </div>
 
 <div class="container">
+  <div class="agregar-boton-estudiante">
   <button class="add-button" (click)="abrirFormulario()">
     <span>+</span> <b>Agregar Estudiante</b>
   </button>
-
+  </div>
         <!-- Modal para agregar/editar estudiante -->
         <div class="modal" *ngIf="mostrarFormulario">
             <div class="modal-content">
               <span class="close" (click)="cerrarFormulario()">&times;</span>
               <h2><b>{{ editando ? 'Editar Estudiante' : 'Agregar Estudiante' }}</b></h2>
-        
+
               <form (ngSubmit)="guardarEstudiante()">
                   <label>Nombre:</label>
                   <input [(ngModel)]="estudiante.nombre" name="nombre" required (ngModelChange)="generarEmailYPassword()" />
-          
+
                   <label>Apellido:</label>
                   <input [(ngModel)]="estudiante.apellido" name="apellido" required (ngModelChange)="generarEmailYPassword()" />
-           
+
                 <label>Email:</label>
                 <input [(ngModel)]="estudiante.email" name="email" required />
-        
+
                 <label>Password:</label>
                 <input [(ngModel)]="estudiante.password" name="password"  required />
-                
-                
+
+
                 <div>
                   <label >Paralelo: </label>
                   <select  (click)="actualizarParalelo($event)">
@@ -40,14 +41,14 @@
                     </option>
                   </select>
                 </div>
-                
 
-        
+
+
                 <button type="submit">{{ editando ? 'Guardar Cambios' : 'Agregar' }}</button>
               </form>
             </div>
           </div>
-  
+
   <table class="table">
     <thead>
       <tr>
