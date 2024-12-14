@@ -6,9 +6,9 @@
     </div>
     <div class="acciones">
       <div class="perfil-notificaciones">
-        <img class="notificaciones" src="../../../assets/img/boton-de-notificaciones.png" alt="Notificaciones" />
+        <img class="notificaciones" src="assets/img/boton-de-notificaciones.png" alt="Notificaciones" />
         <a [routerLink]="userRole === 'estudiante' ? 'perfil-estudiante/' + idEstudiante : '/home/'">
-          <img *ngIf="fotoPerfil || '../../../assets/img/silueta.jpg'" [src]="fotoPerfil" alt="Foto de Perfil" />
+          <img *ngIf="fotoPerfil || 'assets/img/silueta.jpg'" [src]="fotoPerfil" alt="Foto de Perfil" />
         </a>
       </div>
     </div>
