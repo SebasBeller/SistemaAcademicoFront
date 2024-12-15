@@ -25,12 +25,12 @@ import { SelectionColorService } from '../../servicios/selection-color.service';
 })
 export class MaterialComponent {
   selectedColor: string = '';
-  isOpen?:boolean; 
+  isOpen?:boolean;
   readonly panelOpenState2 = signal(false);
   panelOpenState: boolean = false;
   private src!:string;
-  materialesServicio:MaterialService=inject(MaterialService) 
-  route:ActivatedRoute=inject(ActivatedRoute) 
+  materialesServicio:MaterialService=inject(MaterialService)
+  route:ActivatedRoute=inject(ActivatedRoute)
 
   private pdfService=inject(PdfService)
   userPrompt: string = '';
@@ -38,7 +38,7 @@ export class MaterialComponent {
   messages: { user: string; responseIA: string }[] = [];
 
   material?:Material;
-  
+
   id_material?:number;
   constructor(private colorService: SelectionColorService){
 
@@ -48,11 +48,11 @@ export class MaterialComponent {
 
   ngOnInit(): void {
     this.pdfService.askClear()
-    this.isOpen = false; 
+    this.isOpen = false;
     this.materialesServicio.encontrarMaterial(this.id_material).subscribe(
       (data)=>{
           this.material=data
-          this.src='/api'+this.material?.url
+          this.src=`/api${this.material?.url}`;
           console.log(data)
 
       },
@@ -65,7 +65,7 @@ export class MaterialComponent {
       console.log('Color recibido en Login:', this.selectedColor);
     });
   }
-  
+
   getColorClass(): string {
     switch (this.selectedColor) {
       case 'verde':
@@ -83,7 +83,7 @@ export class MaterialComponent {
 
   toggle() {
     this.messages = [];
-    this.isOpen = !this.isOpen; 
+    this.isOpen = !this.isOpen;
   }
 
   async readPdf(pdf: PDFDocumentProxy) {
@@ -104,5 +104,5 @@ export class MaterialComponent {
     }
   }
 
-  
+
 }
