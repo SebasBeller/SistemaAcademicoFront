@@ -22,7 +22,7 @@ export class LoginComponent {
   errorMessage: string | null = null;
   passwordType: string = 'password';
   showPassword: boolean = false;
-  eyeIcon: string = '../../../assets/img/ver.png';
+  eyeIcon: string = 'assets/img/ver.png';
   constructor(
     private colorService: SelectionColorService,
     private authService: AuthService,
@@ -65,7 +65,7 @@ export class LoginComponent {
             let mensajes:string[]=[err.error.message[0]];
             if(mensajes[0].length==1){
               this.mensajeService.mostrarMensajeError("¡Error!", err.error.message ||["Ocurrio un error, intentalo mas tarde!!"]);
-          
+
             }else{
             this.mensajeService.mostrarMensajeError("¡Error!", mensajes[0] ||"Ocurrio un error, intentalo mas tarde!!");
             }
@@ -76,10 +76,10 @@ export class LoginComponent {
 
     if (this.passwordType === 'password') {
       this.passwordType = 'text';
-      this.eyeIcon = '../../../assets/img/esconder.png';
+      this.eyeIcon = 'assets/img/esconder.png';
     } else {
       this.passwordType = 'password';
-      this.eyeIcon = '../../../assets/img/ver.png';
+      this.eyeIcon = 'assets/img/ver.png';
     }
   }
 
