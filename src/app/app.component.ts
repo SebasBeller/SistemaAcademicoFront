@@ -5,6 +5,7 @@ import { RouterOutlet } from '@angular/router';
 import { MatDialogModule } from '@angular/material/dialog';
 import { SelectionColorService } from './servicios/selection-color.service';
 
+
 @Component({
   selector: 'app-root',
   standalone: true,
