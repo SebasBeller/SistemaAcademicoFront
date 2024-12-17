@@ -34,7 +34,6 @@ export class VerListaProfesoresComponent implements OnInit {
     this.getProfesores();
     this.colorService.currentColor$.subscribe(color => {
       this.selectedColor = color;
-      console.log('Color recibido en Login:', this.selectedColor);
     });
   }
 
@@ -54,7 +53,6 @@ export class VerListaProfesoresComponent implements OnInit {
       (data: Profesor[]) => {
         this.profesores = data;
         this.profesoresFiltrados=data;
-        console.log('profesores:',this.profesores);
       },
       (error) => {
         console.error('Error al obtener los profesores:', error);
@@ -80,7 +78,6 @@ export class VerListaProfesoresComponent implements OnInit {
     delete profesorData.id_profesor;
     this.profesorService.updateProfesor(id, profesorData).subscribe(
       (updatedProfesor) => {
-        console.log('Profesor actualizado:', updatedProfesor);
         this.getProfesores();
         this.mensajeService.mostrarMensajeExito("Exito!!!","Se actualizo correctamente al profesor!!")
       },
@@ -97,20 +94,7 @@ export class VerListaProfesoresComponent implements OnInit {
       profesor.apellido.toLowerCase().includes(termino) 
     );
   }
-  // guardarCambios() {
-  //   if (this.profesorSeleccionado) {
-  //     this.profesorService.updateProfesor(this.profesorSeleccionado.id_profesor, this.profesorSeleccionado).subscribe(
-  //       (updatedProfesor) => {
-  //         console.log('Profesor actualizado:', updatedProfesor);
-  //         this.getProfesores(); 
-  //         this.profesorSeleccionado = null; 
-  //       },
-  //       (error) => {
-  //         console.error('Error al actualizar el profesor:', error);
-  //       }
-  //     );
-  //   }
-  // }
+ 
   cancelarEdicion() {
     this.profesorSeleccionado = null;
   }
@@ -141,11 +125,9 @@ export class VerListaProfesoresComponent implements OnInit {
     });
   }
   eliminarProfesor(id: number): void {
-    console.log(`Eliminar profesor con ID: ${id}`);
     if (confirm('¿Estás seguro de que deseas eliminar este profesor?')) {
       this.profesorService.deleteProfesor(id).subscribe({
         next: () => {
-          console.log('Profesor eliminado con exito.');
           this.getProfesores();
         },
         error: (error) => {

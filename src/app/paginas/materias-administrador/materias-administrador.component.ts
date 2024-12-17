@@ -40,8 +40,6 @@ export class MateriasAdministradorComponent {
       response=>{
         this.materias=response;
         let materiasProfesores:any=[];
-
-            console.log("resp-mats",response)
       },
       error=>{
         console.log(error)
@@ -50,7 +48,6 @@ export class MateriasAdministradorComponent {
     paraleloService.getParalelo().subscribe(
       response=>{
         this.paralelos=response;
-        console.log("resp",response)
       },
       error=>{
         console.log(error)
@@ -68,15 +65,12 @@ export class MateriasAdministradorComponent {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        console.log(result);
         let materia:any={
           nombre:result.name,
           id_paralelo:+result.paralelo.id_paralelo,
         }
-        console.log(materia)
         this.servicioMaterias.postMateria(materia).subscribe(
           response=>{
-            console.log("resp",response)
             materia.id_materia=response.id_materia || 0
             materia.id=response.id_materia || 0
             materia.paralelo=result.paralelo
@@ -97,7 +91,6 @@ export class MateriasAdministradorComponent {
   ngOnInit() {
     this.colorService.currentColor$.subscribe(color => {
       this.selectedColor = color; // Actualiza el color recibido
-      console.log('Color recibido en Login:', this.selectedColor);
     });
   }
 

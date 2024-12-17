@@ -58,7 +58,6 @@ export class AsignarMateriaEstudianteComponent {
   ngOnInit() {
     this.colorService.currentColor$.subscribe(color => {
       this.selectedColor = color; // Actualiza el color recibido
-      console.log('Color recibido en Login:', this.selectedColor);
     });
 
             this.materiasProfesorService.obtenerMaterias().subscribe(
@@ -67,7 +66,6 @@ export class AsignarMateriaEstudianteComponent {
             this.profesoresAsignadosAMateria=this.asignacionesMateria.map((materiaAsignada)=>materiaAsignada.profesor)
             this.filtrarMateriasAnio()
             this.filtrarProfesores();
-            console.log()
           },
             error=>{
               console.log(error)
@@ -87,11 +85,7 @@ export class AsignarMateriaEstudianteComponent {
   }
 
   asignarEstudiante(id_profesor:number){
-    console.log(id_profesor)
-    console.log(this.id_materia);
-    console.log("asignaciones",this.asignacionesMateria)
     let id_dicta=this.asignacionesMateria.filter((asignacion)=>asignacion.id_materia==this.id_materia && asignacion.profesor.id_profesor==id_profesor && asignacion.anio===this.selectedYear)[0].id_dicta;
-    console.log(id_dicta)
     this.router.navigate(['/home/asignar-materia-asignada-a-estudiante', id_dicta,this.selectedYear]);
 
   }

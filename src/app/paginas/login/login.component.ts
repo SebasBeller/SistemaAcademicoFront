@@ -32,8 +32,7 @@ export class LoginComponent {
 
   ngOnInit() {
     this.colorService.currentColor$.subscribe(color => {
-      this.selectedColor = color; // Actualiza el color recibido
-      console.log('Color recibido en Login:', this.selectedColor);
+      this.selectedColor = color; 
     });
   }
 
@@ -48,12 +47,9 @@ export class LoginComponent {
     }
   }
 
-
-
     login() {
       this.authService.login(this.email, this.password).subscribe({
         next: (response) => {
-            console.log("Respuesta completa del login:", response);
             if (response && response.usuario) {
                 this.authService.saveUserData(response);
                 this.router.navigate(['/home']);
@@ -61,7 +57,6 @@ export class LoginComponent {
         },
         error: (err) => {
             console.error('Error en el login:', err);
-            // this.mensajeService.mostrarMensajeError("¡Error!",  "<p>Ocurrio un error, intentalo mas tarde!!</p>");
             let mensajes:string[]=[err.error.message[0]];
             if(mensajes[0].length==1){
               this.mensajeService.mostrarMensajeError("¡Error!", err.error.message ||["Ocurrio un error, intentalo mas tarde!!"]);

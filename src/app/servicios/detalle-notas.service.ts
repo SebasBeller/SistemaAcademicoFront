@@ -91,7 +91,6 @@ export class DetalleNotasService {
 
     return this.obtenerTodasLasNotas().pipe(
       map(notas => {
-        console.log('Notas recibidas del servidor:', notas); // Verificar los datos antes del procesamiento
         return notas.map((nota: Nota) => ({
           ...nota,
           fecha: new Date(nota.fecha),

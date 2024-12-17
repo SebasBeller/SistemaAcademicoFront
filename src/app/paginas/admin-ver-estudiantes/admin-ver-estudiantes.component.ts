@@ -61,7 +61,6 @@ export class AdminVerEstudiantesComponent implements OnInit {
     this.obtenerParalelos();
     this.colorService.currentColor$.subscribe(color => {
       this.selectedColor = color; // Actualiza el color recibido
-      console.log('Color recibido en Login:', this.selectedColor);
     });
   }
 
@@ -93,7 +92,6 @@ export class AdminVerEstudiantesComponent implements OnInit {
   }
 
   actualizarParalelo(event:any){
-    console.log(event.target)
     this.paraleloSelec=this.paralelos.find(paralelo=>paralelo.paralelo==event.target.value)
 
   }
@@ -122,24 +120,7 @@ export class AdminVerEstudiantesComponent implements OnInit {
 
 guardarEstudiante(): void {
   this.mostrarFormulario = false;
-  // Verificar si paraleloInput tiene un valor
-  // if (
-  //   !this.estudiante.nombre &&
-  //   !this.estudiante.apellido &&
-  //   !this.estudiante.email &&
-  //   !this.estudiante.password 
-  // ) {
-  //   // console.error("El campo paralelo está vacío");
-  //   this.mostrarFormulario=false;
-  //   this.mensajeService.mostrarMensajeError("Error!!!","Complete todos los campos")
-  //   return;
-  // }
-
-  // Obtener el ID del paralelo por el nombre proporcionado en paraleloInput
-
-        // this.estudiante.paralelo=this.paraleloSelec ;
         this.estudiante.id_paralelo=this.paraleloSelec?.id_paralelo;
-        console.log(this.paraleloSelec)
        
         if (this.editando) {
           if(this.estudiante.password==""){
@@ -150,7 +131,6 @@ guardarEstudiante(): void {
           this.mensajeService.mostrarMensajeConfirmacion("Confirmacion.","Esta seguro que quiere editar al estudiante?",()=>{
           this.estudiantesService.actualizarEstudiante(this.estudiante.id_estudiante, this.estudiante).subscribe(
             () => {
-              console.log("Estudiante actualizado correctamente");
               this.obtenerEstudiantes();
               this.cerrarFormulario();
               this.mensajeService.mostrarMensajeExito("Exito!!!","Estudiante editado correctamente")
@@ -167,7 +147,6 @@ guardarEstudiante(): void {
           this.mensajeService.mostrarMensajeConfirmacion("Confirmacion.","Esta seguro que quiere agregar al estudiante?",()=>{
           delete this.estudiante.paralelo;
           delete this.estudiante.id_estudiante;
-          console.log(this.estudiante)
 
           this.estudiantesService.addEstudiante(this.estudiante).subscribe(
             () => {
@@ -196,7 +175,6 @@ guardarEstudiante(): void {
         this.estudiante.password="";
         this.mostrarFormulario = true;
         this.editando = true;
-        console.log(this.paraleloSelec)
       },
       (error) => console.error('Error al obtener estudiante:', error)
     );

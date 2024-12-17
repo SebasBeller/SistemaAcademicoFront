@@ -30,7 +30,6 @@ export class BuscarMateriaComponent {
   buscar() {
     const inputValue = (document.getElementById('buscar-materia') as HTMLInputElement).value;
 
-    console.log('Buscando:', inputValue, 'en el tipo de búsqueda:', this.tipoBusqueda);
 
     if (this.tipoBusqueda === 'materia') {
       this.resultado = this.materias.filter(m => 

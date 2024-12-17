@@ -55,7 +55,6 @@ export class FormularioAsignarMateriaDocenteComponent {
   ) {
     this.profesores= data.profesores || '';
     this.fecha = data.fecha || new Date();
-    console.log(this.fecha)
   }
 
   ngOnInit() {
@@ -67,7 +66,6 @@ export class FormularioAsignarMateriaDocenteComponent {
 
     this.colorService.currentColor$.subscribe(color => {
       this.selectedColor = color; // Actualiza el color recibido
-      console.log('Color recibido en Login:', this.selectedColor);
     });
   }
 
@@ -99,7 +97,6 @@ export class FormularioAsignarMateriaDocenteComponent {
       this.mensajeService.mostrarMensajesError("Error!!",["Debe asignar un profesor para la materia"]);
       return;
     }
-    // console.log(this.profesor)
     this.dialogRef.close({
       profesor: this.profesor,
       fecha: this.fecha,

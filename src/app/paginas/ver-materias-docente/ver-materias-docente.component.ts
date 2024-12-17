@@ -37,7 +37,6 @@ export class VerMateriasDocenteComponent implements OnInit {
   filtrarAnios() {
     this.anios = [...new Set(this.materiasFiltradas.map((materia) => materia.anio.toString()))]
       .sort((a, b) => parseInt(b) - parseInt(a)); // Ordenar descendente
-    console.log('Años únicos ordenados (descendentes):', this.anios);
   }
   
   
@@ -51,17 +50,12 @@ export class VerMateriasDocenteComponent implements OnInit {
   ngOnInit(): void {
     this.colorService.currentColor$.subscribe(color => {
       this.selectedColor = color; // Actualiza el color recibido
-      console.log('Color recibido en Login:', this.selectedColor);
     });
     const idProfesor = this.authService.getUserId();
 
       this.servicioMateriasProfesor.obtenerMaterias().subscribe(
-        response => {
-          console.log('Datos recibidos:', response);
-          
+        response => {          
           this.materias = response.filter(materia => materia.profesor?.id_profesor === idProfesor);
-          console.log('id_dicta profesor:', idProfesor)
-          console.log('Materias asignadas:', this.materias,);
           this.materiasFiltradas=this.materias;
           this.filtrarMateriasAnio();
           this.filtrarAnios();

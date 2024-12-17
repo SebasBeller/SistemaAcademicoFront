@@ -31,9 +31,6 @@ export class FormCrearProfesorComponent {
   plainPassword: string = 'password123'; // Contraseña sin hashear por defecto
   editando = false;
 
-
-
-
   constructor(
     private colorService: SelectionColorService,
     public dialogRef: MatDialogRef<FormCrearProfesorComponent>,
@@ -50,7 +47,6 @@ export class FormCrearProfesorComponent {
   ngOnInit() {
     this.colorService.currentColor$.subscribe(color => {
       this.selectedColor = color; // Actualiza el color recibido
-      console.log('Color recibido en Login:', this.selectedColor);
     });
     if (!this.profesor.password) {
       this.plainPassword = 'password123';
@@ -73,32 +69,16 @@ export class FormCrearProfesorComponent {
     return hashedPassword;
   }
   async guardar() {
-    // const hashedPassword = await this.generateDefaultPassword(); // Hashear la contraseña
     const profesorData = {
-      // id_profesor: this.profesor.id_profesor,
       nombre: this.profesor.nombre,
       apellido: this.profesor.apellido,
       email: this.profesor.email,
       password: this.plainPassword
     };
-    console.log(profesorData)
     this.dialogRef.close(profesorData);
-
-      // this.profesorService.addProfesor(profesorData).subscribe({
-      //   next: (newProfesor) => {
-      //     console.log('Profesor agregado:', newProfesor);
-      //     this.dialogRef.close(newProfesor);
-      //   },
-      //   error: (error) => {
-      //     console.error('Error al agregar el profesor:', error);
-      //   },
-      // });
-    
   }
-
   cancelar() {
     this.dialogRef.close();
   }
   
-
 }

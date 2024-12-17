@@ -49,7 +49,6 @@ export class AsignarMateriaAsignadaAEstudianteComponent {
        
         this.inscripcionesMateria=response;
         this.inscripcionesMateriaFiltradas=response;
-        console.log(this.inscripcionesMateria)
         this.filtrarEstudiantes();
         this.getEstudiantes()
       },
@@ -62,7 +61,6 @@ export class AsignarMateriaAsignadaAEstudianteComponent {
   ngOnInit() {
     this.colorService.currentColor$.subscribe(color => {
       this.selectedColor = color; // Actualiza el color recibido
-      console.log('Color recibido en Login:', this.selectedColor);
     });
 
     this.actualizarDatos();
@@ -75,7 +73,6 @@ export class AsignarMateriaAsignadaAEstudianteComponent {
 
   filtrarEstudiantes(){
     this.estudiantessAsignadosAMateria=this.inscripcionesMateriaFiltradas.map((inscripcion)=>inscripcion.estudiante)
-    console.log("ests",this.estudiantessAsignadosAMateria)
   }
   
 
@@ -86,7 +83,6 @@ export class AsignarMateriaAsignadaAEstudianteComponent {
         this.estudiantes = response.filter(estudiante =>
           !estudiantesAsignados.some(est => est.id_estudiante === estudiante.id_estudiante)
         );
-        console.log("resp estd", this.estudiantes);
       },
       error => {
         console.error(error);
@@ -115,18 +111,14 @@ export class AsignarMateriaAsignadaAEstudianteComponent {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        console.log(result)
-
         let inscripcion:any={
           id_dicta:this.id_dicta,
           id_estudiante:result.estudiante.id_estudiante,
           fecha_inscripcion:result.fecha.split("T")[0],
           anio:this.selectedYear
         }
-        console.log("inscripcion",inscripcion)
         this.inscripcionService.asignarEstudiantes([inscripcion]).subscribe(
           response=>{
-            console.log("resp",response)
             this.actualizarDatos();
           },
           error=>{

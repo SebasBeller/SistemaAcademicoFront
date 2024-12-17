@@ -36,12 +36,10 @@ export class DetalleMateriaComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log('ID Dicta:', this.id_dicta); // Agrega este log para verificar el valor
 
-    if (this.id_dicta) { // Asegúrate de que id_dicta no sea undefined
+    if (this.id_dicta) { 
       this.materiaAsignadaServicio.obtenerMateriaAsignada(this.id_dicta).subscribe(
         response => {
-          console.log('Datos recibidos:', response);
           this.materiaAsiganda = response;
         },
         error => {
@@ -51,7 +49,6 @@ export class DetalleMateriaComponent implements OnInit {
 
       this.unidadServicio.getUnidadesDeMateriAsignada(this.id_dicta).subscribe(
         response => {
-          console.log('Datos recibidos:', response);
           this.unidades = response;
         },
         error => {
@@ -63,7 +60,6 @@ export class DetalleMateriaComponent implements OnInit {
     }
     this.colorService.currentColor$.subscribe(color => {
       this.selectedColor = color; // Actualiza el color recibido
-      console.log('Color recibido en Login:', this.selectedColor);
     });
   }
   getColorClass(): string {

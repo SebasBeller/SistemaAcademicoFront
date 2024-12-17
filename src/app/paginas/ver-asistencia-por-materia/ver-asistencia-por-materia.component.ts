@@ -35,7 +35,6 @@ export class VerAsistenciaPorMateriaComponent implements OnInit {
     this.obtenerAsistencias();
     this.colorService.currentColor$.subscribe(color => {
       this.selectedColor = color; // Actualiza el color recibido
-      console.log('Color recibido en Login:', this.selectedColor);
     });
   }
 
@@ -54,8 +53,6 @@ export class VerAsistenciaPorMateriaComponent implements OnInit {
     // Asumiendo que estás obteniendo todas las asistencias
     this.historialAsistenciaService.obtenerAsistencias().subscribe(
       (asistencias: Asistencia[]) => {
-        console.log(asistencias)
-        console.log(asistencias)
         this.agruparAsistenciasPorMes(asistencias);
       },
       (error) => {
@@ -65,19 +62,14 @@ export class VerAsistenciaPorMateriaComponent implements OnInit {
   }
 
   agruparAsistenciasPorMes(asistencias: Asistencia[]): void {
-    console.log(asistencias)
-    console.log(asistencias)
     asistencias.forEach((asistencia) => {
       if (
         asistencia.estudiante?.id_estudiante == this.authService.getUserId() &&
         asistencia.estudiante?.id_estudiante == this.authService.getUserId() &&
         asistencia.id_dicta == this.materia
       ) {
-        console.log("gg",asistencia.fecha_asistencia)
-        console.log("gg",asistencia.fecha_asistencia)
 
         const fecha = new Date(asistencia.fecha_asistencia+"T00:00:00");
-        console.log(fecha)
         const mes = fecha.toLocaleString('en-US', {
           month: 'long',
           year: 'numeric',
@@ -87,8 +79,6 @@ export class VerAsistenciaPorMateriaComponent implements OnInit {
           this.asistenciasPorMes[mes] = [];
         }
         this.asistenciasPorMes[mes].push(asistencia);
-        console.log(asistencias);
-        console.log(this.asistenciasPorMes);
       }
     });
   }

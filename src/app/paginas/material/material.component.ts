@@ -21,7 +21,6 @@ import { SelectionColorService } from '../../servicios/selection-color.service';
   imports: [FormsModule, PdfViewerModule, MatExpansionModule, CommonModule],
   templateUrl: './material.component.html',
   styleUrl: './material.component.sass',
-  // changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MaterialComponent {
   selectedColor: string = '';
@@ -53,8 +52,6 @@ export class MaterialComponent {
       (data)=>{
           this.material=data
           this.src=`/api${this.material?.url}`;
-          console.log(data)
-
       },
       error => {
         console.error('Error en la petición GET:', error);
@@ -62,7 +59,6 @@ export class MaterialComponent {
     )
     this.colorService.currentColor$.subscribe(color => {
       this.selectedColor = color; // Actualiza el color recibido
-      console.log('Color recibido en Login:', this.selectedColor);
     });
   }
 

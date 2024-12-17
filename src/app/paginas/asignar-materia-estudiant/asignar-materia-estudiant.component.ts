@@ -5,8 +5,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms'; 
 import { Inscripcion } from '../../interfaces/Inscripcion';
 import { MatDialog } from '@angular/material/dialog'; // Importa MatDialog
-import { FormAsignarMateriaEstudianteComponent } from '../form-asignar-materia-estudiante/form-asignar-materia-estudiante.component';
-
+import { FormularioAsignarMateriaEstudianteComponent } from '../formulario-asignar-materia-estudiante/formulario-asignar-materia-estudiante.component';
 @Component({
   selector: 'app-asignar-materia-estudiant',
   standalone: true,
@@ -41,7 +40,7 @@ export class AsignarMateriaEstudiantComponent implements OnInit {
   abrirDialogo(estudianteId: number): void {
     const inscripcion = this.obtenerInscripcion(estudianteId);
     if (inscripcion) {
-      this.dialog.open(FormAsignarMateriaEstudianteComponent, {
+      this.dialog.open(FormularioAsignarMateriaEstudianteComponent, {
         data: inscripcion // Pasa los datos al diálogo
       });
     } else {

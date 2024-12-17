@@ -48,16 +48,13 @@ export class MostrarMateriaComponent implements OnInit {
   onYearChange(event: Event): void {
     const selectElement = event.target as HTMLSelectElement;
     this.selectedYear = +selectElement.value;
-    // this.materiasFiltradasAnio=this.materias;
-    // this.filtrarMateriasAnio()
-    // this.filtrarAnios();
+ 
     this.actualizar();
   }
   actualizar(){
     this.servicioInscripcion.obtenerMaterias(this.servicioAutenticacion.getUserId()).subscribe(
       (response: MateriaAsignadaDocente[]) => {
-        console.log('Datos recibidos:', response);
-        this.materias = response; // Asigna los datos cuando la respuesta es recibida
+        this.materias = response; 
         this.materiasFiltradas=this.materias;
         this.filtrarAnios()
         if(!this.selectedYear){
@@ -73,11 +70,9 @@ export class MostrarMateriaComponent implements OnInit {
 
   ngOnInit(): void {
     this.actualizar();
-    // this.selectedYear=+this.anios[0];
 
     this.colorService.currentColor$.subscribe(color => {
       this.selectedColor = color; // Actualiza el color recibido
-      console.log('Color recibido en Login:', this.selectedColor);
     });
   }
 
@@ -93,9 +88,6 @@ export class MostrarMateriaComponent implements OnInit {
   }
   
   filtrarMaterias() {
-
-    // this.materias=this.materiasFiltradasAnio;
-    console.log("hola")
     this.filtrarMateriasAnio();
     this.materiasFiltradas=this.materiasFiltradas.filter(materia =>
       materia.materia?.nombre.toLowerCase().includes(this.searchTerm.toLowerCase())

@@ -54,8 +54,6 @@ export class DetalleNotasEstudiantesComponent implements OnInit {
     this.idEstudiante = +this.route.snapshot.params['id_estudiante'];
     this.anio = +this.route.snapshot.params['anio'];
 
-    console.log(this.idDicta)
-    console.log(this.idEstudiante)
   }
   ngOnInit(): void {
     this.isLoading=true;
@@ -64,7 +62,6 @@ export class DetalleNotasEstudiantesComponent implements OnInit {
     this.obtenerNotas();
     this.colorService.currentColor$.subscribe(color => {
       this.selectedColor = color; // Actualiza el color recibido
-      console.log('Color recibido en Login:', this.selectedColor);
     });
   }
 
@@ -86,7 +83,6 @@ export class DetalleNotasEstudiantesComponent implements OnInit {
         nota.estudiante?.id_estudiante === idEstudiante &&
         nota.materiaAsignada?.id_dicta === idMateria && nota.anio==this.anio
     );
-    console.log(idEstudiante,idMateria)
 
     const notasAgrupadasPorTrimestre: {
       [trimestre: number]: { [tipo: string]: any[] };
@@ -108,21 +104,13 @@ export class DetalleNotasEstudiantesComponent implements OnInit {
     });
 
     this.notasPorTrimestre = notasAgrupadasPorTrimestre;
-    // console.log(
-    //   'Notas por trimestre del estudiante',
-    //   idEstudiante,
-    //   'en la materia',
-    //   idMateria,
-    //   ':',
-    //   this.notasPorTrimestre
-    // );
+    
   }
 
   obtenerNotas(): void {
     this.detalleNotasService.obtenerNotasPorAno(this.selectedYear).subscribe(
       (notas: Nota[]) => {
         this.notas = notas;
-        console.log("notas",notas)
         this.filtrarNotasEstudianteMateria(this.idEstudiante, this.idDicta); 
         this.isLoading=false;
         this.isLoading=false;
@@ -141,7 +129,6 @@ export class DetalleNotasEstudiantesComponent implements OnInit {
         this.estudianteSeleccionado =
           estudiantes.find((est) => est.id_estudiante === this.idEstudiante) ||
           null;
-        console.log('Estudiantes obtenidos:', this.estudiantes);
       },
       (error: any) => {
         console.error('Error en la petición de estudiantes:', error);
@@ -179,7 +166,6 @@ export class DetalleNotasEstudiantesComponent implements OnInit {
       }
     });
 
-    console.log('Notas agrupadas por materia:', this.notasPorMateria); // Agregar esta línea
   }
 
   convertToNumber(value: string): number {
