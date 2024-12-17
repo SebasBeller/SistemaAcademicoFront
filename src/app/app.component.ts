@@ -5,6 +5,7 @@ import { RouterOutlet } from '@angular/router';
 import { MatDialogModule } from '@angular/material/dialog';
 import { SelectionColorService } from './servicios/selection-color.service';
 
+
 @Component({
   selector: 'app-root',
   standalone: true,
@@ -24,14 +25,12 @@ export class AppComponent implements OnInit {
     this.colorService.currentColor$.subscribe((color) => {
       this.selectedColor = color;
       this.updateCSSVariables(color);
-      console.log('Color inicial o actualizado a:', color);
     });
   }
 
   onColorChange(color: string): void {
     this.selectedColor = color;
     this.colorService.changeColor(this.selectedColor);
-    console.log('Color seleccionado:', this.selectedColor);
   }
 
   updateCSSVariables(color: string): void {

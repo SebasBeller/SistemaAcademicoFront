@@ -64,7 +64,6 @@ export class PerfilEstudianteComponent implements OnInit {
   ngOnInit(): void {
     this.colorService.currentColor$.subscribe(color => {
       this.selectedColor = color; // Actualiza el color recibido
-      console.log('Color recibido en Login:', this.selectedColor);
     });
     this.obtenerIdEstudiante();
 
@@ -91,7 +90,6 @@ export class PerfilEstudianteComponent implements OnInit {
   obtenerIdEstudiante(): void {
     this.route.paramMap.subscribe(params => {
       this.idEstudiante = +params.get('id')!;
-      console.log('ID del estudiante:', this.idEstudiante);
       this.obtenerDetallesEstudiante();
     });
   }

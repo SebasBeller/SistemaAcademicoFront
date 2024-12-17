@@ -51,7 +51,6 @@ export class FormEditarProfesorComponent {
   ngOnInit() {
     this.colorService.currentColor$.subscribe(color => {
       this.selectedColor = color; // Actualiza el color recibido
-      console.log('Color recibido en Login:', this.selectedColor);
     });
   }
 
@@ -71,10 +70,7 @@ export class FormEditarProfesorComponent {
   }
 
   async  guardar() {
-    // let updatedPassword = this.profesor.password;
-    //  if (this.plainPassword.trim()) {
-      // const salt = await bcrypt.genSalt(10);
-      // updatedPassword = await bcrypt.hash(this.plainPassword.trim(), salt);
+   
       let profesorData :Profesor= {
         id_profesor: this.profesor.id_profesor,
         nombre: this.profesor.nombre,
@@ -83,22 +79,10 @@ export class FormEditarProfesorComponent {
         password: this.plainPassword
       };
       
-    // }
     if(profesorData.password==""){
       delete profesorData.password
     }
     this.dialogRef.close(profesorData);
-    
-      // this.profesorService.updateProfesor(this.profesor.id_profesor, profesorData).subscribe({
-      //   next: (updatedProfesor) => {
-      //     console.log('Profesor actualizado:', updatedProfesor);
-      //   },
-      //   error: (error) => {
-      //     console.error('Error al actualizar el profesor:', error);
-      //   },
-      // });
-    
-     
   }
 
   cancelar() {

@@ -48,17 +48,13 @@ export class NotasComponent implements OnInit {
  
     this.colorService.currentColor$.subscribe(color => {
       this.selectedColor = color; // Actualiza el color recibido
-      console.log('Color recibido en Login:', this.selectedColor);
     });
   }
 
   obtenerAniosNotas(){
-    console.log("aver",this.notasPorMateria)
     this.notaService.obtenerTodosLosAnios().subscribe(
       (response)=>{
 
-        // console.log("notasPorMateria",this.notasPorMateria)
-        console.log("anios",response)
         this.anios=response;
       }
       ,
@@ -119,7 +115,6 @@ export class NotasComponent implements OnInit {
     this.notaService.obtenerNotasPorAno(this.selectedYear).subscribe(
       (notas: Nota[]) => {
         this.notas = notas;
-        console.log("lo",notas)
         this.agruparNotasPorMateria();
         this.obtenerAniosNotas();
         this.isLoading=false;
@@ -148,7 +143,6 @@ export class NotasComponent implements OnInit {
       const trimestre = nota.trimestre;
       const tipo = nota.tipo; // "hacer", "decidir", "saber", "ser"
       const notaValue = nota.nota;
-      // console.log(nota)
 
       if (nota.estudiante.id_estudiante==this.authService.getUserId()){
 
@@ -215,7 +209,6 @@ export class NotasComponent implements OnInit {
       }
     });
 
-    // return trimestresConNotas > 0 ? sumaPromedios / trimestresConNotas : 0; // Retorna el promedio general
     return trimestresConNotas > 0 ? sumaPromedios / 3 : 0; // Retorna el promedio general
 
 

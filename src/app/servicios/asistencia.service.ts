@@ -48,7 +48,6 @@ export class AsistenciaService {
 
   getAsistenciasInscripcionAgrupadasPorEstudiante(inscripciones?: any[]): any[] {
     this.asistencias = this.getAsistenciasInscripcionAgrupadasPor(inscripciones);
-    console.log("hh",this.asistencias)
     return this.asistencias;
   }
 

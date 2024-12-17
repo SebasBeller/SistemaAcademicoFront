@@ -43,10 +43,8 @@ export class HistorialAsistenciaComponent implements OnInit {
     this.obtenerMateriasAsignadas();
     this.colorService.currentColor$.subscribe(color => {
       this.selectedColor = color;
-      console.log('Color recibido en Login:', this.selectedColor);
     });
-    // this.filtrarMateriasAnio()
-    // console.log("materias Filtradas",this.materiasFiltradas)
+    
   }
   filtrarAnios() {
     this.anios = [...new Set(this.materiasAsignadas.map((materia) => materia.anio.toString()))]
@@ -55,9 +53,7 @@ export class HistorialAsistenciaComponent implements OnInit {
   
   
   filtrarMateriasAnio(){
-    console.log(this.selectedYear)
     this.materiasFiltradas=this.materiasAsignadas.filter((materia)=>materia.anio===this.selectedYear);
-    console.log(this.materiasFiltradas)
   }
   getColorClass(): string {
     switch (this.selectedColor) {
@@ -77,7 +73,6 @@ export class HistorialAsistenciaComponent implements OnInit {
   obtenerAsistencias(): void {
     this.historialAsistenciaService.obtenerAsistencias().subscribe(
       (asistencias) => {
-        console.log('Asistencias recibidas:', asistencias);
         this.asistencias = asistencias;
       },
       error => {
@@ -89,7 +84,6 @@ export class HistorialAsistenciaComponent implements OnInit {
   obtenerProfesores(): void {
     this.historialAsistenciaService.obtenerProfesores().subscribe(
       (profesores) => {
-        console.log('Profesores recibidos:', profesores);
         this.profesores = profesores;
       },
       error => {
@@ -101,10 +95,8 @@ export class HistorialAsistenciaComponent implements OnInit {
   obtenerMateriasAsignadas(): void {
     this.servicioInscripcion.obtenerMaterias(this.servicioAutenticacion.getUserId()).subscribe(
       (materiasAsignadas) => {
-        console.log('Materias asignadas recibidas:', materiasAsignadas);
         this.materiasAsignadas = materiasAsignadas;
         this.materiasFiltradas=this.materiasAsignadas;
-        console.log("materiasFin",this.materiasFiltradas) 
         this.filtrarAnios();
         this.selectedYear=+this.anios[0];
         this.filtrarMateriasAnio()
@@ -151,7 +143,6 @@ export class HistorialAsistenciaComponent implements OnInit {
     let faltas = 0;
     let asistencias = 0;
     let licencias = 0;
-    // console.log(this.asistencias)
     this.asistencias.forEach(asistencia => {
       if (asistencia.materiaAsignada.id_dicta === materia.id_dicta && asistencia.estudiante?.id_estudiante==this.servicioAutenticacion.getUserId()) {
         switch (asistencia.estado) {

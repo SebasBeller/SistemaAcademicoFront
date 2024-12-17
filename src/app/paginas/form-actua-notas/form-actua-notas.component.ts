@@ -105,7 +105,6 @@ export class FormActuaNotasComponent {
   ngOnInit() {
     this.colorService.currentColor$.subscribe(color => {
       this.selectedColor = color; // Actualiza el color recibido
-      console.log('Color recibido en Login:', this.selectedColor);
     });
   }
 
@@ -124,7 +123,6 @@ export class FormActuaNotasComponent {
 
     if (this.form.valid) {
 
-      console.log(this.form.value);
       this.mensajeService.mostrarMensajeExito("¡Éxito!","La nota se actualizó con éxito")
 
 
@@ -135,10 +133,6 @@ export class FormActuaNotasComponent {
 
     }
   }
-
-
-
-
   cerrar() {
     this.dialogRef.close();
   }

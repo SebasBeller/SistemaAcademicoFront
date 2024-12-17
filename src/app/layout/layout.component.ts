@@ -27,13 +27,11 @@ export class LayoutComponent {
     this.idEstudiante = this.authService.getUserId();
     this.colorService.currentColor$.subscribe(color => {
       this.selectedColor = color;
-      console.log('Color recibido', this.selectedColor);
     });
     if (this.idEstudiante) {
       this.authService.obtenerFotoPerfil(this.idEstudiante).subscribe({
         next: (data: any) => {
           this.fotoPerfil = data.foto || 'assets/img/silueta.png';
-          console.log("Foto de perfil cargada desde la API:", this.fotoPerfil);
         },
         error: (error) => {
           console.error('Error al obtener la foto de perfil:', error);

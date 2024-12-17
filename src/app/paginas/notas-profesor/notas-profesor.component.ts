@@ -32,12 +32,8 @@ export class NotasProfesorComponent implements OnInit {
     const idProfesor = this.authService.getUserId();
      this.servicioMateriasProfesor.obtenerMaterias().subscribe(
        response => {
-         console.log('Datos recibidos:', response);
          this.materias = response.filter(materia => materia.profesor?.id_profesor === idProfesor); // Asigna los datos cuando la respuesta es recibida
-        //  this.materias = response.filter(materia => materia.profesor?.id_profesor === idProfesor); // Asigna los datos cuando la respuesta es recibida
-         console.log('Materias asignadas:', this.materias);
          this.materiasFiltradas=this.materias;
-         console.log("")
          this.filtrarAnios()
          this.selectedYear=+this.anios[0] || 2024
          this.filtrarMateriasAnio();
@@ -49,7 +45,6 @@ export class NotasProfesorComponent implements OnInit {
      );
      this.colorService.currentColor$.subscribe(color => {
       this.selectedColor = color; // Actualiza el color recibido
-      console.log('Color recibido en Login:', this.selectedColor);
     });
   }
   
@@ -67,9 +62,7 @@ export class NotasProfesorComponent implements OnInit {
   onYearChange(event: Event): void {
     const selectElement = event.target as HTMLSelectElement;
     this.selectedYear = +selectElement.value;
-    console.log(this.selectedYear)
     this.filtrarMateriasAnio()
-    console.log(this.materias)
   }
 
 

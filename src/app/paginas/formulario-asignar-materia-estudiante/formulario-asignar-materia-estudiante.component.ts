@@ -56,7 +56,6 @@ export class FormularioAsignarMateriaEstudianteComponent {
   ) {
     this.estudiantees= data.estudiantes || '';
     this.fecha = data.fecha || new Date();
-    console.log(this.fecha)
   }
 
   ngOnInit() {
@@ -68,7 +67,6 @@ export class FormularioAsignarMateriaEstudianteComponent {
 
     this.colorService.currentColor$.subscribe(color => {
       this.selectedColor = color; // Actualiza el color recibido
-      console.log('Color recibido en Login:', this.selectedColor);
     });
   }
   getNombreCompleto(estudiante:Estudiante){
@@ -78,7 +76,6 @@ export class FormularioAsignarMateriaEstudianteComponent {
     const filterValue = value.toLowerCase();
     let ests= this.estudiantees.filter(est => this.getNombreCompleto(est).toLowerCase().includes(filterValue));
     if(value){
-      console.log(value)
       this.estudiante=ests[0];
     }
 

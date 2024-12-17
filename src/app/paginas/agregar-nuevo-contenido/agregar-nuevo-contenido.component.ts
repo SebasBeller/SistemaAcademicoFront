@@ -53,14 +53,11 @@ export class AgregarNuevoContenidoComponent implements OnInit {
   ngOnInit(): void {
     this.colorService.currentColor$.subscribe(color => {
       this.selectedColor = color;
-      console.log('Color recibido:', this.selectedColor);
     });
 
     this.materiaAsignadaServicio.obtenerMateriaAsignada(this.id_dicta).subscribe(
       response => {
-        console.log('Datos recibidos:', response);
         this.materiaAsignada = response;
-        console.log('Materia:', this.materiaAsignada);
       },
       error => {
         console.error('Error en la petición GET:', error);
@@ -69,9 +66,7 @@ export class AgregarNuevoContenidoComponent implements OnInit {
 
     this.unidadServicio.getUnidadesDeMateriAsignada(this.id_dicta).subscribe(
       response => {
-        console.log('Datos recibidos:', response);
         this.unidades = response;
-        console.log('Unidades:', this.unidades);
       },
       error => {
         console.error('Error en la petición GET:', error);
@@ -107,7 +102,6 @@ export class AgregarNuevoContenidoComponent implements OnInit {
         this.mensajeService.mostrarMensajeExito("¡Éxito!", 'Se ha agregado con éxito un nuevo contenido');
         this.unidadServicio.guardarUnidadDeMateriAsignada(nuevaUnidad).subscribe(
           response => {
-            console.log('Respuesta:', response);
             nuevaUnidad.id_unidad = response;
             this.unidades.push(nuevaUnidad);
             this.cardCounter++;
@@ -145,7 +139,6 @@ export class AgregarNuevoContenidoComponent implements OnInit {
             response => {
               this.unidades[index]=unidad
               this.mensajeService.mostrarMensajeExito("¡Éxito!", 'Se ha editado con éxito el contenido');
-              console.log(response);
             },
             error => {
               console.error('Error:', error);
@@ -170,7 +163,6 @@ export class AgregarNuevoContenidoComponent implements OnInit {
           this.cardCounter = 1;
         }
         this.mensajeService.mostrarMensajeExito("¡Éxito!", 'Se eliminó el contenido con éxito');
-        console.log(response);
       },
       error => {
         console.error('Error:', error);

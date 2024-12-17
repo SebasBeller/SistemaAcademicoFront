@@ -32,7 +32,6 @@ export class APIServiceIAService {
         model: 'llama3-8b-8192',
       });
       const htmlResponse = response.choices[0].message.content;
-      console.log('API Response:', htmlResponse);
       return htmlResponse;
     } catch (error) {
       console.error('Error en askProfessorChat:', error);
@@ -49,7 +48,6 @@ export class APIServiceIAService {
         model: 'llama3-8b-8192',
       });
       const htmlResponse = response.choices[0].message.content;
-      console.log('API Response:', htmlResponse);
       return htmlResponse;
     } catch (error) {
       console.error('Error en askChat:', error);

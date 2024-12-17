@@ -49,7 +49,6 @@ export class MostrarNotasPorMateriaProfesorComponent implements OnInit {
   ngOnInit(): void {
     this.colorService.currentColor$.subscribe(color => {
       this.selectedColor = color; // Actualiza el color recibido
-      console.log('Color recibido en Login:', this.selectedColor);
     });
     this.isLoading = true;
     this.idMateria = this.route.snapshot.paramMap.get('id_dicta')||"";
@@ -59,11 +58,10 @@ export class MostrarNotasPorMateriaProfesorComponent implements OnInit {
     if (this.idMateria) {
       const id = +(this.idMateria);
       this.cargarDatosMateriaAsignada(id);
-      this.cargarNotasEstudiantes(id); // Aquí removí el parámetro paralelo
+      this.cargarNotasEstudiantes(id); 
     } else {
       console.error('ID de materia no encontrado en la URL');
     }
-    console.log(this.estudiantesPromedios)
   }
 
   getColorClass(): string {
@@ -100,7 +98,6 @@ export class MostrarNotasPorMateriaProfesorComponent implements OnInit {
         this.notas = data.filter(nota =>
           nota.materiaAsignada.id_dicta==idDicta && nota.materiaAsignada.anio==this.anio
         );
-        console.log(this.notas)
         this.calcularPromediosPorEstudiante();
         this.isLoading = false;
         this.isLoading = false;
@@ -161,7 +158,6 @@ export class MostrarNotasPorMateriaProfesorComponent implements OnInit {
       return estudiante;
     });
 
-    console.log('Estudiantes con promedios:', this.estudiantesPromedios);
   }
 
   onParaleloChange(paralelo: string) {

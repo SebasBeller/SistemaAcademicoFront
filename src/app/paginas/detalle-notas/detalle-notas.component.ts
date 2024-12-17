@@ -75,7 +75,6 @@ export class DetalleNotasComponent implements OnInit {
     this.obtenerNotas();
     this.colorService.currentColor$.subscribe(color => {
       this.selectedColor = color; 
-      console.log('Color recibido en Login:', this.selectedColor);
     });
   }
 
@@ -91,7 +90,6 @@ export class DetalleNotasComponent implements OnInit {
   }
 
   filtrarNotasEstudianteMateria(idEstudiante: number, idMateria: number): void {
-    // console.log("anio",this.anio)
     const notasEstudianteMateria = this.notas.filter(
       (nota) =>
         nota.estudiante?.id_estudiante === idEstudiante &&
@@ -119,14 +117,6 @@ export class DetalleNotasComponent implements OnInit {
     });
 
     this.notasPorTrimestre = notasAgrupadasPorTrimestre;
-    console.log(
-      'Notas por trimestre del estudiante',
-      idEstudiante,
-      'en la materia',
-      idMateria,
-      ':',
-      this.notasPorTrimestre
-    );
   }
 
   obtenerNotas(): void {
@@ -152,7 +142,6 @@ export class DetalleNotasComponent implements OnInit {
         this.estudianteSeleccionado =
           estudiantes.find((est) => est.id_estudiante === this.idEstudiante) ||
           null;
-        console.log('Estudiantes obtenidos:', this.estudiantes);
       },
       (error: any) => {
         console.error('Error en la petición de estudiantes:', error);
@@ -166,7 +155,6 @@ export class DetalleNotasComponent implements OnInit {
       width: '400px',
       data: { ...trimestre },
     });
-    console.log(trimestre);
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         const notasAActualizar: any[] = Object.values(result).map(
@@ -182,7 +170,6 @@ export class DetalleNotasComponent implements OnInit {
             };
           }
         );
-        console.log(notasAActualizar);
 
          notasAActualizar.forEach((nota: any) => {
           if (nota.id) {
@@ -238,7 +225,6 @@ export class DetalleNotasComponent implements OnInit {
       }
     });
 
-    console.log('Notas agrupadas por materia:', this.notasPorMateria); // Agregar esta línea
   }
 
   actualizarNota(nota: Nota): void {
@@ -247,28 +233,16 @@ export class DetalleNotasComponent implements OnInit {
       this.mensajeService.mostrarMensajesError( 'error',['La nota debe estar entre 30 y 100.']);
       return;
   }
-    console.log(nota);
     this.detalleNotasService.actualizarNota(nota).subscribe(
       (notaActualizada: Nota) => {
-
-
-        console.log('Nota actualizada:', notaActualizada);
-
         const index = this.notas.findIndex((n) => n.id === nota.id);
-        console.log(this.notas)
-
-
         if (index !== -1) {
           this.notas[index].nota = nota.nota;
           this.notas[index].fecha = nota.fecha;
 
           this.notas[index].nota = nota.nota;
           this.notas[index].fecha = nota.fecha;
-
-
         }
-
-
       },
       (error: any) => {
         console.error('Error al actualizar la nota:', error);

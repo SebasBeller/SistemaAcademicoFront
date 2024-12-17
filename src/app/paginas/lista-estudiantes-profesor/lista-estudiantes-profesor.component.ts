@@ -22,19 +22,13 @@ export class ListaEstudiantesProfesorComponent implements OnInit {
   }
 
   ngOnInit() {
-    // this.estudiantesService.obtenerEstudiantes().subscribe(data => {
-    //     this.estudiantes = data.filter((estudiante: any) => estudiante.nombre);
-    //     console.log(this.estudiantes);
-    // });
     this.materiaAsignadaService.obtenerEstudiantesMateriaAsignada(this.id_dicta).subscribe(
       data => {
             this.estudiantes = data;
-            console.log(data);
       }
     );
     this.colorService.currentColor$.subscribe(color => {
       this.selectedColor = color; // Actualiza el color recibido
-      console.log('Color recibido en Login:', this.selectedColor);
     });
   }
   getColorClass(): string {

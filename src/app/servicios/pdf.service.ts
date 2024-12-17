@@ -30,12 +30,10 @@ export class PdfService {
   async readPdf(pdf: PDFDocumentProxy,tipo?:string) {
     this.promptProfessor= await this.getProfessorPrompt(tipo);
     this.promptStudent= await this.getStudentPrompt(tipo);
-    console.log(this.promptStudent);
-    console.log(this.promptProfessor);
+   
 
     const page: PDFPageProxy = await pdf.getPage(1);
     const textContent = await page.getTextContent();
-    console.log(textContent);
     let extractedText = '';
 
     for (let pageNumber = 1; pageNumber <= pdf.numPages; pageNumber++) {
