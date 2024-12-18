@@ -51,7 +51,7 @@ export class MaterialComponent {
     this.materialesServicio.encontrarMaterial(this.id_material).subscribe(
       (data)=>{
           this.material=data
-          this.src=`/api${this.material?.url}`;
+          this.src=`${this.material?.url}`;
       },
       error => {
         console.error('Error en la petición GET:', error);
