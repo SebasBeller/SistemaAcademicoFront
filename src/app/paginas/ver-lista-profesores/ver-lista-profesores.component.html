@@ -22,7 +22,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let profesor of profesoresFiltrados.reverse()">
+          <tr *ngFor="let profesor of getProfesoresFiltrados()">
             <td>{{ profesor.nombre }}</td>
             <td>{{ profesor.apellido }}</td>
             <td>{{ profesor.email }}</td>

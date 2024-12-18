@@ -29,7 +29,8 @@ export class VerListaProfesoresComponent implements OnInit {
     private readonly mensajeService:MensajeService
   
   ) {}
-  
+
+
   ngOnInit(): void {
     this.getProfesores();
     this.colorService.currentColor$.subscribe(color => {
@@ -37,6 +38,10 @@ export class VerListaProfesoresComponent implements OnInit {
     });
   }
 
+  getProfesoresFiltrados(){
+    return this.profesoresFiltrados.reverse();
+  }
+  
   getColorClass(): string {
     switch (this.selectedColor) {
       case 'verde':
