@@ -266,6 +266,7 @@ export class RegistroAsistenciaDocentesComponent implements OnInit {
       showCancelButton: true,
       confirmButtonText: 'Guardar',
       cancelButtonText: 'Cancelar',
+      buttonsStyling: false,
       inputValidator: (value) => {
         if (!value ) {
           return 'Por favor, selecciona una fecha válida.';
@@ -308,8 +309,33 @@ export class RegistroAsistenciaDocentesComponent implements OnInit {
         this.filtrarFechaColumnas();
       }
     });
-  }
 
+    setTimeout(() => {
+      const confirmButton = document.querySelector('.swal2-confirm') as HTMLElement;
+      const cancelButton = document.querySelector('.swal2-cancel') as HTMLElement;
+
+      if (confirmButton) {
+        confirmButton.style.backgroundColor = '#dc3545'; 
+        confirmButton.style.color = '#ffffff'; 
+        confirmButton.style.border = 'none';
+        confirmButton.style.padding = '8px 16px';
+        confirmButton.style.borderRadius = '4px';
+        confirmButton.style.fontSize = '14px';
+        confirmButton.style.cursor = 'pointer';
+        confirmButton.style.marginRight = '20px'; 
+      }
+    
+      if (cancelButton) {
+        cancelButton.style.backgroundColor = '#007bff'; 
+        cancelButton.style.color = '#ffffff'; 
+        cancelButton.style.border = 'none';
+        cancelButton.style.padding = '8px 16px';
+        cancelButton.style.borderRadius = '4px';
+        cancelButton.style.fontSize = '14px';
+        cancelButton.style.cursor = 'pointer';
+      }
+    }, 0);
+  }
 
   eliminarFecha(fecha: string) {
     //const confirmacion = confirm(`¿Estás seguro de eliminar la fecha ${fecha}?`);

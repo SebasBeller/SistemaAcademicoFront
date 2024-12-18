@@ -35,8 +35,8 @@ export class MensajeService {
       mensajes=["Ocurrio un error, vuelva mas tarde"];
     }
     const htmlMensajes = `
-    <ul style="list-style-type: disc; margin: 0; padding-left: 10%; text-align:left;">
-      ${mensajes.map(m => `<li>${m}</li>`).join('')}
+    <ul style="list-style-type: none; margin: 0; text-align:center; font-size: 10px;">
+      ${mensajes.map(m => `<li style="text-decoration: none;"><span style="color: red;">* </span> ${m}</li>`).join('')}
     </ul>
   `;
   
