@@ -9,7 +9,7 @@ import { AuthService } from '../servicios/auth.service';
 
 
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
-  const router = inject(Router); // Inyectar Router de forma manual
+  const router = inject(Router); 
   const authToken = localStorage.getItem('authToken');
   const mensajeService = inject(MensajeService);
   const authService = inject(AuthService);

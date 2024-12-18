@@ -16,9 +16,9 @@ export const errorHandlerInterceptor: HttpInterceptorFn = (req, next) => {
         case 0:
           mensajeService.mostrarMensajeError("Error!!","Ocurrio un error, vuelva a intentarlo mas tarde")
           break;
-        // case 404:
-        //   alert('El recurso solicitado no fue encontrado.');
-        //   break;
+        case 500:
+          mensajeService.mostrarMensajeError("Error!!","Ocurrio un error, vuelva a intentarlo mas tarde.")
+          break;
         // case 400:
         //   alert('Solicitud incorrecta. Verifica los datos ingresados.');
         //   break;
