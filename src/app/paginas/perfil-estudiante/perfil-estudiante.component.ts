@@ -121,24 +121,15 @@ async onGuardar(): Promise<void> {
   try {
     if (this.estudianteForm.valid && this.idEstudiante && this.estudianteSeleccionado) {
       const estudianteEditado = { ...this.estudianteForm.value };
-
-      // Validar contraseña actual
-      if (this.estudianteSeleccionado.password && estudianteEditado.currentPassword) {
-        const passwordCorrecta = await bcrypt.compare(estudianteEditado.currentPassword, this.estudianteSeleccionado.password);
-        if (!passwordCorrecta) {
-          this.mensajeService.mostrarMensajeError("¡Error!", "La contraseña actual es incorrecta.");
-          return;
-        }
+      if(!estudianteEditado.foto){
+        estudianteEditado.foto=this.imagenURL;
       }
-
-      // Validar nueva contraseña
-      if (estudianteEditado.newPassword) {
-        if (estudianteEditado.newPassword.length < 8) {
-          throw new Error("La nueva contraseña debe tener al menos 8 caracteres.");
-        }
-        const salt = await bcrypt.genSalt(10);
-        estudianteEditado.password = await bcrypt.hash(estudianteEditado.newPassword, salt);
-      }
+      if(estudianteEditado.newPassword)
+        estudianteEditado.password=estudianteEditado.newPassword
+      delete estudianteEditado.newPassword
+      delete estudianteEditado.currentPassword
+      delete estudianteEditado.repeatNewPassword
+      estudianteEditado.id_estudiante=+this.estudianteSeleccionado.id_estudiante
 
       // Actualizar estudiante
       this.perfilEstudianteService.actualizarEstudiante(this.idEstudiante, estudianteEditado).subscribe({
@@ -151,7 +142,7 @@ async onGuardar(): Promise<void> {
         },
         error: (err) => {
           console.error('Error al actualizar el estudiante:', err);
-          this.mensajeService.mostrarMensajeError("¡Error!", "Algo ocurrió. Intente de nuevo más tarde.");
+          this.mensajeService.mostrarMensajesError("Error!!",err.error.message);
         }
       });
     }

@@ -32,11 +32,11 @@
         <label for="lname">Apellido</label>
         <input type="text" id="lname" formControlName="apellido">
 
-        <label for="currentPassword">Contraseña Anterior</label>
-        <input type="password" id="currentPassword" formControlName="currentPassword">
-        <div *ngIf="estudianteForm.get('currentPassword')?.invalid && estudianteForm.get('currentPassword')?.touched" class="error">
+        <!-- <label for="currentPassword">Contraseña Anterior</label> -->
+        <!-- <input type="password" id="currentPassword" formControlName="currentPassword"> -->
+        <!-- <div *ngIf="estudianteForm.get('currentPassword')?.invalid && estudianteForm.get('currentPassword')?.touched" class="error">
           La contraseña debe tener al menos 8 caracteres.
-        </div>
+        </div> -->
 
         <label for="newPassword">Contraseña Nueva</label>
         <input type="password" id="newPassword" formControlName="newPassword">

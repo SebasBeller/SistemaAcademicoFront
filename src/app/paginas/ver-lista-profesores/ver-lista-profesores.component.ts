@@ -39,7 +39,7 @@ export class VerListaProfesoresComponent implements OnInit {
   }
 
   getProfesoresFiltrados(){
-    return this.profesoresFiltrados.reverse();
+    return [...this.profesoresFiltrados].reverse();
   }
   
   getColorClass(): string {

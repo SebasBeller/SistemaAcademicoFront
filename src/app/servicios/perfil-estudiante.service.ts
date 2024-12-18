@@ -26,9 +26,7 @@ export class PerfilEstudianteService {
   }
 
   actualizarEstudiante(id: number, estudiante: Partial<Estudiante>): Observable<Estudiante> {
-    return this.http.patch<Estudiante>(`${this.apiUrl}/${id}`, estudiante).pipe(
-      catchError(this.handleError)
-    );
+    return this.http.patch<Estudiante>(`https://academicoapi.onrender.com/auth/update/estudiante/${id}`, estudiante)
   }
 
   private handleError(error: HttpErrorResponse) {
