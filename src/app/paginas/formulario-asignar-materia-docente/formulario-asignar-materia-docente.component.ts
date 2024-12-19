@@ -56,6 +56,9 @@ export class FormularioAsignarMateriaDocenteComponent {
     this.profesores= data.profesores || '';
     this.fecha = data.fecha || new Date();
   }
+  getNombreCompleto(profesor:Profesor){
+    return profesor.nombre+" "+profesor.apellido;
+}
 
   ngOnInit() {
     this.filteredProfesores = this.myControl.valueChanges.pipe(
@@ -70,14 +73,15 @@ export class FormularioAsignarMateriaDocenteComponent {
   }
 
   private _filter(value: string): string[] {
+
     const filterValue = value.toLowerCase();
-    let profs= this.profesores.filter(profe => profe.nombre.toLowerCase().includes(filterValue));
+    let profs= this.profesores.filter(profe =>this.getNombreCompleto(profe).toLowerCase().includes(filterValue));
     if(value){
       this.profesor=profs[0];
     }
 
     return profs.map(
-      profe =>profe.nombre
+      profe =>this.getNombreCompleto(profe)
     );
   }
 

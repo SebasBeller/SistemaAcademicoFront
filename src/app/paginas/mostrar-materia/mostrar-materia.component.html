@@ -18,7 +18,7 @@
         alt="Photo of a Shiba Inu" loading="lazy">
       <button [routerLink]="['/home/detalle-materia', materia.titulo]"
       class="materia-nombre"><b>{{materia.materia?.nombre}}</b></button>
-      <div class="profesor-nombre"><b>{{ materia.profesor?.nombre }}</b></div>
+      <div class="profesor-nombre"><b>{{ materia.profesor?.nombre}} {{ materia.profesor?.apellido }}</b></div>
 
       <div class="Paralelo"><b>Paralelo: {{materia.materia?.paralelo?.paralelo}}</b></div>
 

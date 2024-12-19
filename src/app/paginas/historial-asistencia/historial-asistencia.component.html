@@ -16,7 +16,7 @@
         alt="{{materia.titulo}}" loading="lazy" />
       <div>
         <h2><b>{{materia.materia?.nombre}}</b></h2>
-        <p><strong>Profesor:</strong> {{materia.profesor?.nombre}}</p>
+        <p><strong>Profesor:</strong> {{materia.profesor?.nombre}} {{materia.profesor?.apellido}}</p>
         <p><strong>Paralelo:</strong> {{materia.materia?.paralelo?.paralelo}}</p>
         <div class="historial">
           <p><strong>Faltas:</strong> {{calcularTotalClases(materia).faltas}}</p>
