@@ -1,10 +1,12 @@
 <div [ngClass]="getColorClass()">
+  <div class="gestion">
   <select (change)="onYearChange($event)">
     <option *ngFor="let year of anios" [value]="year">{{ year }}</option>
   </select>
+</div>
     <div class="profesores-container">
       <h2>Lista de profesores asignados a la materia</h2>
-  
+
           <button class="add-button" mat-button color="primary" (click)="asignarProfesor()" >+</button>
         <table>
           <thead>
@@ -20,8 +22,8 @@
               <td>{{ profesor.apellido }}</td>
               <td>
                 <div class="button-container">
-     
-  
+
+
                   <button mat-button (click)="desAsignar(profesor)" >
                     <img src="https://cdn-icons-png.flaticon.com/512/7347/7347206.png" alt="Eliminar" width="30"
                       height="30" />
