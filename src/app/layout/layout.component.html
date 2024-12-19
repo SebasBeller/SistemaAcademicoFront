@@ -6,9 +6,9 @@
     </div>
     <div class="acciones">
       <div class="perfil-notificaciones">
-        <img class="notificaciones" src="assets/img/boton-de-notificaciones.png" alt="Notificaciones" />
+        <img loading="lazy" class="notificaciones" src="assets/img/boton-de-notificaciones.png" alt="Notificaciones" />
         <a [routerLink]="userRole === 'estudiante' ? 'perfil-estudiante/' + idEstudiante : '/home/'">
-          <img *ngIf="fotoPerfil || 'assets/img/silueta.jpg'" [src]="fotoPerfil" alt="Foto de Perfil" />
+          <img loading="lazy" *ngIf="fotoPerfil || 'assets/img/silueta.jpg'" [src]="fotoPerfil" alt="Foto de Perfil" />
         </a>
       </div>
     </div>
@@ -18,7 +18,7 @@
     <div class="sidebar" [class.open]="isSidebarOpen">
       <div class="escudo">
         <a [routerLink]="['/home']">
-          <img src="assets/img/logo.png" alt="Escudo" />
+          <img loading="lazy" src="assets/img/logo.png" alt="Escudo" />
         </a>
       </div>
       <ul>

@@ -10,7 +10,7 @@
   </div>
   <div class="contenido-materia-detalle">
     <div *ngFor="let card of this. unidades" class="card-wrapper">
-      <img [src]="card.imagen_url" alt="Module Image"/>
+      <img [src]="card.imagen_url" alt="Module Image" loading="lazy"/>
       <a  [routerLink]="['/home/ver-materiales-estudiante', card.id_unidad]"><strong><b>{{ card.nombre }}</b></strong></a>
     </div>
   </div>
